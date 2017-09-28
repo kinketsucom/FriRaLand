@@ -99,7 +99,64 @@ namespace FriRaLand {
                 return null;
             }
         }
-        //FrilAPIをPOSTでたたく
+        //RakumaAPIをGETでたたく
+        private RakumaRawResponse getFrilAPI(string url, Dictionary<string, string> param, string user_agent) {
+            System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+            //ストップウォッチを開始する
+            sw.Start();
+            RakumaRawResponse res = new RakumaRawResponse();
+            try {
+                //url = Uri.EscapeUriString(url);//日本語などを％エンコードする
+                //パラメータをURLに付加 ?param1=val1&param2=val2...
+                url += "?";
+                List<string> paramstr = new List<string>();
+                foreach (KeyValuePair<string, string> p in param) {
+                    string k = Uri.EscapeUriString(p.Key);
+                    string v = Uri.EscapeUriString(p.Value);
+                    paramstr.Add(k + "=" + v);
+                }
+                url += string.Join("&", paramstr);
+                //HttpWebRequestの作成
+                HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
+                req.UserAgent = user_agent;
+                req.Method = "GET";
+                //プロキシの設定
+                if (string.IsNullOrEmpty(this.proxy) == false) {
+                    System.Net.WebProxy proxy = new System.Net.WebProxy(this.proxy);
+                    req.Proxy = proxy;
+                }
+                //結果取得
+                string content = "";
+                var task = Task.Factory.StartNew(() => executeGetRequest(req));
+                task.Wait(10000);
+                if (task.IsCompleted)
+                    content = task.Result;
+                else
+                    throw new Exception("Timed out");
+                if (string.IsNullOrEmpty(content)) throw new Exception("webrequest error");
+                res.error = false;
+                res.response = content;
+                Log.Logger.Info("RakumaGETリクエスト成功");
+                return res;
+            }
+            catch (Exception e) {
+                Log.Logger.Error("RakumaGETリクエスト失敗");
+                return res;
+            }
+        }
+        private string executeGetRequest(HttpWebRequest req) {
+            try {
+                HttpWebResponse webres = (HttpWebResponse)req.GetResponse();
+                Stream s = webres.GetResponseStream();
+                StreamReader sr = new StreamReader(s);
+                string content = sr.ReadToEnd();
+                return content;
+            }
+            catch {
+                return "";
+            }
+        }
+        //RakumaAPIをPOSTでたたく
         private RakumaRawResponse postRakumaAPI(string url, Dictionary<string, string> param, string user_agent) {
             RakumaRawResponse res = new RakumaRawResponse();
             try {
@@ -119,7 +176,6 @@ namespace FriRaLand {
                 if (string.IsNullOrEmpty(this.account.rakuma_access_token) == false) {
                     req.Headers.Set("access_token", this.account.rakuma_access_token);
                 }
-                //http://api.fril.jp/api/v2/users?auth_token=6QHEK63vUL8DHiHtWgmK 
                 req.Method = "POST";
                 //リクエストヘッダを付加
                 req.ContentType = "application/x-www-form-urlencoded; charset=utf-8";
