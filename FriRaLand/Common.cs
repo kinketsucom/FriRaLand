@@ -12,11 +12,14 @@ namespace FriRaLand {
         public class Account {
             public const int Fril_Account = 0;
             public const int Rakuma_Account = 1;
+            public int DBId;
             public int kind;
             public string email;
             public string password;
             public string fril_auth_token;
             public string rakuma_access_token;
+            public string nickname;
+            public string userId;
             public DateTime expirationDate;
         }
         public static DateTime UNIX_EPOCH = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc); //UnixTimeの開始時刻
