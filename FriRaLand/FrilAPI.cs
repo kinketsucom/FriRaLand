@@ -31,7 +31,7 @@ namespace FriRaLand {
                 //商品情報をまず送る
                 string url = "https://api.fril.jp/api/items/request";
                 Dictionary<string, string> param = new Dictionary<string, string>();
-                param.Add("auth_token", this.account.auth_token);
+                param.Add("auth_token", this.account.fril_auth_token);
                 param.Add("item_id", "0");
                 param.Add("brand", item.brand_id.ToString());
                 param.Add("carriage", item.carriage.ToString());
@@ -57,7 +57,7 @@ namespace FriRaLand {
                 for (int num = 1; num <= total_img_num; num++) {
                     string image_url = "https://api.fril.jp/api/items/request_img";
                     Dictionary<string, string> req_img_param = new Dictionary<string, string>();
-                    req_img_param.Add("auth_token", this.account.auth_token);
+                    req_img_param.Add("auth_token", this.account.fril_auth_token);
                     req_img_param.Add("item_id", item_id);
                     req_img_param.Add("current_num", num.ToString());
                     req_img_param.Add("total_num", total_img_num.ToString());
@@ -82,12 +82,13 @@ namespace FriRaLand {
             if (rawres.error) return false;
             try {
                 dynamic resjson = DynamicJson.Parse(rawres.response);
-                this.account.auth_token = resjson.auth_token;
-                ////Logger.info("ログイン成功");
+                this.account.fril_auth_token = resjson.auth_token;
+                this.account.expirationDate = DateTime.Now.AddDays(90.0);
+                Log.Logger.Info("フリルログイン成功");
                 return true;
             }
             catch (Exception e) {
-                ////Logger.info("ログイン失敗");
+                Log.Logger.Info("フリルログイン失敗");
                 return false;
             }
         }

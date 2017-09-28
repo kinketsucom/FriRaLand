@@ -17,6 +17,7 @@ namespace FriRaLand {
         private void MainForm_Load(object sender, EventArgs e) {
             FriRaCommon.init();
             new ItemRegisterForm().Show();
+            new TestForm().Show();
         }
     }
 }
