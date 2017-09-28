@@ -12,6 +12,7 @@ namespace FriRaLand {
         private const string USER_AGENT = "Mozilla/5.0 (iPad; COU OS 10_3_2 like Mac OS X) AppleWebKit/603.2.4 (KHTML, like Gecko) Mobile/14F89 Fril/6.7.1";
         private string cookie_fril_session;
         private string proxy;
+
         //GET,POSTのRequestのResponse
         private class FrilRawResponse {
             public bool error = true;
@@ -124,6 +125,7 @@ namespace FriRaLand {
                 url += string.Join("&", paramstr);
                 //HttpWebRequestの作成
                 HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
+                req.CookieContainer = this.cc;
                 req.UserAgent = FrilAPI.USER_AGENT;
                 req.Method = "GET";
                 //プロキシの設定
@@ -202,9 +204,7 @@ namespace FriRaLand {
                 req.Accept = "application/json";
                 req.ContentLength = (long)bytes.Length;
                 //クッキーコンテナの追加
-                req.CookieContainer = this.cc;// new CookieContainer();
-                //クッキーの追加
-                //if (!string.IsNullOrEmpty(this.cookie_fril_session)) req.CookieContainer.Add(new Uri(url), new Cookie("_fril_session", this.cookie_fril_session));
+                req.CookieContainer = this.cc;
                 //プロキシの設定
                 if (string.IsNullOrEmpty(this.proxy) == false) {
                     System.Net.WebProxy proxy = new System.Net.WebProxy(this.proxy);
