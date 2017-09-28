@@ -217,7 +217,8 @@ namespace FriRaLand {
         }
         //public static List<FrilCategory> fril_categories = new List<FrilCategory>();
         public static Dictionary<int, List<FrilCategory>> fril_categoryDictionary = new Dictionary<int, List<FrilCategory>>();
-        public static List<FrilSizeGroup> fril_sizegroups = new List<FrilSizeGroup>();
+        //public static List<FrilSizeGroup> fril_sizegroups = new List<FrilSizeGroup>();
+        public static Dictionary<int, List<FrilSizeInfo>> fril_default_sizeInfoDictionary = new Dictionary<int, List<FrilSizeInfo>>();
         public static List<FrilBrand> fril_brands = new List<FrilBrand>();
         static void getFrilCategories() {
             //fril_categories = new List<FrilCategory>();
@@ -252,6 +253,7 @@ namespace FriRaLand {
             public string name;
             public bool hidden;
             public List<FrilSizeType> size_types;
+            public List<FrilSizeInfo> default_size_list; //FrilSizeType.name = "デフォルト"になっているもの、なければ0個目のsize
         }
         public struct FrilSizeType {
             public string name;
@@ -262,7 +264,8 @@ namespace FriRaLand {
             public string name;
         }
         public static void getFrilSizeGroup() {
-            fril_sizegroups = new List<FrilSizeGroup>();
+            //fril_sizegroups = new List<FrilSizeGroup>();
+            fril_default_sizeInfoDictionary = new Dictionary<int, List<FrilSizeInfo>>();
             string jsonstr = "";
             using (WebClient webClient = new WebClient()) {
                 byte[] bytes = webClient.DownloadData("https://api.fril.jp/api/v3/initial_data");
@@ -275,6 +278,7 @@ namespace FriRaLand {
                 sg.name = sizegroup.name;
                 sg.hidden = (bool)sizegroup.hidden;
                 sg.size_types = new List<FrilSizeType>();
+                sg.default_size_list = new List<FrilSizeInfo>();
                 foreach (var sz in sizegroup.size_types) {
                     FrilSizeType size_type = new FrilSizeType();
                     size_type.name = sz.name;
@@ -285,9 +289,12 @@ namespace FriRaLand {
                         size_info.name = si.name;
                         size_type.sizes.Add(size_info);
                     }
+                    if (sz.name == "デフォルト") sg.default_size_list = size_type.sizes; 
                     sg.size_types.Add(size_type);
                 }
-                fril_sizegroups.Add(sg);
+                if (sg.default_size_list.Count == 0) sg.default_size_list = sg.size_types[0].sizes;
+                //fril_sizegroups.Add(sg)
+                fril_default_sizeInfoDictionary[sg.id] = sg.default_size_list;
             }
             Log.Logger.Info("フリルサイズデータ読み込み完了");
         }

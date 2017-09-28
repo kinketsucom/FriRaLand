@@ -13,5 +13,10 @@ namespace FriRaLand {
         public MainForm() {
             InitializeComponent();
         }
+
+        private void MainForm_Load(object sender, EventArgs e) {
+            FriRaCommon.init();
+            new ItemRegisterForm().Show();
+        }
     }
 }
