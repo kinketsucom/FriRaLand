@@ -19,6 +19,23 @@ namespace FriRaLand {
             public string rakuma_access_token;
             public DateTime expirationDate;
         }
+        public static DateTime UNIX_EPOCH = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc); //UnixTimeの開始時刻
+        static public DateTime getDateFromUnixTimeStamp(long timestamp) {
+            try {
+                return UNIX_EPOCH.AddSeconds(timestamp).ToLocalTime();
+            }
+            catch {
+                return UNIX_EPOCH.ToLocalTime();
+            }
+        }
+        static public DateTime getDateFromUnixTimeStamp(string timestamp) {
+            try {
+                return getDateFromUnixTimeStamp(long.Parse(timestamp));
+            }
+            catch {
+                return UNIX_EPOCH.ToLocalTime();
+            }
+        }
         public static string getExhibitionImageFromPath(string path) {
             try {
                 //imgフォルダがなかったら作成
