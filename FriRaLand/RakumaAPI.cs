@@ -49,6 +49,38 @@ namespace FriRaLand {
                 return false;
             }
         }
+        public string Sell(RakumaItem item) {
+            try {
+                Dictionary<string, string> param = new Dictionary<string, string>();
+                //カテゴリ決定
+                int category_id = -1;
+                foreach (var id in item.categoryId) if (id != -1) category_id = id;
+                param.Add("brand_id", item.brandId.ToString());
+                param.Add("category_id", category_id.ToString());
+                param.Add("condition_type", item.conditionType.ToString());
+                param.Add("delivery_method", item.deliveryMethod.ToString());
+                param.Add("delivery_term", item.deliveryTerm.ToString());
+                param.Add("description_text", item.descriptionText);
+                param.Add("device_type", "1");
+                param.Add("postage_type", "1");
+                param.Add("prefecture_code", item.prefectureCode.ToString());
+                param.Add("product_name", item.productName);
+                param.Add("selling_price", item.sellingPrice.ToString());
+                List<string> imagePathList = new List<string>();
+                foreach (var path in item.imagepaths) if (string.IsNullOrEmpty(path) == false) imagePathList.Add(path);
+                string rst = postMultipartRakuma("https://api.rakuma.rakuten.co.jp/selling-api/rest/product/register", param, imagePathList.ToArray());
+                dynamic resjson = DynamicJson.Parse(rst);
+                string new_access_token = resjson.accessToken;
+                string itemid = null;
+                if (resjson.success == "出品しました") {
+                    itemid = resjson.productId;
+                }
+                return itemid;
+            }catch (Exception ex){
+                Log.Logger.Error("ラクマへの出品失敗: " + ex.Message);
+                return null;
+            }
+        }
         //FrilAPIをPOSTでたたく
         private RakumaRawResponse postRakumaAPI(string url, Dictionary<string, string> param, string user_agent) {
             RakumaRawResponse res = new RakumaRawResponse();
