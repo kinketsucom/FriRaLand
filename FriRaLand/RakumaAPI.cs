@@ -45,12 +45,22 @@ namespace FriRaLand {
                 this.account.rakuma_access_token = resjson.access_token;
                 this.account.expirationDate = DateTime.Now.AddDays(90.0);
                 Log.Logger.Info("ラクマログイン成功");
+                this.account = getProfile(account);
                 return true;
             }
             catch (Exception e) {
                 Log.Logger.Info("ラクマログイン失敗");
                 return false;
             }
+        }
+        private Common.Account getProfile(Common.Account account) {
+            Dictionary<string,string> param = new Dictionary<string,string>();
+            param.Add("device_type", "1");
+            RakumaRawResponse res = postRakumaAPI("https://api.rakuma.rakuten.co.jp/profile-api/rest/user/exist", param, RAKUMA_USER_AGENT);
+            var json = DynamicJson.Parse(res.response);
+            account.nickname = json.userInfo.userNickname;
+            account.userId = json.userInfo.userId;
+            return account;
         }
         public string Sell(RakumaItem item) {
             try {
@@ -106,6 +116,10 @@ namespace FriRaLand {
                 byte[] bytes = Encoding.ASCII.GetBytes(text);
                 HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
                 req.UserAgent = user_agent;
+                if (string.IsNullOrEmpty(this.account.rakuma_access_token) == false) {
+                    req.Headers.Set("access_token", this.account.rakuma_access_token);
+                }
+                //http://api.fril.jp/api/v2/users?auth_token=6QHEK63vUL8DHiHtWgmK 
                 req.Method = "POST";
                 //リクエストヘッダを付加
                 req.ContentType = "application/x-www-form-urlencoded; charset=utf-8";

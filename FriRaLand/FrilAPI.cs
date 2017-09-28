@@ -25,6 +25,9 @@ namespace FriRaLand {
             this.account.email = email;
             this.account.password = password;
         }
+        public FrilAPI(Common.Account account) {
+            this.account = account;
+        }
         //成功: itemID 失敗: null
         public string Sell(FrilItem item) {
             try {
@@ -84,12 +87,96 @@ namespace FriRaLand {
                 dynamic resjson = DynamicJson.Parse(rawres.response);
                 this.account.fril_auth_token = resjson.auth_token;
                 this.account.expirationDate = DateTime.Now.AddDays(90.0);
+                this.account = getProfile(account);
                 Log.Logger.Info("フリルログイン成功");
                 return true;
             }
             catch (Exception e) {
                 Log.Logger.Info("フリルログイン失敗");
                 return false;
+            }
+        }
+        private Common.Account getProfile(Common.Account account) {
+            Dictionary<string, string> param = new Dictionary<string, string>();
+            param.Add("auth_token", account.fril_auth_token);
+            FrilRawResponse res = getFrilAPI("http://api.fril.jp/api/v2/users", param);
+            var json = DynamicJson.Parse(res.response);
+            account.nickname = json.user.screen_name;
+            account.userId = ((long)json.user.id).ToString();
+            return account;
+        }
+        //FrilAPIをGETでたたく
+        private FrilRawResponse getFrilAPI(string url, Dictionary<string, string> param) {
+            System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+            //ストップウォッチを開始する
+            sw.Start();
+            FrilRawResponse res = new FrilRawResponse();
+            try {
+                //url = Uri.EscapeUriString(url);//日本語などを％エンコードする
+                //パラメータをURLに付加 ?param1=val1&param2=val2...
+                url += "?";
+                List<string> paramstr = new List<string>();
+                foreach (KeyValuePair<string, string> p in param) {
+                    string k = Uri.EscapeUriString(p.Key);
+                    string v = Uri.EscapeUriString(p.Value);
+                    paramstr.Add(k + "=" + v);
+                }
+                url += string.Join("&", paramstr);
+                //HttpWebRequestの作成
+                HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
+                req.UserAgent = FrilAPI.USER_AGENT;
+                req.Method = "GET";
+                //プロキシの設定
+                if (string.IsNullOrEmpty(this.proxy) == false) {
+                    System.Net.WebProxy proxy = new System.Net.WebProxy(this.proxy);
+                    req.Proxy = proxy;
+                }
+                //結果取得
+                string content = "";
+                var task = Task.Factory.StartNew(() => executeGetRequest(req));
+                task.Wait(10000);
+                if (task.IsCompleted)
+                    content = task.Result;
+                else
+                    throw new Exception("Timed out");
+                if (string.IsNullOrEmpty(content)) throw new Exception("webrequest error");
+                res.error = false;
+                res.response = content;
+                Log.Logger.Info("FrilGETリクエスト成功");
+                return res;
+            }
+            catch (Exception e) {
+                Log.Logger.Error("FrilGETリクエスト失敗");
+                return res;
+            }
+        }
+        private string executeGetRequest(HttpWebRequest req) {
+            try {
+                HttpWebResponse webres = (HttpWebResponse)req.GetResponse();
+                Stream s = webres.GetResponseStream();
+                StreamReader sr = new StreamReader(s);
+                string content = sr.ReadToEnd();
+                return content;
+            }
+            catch {
+                return "";
+            }
+        }
+        private string executePostRequest(HttpWebRequest req, byte[] bytes) {
+            try {
+                using (Stream requestStream = req.GetRequestStream()) {
+                    requestStream.Write(bytes, 0, bytes.Length);
+                }
+                //結果取得
+                string result = "";
+                using (Stream responseStream = req.GetResponse().GetResponseStream()) {
+                    using (StreamReader streamReader = new StreamReader(responseStream, Encoding.GetEncoding("UTF-8"))) {
+                        return streamReader.ReadToEnd();
+                    }
+                }
+            }
+            catch {
+                return "";
             }
         }
         //FrilAPIをPOSTでたたく
