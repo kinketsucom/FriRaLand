@@ -119,6 +119,10 @@ namespace FriRaLand {
                 //HttpWebRequestの作成
                 HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
                 req.UserAgent = user_agent;
+                req.CookieContainer = this.cc;
+                if (string.IsNullOrEmpty(this.account.rakuma_access_token) == false) {
+                    req.Headers.Set("access_token", this.account.rakuma_access_token);
+                }
                 req.Method = "GET";
                 //プロキシの設定
                 if (string.IsNullOrEmpty(this.proxy) == false) {
@@ -173,6 +177,7 @@ namespace FriRaLand {
                 byte[] bytes = Encoding.ASCII.GetBytes(text);
                 HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
                 req.UserAgent = user_agent;
+                req.CookieContainer = this.cc;
                 if (string.IsNullOrEmpty(this.account.rakuma_access_token) == false) {
                     req.Headers.Set("access_token", this.account.rakuma_access_token);
                 }
@@ -246,6 +251,7 @@ namespace FriRaLand {
             }
             httpWebRequest.Method = "POST";
             httpWebRequest.ContentType = "multipart/form-data; boundary=" + text;
+            httpWebRequest.CookieContainer = this.cc;
             string text2 = "";
             foreach (KeyValuePair<string, string> current in param) {
                 text2 = string.Concat(new string[]
