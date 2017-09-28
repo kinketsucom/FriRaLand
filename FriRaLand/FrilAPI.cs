@@ -10,7 +10,6 @@ using System.IO;
 namespace FriRaLand {
     class FrilAPI {
         private const string USER_AGENT = "Mozilla/5.0 (iPad; COU OS 10_3_2 like Mac OS X) AppleWebKit/603.2.4 (KHTML, like Gecko) Mobile/14F89 Fril/6.7.1";
-        private string cookie_fril_session;
         private string proxy;
 
         //GET,POSTのRequestのResponse
@@ -223,17 +222,13 @@ namespace FriRaLand {
                 if (string.IsNullOrEmpty(content)) throw new Exception("webrequest error");
                 res.error = false;
                 res.response = content;
-                //クッキー更新
-                foreach(Cookie c in req.CookieContainer.GetCookies(new Uri(url))){
-                    if(c.Name.ToString() == "_fril_session") this.cookie_fril_session = c.Value.ToString();
-                }
-                //Log.//Logger.Info("MercariPOSTリクエスト成功");
+                Log.Logger.Info("FrilPOSTリクエスト成功");
                 req.Abort();
                 return res;
             }
             catch (Exception e) {
                 return res;
-                //Log.//Logger.Error("MercariPOSTリクエスト成功");
+                Log.Logger.Error("FrilPOSTリクエスト成功");
             }
         }
         private string executePostRequest(ref HttpWebRequest req, byte[] bytes) {
