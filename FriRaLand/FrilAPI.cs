@@ -17,18 +17,13 @@ namespace FriRaLand {
             public bool error = true;
             public string response = "";
         }
-        public class Account {
-            public Account(string email, string password) {
-                this.email = email;
-                this.password = password;
-            }
-            public string email;
-            public string password;
-            public string auth_token;
-        }
-        public Account account;
+        
+        public Common.Account account;
         public FrilAPI(string email, string password) {
-            this.account = new Account(email, password);
+            this.account = new Common.Account();
+            this.account.kind = Common.Account.Fril_Account;
+            this.account.email = email;
+            this.account.password = password;
         }
         //成功: itemID 失敗: null
         public string Sell(FrilItem item) {

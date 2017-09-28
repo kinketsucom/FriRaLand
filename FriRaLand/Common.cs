@@ -9,6 +9,14 @@ using System.Threading.Tasks;
 
 namespace FriRaLand {
     class Common {
+        public class Account {
+            public static const int Fril_Account = 0;
+            public static const int Rakuma_Account = 1;
+            public int kind;
+            public string email;
+            public string password;
+            public string auth_token;
+        }
         public static string getExhibitionImageFromPath(string path) {
             try {
                 //imgフォルダがなかったら作成
