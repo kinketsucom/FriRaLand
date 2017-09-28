@@ -25,6 +25,9 @@ namespace FriRaLand {
             this.account.email = email;
             this.account.password = password;
         }
+        public RakumaAPI(Common.Account account) {
+            this.account = account;
+        }
         public bool tryRakumaLogin() {
             /*revert,android_id,device_id,app_generated_idなどのパラメタはなくてもOKなので送らない*/
             Dictionary<string, string> param = new Dictionary<string, string>();
@@ -54,7 +57,12 @@ namespace FriRaLand {
                 Dictionary<string, string> param = new Dictionary<string, string>();
                 //カテゴリ決定
                 int category_id = -1;
-                foreach (var id in item.categoryId) if (id != -1) category_id = id;
+                foreach (var id in item.categoryId) {
+                    if (id != -1) {
+                        category_id = id;
+                        break;
+                    }
+                }
                 param.Add("brand_id", item.brandId.ToString());
                 param.Add("category_id", category_id.ToString());
                 param.Add("condition_type", item.conditionType.ToString());
