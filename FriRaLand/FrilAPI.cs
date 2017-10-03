@@ -101,9 +101,23 @@ namespace FriRaLand {
             param.Add("auth_token", account.fril_auth_token);
             FrilRawResponse res = getFrilAPI("http://api.fril.jp/api/v2/users", param);
             var json = DynamicJson.Parse(res.response);
-            account.nickname = json.user.screen_name;
+            account.nickname = json.user.screen_name;   
             account.userId = ((long)json.user.id).ToString();
             return account;
+        }
+        public FrilItem getItemDetailInfo(string item_id) {
+            Dictionary<string, string> param = new Dictionary<string, string>();
+            param.Add("auth_token", this.account.fril_auth_token);
+            param.Add("item_id", item_id);
+            string url = "http://api.fril.jp/api/v3/items/show?";
+            FrilRawResponse rawres = getFrilAPI(url, param);
+            if (rawres.error) {
+                Log.Logger.Error(string.Format("フリル商品詳細情報取得失敗 id:{0} : {1}", item_id));
+                return null;
+            }
+            dynamic resjson = DynamicJson.Parse(rawres.response);
+            FrilItem item = new FrilItem(resjson.item);
+            return item;
         }
         //ユーザが出品している商品をすべて取得
         public List<FrilItem> getSellingItem(string userId) {

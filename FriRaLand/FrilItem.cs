@@ -33,36 +33,41 @@ namespace FriRaLand {
 
         }
         public FrilItem(dynamic json) {
-            //info
-            var info = json.info;
-            this.item_id = ((long)info.item_id).ToString();
-            this.item_name = info.item_name;
-            this.detail = info.detail;
-            this.s_price = (int)info.s_price;
-            this.status = (int)info.status;
-            this.t_status = (int)info.t_status;
-            this.carriage = (int)info.carriage;
-            this.d_method = (int)info.d_method;
-            this.d_date = (int)info.d_date;
-            this.d_area = (int)info.d_area;
-            this.created_at = DateTime.Parse((string)info.created_at);
-            this.user_id = ((long)info.user_id).ToString();
-            this.screen_name = info.screen_name;
-            this.category_id = (int)info.category_id;
-            this.category_p_id = (int)info.category_p_id;
-            this.size_id = (int)info.size_id;
-            this.size_name = info.size_name;
-            this.brand_id = (info.brand_id == null) ? -1 : (int)info.brand_id;
-            this.i_brand_id = (info.i_brand_id == null) ? -1 : (int)info.i_brand_id;
-            //image
-            for (int i = 0; i < 4; i++) imageurls[i] = "";
-            int num = 0;
-            foreach (var image in json.imgs) {
-                imageurls[num++] = image.file_name;
+            try {
+                //info
+                var info = json.info;
+                this.item_id = ((long)info.item_id).ToString();
+                this.item_name = info.item_name;
+                this.detail = info.detail;
+                this.s_price = (int)info.s_price;
+                this.status = (int)info.status;
+                this.t_status = (int)info.t_status;
+                this.carriage = (int)info.carriage;
+                this.d_method = (int)info.d_method;
+                this.d_date = (int)info.d_date;
+                this.d_area = (int)info.d_area;
+                this.created_at = DateTime.Parse((string)info.created_at);
+                this.user_id = ((long)info.user_id).ToString();
+                this.screen_name = info.screen_name;
+                this.category_id = (int)info.category_id;
+                this.category_p_id = (int)info.category_p_id;
+                this.size_id = (int)info.size_id;
+                this.size_name = info.size_name;
+                this.brand_id = (info.brand_id == null) ? -1 : (int)info.brand_id;
+                this.i_brand_id = (info.i_brand_id == null) ? -1 : (int)info.i_brand_id;
+                //image
+                for (int i = 0; i < 4; i++) imageurls[i] = "";
+                int num = 0;
+                foreach (var image in json.imgs) {
+                    imageurls[num++] = image.file_name;
+                }
+                //comment,like
+                this.commens_count = (int)json.comments_count;
+                this.likes_count = (int)json.likes_count;
             }
-            //comment,like
-            this.commens_count = (int)json.comments_count;
-            this.likes_count = (int)json.likes_count;
+            catch (Exception ex) {
+                Log.Logger.Error("フリル商品jsonパース失敗" + ex.Message);
+            }
         }
     }
 }
