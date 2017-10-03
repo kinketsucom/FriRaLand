@@ -12,6 +12,7 @@ namespace FriRaLand {
         private string RAKUMA_USER_AGENT = "RakumaApp/iOS/1.7.4/iPhone8,1/OS10.3.2";
         private string RAKUMA_LOGIN_USER_AGENT = "Rakuma/1.7.4 CFNetwork/811.5.4 Darwin/16.6.0";
         private string RAKUTEN_USER_AGENT = "Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_2 like Mac OS X) AppleWebKit/603.2.4 (KHTML, like Gecko) Mobile/14F89 RakumaApp/iOS/1.7.5.1/iPhone8,1/OS10.3.2";
+        public const string imageURLHead = "https://rakuma.r10s.jp/d/strg/ctrl/25/";
         private string proxy;
         private class RakumaRawResponse {
             public bool error = true;
@@ -98,8 +99,49 @@ namespace FriRaLand {
                 return null;
             }
         }
+        //自分の出品中商品を取得する
+        public List<RakumaItem> getSellingItem() {
+            List<RakumaItem> rst = new List<RakumaItem>();
+            int nowpage = 1;
+            int pagecnt = 1;
+            do {
+                Dictionary<string, string> param = new Dictionary<string, string>();
+                param.Add("selling_status", "0");
+                param.Add("page", nowpage.ToString());
+                string url = "https://api.rakuma.rakuten.co.jp/selling-api/rest/product/list";
+                RakumaRawResponse rawres = getRakumaAPI(url, param, RAKUMA_USER_AGENT);
+                if (rawres.error) {
+                    Log.Logger.Error("ラクマ出品中商品の取得に失敗: UserID: " + this.account.userId);
+                    return rst;
+                }
+                dynamic resjson = DynamicJson.Parse(rawres.response);
+                foreach (dynamic data in resjson.productList) {
+                    RakumaItem item = new RakumaItem();
+                    item.productId = data.productId;
+                    item.productName = data.productName;
+                    item.imageurls[0] = RakumaAPI.imageURLHead + data.productImage;
+                    item.likeCount = (int)data.likeCount;
+                    item.commentCount = (int)data.commentCount;
+                    rst.Add(item);
+                }
+            } while (nowpage < pagecnt);
+            return rst;
+        }
+        public RakumaItem getItemDetailInfo(string productId) {
+            string url = "https://api.rakuma.rakuten.co.jp/search-api/rest/product/get";
+            Dictionary<string, string> param = new Dictionary<string,string>();
+            param.Add("product_id", productId);
+            RakumaRawResponse rawres = getRakumaAPI(url, param, RAKUMA_USER_AGENT);
+            if (rawres.error) {
+                Log.Logger.Error("ラクマ商品詳細情報取得失敗");
+                return null;
+            }
+            dynamic resjson = DynamicJson.Parse(rawres.response);
+            RakumaItem res = new RakumaItem(resjson);
+            return res;
+        }
         //RakumaAPIをGETでたたく
-        private RakumaRawResponse getFrilAPI(string url, Dictionary<string, string> param, string user_agent) {
+        private RakumaRawResponse getRakumaAPI(string url, Dictionary<string, string> param, string user_agent) {
             System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
             //ストップウォッチを開始する
             sw.Start();
