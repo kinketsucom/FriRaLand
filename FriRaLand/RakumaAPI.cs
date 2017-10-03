@@ -12,7 +12,6 @@ namespace FriRaLand {
         private string RAKUMA_USER_AGENT = "RakumaApp/iOS/1.7.4/iPhone8,1/OS10.3.2";
         private string RAKUMA_LOGIN_USER_AGENT = "Rakuma/1.7.4 CFNetwork/811.5.4 Darwin/16.6.0";
         private string RAKUTEN_USER_AGENT = "Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_2 like Mac OS X) AppleWebKit/603.2.4 (KHTML, like Gecko) Mobile/14F89 RakumaApp/iOS/1.7.5.1/iPhone8,1/OS10.3.2";
-        private string cookie_rakuma_session;
         private string proxy;
         private class RakumaRawResponse {
             public bool error = true;
@@ -187,9 +186,7 @@ namespace FriRaLand {
                 req.Accept = "application/json";
                 req.ContentLength = (long)bytes.Length;
                 //クッキーコンテナの追加
-                req.CookieContainer = this.cc;// new CookieContainer();
-                //クッキーの追加
-                //if (!string.IsNullOrEmpty(this.cookie_fril_session)) req.CookieContainer.Add(new Uri(url), new Cookie("_fril_session", this.cookie_fril_session));
+                req.CookieContainer = this.cc;
                 //プロキシの設定
                 if (string.IsNullOrEmpty(this.proxy) == false) {
                     System.Net.WebProxy proxy = new System.Net.WebProxy(this.proxy);
@@ -208,17 +205,13 @@ namespace FriRaLand {
                 if (string.IsNullOrEmpty(content)) throw new Exception("webrequest error");
                 res.error = false;
                 res.response = content;
-                //クッキー更新
-                foreach (Cookie c in req.CookieContainer.GetCookies(new Uri(url))) {
-                    //if (c.Name.ToString() == "_fril_session") this.cookie_fril_session = c.Value.ToString();
-                }
-                //Log.//Logger.Info("MercariPOSTリクエスト成功");
+                Log.Logger.Info("RakumaPOSTリクエスト成功");
                 req.Abort();
                 return res;
             }
             catch (Exception e) {
-                return res;
-                //Log.//Logger.Error("MercariPOSTリクエスト成功");
+                return res; 
+                Log.Logger.Error("RakumaPOSTリクエスト失敗");
             }
         }
         private string executePostRequest(ref HttpWebRequest req, byte[] bytes) {

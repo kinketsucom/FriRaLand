@@ -237,7 +237,6 @@ namespace FriRaLand {
                     requestStream.Write(bytes, 0, bytes.Length);
                 }
                 //結果取得
-                string result = "";
                 using (Stream responseStream = req.GetResponse().GetResponseStream()) {
                     using (StreamReader streamReader = new StreamReader(responseStream, Encoding.GetEncoding("UTF-8"))) {
                         return streamReader.ReadToEnd();
