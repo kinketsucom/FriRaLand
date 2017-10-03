@@ -105,6 +105,47 @@ namespace FriRaLand {
             account.userId = ((long)json.user.id).ToString();
             return account;
         }
+        //ユーザが出品している商品をすべて取得
+        public List<FrilItem> getSellingItem(string userId) {
+            List<FrilItem> rst = new List<FrilItem>();
+            bool has_next = true;
+            string max_id = "0"; //二回目以降で「この商品IDより後」の商品を取得する
+            do {
+                Dictionary<string, string> param = new Dictionary<string, string>();
+
+                param.Add("include_sold_out", "0");
+                param.Add("limit", "60");
+                param.Add("max_id", max_id);
+                param.Add("user_id", userId);
+                string url = "https://api.fril.jp/api/v3/items/list";
+                FrilRawResponse rawres = getFrilAPI(url, param);
+                if (rawres.error) {
+                    Log.Logger.Error("フリル出品中商品の取得に失敗: UserID: " + this.account.userId);
+                    return rst;
+                }
+                dynamic resjson = DynamicJson.Parse(rawres.response);
+                foreach (dynamic data in resjson.items) {
+                    FrilItem item = new FrilItem();
+                    item.item_id = ((long)data.item_id).ToString();
+                    item.imageurls[0] = data.img_url;
+                    item.item_name = data.item_name;
+                    item.detail = data.item_detail;
+                    item.s_price = (int)data.price;
+                    item.t_status = (int)data.t_status;
+                    item.user_id = ((long)data.user_id).ToString();
+                    item.brand_id = ((data.brand_id == null) ? -1 : (int)item.brand_id);
+                    item.i_brand_id = ((data.i_brand_id == null) ? -1 : (int)item.i_brand_id);
+                    item.screen_name = data.screen_name;
+                    item.created_at = DateTime.Parse(data.created_at);
+                    item.likes_count = (int)data.like_count;
+                    item.commens_count = (int)data.comment_count;
+                    rst.Add(item);
+                    max_id = item.item_id;
+                }
+                has_next = (bool)resjson.paging.has_next;
+            } while (has_next);
+            return rst;
+        }
         //FrilAPIをGETでたたく
         private FrilRawResponse getFrilAPI(string url, Dictionary<string, string> param) {
             System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
