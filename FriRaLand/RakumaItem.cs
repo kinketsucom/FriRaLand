@@ -39,43 +39,48 @@ namespace FriRaLand {
 
         }
         public RakumaItem(dynamic json) {
-            var info = json.productInfo;
-            this.productId = info.profuctId;
-            this.sellerId = info.sellerId;
-            this.sellerNickname = info.sellerNickname;
-            this.sellerEvaluationTotal = (int)info.sellerEvaluationTotal;
-            this.sellerSellingCount = (int)info.sellerSellingCount;
-            this.purchaserId = info.purchaserId;
-            this.productName = info.productName;
-            this.sellingPrice = (int)info.sellingPrice;
-            this.systemFee = (int)info.systemFee;
-            this.sellingStatus = (int)info.sellingStatus;
-            this.descriptionText = info.descriptionText;
-            this.brandId = (int)info.brandId;
-            this.brandName = info.brandName;
-            this.sizeId = (int)info.sizeId;
-            this.sizeTitle = info.sizeTitle;
-            this.conditionType = (int)info.conditionType;
-            this.postageType = (int)info.postageType;
-            this.deliveryMethod = (int)info.deliveryMethod;
-            this.deliveryTerm = (int)info.deliveryTerm;
-            this.prefectureCode = (int)info.prefectureCode;
-            this.likeCount = (int)info.likeCount;
-            this.commentCount = (int)info.commentCount;
-            this.updateTime = Common.getDateFromUnixTimeStamp((long)info.updateTime);
-            this.ownLikeFlag = (int)info.ownLikeFlag;
+            try {
+                var info = json.productInfo;
+                this.productId = info.productId;
+                this.sellerId = info.sellerId;
+                this.sellerNickname = info.sellerNickname;
+                this.sellerEvaluationTotal = (int)info.sellerEvaluationTotal;
+                this.sellerSellingCount = (int)info.sellerSellingCount;
+                this.purchaserId = info.purchaserId;
+                this.productName = info.productName;
+                this.sellingPrice = (int)info.sellingPrice;
+                this.systemFee = (int)info.systemFee;
+                this.sellingStatus = (int)info.sellingStatus;
+                this.descriptionText = info.descriptionText;
+                this.brandId = (int)info.brandId;
+                this.brandName = info.brandName;
+                this.sizeId = (int)info.sizeId;
+                this.sizeTitle = info.sizeTitle;
+                this.conditionType = (int)info.conditionType;
+                this.postageType = (int)info.postageType;
+                this.deliveryMethod = (int)info.deliveryMethod;
+                this.deliveryTerm = (int)info.deliveryTerm;
+                this.prefectureCode = (int)info.prefectureCode;
+                this.likeCount = (int)info.likeCount;
+                this.commentCount = (int)info.commentCount;
+                this.updateTime = Common.getDateFromUnixTimeStamp((long)info.updateTime / 1000);
+                this.ownLikeFlag = (int)info.ownLikeFlag;
 
-            var categoryList = json.categoryList;
-            for (int i = 0; i < 3; i++) this.categoryId[i] = -1;
-            int num = 0;
-            foreach (var category in categoryList) {
-                this.categoryId[num++] = (int)category.categoryId;
+                var categoryList = info.categoryList;
+                for (int i = 0; i < 3; i++) this.categoryId[i] = -1;
+                int num = 0;
+                foreach (var category in categoryList) {
+                    this.categoryId[num++] = (int)category.categoryId;
+                }
+                this.registartionTime = Common.getDateFromUnixTimeStamp((long)info.registrationTime / 1000);
+                for (int i = 0; i < 4; i++) this.imageurls[i] = "";
+                num = 0;
+                foreach (var imageinfo in info.imageList) {
+                    this.imageurls[num++] = RakumaAPI.imageURLHead + imageinfo.image;
+                }
             }
-            this.registartionTime = Common.getDateFromUnixTimeStamp((long)info.registrationTime);
-            for (int i = 0; i < 4; i++) this.imageurls[i] = "";
-            num = 0;
-            foreach (var imageinfo in json.imageList) {
-                this.imageurls[num++] = imageinfo.image;
+            catch (Exception ex) {
+                Log.Logger.Error("ラクマ商品のjsonパース失敗: " + ex.Message);
             }
         }
     }
