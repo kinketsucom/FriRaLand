@@ -28,6 +28,8 @@ namespace FriRaLand {
         public FrilAPI(Common.Account account) {
             this.account = account;
         }
+       
+
         //成功: itemID 失敗: null
         public string Sell(FrilItem item) {
             try {
@@ -88,6 +90,7 @@ namespace FriRaLand {
                 this.account.fril_auth_token = resjson.auth_token;
                 this.account.expirationDate = DateTime.Now.AddDays(90.0);
                 this.account = getProfile(account);
+                Console.WriteLine("フリルログイン成功");
                 Log.Logger.Info("フリルログイン成功");
                 return true;
             }
@@ -105,20 +108,53 @@ namespace FriRaLand {
             account.userId = ((long)json.user.id).ToString();
             return account;
         }
-        public FrilItem getItemDetailInfo(string item_id) {
+
+
+        public FrilItem getItemDetailInfo(string item_id)
+        {
             Dictionary<string, string> param = new Dictionary<string, string>();
             param.Add("auth_token", this.account.fril_auth_token);
             param.Add("item_id", item_id);
-            string url = "http://api.fril.jp/api/v3/items/show?";
+            string url = "http://api.fril.jp/api/v3/items/show";
             FrilRawResponse rawres = getFrilAPI(url, param);
-            if (rawres.error) {
-                Log.Logger.Error(string.Format("フリル商品詳細情報取得失敗 id:{0} : {1}", item_id));
+            if (rawres.error)
+            {
+                Log.Logger.Error(string.Format("フリル商品詳細情報取得失敗 id:{0}", item_id));
                 return null;
             }
             dynamic resjson = DynamicJson.Parse(rawres.response);
             FrilItem item = new FrilItem(resjson.item);
             return item;
         }
+
+
+        //ブラウザの商品ページから商品IDを得る
+        //成功:商品ID 失敗null
+        public string getItemIDFromBrowserItemURL(string browserItemURL)
+        {
+            string urlHeader = "https://item.fril.jp/";
+            try
+            {
+                if (browserItemURL.IndexOf(urlHeader) < 0)
+                {
+                    throw new Exception();
+                }
+                string hashstr = browserItemURL.Substring(urlHeader.Length, browserItemURL.Length - urlHeader.Length);
+                Dictionary<string, string> param = new Dictionary<string, string>();
+                param.Add("hash", hashstr);
+                string url = "http://api.fril.jp/api/v3/items/show/open";
+                FrilRawResponse rawres = getFrilAPI(url, param);
+                if (rawres.error) throw new Exception();
+                dynamic resjson = DynamicJson.Parse(rawres.response);
+                return ((long)resjson.item.info.item_id).ToString();
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Error("商品ページURLから商品ID取得に失敗:" + browserItemURL);
+                return null;
+            }
+        }
+
         //ユーザが出品している商品をすべて取得
         public List<FrilItem> getSellingItem(string userId) {
             List<FrilItem> rst = new List<FrilItem>();

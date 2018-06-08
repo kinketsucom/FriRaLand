@@ -14,8 +14,11 @@ namespace FriRaLand {
             InitializeComponent();
         }
 
+        public static string mail = "";
+        public static string pass = "";
+
         private void button1_Click(object sender, EventArgs e) {
-            RakumaAPI api = new RakumaAPI("RakumaEmail", "RakumaPassword");
+            RakumaAPI api = new RakumaAPI(mail, pass);
             api.tryRakumaLogin();
             RakumaItem item = new RakumaItem();
             item.brandId = 1573;
@@ -36,11 +39,17 @@ namespace FriRaLand {
         }
 
         private void button2_Click(object sender, EventArgs e) {
-            FrilAPI api = new FrilAPI("FrilEmail", "FrilPassword");
+            FrilAPI api = new FrilAPI(mail,pass);
             api.tryFrilLogin();
             //api.Sell();
-            var item = api.getItemDetailInfo("101773596");
-            Console.WriteLine(item);
+            var itemid = api.getItemIDFromBrowserItemURL("https://item.fril.jp/63c796255a32a4b40bf96ceb6a0f9aa8");
+            var item = api.getItemDetailInfo(itemid);
+            //Console.WriteLine(item.brand_id);
+            //Console.WriteLine(item.detail);
+
         }
+
+
+
     }
 }

@@ -45,6 +45,7 @@ namespace FriRaLand {
                 this.account.rakuma_access_token = resjson.access_token;
                 this.account.expirationDate = DateTime.Now.AddDays(90.0);
                 Log.Logger.Info("ラクマログイン成功");
+                Console.WriteLine("ラクマログイン成功");
                 this.account = getProfile(account);
                 return true;
             }
