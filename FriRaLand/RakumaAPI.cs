@@ -148,13 +148,13 @@ namespace FriRaLand {
             sw.Start();
             RakumaRawResponse res = new RakumaRawResponse();
             try {
-                //url = Uri.EscapeUriString(url);//日本語などを％エンコードする
+                //url = Uri.EscapeDataString(url);//日本語などを％エンコードする
                 //パラメータをURLに付加 ?param1=val1&param2=val2...
                 url += "?";
                 List<string> paramstr = new List<string>();
                 foreach (KeyValuePair<string, string> p in param) {
-                    string k = Uri.EscapeUriString(p.Key);
-                    string v = Uri.EscapeUriString(p.Value);
+                    string k = Uri.EscapeDataString(p.Key);
+                    string v = Uri.EscapeDataString(p.Value);
                     paramstr.Add(k + "=" + v);
                 }
                 url += string.Join("&", paramstr);
@@ -210,8 +210,8 @@ namespace FriRaLand {
                 List<string> paramstr = new List<string>();
                 int num = 0;
                 foreach (KeyValuePair<string, string> p in param) {
-                    string k = Uri.EscapeUriString(p.Key);
-                    string v = Uri.EscapeUriString(p.Value);
+                    string k = Uri.EscapeDataString(p.Key);
+                    string v = Uri.EscapeDataString(p.Value);
                     if (num != 0) text += "&";
                     text = text + (k + "=" + v);
                     num++;
