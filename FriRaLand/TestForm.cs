@@ -14,8 +14,8 @@ namespace FriRaLand {
             InitializeComponent();
         }
 
-        public static string mail = "";
-        public static string pass = "";
+        public static string mail = "ishiyuka0824@gmail.com";
+        public static string pass = "kirinremon";
 
         private void button1_Click(object sender, EventArgs e) {
             RakumaAPI api = new RakumaAPI(mail, pass);

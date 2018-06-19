@@ -144,6 +144,7 @@ namespace FriRaLand {
                 this.Fril_CategoryComboBoxLevel4.SelectedIndex = -1;
                 this.Fril_CategoryComboBoxLevel2.Text = "選択してください";
                 foreach (var c in FriRaCommon.fril_categoryDictionary[nowfril_selectedCategory.id]) {
+                    Console.WriteLine(c.id.ToString() + ":" + c.name.ToString());
                     this.Fril_CategoryComboBoxLevel2.Items.Add(c);
                 }
             }
@@ -337,97 +338,91 @@ namespace FriRaLand {
             //送料負担者
             if (this.Fril_ShippingPayerComboBox.SelectedItem != null) {
                 KeyValuePair<string, string> carriage = (KeyValuePair<string, string>)this.Fril_ShippingPayerComboBox.SelectedItem;
-                Console.WriteLine("carriage:" + carriage.Value);
+                //Console.WriteLine("carriage:" + carriage.Value);
                 item_data.carriage = int.Parse(carriage.Value);
             }
 
             //カテゴリレベル２
             if (this.Fril_CategoryComboBoxLevel2.SelectedItem != null) {
                 FriRaCommon.FrilCategory category2 = (FriRaCommon.FrilCategory)this.Fril_CategoryComboBoxLevel2.SelectedItem;
-                Console.WriteLine("カテゴリレベル２：" + category2.id);
-                item_data.category_id = category2.id;//FIXIT:idがカテゴリのものかわかってない。p_categoryidは全部0だったので
+                //Console.WriteLine("p_category：" + category2.id);
+                item_data.category_p_id = category2.id;//p_categoryはおそらくこれ
             }
             //カテゴリレベル３
             if (this.Fril_CategoryComboBoxLevel3.SelectedItem != null) {
                 FriRaCommon.FrilCategory category3 = (FriRaCommon.FrilCategory)this.Fril_CategoryComboBoxLevel3.SelectedItem;
-                Console.WriteLine("カテゴリレベル３：" + category3.id);
-                item_data.category_id = category3.id;//FIXIT:idがカテゴリのものかわかってない。p_categoryidは全部0だったので
+                //Console.WriteLine("カテゴリレベル３：" + category3.id);
+                item_data.category_id = category3.id;
             }
             //カテゴリレベル４
             if (this.Fril_CategoryComboBoxLevel4.SelectedItem != null) {
                 FriRaCommon.FrilCategory category4 = (FriRaCommon.FrilCategory)this.Fril_CategoryComboBoxLevel4.SelectedItem;
-                Console.WriteLine("カテゴリレベル４：" + category4.id);
-                item_data.category_id = category4.id;//FIXIT:idがカテゴリのものかわかってない。p_categoryidは全部0だったので
+                //Console.WriteLine("カテゴリレベル４：" + category4.id);
+                item_data.category_id = category4.id;
             }
             //配送元地域
             if (this.ShippingAreaComboBox.SelectedItem != null) {
                 KeyValuePair<string, string> area = (KeyValuePair<string, string>)this.ShippingAreaComboBox.SelectedItem;
-                Console.WriteLine("category_area:" + area.Value);
+               // Console.WriteLine("category_area:" + area.Value);
                 item_data.d_area = int.Parse(area.Value);
             }
             //配送日数
             if (this.ShippingDurationComboBox.SelectedItem != null) {
                 KeyValuePair<string, string> duration = (KeyValuePair<string, string>)this.ShippingDurationComboBox.SelectedItem;
-                Console.WriteLine("delivery_date:" + duration.Value);
+               // Console.WriteLine("delivery_date:" + duration.Value);
                 item_data.d_date = int.Parse(duration.Value);
             }
             //配送方法
             if (this.Fril_ShippingMethodComboBox.SelectedItem != null) {
                 KeyValuePair<string, string> method = (KeyValuePair<string, string>)this.Fril_ShippingMethodComboBox.SelectedItem;
-                Console.WriteLine("delivery_method:" + method.Value);
+                //Console.WriteLine("delivery_method:" + method.Value);
                 item_data.d_method = int.Parse(method.Value);
             }
             //商品詳細
             if (!string.IsNullOrEmpty(this.DescriptionTextBox.Text)) {
                 string detail = this.DescriptionTextBox.Text;
-                Console.WriteLine("detail:"+detail);
+                //Console.WriteLine("detail:"+detail);
                 item_data.detail = detail;
             }
             //item_id
-            Console.WriteLine("item_id:0");
-            //カテゴリレベル１
-            if (this.Fril_CategoryComboBoxLevel1.SelectedItem != null) {
-                FriRaCommon.FrilCategory category1 = (FriRaCommon.FrilCategory)this.Fril_CategoryComboBoxLevel1.SelectedItem;
-                Console.WriteLine("p_category：" + category1.id);
-                item_data.category_p_id = category1.id;//FIXIT:idがカテゴリのものかわかってない。p_categoryidは全部0だったので
-            }
+            //Console.WriteLine("item_id:0");
+            //カテゴリレベル１いらんきがする
+            //if (this.Fril_CategoryComboBoxLevel1.SelectedItem != null) {
+            //    FriRaCommon.FrilCategory category1 = (FriRaCommon.FrilCategory)this.Fril_CategoryComboBoxLevel1.SelectedItem;
+            //    Console.WriteLine("p_category：" + category1.id);
+            //    //item_data.category_p_id = category1.id;
+            //}
             //request_required
-            Console.WriteLine("request_required:0");
+            //Console.WriteLine("request_required:0");
             //商品料金
             if (!string.IsNullOrEmpty(this.PriceTextBox.Text)) {
                 int s_price = int.Parse(this.PriceTextBox.Text);
-                Console.WriteLine("sell_price:"+this.PriceTextBox.Text);
+                //Console.WriteLine("sell_price:"+this.PriceTextBox.Text);
                 item_data.s_price = s_price;
             }
             //サイズID,サイズ名
             if (this.Fril_SizeComboBox.SelectedItem != null) {
                 FriRaCommon.FrilSizeInfo size = (FriRaCommon.FrilSizeInfo)this.Fril_SizeComboBox.SelectedItem;
-                Console.WriteLine("size:"+size.id+"\nsize_name:"+size.name);
+                //Console.WriteLine("size:"+size.id+"\nsize_name:"+size.name);
                 item_data.size_id = size.id;
                 item_data.size_name = size.name;
             } else {
-                Console.WriteLine("とれてないよ");
+                item_data.size_id = 19999;
+                item_data.size_name = "なし";
+                //Console.WriteLine("size:" + item_data.size_id);
             }
             //商品状態
             if (this.Fril_ItemConditionComboBox.SelectedItem != null) {
                 KeyValuePair<string, string> status = (KeyValuePair<string, string>)this.Fril_ItemConditionComboBox.SelectedItem;
-                Console.WriteLine("status:" + status.Value);
+                //Console.WriteLine("status:" + status.Value);
                 item_data.status = int.Parse(status.Value);
             }
             //商品名前
             if (!string.IsNullOrEmpty(this.ItemNameTextBox.Text)) {
                 string name = this.ItemNameTextBox.Text;
-                Console.WriteLine("title:"+name);
+                //Console.WriteLine("title:"+name);
                 item_data.item_name = name;
             }
-
-
-
-
-
-
-
-
 
 
 

@@ -52,12 +52,13 @@ namespace FriRaLand {
                 param.Add("size_name", item.size_name);
                 param.Add("status", item.status.ToString());
                 param.Add("title", item.item_name);
-                param.Add("brand", item.brand_id.ToString()); 
+                //param.Add("brand", item.brand_id.ToString());
                 
-                
-                
-                
-               
+                //パラメータ表示
+                foreach(var val in param) {
+                    Console.WriteLine(val.Key + ":" + val.Value);
+                }
+
 
                 var rawres = postFrilAPI(url, param, cc);
                 if (rawres.error) throw new Exception("商品情報の送信に失敗");
@@ -302,9 +303,12 @@ namespace FriRaLand {
                 req.UserAgent = FrilAPI.USER_AGENT;
                 req.Method = "POST";
                 //リクエストヘッダを付加
+                req.Headers.Add("Accept-Encoding", "br, gzip, deflate");
                 req.ContentType = "application/x-www-form-urlencoded";
-                req.Accept = "application/json";
+                req.Accept = "*/*";
+                req.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
                 req.ContentLength = (long)bytes.Length;
+
                 //クッキーコンテナの追加
                 req.CookieContainer = cc;
                 // クッキー確認
