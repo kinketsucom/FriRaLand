@@ -91,9 +91,9 @@
             this.groupBox2.Controls.Add(this.Fril_CategoryComboBoxLevel4);
             this.groupBox2.Controls.Add(this.Fril_BrandComboBox);
             this.groupBox2.Location = new System.Drawing.Point(581, 10);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox2.Size = new System.Drawing.Size(251, 450);
             this.groupBox2.TabIndex = 142;
             this.groupBox2.TabStop = false;
@@ -103,7 +103,7 @@
             // 
             this.Fril_ShippingMethodComboBox.FormattingEnabled = true;
             this.Fril_ShippingMethodComboBox.Location = new System.Drawing.Point(20, 406);
-            this.Fril_ShippingMethodComboBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Fril_ShippingMethodComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.Fril_ShippingMethodComboBox.Name = "Fril_ShippingMethodComboBox";
             this.Fril_ShippingMethodComboBox.Size = new System.Drawing.Size(211, 23);
             this.Fril_ShippingMethodComboBox.TabIndex = 76;
@@ -165,7 +165,7 @@
             // 
             this.Fril_ItemConditionComboBox.FormattingEnabled = true;
             this.Fril_ItemConditionComboBox.Location = new System.Drawing.Point(20, 311);
-            this.Fril_ItemConditionComboBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Fril_ItemConditionComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.Fril_ItemConditionComboBox.Name = "Fril_ItemConditionComboBox";
             this.Fril_ItemConditionComboBox.Size = new System.Drawing.Size(211, 23);
             this.Fril_ItemConditionComboBox.TabIndex = 70;
@@ -176,7 +176,7 @@
             // 
             this.Fril_ShippingPayerComboBox.FormattingEnabled = true;
             this.Fril_ShippingPayerComboBox.Location = new System.Drawing.Point(20, 359);
-            this.Fril_ShippingPayerComboBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Fril_ShippingPayerComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.Fril_ShippingPayerComboBox.Name = "Fril_ShippingPayerComboBox";
             this.Fril_ShippingPayerComboBox.Size = new System.Drawing.Size(211, 23);
             this.Fril_ShippingPayerComboBox.TabIndex = 71;
@@ -189,7 +189,7 @@
             this.Fril_SizeComboBox.Enabled = false;
             this.Fril_SizeComboBox.FormattingEnabled = true;
             this.Fril_SizeComboBox.Location = new System.Drawing.Point(20, 207);
-            this.Fril_SizeComboBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Fril_SizeComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.Fril_SizeComboBox.Name = "Fril_SizeComboBox";
             this.Fril_SizeComboBox.Size = new System.Drawing.Size(212, 23);
             this.Fril_SizeComboBox.TabIndex = 74;
@@ -210,7 +210,7 @@
             // 
             this.Fril_CategoryComboBoxLevel1.FormattingEnabled = true;
             this.Fril_CategoryComboBoxLevel1.Location = new System.Drawing.Point(20, 46);
-            this.Fril_CategoryComboBoxLevel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Fril_CategoryComboBoxLevel1.Margin = new System.Windows.Forms.Padding(4);
             this.Fril_CategoryComboBoxLevel1.Name = "Fril_CategoryComboBoxLevel1";
             this.Fril_CategoryComboBoxLevel1.Size = new System.Drawing.Size(212, 23);
             this.Fril_CategoryComboBoxLevel1.TabIndex = 77;
@@ -222,7 +222,7 @@
             // 
             this.Fril_CategoryComboBoxLevel2.FormattingEnabled = true;
             this.Fril_CategoryComboBoxLevel2.Location = new System.Drawing.Point(20, 79);
-            this.Fril_CategoryComboBoxLevel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Fril_CategoryComboBoxLevel2.Margin = new System.Windows.Forms.Padding(4);
             this.Fril_CategoryComboBoxLevel2.Name = "Fril_CategoryComboBoxLevel2";
             this.Fril_CategoryComboBoxLevel2.Size = new System.Drawing.Size(212, 23);
             this.Fril_CategoryComboBoxLevel2.TabIndex = 78;
@@ -235,7 +235,7 @@
             // 
             this.Fril_CategoryComboBoxLevel3.FormattingEnabled = true;
             this.Fril_CategoryComboBoxLevel3.Location = new System.Drawing.Point(20, 111);
-            this.Fril_CategoryComboBoxLevel3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Fril_CategoryComboBoxLevel3.Margin = new System.Windows.Forms.Padding(4);
             this.Fril_CategoryComboBoxLevel3.Name = "Fril_CategoryComboBoxLevel3";
             this.Fril_CategoryComboBoxLevel3.Size = new System.Drawing.Size(212, 23);
             this.Fril_CategoryComboBoxLevel3.TabIndex = 79;
@@ -248,7 +248,7 @@
             // 
             this.Fril_CategoryComboBoxLevel4.FormattingEnabled = true;
             this.Fril_CategoryComboBoxLevel4.Location = new System.Drawing.Point(20, 144);
-            this.Fril_CategoryComboBoxLevel4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Fril_CategoryComboBoxLevel4.Margin = new System.Windows.Forms.Padding(4);
             this.Fril_CategoryComboBoxLevel4.Name = "Fril_CategoryComboBoxLevel4";
             this.Fril_CategoryComboBoxLevel4.Size = new System.Drawing.Size(212, 23);
             this.Fril_CategoryComboBoxLevel4.TabIndex = 80;
@@ -261,17 +261,18 @@
             // 
             this.Fril_BrandComboBox.FormattingEnabled = true;
             this.Fril_BrandComboBox.Location = new System.Drawing.Point(20, 254);
-            this.Fril_BrandComboBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Fril_BrandComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.Fril_BrandComboBox.Name = "Fril_BrandComboBox";
             this.Fril_BrandComboBox.Size = new System.Drawing.Size(212, 23);
             this.Fril_BrandComboBox.TabIndex = 81;
             this.Fril_BrandComboBox.Text = "選択してください";
+            this.Fril_BrandComboBox.Visible = false;
             this.Fril_BrandComboBox.Format += new System.Windows.Forms.ListControlConvertEventHandler(this.Fril_BrandComboBox_Format);
             // 
             // childIDTextBox
             // 
             this.childIDTextBox.Location = new System.Drawing.Point(957, 592);
-            this.childIDTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.childIDTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.childIDTextBox.Name = "childIDTextBox";
             this.childIDTextBox.Size = new System.Drawing.Size(132, 22);
             this.childIDTextBox.TabIndex = 140;
@@ -291,7 +292,7 @@
             // parentIDTextBox
             // 
             this.parentIDTextBox.Location = new System.Drawing.Point(816, 592);
-            this.parentIDTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.parentIDTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.parentIDTextBox.Name = "parentIDTextBox";
             this.parentIDTextBox.Size = new System.Drawing.Size(132, 22);
             this.parentIDTextBox.TabIndex = 138;
@@ -311,7 +312,7 @@
             // pic4Reset
             // 
             this.pic4Reset.Location = new System.Drawing.Point(452, 160);
-            this.pic4Reset.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pic4Reset.Margin = new System.Windows.Forms.Padding(4);
             this.pic4Reset.Name = "pic4Reset";
             this.pic4Reset.Size = new System.Drawing.Size(100, 24);
             this.pic4Reset.TabIndex = 136;
@@ -322,7 +323,7 @@
             // pic3Reset
             // 
             this.pic3Reset.Location = new System.Drawing.Point(313, 160);
-            this.pic3Reset.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pic3Reset.Margin = new System.Windows.Forms.Padding(4);
             this.pic3Reset.Name = "pic3Reset";
             this.pic3Reset.Size = new System.Drawing.Size(100, 24);
             this.pic3Reset.TabIndex = 135;
@@ -333,7 +334,7 @@
             // pic2Reset
             // 
             this.pic2Reset.Location = new System.Drawing.Point(175, 160);
-            this.pic2Reset.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pic2Reset.Margin = new System.Windows.Forms.Padding(4);
             this.pic2Reset.Name = "pic2Reset";
             this.pic2Reset.Size = new System.Drawing.Size(100, 24);
             this.pic2Reset.TabIndex = 134;
@@ -344,7 +345,7 @@
             // pic1Reset
             // 
             this.pic1Reset.Location = new System.Drawing.Point(31, 160);
-            this.pic1Reset.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pic1Reset.Margin = new System.Windows.Forms.Padding(4);
             this.pic1Reset.Name = "pic1Reset";
             this.pic1Reset.Size = new System.Drawing.Size(100, 24);
             this.pic1Reset.TabIndex = 133;
@@ -357,7 +358,7 @@
             this.ApiListComboBox.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.ApiListComboBox.FormattingEnabled = true;
             this.ApiListComboBox.Location = new System.Drawing.Point(299, 639);
-            this.ApiListComboBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ApiListComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.ApiListComboBox.Name = "ApiListComboBox";
             this.ApiListComboBox.Size = new System.Drawing.Size(271, 31);
             this.ApiListComboBox.TabIndex = 132;
@@ -369,7 +370,7 @@
             this.ExhibitNowButton.Enabled = false;
             this.ExhibitNowButton.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.ExhibitNowButton.Location = new System.Drawing.Point(155, 630);
-            this.ExhibitNowButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ExhibitNowButton.Margin = new System.Windows.Forms.Padding(4);
             this.ExhibitNowButton.Name = "ExhibitNowButton";
             this.ExhibitNowButton.Size = new System.Drawing.Size(136, 45);
             this.ExhibitNowButton.TabIndex = 131;
@@ -381,7 +382,7 @@
             // button3
             // 
             this.button3.Location = new System.Drawing.Point(685, 649);
-            this.button3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button3.Margin = new System.Windows.Forms.Padding(4);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(120, 29);
             this.button3.TabIndex = 130;
@@ -393,7 +394,7 @@
             // 
             this.SaveExhibitItemButton.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.SaveExhibitItemButton.Location = new System.Drawing.Point(11, 630);
-            this.SaveExhibitItemButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.SaveExhibitItemButton.Margin = new System.Windows.Forms.Padding(4);
             this.SaveExhibitItemButton.Name = "SaveExhibitItemButton";
             this.SaveExhibitItemButton.Size = new System.Drawing.Size(136, 45);
             this.SaveExhibitItemButton.TabIndex = 129;
@@ -404,7 +405,7 @@
             // PriceTextBox
             // 
             this.PriceTextBox.Location = new System.Drawing.Point(599, 595);
-            this.PriceTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.PriceTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.PriceTextBox.Name = "PriceTextBox";
             this.PriceTextBox.Size = new System.Drawing.Size(211, 22);
             this.PriceTextBox.TabIndex = 128;
@@ -413,7 +414,7 @@
             // 
             this.ShippingDurationComboBox.FormattingEnabled = true;
             this.ShippingDurationComboBox.Location = new System.Drawing.Point(597, 538);
-            this.ShippingDurationComboBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ShippingDurationComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.ShippingDurationComboBox.Name = "ShippingDurationComboBox";
             this.ShippingDurationComboBox.Size = new System.Drawing.Size(475, 23);
             this.ShippingDurationComboBox.TabIndex = 126;
@@ -424,7 +425,7 @@
             // 
             this.ShippingAreaComboBox.FormattingEnabled = true;
             this.ShippingAreaComboBox.Location = new System.Drawing.Point(597, 490);
-            this.ShippingAreaComboBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ShippingAreaComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.ShippingAreaComboBox.Name = "ShippingAreaComboBox";
             this.ShippingAreaComboBox.Size = new System.Drawing.Size(475, 23);
             this.ShippingAreaComboBox.TabIndex = 125;
@@ -434,7 +435,7 @@
             // DescriptionTextBox
             // 
             this.DescriptionTextBox.Location = new System.Drawing.Point(13, 270);
-            this.DescriptionTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.DescriptionTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.DescriptionTextBox.Name = "DescriptionTextBox";
             this.DescriptionTextBox.Size = new System.Drawing.Size(556, 345);
             this.DescriptionTextBox.TabIndex = 124;
@@ -443,7 +444,7 @@
             // ItemNameTextBox
             // 
             this.ItemNameTextBox.Location = new System.Drawing.Point(13, 212);
-            this.ItemNameTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ItemNameTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.ItemNameTextBox.Name = "ItemNameTextBox";
             this.ItemNameTextBox.Size = new System.Drawing.Size(556, 22);
             this.ItemNameTextBox.TabIndex = 123;
@@ -452,7 +453,7 @@
             // 
             this.pictureBox4.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.pictureBox4.Location = new System.Drawing.Point(440, 28);
-            this.pictureBox4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBox4.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(133, 125);
             this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -464,7 +465,7 @@
             // 
             this.pictureBox3.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.pictureBox3.Location = new System.Drawing.Point(299, 28);
-            this.pictureBox3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBox3.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(133, 125);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -476,7 +477,7 @@
             // 
             this.pictureBox2.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.pictureBox2.Location = new System.Drawing.Point(157, 28);
-            this.pictureBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBox2.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(133, 125);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -498,7 +499,7 @@
             // 
             this.pictureBox1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.pictureBox1.Location = new System.Drawing.Point(16, 28);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(133, 125);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -589,7 +590,7 @@
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "ItemRegisterForm";
             this.Text = "商品の登録";
             this.Load += new System.EventHandler(this.ItemRegisterForm_Load);

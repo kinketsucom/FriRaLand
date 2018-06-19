@@ -9,8 +9,9 @@ using System.IO;
 
 namespace FriRaLand {
     class FrilAPI {
-        private const string USER_AGENT = "Mozilla/5.0 (iPad; COU OS 10_3_2 like Mac OS X) AppleWebKit/603.2.4 (KHTML, like Gecko) Mobile/14F89 Fril/6.7.1";
+        private const string USER_AGENT = "Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_3 like Mac OS X) AppleWebKit/603.3.8 (KHTML, like Gecko) Mobile/14G60 Fril/7.2.0";
         private string proxy;
+        //private CookieContainer cc = new CookieContainer();
 
         //GET,POSTのRequestのResponse
         private class FrilRawResponse {
@@ -31,20 +32,19 @@ namespace FriRaLand {
        
 
         //成功: itemID 失敗: null
-        public string Sell(FrilItem item) {
+        public string Sell(FrilItem item,CookieContainer cc) {
             try {
                 //商品情報をまず送る
                 string url = "https://api.fril.jp/api/items/request";
                 Dictionary<string, string> param = new Dictionary<string, string>();
                 param.Add("auth_token", this.account.fril_auth_token);
-                param.Add("item_id", "0");
-                param.Add("brand", item.brand_id.ToString());
                 param.Add("carriage", item.carriage.ToString());
                 param.Add("category", item.category_id.ToString());
                 param.Add("delivery_area", item.d_area.ToString());
                 param.Add("delivery_date", item.d_date.ToString());
                 param.Add("delivery_method", item.d_method.ToString());
                 param.Add("detail", item.detail);
+                param.Add("item_id", "0");
                 param.Add("p_category", item.category_p_id.ToString());
                 param.Add("request_required", "0");
                 param.Add("sell_price", item.s_price.ToString());
@@ -52,7 +52,14 @@ namespace FriRaLand {
                 param.Add("size_name", item.size_name);
                 param.Add("status", item.status.ToString());
                 param.Add("title", item.item_name);
-                var rawres = postFrilAPI(url, param);
+                param.Add("brand", item.brand_id.ToString()); 
+                
+                
+                
+                
+               
+
+                var rawres = postFrilAPI(url, param, cc);
                 if (rawres.error) throw new Exception("商品情報の送信に失敗");
                 string res = "";
                 //itemIDをとりだして画像を送る
@@ -66,30 +73,31 @@ namespace FriRaLand {
                     req_img_param.Add("item_id", item_id);
                     req_img_param.Add("current_num", num.ToString());
                     req_img_param.Add("total_num", total_img_num.ToString());
-                    res = postMultipartFril(image_url, req_img_param, item.imagepaths[num - 1]);
+                    res = postMultipartFril(image_url, req_img_param, item.imagepaths[num - 1],cc);
                 }
                 Console.WriteLine(res);
                 Log.Logger.Info("商品出品成功: " + item_id);
                 return item_id;
             }
             catch (Exception ex) {
+                Console.WriteLine(ex);
                 Log.Logger.Error("商品出品失敗: " + ex.Message);
                 return null;
             }
         }
-        public bool tryFrilLogin() {
+        public bool tryFrilLogin(CookieContainer cc) {
             /*revert,android_id,device_id,app_generated_idなどのパラメタはなくてもOKなので送らない*/
             Dictionary<string, string> param = new Dictionary<string, string>();
             param.Add("email", this.account.email);
             param.Add("password", this.account.password);
             string url = "https://api.fril.jp/api/v4/users/sign_in";
-            FrilRawResponse rawres = postFrilAPI(url, param);
+            FrilRawResponse rawres = postFrilAPI(url, param, cc);
             if (rawres.error) return false;
             try {
                 dynamic resjson = DynamicJson.Parse(rawres.response);
                 this.account.fril_auth_token = resjson.auth_token;
                 this.account.expirationDate = DateTime.Now.AddDays(90.0);
-                this.account = getProfile(account);
+                this.account = getProfile(account,cc);
                 Console.WriteLine("フリルログイン成功");
                 Log.Logger.Info("フリルログイン成功");
                 return true;
@@ -99,10 +107,10 @@ namespace FriRaLand {
                 return false;
             }
         }
-        private Common.Account getProfile(Common.Account account) {
+        private Common.Account getProfile(Common.Account account,CookieContainer cc) {
             Dictionary<string, string> param = new Dictionary<string, string>();
             param.Add("auth_token", account.fril_auth_token);
-            FrilRawResponse res = getFrilAPI("http://api.fril.jp/api/v2/users", param);
+            FrilRawResponse res = getFrilAPI("http://api.fril.jp/api/v2/users", param,cc);
             var json = DynamicJson.Parse(res.response);
             account.nickname = json.user.screen_name;   
             account.userId = ((long)json.user.id).ToString();
@@ -110,13 +118,13 @@ namespace FriRaLand {
         }
 
 
-        public FrilItem getItemDetailInfo(string item_id)
+        public FrilItem getItemDetailInfo(string item_id,CookieContainer cc)
         {
             Dictionary<string, string> param = new Dictionary<string, string>();
             param.Add("auth_token", this.account.fril_auth_token);
             param.Add("item_id", item_id);
             string url = "http://api.fril.jp/api/v3/items/show";
-            FrilRawResponse rawres = getFrilAPI(url, param);
+            FrilRawResponse rawres = getFrilAPI(url, param,cc);
             if (rawres.error)
             {
                 Log.Logger.Error(string.Format("フリル商品詳細情報取得失敗 id:{0}", item_id));
@@ -130,7 +138,7 @@ namespace FriRaLand {
 
         //ブラウザの商品ページから商品IDを得る
         //成功:商品ID 失敗null
-        public string getItemIDFromBrowserItemURL(string browserItemURL)
+        public string getItemIDFromBrowserItemURL(string browserItemURL,CookieContainer cc)
         {
             string urlHeader = "https://item.fril.jp/";
             try
@@ -143,7 +151,7 @@ namespace FriRaLand {
                 Dictionary<string, string> param = new Dictionary<string, string>();
                 param.Add("hash", hashstr);
                 string url = "http://api.fril.jp/api/v3/items/show/open";
-                FrilRawResponse rawres = getFrilAPI(url, param);
+                FrilRawResponse rawres = getFrilAPI(url, param, cc);
                 if (rawres.error) throw new Exception();
                 dynamic resjson = DynamicJson.Parse(rawres.response);
                 return ((long)resjson.item.info.item_id).ToString();
@@ -156,7 +164,7 @@ namespace FriRaLand {
         }
 
         //ユーザが出品している商品をすべて取得
-        public List<FrilItem> getSellingItem(string userId) {
+        public List<FrilItem> getSellingItem(string userId,CookieContainer cc) {
             List<FrilItem> rst = new List<FrilItem>();
             bool has_next = true;
             string max_id = "0"; //二回目以降で「この商品IDより後」の商品を取得する
@@ -168,7 +176,7 @@ namespace FriRaLand {
                 param.Add("max_id", max_id);
                 param.Add("user_id", userId);
                 string url = "https://api.fril.jp/api/v3/items/list";
-                FrilRawResponse rawres = getFrilAPI(url, param);
+                FrilRawResponse rawres = getFrilAPI(url, param,cc);
                 if (rawres.error) {
                     Log.Logger.Error("フリル出品中商品の取得に失敗: UserID: " + this.account.userId);
                     return rst;
@@ -197,7 +205,7 @@ namespace FriRaLand {
             return rst;
         }
         //FrilAPIをGETでたたく
-        private FrilRawResponse getFrilAPI(string url, Dictionary<string, string> param) {
+        private FrilRawResponse getFrilAPI(string url, Dictionary<string, string> param, CookieContainer cc) {
             System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
             //ストップウォッチを開始する
             sw.Start();
@@ -215,7 +223,11 @@ namespace FriRaLand {
                 url += string.Join("&", paramstr);
                 //HttpWebRequestの作成
                 HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
-                req.CookieContainer = this.cc;
+                req.CookieContainer = cc;
+
+
+
+
                 req.UserAgent = FrilAPI.USER_AGENT;
                 req.Method = "GET";
                 //プロキシの設定
@@ -227,9 +239,9 @@ namespace FriRaLand {
                 string content = "";
                 var task = Task.Factory.StartNew(() => executeGetRequest(req));
                 task.Wait(10000);
-                if (task.IsCompleted)
+                if (task.IsCompleted) {
                     content = task.Result;
-                else
+                } else
                     throw new Exception("Timed out");
                 if (string.IsNullOrEmpty(content)) throw new Exception("webrequest error");
                 res.error = false;
@@ -272,7 +284,7 @@ namespace FriRaLand {
             }
         }
         //FrilAPIをPOSTでたたく
-        private FrilRawResponse postFrilAPI(string url, Dictionary<string, string> param) {
+        private FrilRawResponse postFrilAPI(string url, Dictionary<string, string> param,CookieContainer cc) {
             FrilRawResponse res = new FrilRawResponse();
             try {
                 string text = "";
@@ -290,11 +302,17 @@ namespace FriRaLand {
                 req.UserAgent = FrilAPI.USER_AGENT;
                 req.Method = "POST";
                 //リクエストヘッダを付加
-                req.ContentType = "application/x-www-form-urlencoded; charset=utf-8";
+                req.ContentType = "application/x-www-form-urlencoded";
                 req.Accept = "application/json";
                 req.ContentLength = (long)bytes.Length;
                 //クッキーコンテナの追加
-                req.CookieContainer = this.cc;
+                req.CookieContainer = cc;
+                // クッキー確認
+                foreach (Cookie c in cc.GetCookies(new Uri("https://api.fril.jp/api/"))) {
+                    Console.WriteLine("クッキー名:" + c.Name.ToString());
+                    Console.WriteLine("値:" + c.Value.ToString());
+                    Console.WriteLine("ドメイン名:" + c.Domain.ToString());
+                }
                 //プロキシの設定
                 if (string.IsNullOrEmpty(this.proxy) == false) {
                     System.Net.WebProxy proxy = new System.Net.WebProxy(this.proxy);
@@ -306,11 +324,14 @@ namespace FriRaLand {
                 string content = "";
                 var task = Task.Factory.StartNew(() => executePostRequest(ref req, bytes));
                 task.Wait(10000);
-                if (task.IsCompleted)
+                if (task.IsCompleted) {
                     content = task.Result;
-                else
+                    Console.WriteLine(content);
+                } else {
                     throw new Exception("Timed out");
+                }
                 if (string.IsNullOrEmpty(content)) throw new Exception("webrequest error");
+                if (content.Contains("false")) throw new Exception("item result false");
                 res.error = false;
                 res.response = content;
                 Log.Logger.Info("FrilPOSTリクエスト成功");
@@ -318,8 +339,10 @@ namespace FriRaLand {
                 return res;
             }
             catch (Exception e) {
+                
+                Console.WriteLine(e);
+                Log.Logger.Error("FrilPOSTリクエスト失敗");
                 return res;
-                Log.Logger.Error("FrilPOSTリクエスト成功");
             }
         }
         private string executePostRequest(ref HttpWebRequest req, byte[] bytes) {
@@ -338,14 +361,14 @@ namespace FriRaLand {
                 return "";
             }
         }
-        private CookieContainer cc = new CookieContainer();
-        private string postMultipartFril(string url, Dictionary<string, string> param, string file) {
+
+        private string postMultipartFril(string url, Dictionary<string, string> param, string file,CookieContainer cc) {
             Encoding encoding = Encoding.GetEncoding("UTF-8");
             string text = Environment.TickCount.ToString();
             byte[] bytes = encoding.GetBytes("\r\n");
             HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
             httpWebRequest.UserAgent = USER_AGENT;
-            httpWebRequest.CookieContainer = this.cc;
+            httpWebRequest.CookieContainer = cc;
             httpWebRequest.Method = "POST";
             httpWebRequest.ContentType = "multipart/form-data; boundary=" + text;
             string text2 = "";
