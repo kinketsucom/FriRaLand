@@ -18,10 +18,10 @@ namespace FriRaLand {
         private void ItemRegisterForm_Load(object sender, EventArgs e) {
             //フリル側
 
-            ////ブランド
-            //foreach(FriRaCommon.FrilBrand p in FriRaCommon.fril_brands{
-            //    this.Fril_BrandComboBox.Items.Add(p);
-            //}
+            //ブランド
+            foreach (FriRaCommon.FrilBrand p in FriRaCommon.fril_brands){
+                this.Fril_BrandComboBox.Items.Add(p);
+            }
             //カテゴリレベル1
             foreach (var c in FriRaCommon.fril_categoryDictionary[0]) {
                 this.Fril_CategoryComboBoxLevel1.Items.Add(c);
@@ -69,7 +69,7 @@ namespace FriRaLand {
         }
 
         private void Fril_BrandComboBox_Format(object sender, ListControlConvertEventArgs e) {
-
+            e.Value = ((FriRaCommon.FrilBrand)e.ListItem).name;
         }
 
         private void Fril_ItemConditionComboBox_Format(object sender, ListControlConvertEventArgs e) {
@@ -83,41 +83,41 @@ namespace FriRaLand {
         private void Fril_ShippingMethodComboBox_Format(object sender, ListControlConvertEventArgs e) {
             e.Value = ((KeyValuePair<string, string>)e.ListItem).Key;
         }
-        private void Rakuma_CategoryComboBoxLevel1_Format(object sender, ListControlConvertEventArgs e) {
-            e.Value = ((FriRaCommon.RakumaCategory)e.ListItem).name;
-        }
+        //private void Rakuma_CategoryComboBoxLevel1_Format(object sender, ListControlConvertEventArgs e) {
+        //    e.Value = ((FriRaCommon.RakumaCategory)e.ListItem).name;
+        //}
 
-        private void Rakuma_CategoryComboBoxLevel2_Format(object sender, ListControlConvertEventArgs e) {
-            e.Value = ((FriRaCommon.RakumaCategory)e.ListItem).name;
-        }
+        //private void Rakuma_CategoryComboBoxLevel2_Format(object sender, ListControlConvertEventArgs e) {
+        //    e.Value = ((FriRaCommon.RakumaCategory)e.ListItem).name;
+        //}
 
-        private void Rakuma_CategoryComboBoxLevel3_Format(object sender, ListControlConvertEventArgs e) {
-            e.Value = ((FriRaCommon.RakumaCategory)e.ListItem).name;
-        }
+        //private void Rakuma_CategoryComboBoxLevel3_Format(object sender, ListControlConvertEventArgs e) {
+        //    e.Value = ((FriRaCommon.RakumaCategory)e.ListItem).name;
+        //}
 
-        private void Rakuma_CategoryComboBoxLevel4_Format(object sender, ListControlConvertEventArgs e) {
-            e.Value = ((FriRaCommon.RakumaCategory)e.ListItem).name;
-        }
+        //private void Rakuma_CategoryComboBoxLevel4_Format(object sender, ListControlConvertEventArgs e) {
+        //    e.Value = ((FriRaCommon.RakumaCategory)e.ListItem).name;
+        //}
 
-        private void Rakuma_SizeComboBox_Format(object sender, ListControlConvertEventArgs e) {
-            e.Value = ((FriRaCommon.RakumaSize)e.ListItem).title;
-        }
+        //private void Rakuma_SizeComboBox_Format(object sender, ListControlConvertEventArgs e) {
+        //    e.Value = ((FriRaCommon.RakumaSize)e.ListItem).title;
+        //}
 
-        private void Rakuma_BrandComboBox_Format(object sender, ListControlConvertEventArgs e) {
+        //private void Rakuma_BrandComboBox_Format(object sender, ListControlConvertEventArgs e) {
 
-        }
+        //}
 
-        private void Rakuma_ItemConditionComboBox_Format(object sender, ListControlConvertEventArgs e) {
-            e.Value = ((KeyValuePair<string, string>)e.ListItem).Key;
-        }
+        //private void Rakuma_ItemConditionComboBox_Format(object sender, ListControlConvertEventArgs e) {
+        //    e.Value = ((KeyValuePair<string, string>)e.ListItem).Key;
+        //}
 
-        private void Rakuma_ShippingPayerComboBox_Format(object sender, ListControlConvertEventArgs e) {
-            e.Value = ((KeyValuePair<string, string>)e.ListItem).Key;
-        }
+        //private void Rakuma_ShippingPayerComboBox_Format(object sender, ListControlConvertEventArgs e) {
+        //    e.Value = ((KeyValuePair<string, string>)e.ListItem).Key;
+        //}
 
-        private void Rakuma_ShippingMethodComboBox_Format(object sender, ListControlConvertEventArgs e) {
-            e.Value = ((KeyValuePair<string, string>)e.ListItem).Key;
-        }
+        //private void Rakuma_ShippingMethodComboBox_Format(object sender, ListControlConvertEventArgs e) {
+        //    e.Value = ((KeyValuePair<string, string>)e.ListItem).Key;
+        //}
 
         private void ShippingAreaComboBox_Format(object sender, ListControlConvertEventArgs e) {
             e.Value = ((KeyValuePair<string, string>)e.ListItem).Key;
@@ -444,8 +444,12 @@ namespace FriRaLand {
                 item_data.imagepaths[3] = pictureBox4.ImageLocation;
             }
 
-            //item.brand_id = ;
-            //param.Add("category", item.category_id.ToString());
+            //任意部分
+            //ブランドid
+            if (this.Fril_BrandComboBox.SelectedItem != null) {
+                FriRaCommon.FrilBrand brand = (FriRaCommon.FrilBrand)this.Fril_BrandComboBox.SelectedItem;
+                item_data.brand_id = brand.id;
+            }
             return item_data;
         }
 

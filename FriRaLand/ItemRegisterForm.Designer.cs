@@ -66,30 +66,32 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.Fril_ShippingMethodComboBox);
             this.groupBox2.Controls.Add(this.label15);
             this.groupBox2.Controls.Add(this.label16);
             this.groupBox2.Controls.Add(this.label17);
             this.groupBox2.Controls.Add(this.label18);
-            this.groupBox2.Controls.Add(this.label19);
             this.groupBox2.Controls.Add(this.Fril_ItemConditionComboBox);
             this.groupBox2.Controls.Add(this.Fril_ShippingPayerComboBox);
             this.groupBox2.Controls.Add(this.Fril_SizeComboBox);
-            this.groupBox2.Controls.Add(this.label20);
             this.groupBox2.Controls.Add(this.Fril_CategoryComboBoxLevel1);
             this.groupBox2.Controls.Add(this.Fril_CategoryComboBoxLevel2);
             this.groupBox2.Controls.Add(this.Fril_CategoryComboBoxLevel3);
             this.groupBox2.Controls.Add(this.Fril_CategoryComboBoxLevel4);
-            this.groupBox2.Controls.Add(this.Fril_BrandComboBox);
+            this.groupBox2.Controls.Add(this.label9);
+            this.groupBox2.Controls.Add(this.ShippingDurationComboBox);
+            this.groupBox2.Controls.Add(this.label8);
+            this.groupBox2.Controls.Add(this.ShippingAreaComboBox);
             this.groupBox2.Location = new System.Drawing.Point(581, 10);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox2.Name = "groupBox2";
@@ -97,12 +99,12 @@
             this.groupBox2.Size = new System.Drawing.Size(251, 450);
             this.groupBox2.TabIndex = 142;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "フリル";
+            this.groupBox2.Text = "必須";
             // 
             // Fril_ShippingMethodComboBox
             // 
             this.Fril_ShippingMethodComboBox.FormattingEnabled = true;
-            this.Fril_ShippingMethodComboBox.Location = new System.Drawing.Point(20, 406);
+            this.Fril_ShippingMethodComboBox.Location = new System.Drawing.Point(7, 90);
             this.Fril_ShippingMethodComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.Fril_ShippingMethodComboBox.Name = "Fril_ShippingMethodComboBox";
             this.Fril_ShippingMethodComboBox.Size = new System.Drawing.Size(211, 23);
@@ -113,61 +115,64 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(12, 292);
+            this.label15.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label15.Location = new System.Drawing.Point(12, 217);
             this.label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(79, 15);
+            this.label15.Size = new System.Drawing.Size(84, 15);
             this.label15.TabIndex = 56;
             this.label15.Text = "商品の状態";
             // 
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(12, 340);
+            this.label16.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label16.Location = new System.Drawing.Point(12, 263);
             this.label16.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(94, 15);
+            this.label16.Size = new System.Drawing.Size(100, 15);
             this.label16.TabIndex = 57;
             this.label16.Text = "配送料の負担";
             // 
             // label17
             // 
             this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.label17.Location = new System.Drawing.Point(12, 28);
             this.label17.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(62, 15);
+            this.label17.Size = new System.Drawing.Size(67, 15);
             this.label17.TabIndex = 55;
             this.label17.Text = "カテゴリー";
             // 
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(12, 188);
+            this.label18.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label18.Location = new System.Drawing.Point(12, 171);
             this.label18.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(42, 15);
+            this.label18.Size = new System.Drawing.Size(45, 15);
             this.label18.TabIndex = 68;
             this.label18.Text = "サイズ";
             // 
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(12, 235);
+            this.label19.Location = new System.Drawing.Point(7, 26);
             this.label19.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(50, 15);
+            this.label19.Size = new System.Drawing.Size(90, 15);
             this.label19.TabIndex = 69;
-            this.label19.Text = "ブランド";
-            this.label19.Visible = false;
+            this.label19.Text = "ブランド(任意)";
             // 
             // Fril_ItemConditionComboBox
             // 
             this.Fril_ItemConditionComboBox.FormattingEnabled = true;
-            this.Fril_ItemConditionComboBox.Location = new System.Drawing.Point(20, 311);
+            this.Fril_ItemConditionComboBox.Location = new System.Drawing.Point(20, 236);
             this.Fril_ItemConditionComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.Fril_ItemConditionComboBox.Name = "Fril_ItemConditionComboBox";
-            this.Fril_ItemConditionComboBox.Size = new System.Drawing.Size(211, 23);
+            this.Fril_ItemConditionComboBox.Size = new System.Drawing.Size(212, 23);
             this.Fril_ItemConditionComboBox.TabIndex = 70;
             this.Fril_ItemConditionComboBox.Text = "選択してください";
             this.Fril_ItemConditionComboBox.Format += new System.Windows.Forms.ListControlConvertEventHandler(this.Fril_ItemConditionComboBox_Format);
@@ -175,10 +180,10 @@
             // Fril_ShippingPayerComboBox
             // 
             this.Fril_ShippingPayerComboBox.FormattingEnabled = true;
-            this.Fril_ShippingPayerComboBox.Location = new System.Drawing.Point(20, 359);
+            this.Fril_ShippingPayerComboBox.Location = new System.Drawing.Point(20, 282);
             this.Fril_ShippingPayerComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.Fril_ShippingPayerComboBox.Name = "Fril_ShippingPayerComboBox";
-            this.Fril_ShippingPayerComboBox.Size = new System.Drawing.Size(211, 23);
+            this.Fril_ShippingPayerComboBox.Size = new System.Drawing.Size(212, 23);
             this.Fril_ShippingPayerComboBox.TabIndex = 71;
             this.Fril_ShippingPayerComboBox.Text = "選択してください";
             this.Fril_ShippingPayerComboBox.SelectedIndexChanged += new System.EventHandler(this.Fril_ShippingPayerComboBox_SelectedIndexChanged);
@@ -188,7 +193,7 @@
             // 
             this.Fril_SizeComboBox.Enabled = false;
             this.Fril_SizeComboBox.FormattingEnabled = true;
-            this.Fril_SizeComboBox.Location = new System.Drawing.Point(20, 207);
+            this.Fril_SizeComboBox.Location = new System.Drawing.Point(20, 190);
             this.Fril_SizeComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.Fril_SizeComboBox.Name = "Fril_SizeComboBox";
             this.Fril_SizeComboBox.Size = new System.Drawing.Size(212, 23);
@@ -199,7 +204,7 @@
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(12, 388);
+            this.label20.Location = new System.Drawing.Point(7, 71);
             this.label20.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(79, 15);
@@ -260,13 +265,12 @@
             // Fril_BrandComboBox
             // 
             this.Fril_BrandComboBox.FormattingEnabled = true;
-            this.Fril_BrandComboBox.Location = new System.Drawing.Point(20, 254);
+            this.Fril_BrandComboBox.Location = new System.Drawing.Point(7, 44);
             this.Fril_BrandComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.Fril_BrandComboBox.Name = "Fril_BrandComboBox";
             this.Fril_BrandComboBox.Size = new System.Drawing.Size(212, 23);
             this.Fril_BrandComboBox.TabIndex = 81;
             this.Fril_BrandComboBox.Text = "選択してください";
-            this.Fril_BrandComboBox.Visible = false;
             this.Fril_BrandComboBox.Format += new System.Windows.Forms.ListControlConvertEventHandler(this.Fril_BrandComboBox_Format);
             // 
             // childIDTextBox
@@ -404,20 +408,20 @@
             // 
             // PriceTextBox
             // 
-            this.PriceTextBox.Location = new System.Drawing.Point(599, 595);
+            this.PriceTextBox.Location = new System.Drawing.Point(601, 481);
             this.PriceTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.PriceTextBox.Name = "PriceTextBox";
-            this.PriceTextBox.Size = new System.Drawing.Size(211, 22);
+            this.PriceTextBox.Size = new System.Drawing.Size(212, 22);
             this.PriceTextBox.TabIndex = 128;
             this.PriceTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PriceTextBox_KeyPress);
             // 
             // ShippingDurationComboBox
             // 
             this.ShippingDurationComboBox.FormattingEnabled = true;
-            this.ShippingDurationComboBox.Location = new System.Drawing.Point(597, 538);
+            this.ShippingDurationComboBox.Location = new System.Drawing.Point(20, 328);
             this.ShippingDurationComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.ShippingDurationComboBox.Name = "ShippingDurationComboBox";
-            this.ShippingDurationComboBox.Size = new System.Drawing.Size(475, 23);
+            this.ShippingDurationComboBox.Size = new System.Drawing.Size(212, 23);
             this.ShippingDurationComboBox.TabIndex = 126;
             this.ShippingDurationComboBox.Text = "選択してください";
             this.ShippingDurationComboBox.Format += new System.Windows.Forms.ListControlConvertEventHandler(this.ShippingDurationComboBox_Format);
@@ -425,10 +429,10 @@
             // ShippingAreaComboBox
             // 
             this.ShippingAreaComboBox.FormattingEnabled = true;
-            this.ShippingAreaComboBox.Location = new System.Drawing.Point(597, 490);
+            this.ShippingAreaComboBox.Location = new System.Drawing.Point(20, 374);
             this.ShippingAreaComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.ShippingAreaComboBox.Name = "ShippingAreaComboBox";
-            this.ShippingAreaComboBox.Size = new System.Drawing.Size(475, 23);
+            this.ShippingAreaComboBox.Size = new System.Drawing.Size(212, 23);
             this.ShippingAreaComboBox.TabIndex = 125;
             this.ShippingAreaComboBox.Text = "選択してください";
             this.ShippingAreaComboBox.Format += new System.Windows.Forms.ListControlConvertEventHandler(this.ShippingAreaComboBox_Format);
@@ -511,58 +515,77 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(589, 576);
+            this.label10.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label10.Location = new System.Drawing.Point(588, 464);
             this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(37, 15);
+            this.label10.Size = new System.Drawing.Size(39, 15);
             this.label10.TabIndex = 117;
             this.label10.Text = "価格";
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(589, 519);
+            this.label9.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label9.Location = new System.Drawing.Point(12, 309);
             this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(102, 15);
+            this.label9.Size = new System.Drawing.Size(109, 15);
             this.label9.TabIndex = 116;
             this.label9.Text = "発送までの日数";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(589, 471);
+            this.label8.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label8.Location = new System.Drawing.Point(12, 355);
             this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(94, 15);
+            this.label8.Size = new System.Drawing.Size(100, 15);
             this.label8.TabIndex = 115;
             this.label8.Text = "発送元の地域";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.label2.Location = new System.Drawing.Point(11, 251);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(67, 15);
+            this.label2.Size = new System.Drawing.Size(71, 15);
             this.label2.TabIndex = 114;
             this.label2.Text = "商品説明";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.label1.Location = new System.Drawing.Point(11, 194);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(52, 15);
+            this.label1.Size = new System.Drawing.Size(55, 15);
             this.label1.TabIndex = 113;
             this.label1.Text = "商品名";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.Fril_ShippingMethodComboBox);
+            this.groupBox1.Controls.Add(this.label19);
+            this.groupBox1.Controls.Add(this.Fril_BrandComboBox);
+            this.groupBox1.Controls.Add(this.label20);
+            this.groupBox1.Location = new System.Drawing.Point(839, 12);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(233, 448);
+            this.groupBox1.TabIndex = 143;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "任意";
             // 
             // ItemRegisterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1107, 690);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.childIDTextBox);
             this.Controls.Add(this.label12);
@@ -577,8 +600,6 @@
             this.Controls.Add(this.button3);
             this.Controls.Add(this.SaveExhibitItemButton);
             this.Controls.Add(this.PriceTextBox);
-            this.Controls.Add(this.ShippingDurationComboBox);
-            this.Controls.Add(this.ShippingAreaComboBox);
             this.Controls.Add(this.DescriptionTextBox);
             this.Controls.Add(this.ItemNameTextBox);
             this.Controls.Add(this.pictureBox4);
@@ -587,8 +608,6 @@
             this.Controls.Add(this.label13);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label10);
-            this.Controls.Add(this.label9);
-            this.Controls.Add(this.label8);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Margin = new System.Windows.Forms.Padding(4);
@@ -601,6 +620,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -650,5 +671,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         public System.Windows.Forms.ComboBox Fril_BrandComboBox;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }
