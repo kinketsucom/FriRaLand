@@ -52,8 +52,9 @@ namespace FriRaLand {
                 param.Add("size_name", item.size_name);
                 param.Add("status", item.status.ToString());
                 param.Add("title", item.item_name);
-                //param.Add("brand", item.brand_id.ToString());
-                
+                if (item.brand_id.ToString()!="0") { //FIXIT:ブランドが必要なカテゴリではブランドidがないとクラッシュ
+                    param.Add("brand", item.brand_id.ToString());
+                }                
                 //パラメータ表示
                 foreach(var val in param) {
                     Console.WriteLine(val.Key + ":" + val.Value);
@@ -171,7 +172,6 @@ namespace FriRaLand {
             string max_id = "0"; //二回目以降で「この商品IDより後」の商品を取得する
             do {
                 Dictionary<string, string> param = new Dictionary<string, string>();
-
                 param.Add("include_sold_out", "0");
                 param.Add("limit", "60");
                 param.Add("max_id", max_id);
@@ -212,13 +212,13 @@ namespace FriRaLand {
             sw.Start();
             FrilRawResponse res = new FrilRawResponse();
             try {
-                //url = Uri.EscapeUriString(url);//日本語などを％エンコードする
+                //url = Uri.EscapeDataString(url);//日本語などを％エンコードする
                 //パラメータをURLに付加 ?param1=val1&param2=val2...
                 url += "?";
                 List<string> paramstr = new List<string>();
                 foreach (KeyValuePair<string, string> p in param) {
-                    string k = Uri.EscapeUriString(p.Key);
-                    string v = Uri.EscapeUriString(p.Value);
+                    string k = Uri.EscapeDataString(p.Key);
+                    string v = Uri.EscapeDataString(p.Value);
                     paramstr.Add(k + "=" + v);
                 }
                 url += string.Join("&", paramstr);
@@ -292,8 +292,8 @@ namespace FriRaLand {
                 List<string> paramstr = new List<string>();
                 int num = 0;
                 foreach (KeyValuePair<string, string> p in param) {
-                    string k = Uri.EscapeUriString(p.Key);
-                    string v = Uri.EscapeUriString(p.Value);
+                    string k = Uri.EscapeDataString(p.Key);
+                    string v = Uri.EscapeDataString(p.Value);
                     if (num != 0) text += "&";
                     text = text + (k + "=" + v);
                     num++;
@@ -312,11 +312,11 @@ namespace FriRaLand {
                 //クッキーコンテナの追加
                 req.CookieContainer = cc;
                 // クッキー確認
-                foreach (Cookie c in cc.GetCookies(new Uri("https://api.fril.jp/api/"))) {
-                    Console.WriteLine("クッキー名:" + c.Name.ToString());
-                    Console.WriteLine("値:" + c.Value.ToString());
-                    Console.WriteLine("ドメイン名:" + c.Domain.ToString());
-                }
+                //foreach (Cookie c in cc.GetCookies(new Uri("https://api.fril.jp/api/"))) {
+                //    Console.WriteLine("クッキー名:" + c.Name.ToString());
+                //    Console.WriteLine("値:" + c.Value.ToString());
+                //    Console.WriteLine("ドメイン名:" + c.Domain.ToString());
+                //}
                 //プロキシの設定
                 if (string.IsNullOrEmpty(this.proxy) == false) {
                     System.Net.WebProxy proxy = new System.Net.WebProxy(this.proxy);

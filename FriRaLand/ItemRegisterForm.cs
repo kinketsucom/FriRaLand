@@ -144,7 +144,7 @@ namespace FriRaLand {
                 this.Fril_CategoryComboBoxLevel4.SelectedIndex = -1;
                 this.Fril_CategoryComboBoxLevel2.Text = "選択してください";
                 foreach (var c in FriRaCommon.fril_categoryDictionary[nowfril_selectedCategory.id]) {
-                    Console.WriteLine(c.id.ToString() + ":" + c.name.ToString());
+                    //Console.WriteLine(c.id.ToString() + ":" + c.name.ToString());
                     this.Fril_CategoryComboBoxLevel2.Items.Add(c);
                 }
             }
@@ -326,10 +326,13 @@ namespace FriRaLand {
         private void SaveExhibitItemButton_Click(object sender, EventArgs e) {
             CookieContainer cc = new CookieContainer();
             FrilAPI api = new FrilAPI(TestForm.mail, TestForm.pass);
-            api.tryFrilLogin(cc);
-            FrilItem item = CollectSellSettingsFromGUI();
-
-            api.Sell(item,cc);
+            try{
+                if(!api.tryFrilLogin(cc)) throw new Exception("ログイン失敗(mailかpassが間違っています)");
+                FrilItem item = CollectSellSettingsFromGUI();
+                api.Sell(item, cc);
+            } catch(Exception ex) {
+                Console.WriteLine(ex);
+            }
         }
 
         //
@@ -363,13 +366,13 @@ namespace FriRaLand {
             //配送元地域
             if (this.ShippingAreaComboBox.SelectedItem != null) {
                 KeyValuePair<string, string> area = (KeyValuePair<string, string>)this.ShippingAreaComboBox.SelectedItem;
-               // Console.WriteLine("category_area:" + area.Value);
+                // Console.WriteLine("category_area:" + area.Value);
                 item_data.d_area = int.Parse(area.Value);
             }
             //配送日数
             if (this.ShippingDurationComboBox.SelectedItem != null) {
                 KeyValuePair<string, string> duration = (KeyValuePair<string, string>)this.ShippingDurationComboBox.SelectedItem;
-               // Console.WriteLine("delivery_date:" + duration.Value);
+                // Console.WriteLine("delivery_date:" + duration.Value);
                 item_data.d_date = int.Parse(duration.Value);
             }
             //配送方法
@@ -383,6 +386,8 @@ namespace FriRaLand {
                 string detail = this.DescriptionTextBox.Text;
                 //Console.WriteLine("detail:"+detail);
                 item_data.detail = detail;
+            } else {
+                item_data.detail = "detail";
             }
             //item_id
             //Console.WriteLine("item_id:0");
@@ -422,9 +427,22 @@ namespace FriRaLand {
                 string name = this.ItemNameTextBox.Text;
                 //Console.WriteLine("title:"+name);
                 item_data.item_name = name;
+            } else {
+                item_data.item_name = "title";
             }
-
-
+            ;//画像パス
+            if (!string.IsNullOrEmpty(pictureBox1.ImageLocation)){
+                item_data.imagepaths[0] = pictureBox1.ImageLocation;
+            }
+            if (!string.IsNullOrEmpty(pictureBox2.ImageLocation)) {
+                item_data.imagepaths[1] = pictureBox2.ImageLocation;
+            }
+            if (!string.IsNullOrEmpty(pictureBox3.ImageLocation)) {
+                item_data.imagepaths[2] = pictureBox3.ImageLocation;
+            }
+            if (!string.IsNullOrEmpty(pictureBox4.ImageLocation)) {
+                item_data.imagepaths[3] = pictureBox4.ImageLocation;
+            }
 
             //item.brand_id = ;
             //param.Add("category", item.category_id.ToString());
