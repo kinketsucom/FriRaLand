@@ -409,6 +409,7 @@
             this.PriceTextBox.Name = "PriceTextBox";
             this.PriceTextBox.Size = new System.Drawing.Size(211, 22);
             this.PriceTextBox.TabIndex = 128;
+            this.PriceTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PriceTextBox_KeyPress);
             // 
             // ShippingDurationComboBox
             // 

@@ -431,6 +431,21 @@ namespace FriRaLand {
             return item_data;
         }
 
+        private void PriceTextBox_KeyPress(object sender, KeyPressEventArgs e) {
+            // 制御文字は入力可
+            if (char.IsControl(e.KeyChar)) {
+                e.Handled = false;
+                return;
+            }
+
+            // 数字(0-9)は入力可
+            if (char.IsDigit(e.KeyChar)) {
+                e.Handled = false;
+                return;
+            }
+            // 上記以外は入力不可
+            e.Handled = true;
+        }
     }
 
 }
