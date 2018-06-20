@@ -18,7 +18,7 @@ namespace FriRaLand {
         public int d_area;//delivary_from_area;
         public string user_id;//出品者ID
         public DateTime created_at;//ex)2017-09-27T09:12:57+09:00
-        public string screen_name; //出品者アカウント名
+        public string screen_name = ""; //出品者アカウント名
         public int category_id;
         public int category_p_id;//parent?
         public int size_id; //19999=>なし
@@ -27,8 +27,8 @@ namespace FriRaLand {
         public int i_brand_id;
         public int comments_count;
         public int likes_count;
-        public string[] imageurls = new string[4]; //画像URL
-        public string[] imagepaths = new string[4]; //ローカルの画像パス
+        public string[] imageurls = new string[]{"","","",""}; //画像URL
+        public string[] imagepaths = new string[] { "", "", "", "" }; //ローカルの画像パス
         public FrilItem() {
 
         }
@@ -62,7 +62,7 @@ namespace FriRaLand {
                     imageurls[num++] = image.file_name;
                 }
                 //comment,like
-                this.commens_count = (int)json.comments_count;
+                this.comments_count = (int)json.comments_count;
                 this.likes_count = (int)json.likes_count;
             }
             catch (Exception ex) {

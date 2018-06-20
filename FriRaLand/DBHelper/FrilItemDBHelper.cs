@@ -25,7 +25,7 @@ namespace FriRaLand.DBHelper {
                                 + "size_id INTEGER, size_name TEXT,brand_id INTEGER,"
                                 + "i_brand_id INTEGER, comments_count INTEGER,"
                                 + "likes_count INTEGER,"
-                                + "Pic1 TEXT,Pic2 TEXT,Pic3 TEXT,Pic4 TEXT,";//imagepathsのほう
+                                + "Pic1 TEXT,Pic2 TEXT,Pic3 TEXT,Pic4 TEXT);";//imagepathsのほう
                    
             SQLiteCommand command = conn.CreateCommand();
             command.CommandText = commandText;
@@ -70,71 +70,67 @@ namespace FriRaLand.DBHelper {
             Console.WriteLine(max_number);
             return max_number;
         }
-        public void addNumberColumn() {
-            int user_version = LoadUserVersion();
-            //更新
-            if (user_version < 14) {
-                conn.Open();
-                string commandText = "pragma user_version = 14;";
-                SQLiteCommand command = conn.CreateCommand();
-                command.CommandText = commandText;
-                command.ExecuteNonQuery();
-                command.Dispose();
-                conn.Close();
+        //public void addNumberColumn() {
+        //    int user_version = LoadUserVersion();
+        //    //更新
+        //    if (user_version < 14) {
+        //        conn.Open();
+        //        string commandText = "pragma user_version = 14;";
+        //        SQLiteCommand command = conn.CreateCommand();
+        //        command.CommandText = commandText;
+        //        command.ExecuteNonQuery();
+        //        command.Dispose();
+        //        conn.Close();
 
-                conn.Open();
-                commandText = "alter table items add number INTEGER;";
-                command = conn.CreateCommand();
-                command.CommandText = commandText;
-                command.ExecuteNonQuery();
-                command.Dispose();
-                conn.Close();
+        //        conn.Open();
+        //        commandText = "alter table items add number INTEGER;";
+        //        command = conn.CreateCommand();
+        //        command.CommandText = commandText;
+        //        command.ExecuteNonQuery();
+        //        command.Dispose();
+        //        conn.Close();
 
-                conn.Open();
-                commandText = "update items set number = rowid;";
-                command = conn.CreateCommand();
-                command.CommandText = commandText;
-                command.ExecuteNonQuery();
-                command.Dispose();
-                conn.Close();
-            }
-        }
+        //        conn.Open();
+        //        commandText = "update items set number = rowid;";
+        //        command = conn.CreateCommand();
+        //        command.CommandText = commandText;
+        //        command.ExecuteNonQuery();
+        //        command.Dispose();
+        //        conn.Close();
+        //    }
+        //}
         public void addItem(FrilItem item) {
             //addするときはまずmax(number)を取得して+1の値をいれる
-            int max_number = getMaxNumber();
-            int new_number = 0;
-            if (max_number < 0) {
-                //はじめてアカウントを追加する
-                new_number = 1;
-            } else {
-                new_number = max_number + 1;
-            }
+            //int max_number = getMaxNumber();
+            //int new_number = 0;
+            //if (max_number < 0) {
+            //    //はじめてアカウントを追加する
+            //    new_number = 1;
+            //} else {
+            //    new_number = max_number + 1;
+            //}
             conn.Open();
 
 
+            string commandText = "INSERT INTO items ("
+                                    + "item_id, item_name, detail, s_price, status, t_status,"
+                                    + "carriage, d_method, d_date, d_area, "
+                                    + "user_id, created_at,screen_name,category_id, "
+                                    + "category_p_id,size_id,size_name,brand_id,i_brand_id,"
+                                    + "comments_count,likes_count,Pic1,Pic2,Pic3,Pic4) "
+                                    + "VALUES ('" + item.item_id.Replace("'", "''") + "','" + item.item_name.Replace("'", "''") 
+                                    + "','" + item.detail + "'," + item.s_price.ToString() + "," + item.status.ToString() 
+                                    + "," + item.t_status.ToString() + ","
+                                    + item.carriage.ToString() + "," + item.d_method.ToString() + "," 
+                                    + item.d_date.ToString() + "," + item.d_area.ToString() + ",'"
+                                    + item.user_id + "','" + item.created_at.ToString() + "','" + item.screen_name.ToString() + "',"
+                                    + item.category_id.ToString() + "," + item.category_p_id.ToString() + "," 
+                                    + item.size_id.ToString() + ",'" + item.size_name + "', "
+                                    + item.brand_id.ToString() + "," + item.i_brand_id + ", "
+                                    + item.comments_count.ToString() + "," + item.likes_count + ",' "
+                                    + item.imagepaths[0].ToString() + "','" + item.imagepaths[1] + "','"
+                                    + item.imagepaths[2].ToString() + "','" + item.imagepaths[3] + "');";
 
- 
-
-
-        string commandText = "INSERT INTO items ("
-                                + "item_id, item_name, detail, s_price, status, t_status,"
-                                + "carriage, d_method, d_date, d_area, "
-                                + "user_id, created_at,screen_name,category_id, "
-                                + "category_p_id,size_id,size_name,brand_id,i_brand_id,"
-                                + "comments_count,likes_count,Pic1,Pic2,Pic3,Pic4) "
-                                + "VALUES ('" + item.item_id.Replace("'", "''") + "','" + item.item_name.Replace("'", "''") 
-                                + "','" + item.detail + "','" + item.s_price.ToString() + "','" + item.status.ToString() 
-                                + "','" + item.t_status.ToString() + "',"
-                                + item.carriage.ToString() + "," + item.d_method.ToString() + "," 
-                                + item.d_date.ToString() + "," + item.d_area.ToString() + ","
-                                + item.user_id + "," + item.created_at.ToString() + "," + item.screen_name.ToString() + ","
-                                + item.category_id.ToString() + "," + item.category_p_id.ToString() + "," + item.size_id.ToString() + "," 
-                                + item.size_id.ToString() + "," + item.size_name + ", "
-                                + item.brand_id.ToString() + "," + item.i_brand_id + ", "
-                                + item.comments_count.ToString() + "," + item.likes_count + ", "
-                                + item.imagepaths[0].ToString() + "," + item.imagepaths[1] + ", "
-                                + item.imagepaths[2].ToString() + "," + item.imagepaths[3] + ", "
-                                + ");";
             SQLiteCommand command = conn.CreateCommand();
             command.CommandText = commandText;
             command.ExecuteNonQuery();
@@ -324,99 +320,99 @@ namespace FriRaLand.DBHelper {
         //    return rst;
         //}
 
-        public bool updateItem(int DBId, ItemRegisterForm.FrilExhibitItem item) {
-            try {
-                conn.Open();
-                string commandText = "UPDATE items SET "
-                                    + "ItemName = '" + item.name.Replace("'", "''") + "',"
-                                    + "ItemDescription = '" + item.description.Replace("'", "''") + "',"
-                                    + "Pic1 = '" + item.picturelocation[0] + "',"
-                                    + "Pic2 = '" + item.picturelocation[1] + "',"
-                                    + "Pic3 = '" + item.picturelocation[2] + "',"
-                                    + "Pic4 = '" + item.picturelocation[3] + "',"
-                                    + "CategoryLevel1 = " + item.category_level1_id.ToString() + ","
-                                    + "CategoryLevel2 = " + item.category_level2_id.ToString() + ","
-                                    + "CategoryLevel3 = " + item.category_level3_id.ToString() + ","
-                                    + "CategoryLevel4 = " + item.category_level4_id.ToString() + ","
-                                    + "Size = " + item.size_id.ToString() + ", Brand = " + item.brand_id.ToString() + ", ItemCondition =  " + item.item_condition_id.ToString() + ","
-                                    + "ShippingPayer = " + item.shipping_payer_id.ToString() + ", ShippingDuration = " + item.shipping_duration_id.ToString() + ","
-                                    + "ShippingMethod = " + item.shipping_method_id.ToString() + ", ShippingArea = " + item.shipping_area_id.ToString() + ","
-                                    + "Price = " + item.price.ToString()
-                                    + " WHERE Id = " + DBId.ToString() + ";";
-                SQLiteCommand command = conn.CreateCommand();
-                command.CommandText = commandText;
-                command.ExecuteNonQuery();
-                command.Dispose();
-                conn.Close();
-                Log.Logger.Info("商品DBの更新に成功");
-                return true;
-            } catch (Exception ex) {
-                conn.Close();
-                Log.Logger.Error(ex.Message);
-                Log.Logger.Error("商品DBの更新に失敗");
-                return false;
-            }
-        }
+        //public bool updateItem(int DBId, FrilItem item) {
+        //    try {
+        //        conn.Open();
+        //        string commandText = "UPDATE items SET "
+        //                            + "ItemName = '" + item.name.Replace("'", "''") + "',"
+        //                            + "ItemDescription = '" + item.description.Replace("'", "''") + "',"
+        //                            + "Pic1 = '" + item.picturelocation[0] + "',"
+        //                            + "Pic2 = '" + item.picturelocation[1] + "',"
+        //                            + "Pic3 = '" + item.picturelocation[2] + "',"
+        //                            + "Pic4 = '" + item.picturelocation[3] + "',"
+        //                            + "CategoryLevel1 = " + item.category_level1_id.ToString() + ","
+        //                            + "CategoryLevel2 = " + item.category_level2_id.ToString() + ","
+        //                            + "CategoryLevel3 = " + item.category_level3_id.ToString() + ","
+        //                            + "CategoryLevel4 = " + item.category_level4_id.ToString() + ","
+        //                            + "Size = " + item.size_id.ToString() + ", Brand = " + item.brand_id.ToString() + ", ItemCondition =  " + item.item_condition_id.ToString() + ","
+        //                            + "ShippingPayer = " + item.shipping_payer_id.ToString() + ", ShippingDuration = " + item.shipping_duration_id.ToString() + ","
+        //                            + "ShippingMethod = " + item.shipping_method_id.ToString() + ", ShippingArea = " + item.shipping_area_id.ToString() + ","
+        //                            + "Price = " + item.price.ToString()
+        //                            + " WHERE Id = " + DBId.ToString() + ";";
+        //        SQLiteCommand command = conn.CreateCommand();
+        //        command.CommandText = commandText;
+        //        command.ExecuteNonQuery();
+        //        command.Dispose();
+        //        conn.Close();
+        //        Log.Logger.Info("商品DBの更新に成功");
+        //        return true;
+        //    } catch (Exception ex) {
+        //        conn.Close();
+        //        Log.Logger.Error(ex.Message);
+        //        Log.Logger.Error("商品DBの更新に失敗");
+        //        return false;
+        //    }
+        //}
 
-        public bool deleteItem(List<int> DBIdList) {
-            if (DBIdList.Count == 0) return true;
-            try {
-                string text = string.Join(",", DBIdList.ToArray());
-                this.conn.Open();
-                string commandText = "DELETE FROM items Where Id in (" + text + ");";
-                SQLiteCommand command = conn.CreateCommand();
-                command.CommandText = commandText;
-                command.ExecuteNonQuery();
-                command.Dispose();
-                conn.Close();
-                Log.Logger.Info("商品DBからの商品削除成功");
-                return true;
-            } catch (Exception ex) {
-                conn.Close();
-                Log.Logger.Error(ex.Message);
-                Log.Logger.Error("商品DBからの商品削除失敗");
-                return false;
-            }
-        }
+        //public bool deleteItem(List<int> DBIdList) {
+        //    if (DBIdList.Count == 0) return true;
+        //    try {
+        //        string text = string.Join(",", DBIdList.ToArray());
+        //        this.conn.Open();
+        //        string commandText = "DELETE FROM items Where Id in (" + text + ");";
+        //        SQLiteCommand command = conn.CreateCommand();
+        //        command.CommandText = commandText;
+        //        command.ExecuteNonQuery();
+        //        command.Dispose();
+        //        conn.Close();
+        //        Log.Logger.Info("商品DBからの商品削除成功");
+        //        return true;
+        //    } catch (Exception ex) {
+        //        conn.Close();
+        //        Log.Logger.Error(ex.Message);
+        //        Log.Logger.Error("商品DBからの商品削除失敗");
+        //        return false;
+        //    }
+        //}
 
         //同一商品がDBに存在すればID返す なければ0
-        public int getItemDBId(ItemRegisterForm.FrilExhibitItem item) {
-            int rst = 0;
-            this.conn.Open();
-            try {
-                SQLiteCommand sQLiteCommand = new SQLiteCommand("select i.Id from items i where"
-                                    + " i.ItemName = '" + item.name.Replace("'", "''") + "'"
-                                    + " AND i.ItemDescription = '" + item.description.Replace("'", "''") + "'"
-                                    + " AND i.Pic1 = '" + item.picturelocation[0].Replace("'", "''") + "'"
-                                    + " AND i.Pic2 = '" + item.picturelocation[1].Replace("'", "''") + "'"
-                                    + " AND i.Pic3 = '" + item.picturelocation[2].Replace("'", "''") + "'"
-                                    + " AND i.Pic4 = '" + item.picturelocation[3].Replace("'", "''") + "'"
-                                    + " AND i.CategoryLevel1 = " + item.category_level1_id.ToString()
-                                    + " AND i.CategoryLevel2 = " + item.category_level2_id.ToString()
-                                    + " AND i.CategoryLevel3 = " + item.category_level3_id.ToString()
-                                    + " AND i.CategoryLevel4 = " + item.category_level4_id.ToString()
-                                    + " AND i.Size = " + item.size_id.ToString()
-                                    + " AND i.Brand = " + item.brand_id.ToString()
-                                    + " AND i.ItemCondition = " + item.item_condition_id.ToString()
-                                    + " AND i.ShippingPayer = " + item.shipping_payer_id.ToString()
-                                    + " AND i.ShippingDuration = " + item.shipping_duration_id.ToString()
-                                    + " AND i.ShippingMethod = " + item.shipping_method_id.ToString()
-                                    + " AND i.ShippingArea = " + item.shipping_area_id.ToString()
-                                    + " AND i.ShippingPayer = " + item.shipping_payer_id.ToString()
-                                    + " AND i.Price = " + item.price.ToString() + ";", this.conn);
-                SQLiteDataReader sQLiteDataReader = sQLiteCommand.ExecuteReader();
-                while (sQLiteDataReader.Read()) {
-                    rst = int.Parse(sQLiteDataReader["Id"].ToString());
-                }
-                sQLiteDataReader.Close();
-                this.conn.Close();
-                sQLiteCommand.Dispose();
-                return rst;
-            } catch (Exception ex) {
-                this.conn.Close();
-                return rst;
-            }
-        }
+        //public int getItemDBId(ItemRegisterForm.FrilExhibitItem item) {
+        //    int rst = 0;
+        //    this.conn.Open();
+        //    try {
+        //        SQLiteCommand sQLiteCommand = new SQLiteCommand("select i.Id from items i where"
+        //                            + " i.ItemName = '" + item.name.Replace("'", "''") + "'"
+        //                            + " AND i.ItemDescription = '" + item.description.Replace("'", "''") + "'"
+        //                            + " AND i.Pic1 = '" + item.picturelocation[0].Replace("'", "''") + "'"
+        //                            + " AND i.Pic2 = '" + item.picturelocation[1].Replace("'", "''") + "'"
+        //                            + " AND i.Pic3 = '" + item.picturelocation[2].Replace("'", "''") + "'"
+        //                            + " AND i.Pic4 = '" + item.picturelocation[3].Replace("'", "''") + "'"
+        //                            + " AND i.CategoryLevel1 = " + item.category_level1_id.ToString()
+        //                            + " AND i.CategoryLevel2 = " + item.category_level2_id.ToString()
+        //                            + " AND i.CategoryLevel3 = " + item.category_level3_id.ToString()
+        //                            + " AND i.CategoryLevel4 = " + item.category_level4_id.ToString()
+        //                            + " AND i.Size = " + item.size_id.ToString()
+        //                            + " AND i.Brand = " + item.brand_id.ToString()
+        //                            + " AND i.ItemCondition = " + item.item_condition_id.ToString()
+        //                            + " AND i.ShippingPayer = " + item.shipping_payer_id.ToString()
+        //                            + " AND i.ShippingDuration = " + item.shipping_duration_id.ToString()
+        //                            + " AND i.ShippingMethod = " + item.shipping_method_id.ToString()
+        //                            + " AND i.ShippingArea = " + item.shipping_area_id.ToString()
+        //                            + " AND i.ShippingPayer = " + item.shipping_payer_id.ToString()
+        //                            + " AND i.Price = " + item.price.ToString() + ";", this.conn);
+        //        SQLiteDataReader sQLiteDataReader = sQLiteCommand.ExecuteReader();
+        //        while (sQLiteDataReader.Read()) {
+        //            rst = int.Parse(sQLiteDataReader["Id"].ToString());
+        //        }
+        //        sQLiteDataReader.Close();
+        //        this.conn.Close();
+        //        sQLiteCommand.Dispose();
+        //        return rst;
+        //    } catch (Exception ex) {
+        //        this.conn.Close();
+        //        return rst;
+        //    }
+        //}
         public void swapNumber(int DBId1, int DBId2) {
             //それぞれのnumberを取得する
             int number1, number2;

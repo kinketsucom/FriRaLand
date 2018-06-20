@@ -24,20 +24,24 @@
         /// </summary>
         private void InitializeComponent() {
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.Fril_ShippingMethodComboBox = new System.Windows.Forms.ComboBox();
             this.label15 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
             this.Fril_ItemConditionComboBox = new System.Windows.Forms.ComboBox();
             this.Fril_ShippingPayerComboBox = new System.Windows.Forms.ComboBox();
             this.Fril_SizeComboBox = new System.Windows.Forms.ComboBox();
-            this.label20 = new System.Windows.Forms.Label();
             this.Fril_CategoryComboBoxLevel1 = new System.Windows.Forms.ComboBox();
             this.Fril_CategoryComboBoxLevel2 = new System.Windows.Forms.ComboBox();
             this.Fril_CategoryComboBoxLevel3 = new System.Windows.Forms.ComboBox();
             this.Fril_CategoryComboBoxLevel4 = new System.Windows.Forms.ComboBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.ShippingDurationComboBox = new System.Windows.Forms.ComboBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.ShippingAreaComboBox = new System.Windows.Forms.ComboBox();
+            this.Fril_ShippingMethodComboBox = new System.Windows.Forms.ComboBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
             this.Fril_BrandComboBox = new System.Windows.Forms.ComboBox();
             this.childIDTextBox = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
@@ -52,8 +56,6 @@
             this.button3 = new System.Windows.Forms.Button();
             this.SaveExhibitItemButton = new System.Windows.Forms.Button();
             this.PriceTextBox = new System.Windows.Forms.TextBox();
-            this.ShippingDurationComboBox = new System.Windows.Forms.ComboBox();
-            this.ShippingAreaComboBox = new System.Windows.Forms.ComboBox();
             this.DescriptionTextBox = new System.Windows.Forms.RichTextBox();
             this.ItemNameTextBox = new System.Windows.Forms.TextBox();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
@@ -62,8 +64,6 @@
             this.label13 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -100,17 +100,6 @@
             this.groupBox2.TabIndex = 142;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "必須";
-            // 
-            // Fril_ShippingMethodComboBox
-            // 
-            this.Fril_ShippingMethodComboBox.FormattingEnabled = true;
-            this.Fril_ShippingMethodComboBox.Location = new System.Drawing.Point(7, 90);
-            this.Fril_ShippingMethodComboBox.Margin = new System.Windows.Forms.Padding(4);
-            this.Fril_ShippingMethodComboBox.Name = "Fril_ShippingMethodComboBox";
-            this.Fril_ShippingMethodComboBox.Size = new System.Drawing.Size(211, 23);
-            this.Fril_ShippingMethodComboBox.TabIndex = 76;
-            this.Fril_ShippingMethodComboBox.Text = "選択してください";
-            this.Fril_ShippingMethodComboBox.Format += new System.Windows.Forms.ListControlConvertEventHandler(this.Fril_ShippingMethodComboBox_Format);
             // 
             // label15
             // 
@@ -156,16 +145,6 @@
             this.label18.TabIndex = 68;
             this.label18.Text = "サイズ";
             // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(7, 26);
-            this.label19.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(90, 15);
-            this.label19.TabIndex = 69;
-            this.label19.Text = "ブランド(任意)";
-            // 
             // Fril_ItemConditionComboBox
             // 
             this.Fril_ItemConditionComboBox.FormattingEnabled = true;
@@ -200,16 +179,6 @@
             this.Fril_SizeComboBox.TabIndex = 74;
             this.Fril_SizeComboBox.Text = "選択してください";
             this.Fril_SizeComboBox.Format += new System.Windows.Forms.ListControlConvertEventHandler(this.Fril_SizeComboBox_Format);
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(7, 71);
-            this.label20.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(79, 15);
-            this.label20.TabIndex = 75;
-            this.label20.Text = "配送の方法";
             // 
             // Fril_CategoryComboBoxLevel1
             // 
@@ -261,6 +230,81 @@
             this.Fril_CategoryComboBoxLevel4.Visible = false;
             this.Fril_CategoryComboBoxLevel4.SelectedIndexChanged += new System.EventHandler(this.Fril_CategoryComboBoxLevel4_SelectedIndexChanged);
             this.Fril_CategoryComboBoxLevel4.Format += new System.Windows.Forms.ListControlConvertEventHandler(this.Fril_CategoryComboBoxLevel4_Format);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label9.Location = new System.Drawing.Point(12, 309);
+            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(109, 15);
+            this.label9.TabIndex = 116;
+            this.label9.Text = "発送までの日数";
+            // 
+            // ShippingDurationComboBox
+            // 
+            this.ShippingDurationComboBox.FormattingEnabled = true;
+            this.ShippingDurationComboBox.Location = new System.Drawing.Point(20, 328);
+            this.ShippingDurationComboBox.Margin = new System.Windows.Forms.Padding(4);
+            this.ShippingDurationComboBox.Name = "ShippingDurationComboBox";
+            this.ShippingDurationComboBox.Size = new System.Drawing.Size(212, 23);
+            this.ShippingDurationComboBox.TabIndex = 126;
+            this.ShippingDurationComboBox.Text = "選択してください";
+            this.ShippingDurationComboBox.Format += new System.Windows.Forms.ListControlConvertEventHandler(this.ShippingDurationComboBox_Format);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label8.Location = new System.Drawing.Point(12, 355);
+            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(100, 15);
+            this.label8.TabIndex = 115;
+            this.label8.Text = "発送元の地域";
+            // 
+            // ShippingAreaComboBox
+            // 
+            this.ShippingAreaComboBox.FormattingEnabled = true;
+            this.ShippingAreaComboBox.Location = new System.Drawing.Point(20, 374);
+            this.ShippingAreaComboBox.Margin = new System.Windows.Forms.Padding(4);
+            this.ShippingAreaComboBox.Name = "ShippingAreaComboBox";
+            this.ShippingAreaComboBox.Size = new System.Drawing.Size(212, 23);
+            this.ShippingAreaComboBox.TabIndex = 125;
+            this.ShippingAreaComboBox.Text = "選択してください";
+            this.ShippingAreaComboBox.Format += new System.Windows.Forms.ListControlConvertEventHandler(this.ShippingAreaComboBox_Format);
+            // 
+            // Fril_ShippingMethodComboBox
+            // 
+            this.Fril_ShippingMethodComboBox.FormattingEnabled = true;
+            this.Fril_ShippingMethodComboBox.Location = new System.Drawing.Point(7, 90);
+            this.Fril_ShippingMethodComboBox.Margin = new System.Windows.Forms.Padding(4);
+            this.Fril_ShippingMethodComboBox.Name = "Fril_ShippingMethodComboBox";
+            this.Fril_ShippingMethodComboBox.Size = new System.Drawing.Size(211, 23);
+            this.Fril_ShippingMethodComboBox.TabIndex = 76;
+            this.Fril_ShippingMethodComboBox.Text = "選択してください";
+            this.Fril_ShippingMethodComboBox.Format += new System.Windows.Forms.ListControlConvertEventHandler(this.Fril_ShippingMethodComboBox_Format);
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(7, 26);
+            this.label19.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(90, 15);
+            this.label19.TabIndex = 69;
+            this.label19.Text = "ブランド(任意)";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(7, 71);
+            this.label20.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(79, 15);
+            this.label20.TabIndex = 75;
+            this.label20.Text = "配送の方法";
             // 
             // Fril_BrandComboBox
             // 
@@ -371,7 +415,6 @@
             // 
             // ExhibitNowButton
             // 
-            this.ExhibitNowButton.Enabled = false;
             this.ExhibitNowButton.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.ExhibitNowButton.Location = new System.Drawing.Point(155, 630);
             this.ExhibitNowButton.Margin = new System.Windows.Forms.Padding(4);
@@ -413,28 +456,6 @@
             this.PriceTextBox.Size = new System.Drawing.Size(212, 22);
             this.PriceTextBox.TabIndex = 128;
             this.PriceTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PriceTextBox_KeyPress);
-            // 
-            // ShippingDurationComboBox
-            // 
-            this.ShippingDurationComboBox.FormattingEnabled = true;
-            this.ShippingDurationComboBox.Location = new System.Drawing.Point(20, 328);
-            this.ShippingDurationComboBox.Margin = new System.Windows.Forms.Padding(4);
-            this.ShippingDurationComboBox.Name = "ShippingDurationComboBox";
-            this.ShippingDurationComboBox.Size = new System.Drawing.Size(212, 23);
-            this.ShippingDurationComboBox.TabIndex = 126;
-            this.ShippingDurationComboBox.Text = "選択してください";
-            this.ShippingDurationComboBox.Format += new System.Windows.Forms.ListControlConvertEventHandler(this.ShippingDurationComboBox_Format);
-            // 
-            // ShippingAreaComboBox
-            // 
-            this.ShippingAreaComboBox.FormattingEnabled = true;
-            this.ShippingAreaComboBox.Location = new System.Drawing.Point(20, 374);
-            this.ShippingAreaComboBox.Margin = new System.Windows.Forms.Padding(4);
-            this.ShippingAreaComboBox.Name = "ShippingAreaComboBox";
-            this.ShippingAreaComboBox.Size = new System.Drawing.Size(212, 23);
-            this.ShippingAreaComboBox.TabIndex = 125;
-            this.ShippingAreaComboBox.Text = "選択してください";
-            this.ShippingAreaComboBox.Format += new System.Windows.Forms.ListControlConvertEventHandler(this.ShippingAreaComboBox_Format);
             // 
             // DescriptionTextBox
             // 
@@ -521,28 +542,6 @@
             this.label10.Size = new System.Drawing.Size(39, 15);
             this.label10.TabIndex = 117;
             this.label10.Text = "価格";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label9.Location = new System.Drawing.Point(12, 309);
-            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(109, 15);
-            this.label9.TabIndex = 116;
-            this.label9.Text = "発送までの日数";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label8.Location = new System.Drawing.Point(12, 355);
-            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(100, 15);
-            this.label8.TabIndex = 115;
-            this.label8.Text = "発送元の地域";
             // 
             // label2
             // 

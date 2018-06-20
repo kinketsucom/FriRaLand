@@ -380,7 +380,10 @@ namespace FriRaLand {
         private void SaveExhibitItemButton_Click(object sender, EventArgs e) {
             //GUIからItem情報を保存する
             FrilItem item = CollectSellSettingsFromGUI();
-
+            FrilItemDBHelper DbHelper = new FrilItemDBHelper();
+            DbHelper.onCreate();
+            DbHelper.addItem(item);
+            
             //商品名が設定で制限した長さ以内か調べる
             //if (this.ItemNameTextBox.Text.Length > Settings.getItemNameMaxLength()) {
             //    MessageBox.Show("商品名の長さがオプションで設定した長さより長いです", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
