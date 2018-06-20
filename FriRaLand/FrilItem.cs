@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace FriRaLand {
-    class FrilItem {
+    public class FrilItem {
         public string item_id;
         public string item_name;
         public string detail;
