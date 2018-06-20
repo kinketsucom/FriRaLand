@@ -12,16 +12,21 @@ namespace FriRaLand.DBHelper {
         public FrilItemDBHelper() {
             this.conn = new SQLiteConnection("Data Source=" + DBname + ";foreign keys = true;");
         }
+     
 
         public void onCreate() {
             conn.Open();
             string commandText = "CREATE TABLE IF NOT EXISTS items ( Id INTEGER PRIMARY KEY AUTOINCREMENT,"
-                                + "ItemName TEXT,ItemDescription TEXT,"
-                                + "Pic1 TEXT,Pic2 TEXT,Pic3 TEXT,Pic4 TEXT,"
-                                + "CategoryLevel1 INTEGER, CategoryLevel2 INTEGER, CategoryLevel3 INTEGER, CategoryLevel4 INTEGER, "
-                                + "Size INTEGER, Brand INTEGER, ItemCondition INTEGER, "
-                                + "ShippingPayer INTEGER, ShippingDuration INTEGER, ShippingMethod INTEGER,ShippingArea INTEGER,"
-                                + "Price INTEGER);";
+                                + "item_id TEXT,item_name TEXT, detail TEXT,"
+                                + "s_price INTEGER,status INTEGER, t_status INTEGER,"
+                                + "carriage INTEGER,d_method INTEGER, d_date INTEGER,d_area INTEGER,"
+                                + "user_id TEXT, created_at TEXT,"//created_atはDateTime型
+                                + "screen_name TEXT, category_id INTEGER, category_p_id INTEGER,"
+                                + "size_id INTEGER, size_name TEXT,brand_id INTEGER,"
+                                + "i_brand_id INTEGER, comments_count INTEGER,"
+                                + "likes_count INTEGER,"
+                                + "Pic1 TEXT,Pic2 TEXT,Pic3 TEXT,Pic4 TEXT,";//imagepathsのほう
+                   
             SQLiteCommand command = conn.CreateCommand();
             command.CommandText = commandText;
             command.ExecuteNonQuery();
@@ -94,7 +99,7 @@ namespace FriRaLand.DBHelper {
                 conn.Close();
             }
         }
-        public void addItem(ItemRegisterForm.FrilExhibitItem item) {
+        public void addItem(FrilItem item) {
             //addするときはまずmax(number)を取得して+1の値をいれる
             int max_number = getMaxNumber();
             int new_number = 0;
@@ -105,23 +110,41 @@ namespace FriRaLand.DBHelper {
                 new_number = max_number + 1;
             }
             conn.Open();
-            string commandText = "INSERT INTO items ("
-                                + "ItemName, ItemDescription, Pic1, Pic2, Pic3, Pic4,"
-                                + "CategoryLevel1, CategoryLevel2, CategoryLevel3, CategoryLevel4, "
-                                + "Size, Brand, ItemCondition, "
-                                + "ShippingPayer, ShippingDuration, ShippingMethod, ShippingArea,"
-                                + "Price, number) "
-                                + "VALUES ('" + item.name.Replace("'", "''") + "','" + item.description.Replace("'", "''") + "','" + item.picturelocation[0] + "','" + item.picturelocation[1] + "','" + item.picturelocation[2] + "','" + item.picturelocation[3] + "',"
-                                + item.category_level1_id.ToString() + "," + item.category_level2_id.ToString() + "," + item.category_level3_id.ToString() + "," + item.category_level4_id.ToString() + ","
-                                + item.size_id.ToString() + "," + item.brand_id.ToString() + "," + item.item_condition_id.ToString() + ","
-                                + item.shipping_payer_id.ToString() + "," + item.shipping_duration_id.ToString() + "," + item.shipping_method_id.ToString() + "," + item.shipping_area_id.ToString() + ","
-                                + item.price.ToString() + ", " + new_number.ToString() + ");";
+
+
+
+ 
+
+
+        string commandText = "INSERT INTO items ("
+                                + "item_id, item_name, detail, s_price, status, t_status,"
+                                + "carriage, d_method, d_date, d_area, "
+                                + "user_id, created_at,screen_name,category_id, "
+                                + "category_p_id,size_id,size_name,brand_id,i_brand_id,"
+                                + "comments_count,likes_count,Pic1,Pic2,Pic3,Pic4) "
+                                + "VALUES ('" + item.item_id.Replace("'", "''") + "','" + item.item_name.Replace("'", "''") 
+                                + "','" + item.detail + "','" + item.s_price.ToString() + "','" + item.status.ToString() 
+                                + "','" + item.t_status.ToString() + "',"
+                                + item.carriage.ToString() + "," + item.d_method.ToString() + "," 
+                                + item.d_date.ToString() + "," + item.d_area.ToString() + ","
+                                + item.user_id + "," + item.created_at.ToString() + "," + item.screen_name.ToString() + ","
+                                + item.category_id.ToString() + "," + item.category_p_id.ToString() + "," + item.size_id.ToString() + "," 
+                                + item.size_id.ToString() + "," + item.size_name + ", "
+                                + item.brand_id.ToString() + "," + item.i_brand_id + ", "
+                                + item.comments_count.ToString() + "," + item.likes_count + ", "
+                                + item.imagepaths[0].ToString() + "," + item.imagepaths[1] + ", "
+                                + item.imagepaths[2].ToString() + "," + item.imagepaths[3] + ", "
+                                + ");";
             SQLiteCommand command = conn.CreateCommand();
             command.CommandText = commandText;
             command.ExecuteNonQuery();
             command.Dispose();
             conn.Close();
-        }
+
+
+
+
+    }
 
         public List<FrilItem> loadItems() {
             List<FrilItem> rst = new List<FrilItem>();
@@ -130,25 +153,32 @@ namespace FriRaLand.DBHelper {
             SQLiteDataReader sQLiteDataReader = sQLiteCommand.ExecuteReader();
             while (sQLiteDataReader.Read()) {
                 try {
-                    ItemRegisterForm.FrilExhibitItem item = new ItemRegisterForm.FrilExhibitItem();
-                    item.name = sQLiteDataReader["ItemName"].ToString();
-                    item.description = sQLiteDataReader["ItemDescription"].ToString();
-                    item.picturelocation[0] = sQLiteDataReader["Pic1"].ToString();
-                    item.picturelocation[1] = sQLiteDataReader["Pic2"].ToString();
-                    item.picturelocation[2] = sQLiteDataReader["Pic3"].ToString();
-                    item.picturelocation[3] = sQLiteDataReader["Pic4"].ToString();
-                    item.category_level1_id = int.Parse(sQLiteDataReader["CategoryLevel1"].ToString());
-                    item.category_level2_id = int.Parse(sQLiteDataReader["CategoryLevel2"].ToString());
-                    item.category_level3_id = int.Parse(sQLiteDataReader["CategoryLevel3"].ToString());
-                    item.category_level4_id = int.Parse(sQLiteDataReader["CategoryLevel4"].ToString());
-                    item.size_id = int.Parse(sQLiteDataReader["Size"].ToString());
-                    item.brand_id = int.Parse(sQLiteDataReader["Brand"].ToString());
-                    item.item_condition_id = int.Parse(sQLiteDataReader["ItemCondition"].ToString());
-                    item.shipping_payer_id = int.Parse(sQLiteDataReader["ShippingPayer"].ToString());
-                    item.shipping_duration_id = int.Parse(sQLiteDataReader["ShippingDuration"].ToString());
-                    item.shipping_method_id = int.Parse(sQLiteDataReader["ShippingMethod"].ToString());
-                    item.shipping_area_id = int.Parse(sQLiteDataReader["ShippingArea"].ToString());
-                    item.price = int.Parse(sQLiteDataReader["Price"].ToString());
+                    FrilItem item = new FrilItem();
+                    item.item_id = sQLiteDataReader["item_id"].ToString();
+                    item.item_name = sQLiteDataReader["item_name"].ToString();
+                    item.detail = sQLiteDataReader["detail"].ToString();
+                    item.s_price = int.Parse(sQLiteDataReader["s_price"].ToString());
+                    item.status = int.Parse(sQLiteDataReader["status"].ToString());
+                    item.t_status = int.Parse(sQLiteDataReader["t_status"].ToString());
+                    item.carriage = int.Parse(sQLiteDataReader["carriage"].ToString());
+                    item.d_method = int.Parse(sQLiteDataReader["d_method"].ToString());
+                    item.d_date = int.Parse(sQLiteDataReader["d_date"].ToString());
+                    item.d_area = int.Parse(sQLiteDataReader["d_area"].ToString());
+                    item.user_id = sQLiteDataReader["user_id"].ToString();
+                    item.created_at = DateTime.Parse( sQLiteDataReader["created_at"].ToString());
+                    item.screen_name = sQLiteDataReader["screen_name"].ToString();
+                    item.category_id = int.Parse(sQLiteDataReader["category_id"].ToString());
+                    item.category_p_id = int.Parse(sQLiteDataReader["category_p_id"].ToString());
+                    item.size_id = int.Parse(sQLiteDataReader["size_id"].ToString());
+                    item.size_name = sQLiteDataReader["size_name"].ToString();
+                    item.brand_id = int.Parse(sQLiteDataReader["brand_id"].ToString());
+                    item.i_brand_id = int.Parse(sQLiteDataReader["i_brand_id"].ToString());
+                    item.comments_count = int.Parse(sQLiteDataReader["comments_count"].ToString());
+                    item.likes_count = int.Parse(sQLiteDataReader["likes_count"].ToString());
+                    item.imagepaths[0] = sQLiteDataReader["Pic1"].ToString();
+                    item.imagepaths[1] = sQLiteDataReader["Pic2"].ToString();
+                    item.imagepaths[2] = sQLiteDataReader["Pic3"].ToString();
+                    item.imagepaths[3] = sQLiteDataReader["Pic4"].ToString();
                     //FrilItem mitem = ItemRegisterForm.getFrilItemFromExhibitItem(item);
                     //mitem.parent_id = sQLiteDataReader.IsDBNull(sQLiteDataReader.GetOrdinal("parent_id")) ? "" : sQLiteDataReader["parent_id"].ToString();
                     //mitem.child_id = sQLiteDataReader.IsDBNull(sQLiteDataReader.GetOrdinal("child_id")) ? "" : sQLiteDataReader["child_id"].ToString();
@@ -167,132 +197,132 @@ namespace FriRaLand.DBHelper {
             return rst;
         }
 
-        public List<FrilItem> selectItem(List<int> DBIdList) {
-            List<FrilItem> rst = new List<FrilItem>();
-            if (DBIdList.Count == 0) return rst;
-            string text = string.Join(",", DBIdList.ToArray());
-            this.conn.Open();
-            SQLiteCommand sQLiteCommand = new SQLiteCommand("select * from ((items it LEFT OUTER JOIN item_family if ON if.itemDBId = it.Id )  LEFT OUTER JOIN zaiko z ON z.parent_id = if.parent_id) where it.id in (" + text + ") order by number;", this.conn);
-            SQLiteDataReader sQLiteDataReader = sQLiteCommand.ExecuteReader();
-            while (sQLiteDataReader.Read()) {
-                try {
-                    ItemRegisterForm.FrilExhibitItem item = new ItemRegisterForm.FrilExhibitItem();
-                    item.name = sQLiteDataReader["ItemName"].ToString();
-                    item.description = sQLiteDataReader["ItemDescription"].ToString();
-                    item.picturelocation[0] = sQLiteDataReader["Pic1"].ToString();
-                    item.picturelocation[1] = sQLiteDataReader["Pic2"].ToString();
-                    item.picturelocation[2] = sQLiteDataReader["Pic3"].ToString();
-                    item.picturelocation[3] = sQLiteDataReader["Pic4"].ToString();
-                    item.category_level1_id = int.Parse(sQLiteDataReader["CategoryLevel1"].ToString());
-                    item.category_level2_id = int.Parse(sQLiteDataReader["CategoryLevel2"].ToString());
-                    item.category_level3_id = int.Parse(sQLiteDataReader["CategoryLevel3"].ToString());
-                    item.category_level4_id = int.Parse(sQLiteDataReader["CategoryLevel4"].ToString());
-                    item.size_id = int.Parse(sQLiteDataReader["Size"].ToString());
-                    item.brand_id = int.Parse(sQLiteDataReader["Brand"].ToString());
-                    item.item_condition_id = int.Parse(sQLiteDataReader["ItemCondition"].ToString());
-                    item.shipping_payer_id = int.Parse(sQLiteDataReader["ShippingPayer"].ToString());
-                    item.shipping_duration_id = int.Parse(sQLiteDataReader["ShippingDuration"].ToString());
-                    item.shipping_method_id = int.Parse(sQLiteDataReader["ShippingMethod"].ToString());
-                    item.shipping_area_id = int.Parse(sQLiteDataReader["ShippingArea"].ToString());
-                    item.price = int.Parse(sQLiteDataReader["Price"].ToString());
-                    //FrilItem mitem = ItemRegisterForm.getFrilItemFromExhibitItem(item);
-                    //mitem.parent_id = sQLiteDataReader.IsDBNull(sQLiteDataReader.GetOrdinal("parent_id")) ? "" : sQLiteDataReader["parent_id"].ToString();
-                    //mitem.child_id = sQLiteDataReader.IsDBNull(sQLiteDataReader.GetOrdinal("child_id")) ? "" : sQLiteDataReader["child_id"].ToString();
-                    //mitem.zaikonum = sQLiteDataReader.IsDBNull(sQLiteDataReader.GetOrdinal("zaikonum")) ? -1 : int.Parse(sQLiteDataReader["zaikonum"].ToString());
-                    //mitem.Image = null;//mitem.loadImageFromFile();
-                    //mitem.DBId = int.Parse(sQLiteDataReader["Id"].ToString());
-                    //rst.Add(mitem);
-                } catch (Exception ex) {
-                    Log.Logger.Error("商品読み込み中エラー : " + ex.Message);
-                }
-            }
-            sQLiteDataReader.Close();
-            this.conn.Close();
-            sQLiteCommand.Dispose();
-            return rst;
-        }
+        //public List<FrilItem> selectItem(List<int> DBIdList) {
+        //    List<FrilItem> rst = new List<FrilItem>();
+        //    if (DBIdList.Count == 0) return rst;
+        //    string text = string.Join(",", DBIdList.ToArray());
+        //    this.conn.Open();
+        //    SQLiteCommand sQLiteCommand = new SQLiteCommand("select * from ((items it LEFT OUTER JOIN item_family if ON if.itemDBId = it.Id )  LEFT OUTER JOIN zaiko z ON z.parent_id = if.parent_id) where it.id in (" + text + ") order by number;", this.conn);
+        //    SQLiteDataReader sQLiteDataReader = sQLiteCommand.ExecuteReader();
+        //    while (sQLiteDataReader.Read()) {
+        //        try {
+        //            ItemRegisterForm.FrilExhibitItem item = new ItemRegisterForm.FrilExhibitItem();
+        //            item.name = sQLiteDataReader["ItemName"].ToString();
+        //            item.description = sQLiteDataReader["ItemDescription"].ToString();
+        //            item.picturelocation[0] = sQLiteDataReader["Pic1"].ToString();
+        //            item.picturelocation[1] = sQLiteDataReader["Pic2"].ToString();
+        //            item.picturelocation[2] = sQLiteDataReader["Pic3"].ToString();
+        //            item.picturelocation[3] = sQLiteDataReader["Pic4"].ToString();
+        //            item.category_level1_id = int.Parse(sQLiteDataReader["CategoryLevel1"].ToString());
+        //            item.category_level2_id = int.Parse(sQLiteDataReader["CategoryLevel2"].ToString());
+        //            item.category_level3_id = int.Parse(sQLiteDataReader["CategoryLevel3"].ToString());
+        //            item.category_level4_id = int.Parse(sQLiteDataReader["CategoryLevel4"].ToString());
+        //            item.size_id = int.Parse(sQLiteDataReader["Size"].ToString());
+        //            item.brand_id = int.Parse(sQLiteDataReader["Brand"].ToString());
+        //            item.item_condition_id = int.Parse(sQLiteDataReader["ItemCondition"].ToString());
+        //            item.shipping_payer_id = int.Parse(sQLiteDataReader["ShippingPayer"].ToString());
+        //            item.shipping_duration_id = int.Parse(sQLiteDataReader["ShippingDuration"].ToString());
+        //            item.shipping_method_id = int.Parse(sQLiteDataReader["ShippingMethod"].ToString());
+        //            item.shipping_area_id = int.Parse(sQLiteDataReader["ShippingArea"].ToString());
+        //            item.price = int.Parse(sQLiteDataReader["Price"].ToString());
+        //            //FrilItem mitem = ItemRegisterForm.getFrilItemFromExhibitItem(item);
+        //            //mitem.parent_id = sQLiteDataReader.IsDBNull(sQLiteDataReader.GetOrdinal("parent_id")) ? "" : sQLiteDataReader["parent_id"].ToString();
+        //            //mitem.child_id = sQLiteDataReader.IsDBNull(sQLiteDataReader.GetOrdinal("child_id")) ? "" : sQLiteDataReader["child_id"].ToString();
+        //            //mitem.zaikonum = sQLiteDataReader.IsDBNull(sQLiteDataReader.GetOrdinal("zaikonum")) ? -1 : int.Parse(sQLiteDataReader["zaikonum"].ToString());
+        //            //mitem.Image = null;//mitem.loadImageFromFile();
+        //            //mitem.DBId = int.Parse(sQLiteDataReader["Id"].ToString());
+        //            //rst.Add(mitem);
+        //        } catch (Exception ex) {
+        //            Log.Logger.Error("商品読み込み中エラー : " + ex.Message);
+        //        }
+        //    }
+        //    sQLiteDataReader.Close();
+        //    this.conn.Close();
+        //    sQLiteCommand.Dispose();
+        //    return rst;
+        //}
 
-        public List<ItemRegisterForm.FrilExhibitItem> selectExhibitItem(List<int> DBId) {
-            List<ItemRegisterForm.FrilExhibitItem> rst = new List<ItemRegisterForm.FrilExhibitItem>();
-            if (DBId.Count == 0) return rst;
-            string text = string.Join(",", DBId.ToArray());
-            this.conn.Open();
-            SQLiteCommand sQLiteCommand = new SQLiteCommand("select * from items where Id in (" + text + ") order by number;", this.conn);
-            SQLiteDataReader sQLiteDataReader = sQLiteCommand.ExecuteReader();
-            while (sQLiteDataReader.Read()) {
-                try {
-                    ItemRegisterForm.FrilExhibitItem item = new ItemRegisterForm.FrilExhibitItem();
-                    item.name = sQLiteDataReader["ItemName"].ToString();
-                    item.description = sQLiteDataReader["ItemDescription"].ToString();
-                    item.picturelocation[0] = sQLiteDataReader["Pic1"].ToString();
-                    item.picturelocation[1] = sQLiteDataReader["Pic2"].ToString();
-                    item.picturelocation[2] = sQLiteDataReader["Pic3"].ToString();
-                    item.picturelocation[3] = sQLiteDataReader["Pic4"].ToString();
-                    item.category_level1_id = int.Parse(sQLiteDataReader["CategoryLevel1"].ToString());
-                    item.category_level2_id = int.Parse(sQLiteDataReader["CategoryLevel2"].ToString());
-                    item.category_level3_id = int.Parse(sQLiteDataReader["CategoryLevel3"].ToString());
-                    item.category_level4_id = int.Parse(sQLiteDataReader["CategoryLevel4"].ToString());
-                    item.size_id = int.Parse(sQLiteDataReader["Size"].ToString());
-                    item.brand_id = int.Parse(sQLiteDataReader["Brand"].ToString());
-                    item.item_condition_id = int.Parse(sQLiteDataReader["ItemCondition"].ToString());
-                    item.shipping_payer_id = int.Parse(sQLiteDataReader["ShippingPayer"].ToString());
-                    item.shipping_duration_id = int.Parse(sQLiteDataReader["ShippingDuration"].ToString());
-                    item.shipping_method_id = int.Parse(sQLiteDataReader["ShippingMethod"].ToString());
-                    item.shipping_area_id = int.Parse(sQLiteDataReader["ShippingArea"].ToString());
-                    item.price = int.Parse(sQLiteDataReader["Price"].ToString());
-                    rst.Add(item);
-                } catch (Exception ex) {
-                    Log.Logger.Error("商品読み込み中エラー : " + ex.Message);
-                }
-            }
-            sQLiteDataReader.Close();
-            this.conn.Close();
-            sQLiteCommand.Dispose();
-            return rst;
-        }
+        //public List<ItemRegisterForm.FrilExhibitItem> selectExhibitItem(List<int> DBId) {
+        //    List<ItemRegisterForm.FrilExhibitItem> rst = new List<ItemRegisterForm.FrilExhibitItem>();
+        //    if (DBId.Count == 0) return rst;
+        //    string text = string.Join(",", DBId.ToArray());
+        //    this.conn.Open();
+        //    SQLiteCommand sQLiteCommand = new SQLiteCommand("select * from items where Id in (" + text + ") order by number;", this.conn);
+        //    SQLiteDataReader sQLiteDataReader = sQLiteCommand.ExecuteReader();
+        //    while (sQLiteDataReader.Read()) {
+        //        try {
+        //            ItemRegisterForm.FrilExhibitItem item = new ItemRegisterForm.FrilExhibitItem();
+        //            item.name = sQLiteDataReader["ItemName"].ToString();
+        //            item.description = sQLiteDataReader["ItemDescription"].ToString();
+        //            item.picturelocation[0] = sQLiteDataReader["Pic1"].ToString();
+        //            item.picturelocation[1] = sQLiteDataReader["Pic2"].ToString();
+        //            item.picturelocation[2] = sQLiteDataReader["Pic3"].ToString();
+        //            item.picturelocation[3] = sQLiteDataReader["Pic4"].ToString();
+        //            item.category_level1_id = int.Parse(sQLiteDataReader["CategoryLevel1"].ToString());
+        //            item.category_level2_id = int.Parse(sQLiteDataReader["CategoryLevel2"].ToString());
+        //            item.category_level3_id = int.Parse(sQLiteDataReader["CategoryLevel3"].ToString());
+        //            item.category_level4_id = int.Parse(sQLiteDataReader["CategoryLevel4"].ToString());
+        //            item.size_id = int.Parse(sQLiteDataReader["Size"].ToString());
+        //            item.brand_id = int.Parse(sQLiteDataReader["Brand"].ToString());
+        //            item.item_condition_id = int.Parse(sQLiteDataReader["ItemCondition"].ToString());
+        //            item.shipping_payer_id = int.Parse(sQLiteDataReader["ShippingPayer"].ToString());
+        //            item.shipping_duration_id = int.Parse(sQLiteDataReader["ShippingDuration"].ToString());
+        //            item.shipping_method_id = int.Parse(sQLiteDataReader["ShippingMethod"].ToString());
+        //            item.shipping_area_id = int.Parse(sQLiteDataReader["ShippingArea"].ToString());
+        //            item.price = int.Parse(sQLiteDataReader["Price"].ToString());
+        //            rst.Add(item);
+        //        } catch (Exception ex) {
+        //            Log.Logger.Error("商品読み込み中エラー : " + ex.Message);
+        //        }
+        //    }
+        //    sQLiteDataReader.Close();
+        //    this.conn.Close();
+        //    sQLiteCommand.Dispose();
+        //    return rst;
+        //}
 
-        public List<FrilItem> selectItemFromName(string text) {
-            List<FrilItem> rst = new List<FrilItem>();
-            this.conn.Open();
-            SQLiteCommand sQLiteCommand = new SQLiteCommand("select * from ((items it LEFT OUTER JOIN item_family if ON if.itemDBId = it.Id )  LEFT OUTER JOIN zaiko z ON z.parent_id = if.parent_id) where ItemDescription like '%" + text + "%' order by number;", this.conn);
-            SQLiteDataReader sQLiteDataReader = sQLiteCommand.ExecuteReader();
-            while (sQLiteDataReader.Read()) {
-                try {
-                    ItemRegisterForm.FrilExhibitItem item = new ItemRegisterForm.FrilExhibitItem();
-                    item.name = sQLiteDataReader["ItemName"].ToString();
-                    item.description = sQLiteDataReader["ItemDescription"].ToString();
-                    item.picturelocation[0] = sQLiteDataReader["Pic1"].ToString();
-                    item.picturelocation[1] = sQLiteDataReader["Pic2"].ToString();
-                    item.picturelocation[2] = sQLiteDataReader["Pic3"].ToString();
-                    item.picturelocation[3] = sQLiteDataReader["Pic4"].ToString();
-                    item.category_level1_id = int.Parse(sQLiteDataReader["CategoryLevel1"].ToString());
-                    item.category_level2_id = int.Parse(sQLiteDataReader["CategoryLevel2"].ToString());
-                    item.category_level3_id = int.Parse(sQLiteDataReader["CategoryLevel3"].ToString());
-                    item.category_level4_id = int.Parse(sQLiteDataReader["CategoryLevel4"].ToString());
-                    item.size_id = int.Parse(sQLiteDataReader["Size"].ToString());
-                    item.brand_id = int.Parse(sQLiteDataReader["Brand"].ToString());
-                    item.item_condition_id = int.Parse(sQLiteDataReader["ItemCondition"].ToString());
-                    item.shipping_payer_id = int.Parse(sQLiteDataReader["ShippingPayer"].ToString());
-                    item.shipping_duration_id = int.Parse(sQLiteDataReader["ShippingDuration"].ToString());
-                    item.shipping_method_id = int.Parse(sQLiteDataReader["ShippingMethod"].ToString());
-                    item.shipping_area_id = int.Parse(sQLiteDataReader["ShippingArea"].ToString());
-                    item.price = int.Parse(sQLiteDataReader["Price"].ToString());
-                    //FrilItem mitem = ItemRegisterForm.getFrilItemFromExhibitItem(item);
-                    //mitem.parent_id = sQLiteDataReader.IsDBNull(sQLiteDataReader.GetOrdinal("parent_id")) ? "" : sQLiteDataReader["parent_id"].ToString();
-                    //mitem.child_id = sQLiteDataReader.IsDBNull(sQLiteDataReader.GetOrdinal("child_id")) ? "" : sQLiteDataReader["child_id"].ToString();
-                    //mitem.zaikonum = sQLiteDataReader.IsDBNull(sQLiteDataReader.GetOrdinal("zaikonum")) ? -1 : int.Parse(sQLiteDataReader["zaikonum"].ToString());
-                    //mitem.Image = null;//mitem.loadImageFromFile();
-                    //mitem.DBId = int.Parse(sQLiteDataReader["Id"].ToString());
-                    //rst.Add(mitem);
-                } catch (Exception ex) {
-                    Log.Logger.Error("商品読み込み中エラー : " + ex.Message);
-                }
-            }
-            sQLiteDataReader.Close();
-            this.conn.Close();
-            sQLiteCommand.Dispose();
-            return rst;
-        }
+        //public List<FrilItem> selectItemFromName(string text) {
+        //    List<FrilItem> rst = new List<FrilItem>();
+        //    this.conn.Open();
+        //    SQLiteCommand sQLiteCommand = new SQLiteCommand("select * from ((items it LEFT OUTER JOIN item_family if ON if.itemDBId = it.Id )  LEFT OUTER JOIN zaiko z ON z.parent_id = if.parent_id) where ItemDescription like '%" + text + "%' order by number;", this.conn);
+        //    SQLiteDataReader sQLiteDataReader = sQLiteCommand.ExecuteReader();
+        //    while (sQLiteDataReader.Read()) {
+        //        try {
+        //            ItemRegisterForm.FrilExhibitItem item = new ItemRegisterForm.FrilExhibitItem();
+        //            item.name = sQLiteDataReader["ItemName"].ToString();
+        //            item.description = sQLiteDataReader["ItemDescription"].ToString();
+        //            item.picturelocation[0] = sQLiteDataReader["Pic1"].ToString();
+        //            item.picturelocation[1] = sQLiteDataReader["Pic2"].ToString();
+        //            item.picturelocation[2] = sQLiteDataReader["Pic3"].ToString();
+        //            item.picturelocation[3] = sQLiteDataReader["Pic4"].ToString();
+        //            item.category_level1_id = int.Parse(sQLiteDataReader["CategoryLevel1"].ToString());
+        //            item.category_level2_id = int.Parse(sQLiteDataReader["CategoryLevel2"].ToString());
+        //            item.category_level3_id = int.Parse(sQLiteDataReader["CategoryLevel3"].ToString());
+        //            item.category_level4_id = int.Parse(sQLiteDataReader["CategoryLevel4"].ToString());
+        //            item.size_id = int.Parse(sQLiteDataReader["Size"].ToString());
+        //            item.brand_id = int.Parse(sQLiteDataReader["Brand"].ToString());
+        //            item.item_condition_id = int.Parse(sQLiteDataReader["ItemCondition"].ToString());
+        //            item.shipping_payer_id = int.Parse(sQLiteDataReader["ShippingPayer"].ToString());
+        //            item.shipping_duration_id = int.Parse(sQLiteDataReader["ShippingDuration"].ToString());
+        //            item.shipping_method_id = int.Parse(sQLiteDataReader["ShippingMethod"].ToString());
+        //            item.shipping_area_id = int.Parse(sQLiteDataReader["ShippingArea"].ToString());
+        //            item.price = int.Parse(sQLiteDataReader["Price"].ToString());
+        //            //FrilItem mitem = ItemRegisterForm.getFrilItemFromExhibitItem(item);
+        //            //mitem.parent_id = sQLiteDataReader.IsDBNull(sQLiteDataReader.GetOrdinal("parent_id")) ? "" : sQLiteDataReader["parent_id"].ToString();
+        //            //mitem.child_id = sQLiteDataReader.IsDBNull(sQLiteDataReader.GetOrdinal("child_id")) ? "" : sQLiteDataReader["child_id"].ToString();
+        //            //mitem.zaikonum = sQLiteDataReader.IsDBNull(sQLiteDataReader.GetOrdinal("zaikonum")) ? -1 : int.Parse(sQLiteDataReader["zaikonum"].ToString());
+        //            //mitem.Image = null;//mitem.loadImageFromFile();
+        //            //mitem.DBId = int.Parse(sQLiteDataReader["Id"].ToString());
+        //            //rst.Add(mitem);
+        //        } catch (Exception ex) {
+        //            Log.Logger.Error("商品読み込み中エラー : " + ex.Message);
+        //        }
+        //    }
+        //    sQLiteDataReader.Close();
+        //    this.conn.Close();
+        //    sQLiteCommand.Dispose();
+        //    return rst;
+        //}
 
         public bool updateItem(int DBId, ItemRegisterForm.FrilExhibitItem item) {
             try {

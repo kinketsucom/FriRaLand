@@ -25,7 +25,7 @@ namespace FriRaLand {
         public string size_name;
         public int brand_id; //null
         public int i_brand_id;
-        public int commens_count;
+        public int comments_count;
         public int likes_count;
         public string[] imageurls = new string[4]; //画像URL
         public string[] imagepaths = new string[4]; //ローカルの画像パス

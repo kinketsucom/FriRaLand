@@ -197,7 +197,7 @@ namespace FriRaLand {
                     item.screen_name = data.screen_name;
                     item.created_at = DateTime.Parse(data.created_at);
                     item.likes_count = (int)data.like_count;
-                    item.commens_count = (int)data.comment_count;
+                    item.comments_count = (int)data.comment_count;
                     rst.Add(item);
                     max_id = item.item_id;
                 }
