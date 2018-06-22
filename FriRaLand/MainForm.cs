@@ -40,7 +40,7 @@ namespace FriRaLand {
 
         private void MainForm_Load(object sender, EventArgs e) {
             FrilCommon.init();
-            new ItemRegisterForm().Show();
+            //new ItemRegisterForm().Show();
             FrilItemDBHelper DBhelper = new FrilItemDBHelper();
             AccountDBHelper accountDBHelper = new AccountDBHelper();
             accountDBHelper.onCreate();
@@ -50,17 +50,14 @@ namespace FriRaLand {
             new ItemFamilyDBHelper().onCreate();
             new ZaikoDBHelper().onCreate();
             InitializeMainForm();//データ表示グリッドの初期化
-            ReloadLocalItem("");
-            
+
             LocalItemDataGridView.AutoGenerateColumns = false;
             ReservationDataGridView.AutoGenerateColumns = false;
             ExhibittedDataGridView.AutoGenerateColumns = false;
             ReloadLocalItem("");
 
+
             //new TestForm().Show();
-
-
-
 
         }
 
@@ -207,15 +204,18 @@ namespace FriRaLand {
             LocalItemDataGridView.Refresh();
             LocalItemDataGridView.ClearSelection();
         }
-        
+        public void OnBackFromItemExhibitForm() {
+            ReloadLocalItem("");
+            //ReloadReservationItem("");
+        }
 
-
-
-
-
-
-
-
-
+        private void register_button_Click(object sender, EventArgs e) {
+                //if (!LicenseForm.checkCanUseWithErrorWindow()) return;
+                //if (checkNowAutoMode()) return;
+                ItemRegisterForm f = new ItemRegisterForm();
+                //f.apilist = mercariAPIList;
+                f.mainform = this;
+                f.Show();
+        }
     }
 }

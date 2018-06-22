@@ -15,6 +15,7 @@ namespace FriRaLand {
         public ItemRegisterForm() {
             InitializeComponent();
         }
+        public MainForm mainform;
         //private int openItemDBId;
         //public class FrilExhibitItem {
         //    public string itemid = "";//商品編集で使用する
@@ -566,6 +567,10 @@ namespace FriRaLand {
             }
             // 上記以外は入力不可
             e.Handled = true;
+        }
+
+        private void ItemRegisterForm_FormClosing(object sender, FormClosingEventArgs e) {
+            this.mainform.OnBackFromItemExhibitForm();
         }
     }
 

@@ -87,8 +87,9 @@ namespace FriRaLand {
                 var bitmap = new Bitmap(this.imagepaths[0]);
                 this.Image = FrilCommon.ResizeImage(bitmap, 50, 50);
                 bitmap.Dispose();
-            } catch {
+            } catch(Exception ex) {
                 this.Image = null;
+                Console.WriteLine(ex);
             }
         }
 

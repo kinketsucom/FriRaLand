@@ -63,7 +63,6 @@ namespace FriRaLand.DBHelper {
                     if (!string.IsNullOrEmpty(sQLiteDataReader["max(number)"].ToString())) {
                         max_number = int.Parse(sQLiteDataReader["max(number)"].ToString());
                     }
-                    
                 } catch (Exception ex) {
                     Log.Logger.Error("DBのnumberの最大値取得失敗");
                     Console.WriteLine(ex);

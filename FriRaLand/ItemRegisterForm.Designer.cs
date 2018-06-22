@@ -612,6 +612,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "ItemRegisterForm";
             this.Text = "商品の登録";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ItemRegisterForm_FormClosing);
             this.Load += new System.EventHandler(this.ItemRegisterForm_Load);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();

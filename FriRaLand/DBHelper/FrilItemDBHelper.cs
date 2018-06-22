@@ -123,9 +123,9 @@ namespace FriRaLand.DBHelper {
                                     + item.d_date.ToString() + "," + item.d_area.ToString() + ",'"
                                     + item.user_id + "','" + item.created_at.ToString() + "','" + item.screen_name.ToString() + "',"
                                     + item.category_id.ToString() + "," + item.category_p_id.ToString() + ","
-                                    + item.size_id.ToString() + ",'" + item.size_name + "', "
-                                    + item.brand_id.ToString() + "," + item.i_brand_id + ", "
-                                    + item.comments_count.ToString() + "," + item.likes_count + ",' "
+                                    + item.size_id.ToString() + ",'" + item.size_name + "',"
+                                    + item.brand_id.ToString() + "," + item.i_brand_id + ","
+                                    + item.comments_count.ToString() + "," + item.likes_count + ",'"
                                     + item.imagepaths[0].ToString() + "','" + item.imagepaths[1] + "','"
                                     + item.imagepaths[2].ToString() + "','" + item.imagepaths[3] + "'," + new_number.ToString() + ");";
 
@@ -176,7 +176,7 @@ namespace FriRaLand.DBHelper {
                     //// mitem.loadImageFromFile();
                     //mitem.Image = null;
                     //mitem.DBId = int.Parse(sQLiteDataReader["Id"].ToString());
-                    //rst.Add(mitem);
+                    rst.Add(item);
                 } catch (Exception ex) {
                     Log.Logger.Error("商品読み込み中エラー : " + ex.Message);
                 }
