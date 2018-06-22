@@ -71,10 +71,12 @@
   <ItemGroup>
     <Compile Include="Common.cs" />
     <Compile Include="DBHelper\FrilItemDBHelper.cs" />
+    <Compile Include="DBHelper\ItemFamilyDBHelper.cs" />
+    <Compile Include="DBHelper\ZaikoDBHelper.cs" />
     <Compile Include="DynamicJson.cs" />
     <Compile Include="FrilAPI.cs" />
     <Compile Include="FrilItem.cs" />
-    <Compile Include="FriRaCommon.cs" />
+    <Compile Include="FrilCommon.cs" />
     <Compile Include="ItemRegisterForm.cs">
       <SubType>Form</SubType>
     </Compile>

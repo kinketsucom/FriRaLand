@@ -75,57 +75,57 @@ namespace FriRaLand {
             //フリル側
 
             //ブランド
-            foreach (FriRaCommon.FrilBrand p in FriRaCommon.fril_brands){
+            foreach (FrilCommon.FrilBrand p in FrilCommon.fril_brands){
                 this.Fril_BrandComboBox.Items.Add(p);
             }
             //カテゴリレベル1
-            foreach (var c in FriRaCommon.fril_categoryDictionary[0]) {
+            foreach (var c in FrilCommon.fril_categoryDictionary[0]) {
                 this.Fril_CategoryComboBoxLevel1.Items.Add(c);
             }
             //商品の状態
-            foreach (KeyValuePair<string, string> p in FriRaCommon.conditionTypeFril) {
+            foreach (KeyValuePair<string, string> p in FrilCommon.conditionTypeFril) {
                 this.Fril_ItemConditionComboBox.Items.Add(p);
             }
             //配送料の負担
-            foreach (KeyValuePair<string, string> p in FriRaCommon.shippingPayersFril) {
+            foreach (KeyValuePair<string, string> p in FrilCommon.shippingPayersFril) {
                 this.Fril_ShippingPayerComboBox.Items.Add(p);
             }
            
             //共通
             //発送までの日数
-            foreach (KeyValuePair<string, string> p in FriRaCommon.shippingDurations) {
+            foreach (KeyValuePair<string, string> p in FrilCommon.shippingDurations) {
                 this.ShippingDurationComboBox.Items.Add(p);
             }
             //都道府県
-            foreach (KeyValuePair<string, string> p in FriRaCommon.shippingFromAreas) {
+            foreach (KeyValuePair<string, string> p in FrilCommon.shippingFromAreas) {
                 this.ShippingAreaComboBox.Items.Add(p);
             }
         }
-        FriRaCommon.FrilCategory nowfril_selectedCategory; //フリルの最下層選択中カテゴリ
-        FriRaCommon.RakumaCategory nowrakuma_selectedCategory; //ラクマの最下層選択中カテゴリ
+        FrilCommon.FrilCategory nowfril_selectedCategory; //フリルの最下層選択中カテゴリ
+        FrilCommon.RakumaCategory nowrakuma_selectedCategory; //ラクマの最下層選択中カテゴリ
         #region GUIFormat
         private void Fril_CategoryComboBoxLevel1_Format(object sender, ListControlConvertEventArgs e) {
-            e.Value = ((FriRaCommon.FrilCategory)e.ListItem).name;
+            e.Value = ((FrilCommon.FrilCategory)e.ListItem).name;
         }
 
         private void Fril_CategoryComboBoxLevel2_Format(object sender, ListControlConvertEventArgs e) {
-            e.Value = ((FriRaCommon.FrilCategory)e.ListItem).name;
+            e.Value = ((FrilCommon.FrilCategory)e.ListItem).name;
         }
 
         private void Fril_CategoryComboBoxLevel3_Format(object sender, ListControlConvertEventArgs e) {
-            e.Value = ((FriRaCommon.FrilCategory)e.ListItem).name;
+            e.Value = ((FrilCommon.FrilCategory)e.ListItem).name;
         }
 
         private void Fril_CategoryComboBoxLevel4_Format(object sender, ListControlConvertEventArgs e) {
-            e.Value = ((FriRaCommon.FrilCategory)e.ListItem).name;
+            e.Value = ((FrilCommon.FrilCategory)e.ListItem).name;
         }
 
         private void Fril_SizeComboBox_Format(object sender, ListControlConvertEventArgs e) {
-            e.Value = ((FriRaCommon.FrilSizeInfo)e.ListItem).name;
+            e.Value = ((FrilCommon.FrilSizeInfo)e.ListItem).name;
         }
 
         private void Fril_BrandComboBox_Format(object sender, ListControlConvertEventArgs e) {
-            e.Value = ((FriRaCommon.FrilBrand)e.ListItem).name;
+            e.Value = ((FrilCommon.FrilBrand)e.ListItem).name;
         }
 
         private void Fril_ItemConditionComboBox_Format(object sender, ListControlConvertEventArgs e) {
@@ -187,11 +187,11 @@ namespace FriRaLand {
         #region ComboBoxSelectedIndexChanged
         private void Fril_CategoryComboBoxLevel1_SelectedIndexChanged(object sender, EventArgs e) {
             if (this.Fril_CategoryComboBoxLevel1.SelectedIndex < 0) return;
-            nowfril_selectedCategory = (FriRaCommon.FrilCategory)Fril_CategoryComboBoxLevel1.SelectedItem;
+            nowfril_selectedCategory = (FrilCommon.FrilCategory)Fril_CategoryComboBoxLevel1.SelectedItem;
             this.Fril_CategoryComboBoxLevel2.Items.Clear();
             this.Fril_CategoryComboBoxLevel3.Items.Clear();
             this.Fril_CategoryComboBoxLevel4.Items.Clear();
-            if (FriRaCommon.fril_categoryDictionary.ContainsKey(nowfril_selectedCategory.id)) {
+            if (FrilCommon.fril_categoryDictionary.ContainsKey(nowfril_selectedCategory.id)) {
                 this.Fril_CategoryComboBoxLevel2.Visible = true;
                 this.Fril_CategoryComboBoxLevel3.Visible = false;
                 this.Fril_CategoryComboBoxLevel4.Visible = false;
@@ -199,7 +199,7 @@ namespace FriRaLand {
                 this.Fril_CategoryComboBoxLevel3.SelectedIndex = -1;
                 this.Fril_CategoryComboBoxLevel4.SelectedIndex = -1;
                 this.Fril_CategoryComboBoxLevel2.Text = "選択してください";
-                foreach (var c in FriRaCommon.fril_categoryDictionary[nowfril_selectedCategory.id]) {
+                foreach (var c in FrilCommon.fril_categoryDictionary[nowfril_selectedCategory.id]) {
                     //Console.WriteLine(c.id.ToString() + ":" + c.name.ToString());
                     this.Fril_CategoryComboBoxLevel2.Items.Add(c);
                 }
@@ -209,11 +209,11 @@ namespace FriRaLand {
 
         private void Fril_CategoryComboBoxLevel2_SelectedIndexChanged(object sender, EventArgs e) {
             if (this.Fril_CategoryComboBoxLevel2.SelectedIndex < 0) return;
-            nowfril_selectedCategory = (FriRaCommon.FrilCategory)Fril_CategoryComboBoxLevel2.SelectedItem;
+            nowfril_selectedCategory = (FrilCommon.FrilCategory)Fril_CategoryComboBoxLevel2.SelectedItem;
             this.Fril_CategoryComboBoxLevel3.Items.Clear();
             this.Fril_CategoryComboBoxLevel4.Items.Clear();
-            if (FriRaCommon.fril_categoryDictionary.ContainsKey(nowfril_selectedCategory.id)) {
-                foreach (var c in FriRaCommon.fril_categoryDictionary[nowfril_selectedCategory.id]) {
+            if (FrilCommon.fril_categoryDictionary.ContainsKey(nowfril_selectedCategory.id)) {
+                foreach (var c in FrilCommon.fril_categoryDictionary[nowfril_selectedCategory.id]) {
                     this.Fril_CategoryComboBoxLevel3.Visible = true;
                     this.Fril_CategoryComboBoxLevel4.Visible = false;
                     this.Fril_CategoryComboBoxLevel3.SelectedIndex = -1;
@@ -227,10 +227,10 @@ namespace FriRaLand {
 
         private void Fril_CategoryComboBoxLevel3_SelectedIndexChanged(object sender, EventArgs e) {
             if (this.Fril_CategoryComboBoxLevel3.SelectedIndex < 0) return;
-            nowfril_selectedCategory = (FriRaCommon.FrilCategory)Fril_CategoryComboBoxLevel3.SelectedItem;
+            nowfril_selectedCategory = (FrilCommon.FrilCategory)Fril_CategoryComboBoxLevel3.SelectedItem;
             this.Fril_CategoryComboBoxLevel4.Items.Clear();
-            if (FriRaCommon.fril_categoryDictionary.ContainsKey(nowfril_selectedCategory.id)) {
-                foreach (var c in FriRaCommon.fril_categoryDictionary[nowfril_selectedCategory.id]) {
+            if (FrilCommon.fril_categoryDictionary.ContainsKey(nowfril_selectedCategory.id)) {
+                foreach (var c in FrilCommon.fril_categoryDictionary[nowfril_selectedCategory.id]) {
                     this.Fril_CategoryComboBoxLevel4.Items.Add(c);
                     this.Fril_CategoryComboBoxLevel4.Visible = true;
                     this.Fril_CategoryComboBoxLevel4.SelectedIndex = -1;
@@ -242,8 +242,8 @@ namespace FriRaLand {
 
         private void Fril_CategoryComboBoxLevel4_SelectedIndexChanged(object sender, EventArgs e) {
             if (this.Fril_CategoryComboBoxLevel4.SelectedIndex < 0) return;
-            nowfril_selectedCategory = (FriRaCommon.FrilCategory)Fril_CategoryComboBoxLevel4.SelectedItem;
-            if (FriRaCommon.fril_categoryDictionary.ContainsKey(nowfril_selectedCategory.id)) {
+            nowfril_selectedCategory = (FrilCommon.FrilCategory)Fril_CategoryComboBoxLevel4.SelectedItem;
+            if (FrilCommon.fril_categoryDictionary.ContainsKey(nowfril_selectedCategory.id)) {
                 //Level5がないのでエラー　ないと思う
                 MessageBox.Show("このカテゴリは指定できません");
                 Log.Logger.Error("フリルカテゴリがレベル4以上");
@@ -254,9 +254,9 @@ namespace FriRaLand {
         
         private void SetFrilSizeComboBox() {
             //現在選択されたカテゴリに応じてサイズのComboBoxを修正する
-            if (FriRaCommon.fril_default_sizeInfoDictionary.ContainsKey(nowfril_selectedCategory.size_group_id)) {
+            if (FrilCommon.fril_default_sizeInfoDictionary.ContainsKey(nowfril_selectedCategory.size_group_id)) {
                 this.Fril_SizeComboBox.Items.Clear();
-                foreach (var sizeinfo in FriRaCommon.fril_default_sizeInfoDictionary[nowfril_selectedCategory.size_group_id]) {
+                foreach (var sizeinfo in FrilCommon.fril_default_sizeInfoDictionary[nowfril_selectedCategory.size_group_id]) {
                     this.Fril_SizeComboBox.Items.Add(sizeinfo);
                 }
                 this.Fril_SizeComboBox.Enabled = true;
@@ -273,13 +273,13 @@ namespace FriRaLand {
             if (this.Fril_ShippingPayerComboBox.SelectedItem == null) return;
             if (this.Fril_ShippingPayerComboBox.SelectedIndex == 0) {
                 //送料込み
-                foreach (KeyValuePair<string, string> p in FriRaCommon.shippingMethodsSellerFril) {
+                foreach (KeyValuePair<string, string> p in FrilCommon.shippingMethodsSellerFril) {
                     this.Fril_ShippingMethodComboBox.Items.Add(p);
                 }
             }
             else if (this.Fril_ShippingPayerComboBox.SelectedIndex == 1) {
                 //着払い
-                foreach (KeyValuePair<string, string> p in FriRaCommon.shippingMethodsBuyerFril) {
+                foreach (KeyValuePair<string, string> p in FrilCommon.shippingMethodsBuyerFril) {
                     this.Fril_ShippingMethodComboBox.Items.Add(p);
                 }
             }
@@ -503,22 +503,22 @@ namespace FriRaLand {
             //}
             //カテゴリレベル２ category_p_idになる
             if (this.Fril_CategoryComboBoxLevel2.SelectedItem != null) {
-                FriRaCommon.FrilCategory category2 = (FriRaCommon.FrilCategory)this.Fril_CategoryComboBoxLevel2.SelectedItem;
+                FrilCommon.FrilCategory category2 = (FrilCommon.FrilCategory)this.Fril_CategoryComboBoxLevel2.SelectedItem;
                 item_data.category_p_id = category2.id;//p_categoryはおそらくこれ
             }
             //カテゴリレベル３
             if (this.Fril_CategoryComboBoxLevel3.SelectedItem != null) {
-                FriRaCommon.FrilCategory category3 = (FriRaCommon.FrilCategory)this.Fril_CategoryComboBoxLevel3.SelectedItem;
+                FrilCommon.FrilCategory category3 = (FrilCommon.FrilCategory)this.Fril_CategoryComboBoxLevel3.SelectedItem;
                 item_data.category_id = category3.id;
             }
             //カテゴリレベル４
             if (this.Fril_CategoryComboBoxLevel4.SelectedItem != null) {
-                FriRaCommon.FrilCategory category4 = (FriRaCommon.FrilCategory)this.Fril_CategoryComboBoxLevel4.SelectedItem;
+                FrilCommon.FrilCategory category4 = (FrilCommon.FrilCategory)this.Fril_CategoryComboBoxLevel4.SelectedItem;
                 item_data.category_id = category4.id;
             }
             //サイズID,サイズ名
             if (this.Fril_SizeComboBox.SelectedItem != null) {
-                FriRaCommon.FrilSizeInfo size = (FriRaCommon.FrilSizeInfo)this.Fril_SizeComboBox.SelectedItem;
+                FrilCommon.FrilSizeInfo size = (FrilCommon.FrilSizeInfo)this.Fril_SizeComboBox.SelectedItem;
                 item_data.size_id = size.id;
                 item_data.size_name = size.name;
             } else {
@@ -528,7 +528,7 @@ namespace FriRaLand {
             //任意部分
             //ブランドid
             if (this.Fril_BrandComboBox.SelectedItem != null) {
-                FriRaCommon.FrilBrand brand = (FriRaCommon.FrilBrand)this.Fril_BrandComboBox.SelectedItem;
+                FrilCommon.FrilBrand brand = (FrilCommon.FrilBrand)this.Fril_BrandComboBox.SelectedItem;
                 item_data.brand_id = brand.id;
             }
             //FIXIT:i_brand_id

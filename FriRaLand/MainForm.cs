@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FriRaLand.DBHelper;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,9 +15,37 @@ namespace FriRaLand {
             InitializeComponent();
         }
 
+        private List<FrilItem> LocalItemDataBindList = new List<FrilItem>();
+        public const string ProductName = "Friland";
+
+        public class Account {
+            public int DBId;
+            public string email;
+            public string password;
+            public string access_token;
+            public string global_access_token;
+            public string sellerid;
+            public int kengai_num;
+            public int hanbai_num { get; set; }
+            public int exhibit_cnt { get; set; }
+            public string last_exhibitTime_str; 
+            public string nickname { get; set; }
+            public bool addSpecialTextToItemName;
+            public bool insertEmptyStrToItemName;
+            public int defaultbankaddressId = -1;
+            public DateTime token_update_date { get; set; }
+            public DateTime expiration_date { get; set; }
+        }
+
+
         private void MainForm_Load(object sender, EventArgs e) {
-            FriRaCommon.init();
+            FrilCommon.init();
+            FrilItemDBHelper DBhelper = new FrilItemDBHelper();
+            AccountDBHelper accountDBHelper = new AccountDBHelper();
+            new ItemFamilyDBHelper().onCreate();
+            new ZaikoDBHelper().onCreate();
             InitializeMainForm();//データ表示グリッドの初期化
+            ReloadLocalItem("");
             new ItemRegisterForm().Show();
             //new TestForm().Show();
 
@@ -118,5 +147,65 @@ namespace FriRaLand {
                 ExhibittedDataGridView.Columns["ExhibittedDataGridView_buyer_name"].Visible = true;
             }
         }
+
+        private void LocalItemDataGridView_CellValueNeeded(object sender, DataGridViewCellValueEventArgs e) {
+            try {
+                if (LocalItemDataBindList.Count <= e.RowIndex) return;
+                FrilItem item = LocalItemDataBindList[e.RowIndex];
+                if (item.Image == null) item.loadImageFromFile();
+                switch (e.ColumnIndex) {
+                    case 0:
+                        e.Value = item.Image;
+                        break;
+                    case 1:
+                        e.Value = item.parent_id;
+                        break;
+                    case 2:
+                        e.Value = item.child_id;
+                        break;
+                    case 3:
+                        e.Value = (item.zaikonum < 0) ? "" : item.zaikonum.ToString();
+                        break;
+                    case 4:
+                        e.Value = item.item_name;
+                        break;
+                    case 5:
+                        e.Value = item.detail;
+                        break;
+                    case 6:
+                        e.Value = item.s_price;
+                        break;
+                }
+            } catch {
+
+            }
+        }
+        private async void ReloadLocalItem(string text) {
+            FrilItemDBHelper DBhelper = new FrilItemDBHelper();
+            List<FrilItem> loadresult;
+            if (string.IsNullOrEmpty(text)) loadresult = await Task.Run(() => DBhelper.loadItems());
+            else loadresult = await Task.Run(() => DBhelper.selectItemFromName(text));
+            string message = "";// loadresult.Value;
+            LocalItemDataBindList.Clear();
+            foreach (var item in loadresult) {
+                LocalItemDataBindList.Add(item);
+            }
+            if (message != "") {
+                MessageBox.Show(message, MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            LocalItemDataGridView.RowCount = LocalItemDataBindList.Count;
+            LocalItemDataGridView.Refresh();
+            LocalItemDataGridView.ClearSelection();
+        }
+
+
+
+
+
+
+
+
+
+
     }
 }

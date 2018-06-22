@@ -3,9 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Codeplex.Data;
+using System.Net;
+using System.IO;
+using System.Drawing;        //json
 
 namespace FriRaLand {
     public class FrilItem {
+        public System.Drawing.Image Image { get; set; } //アプリケーション内使用用パラメータ//表示用の画像
+        public string parent_id;
+        public string child_id;
+        public int zaikonum;
+
+
         public string item_id;
         public string item_name;
         public string detail;
@@ -69,5 +79,26 @@ namespace FriRaLand {
                 Log.Logger.Error("フリル商品jsonパース失敗" + ex.Message);
             }
         }
+
+
+        public void loadImageFromFile() {
+            try {
+                if (string.IsNullOrEmpty(this.imagepaths[0])) return;
+                var bitmap = new Bitmap(this.imagepaths[0]);
+                this.Image = FrilCommon.ResizeImage(bitmap, 50, 50);
+                bitmap.Dispose();
+            } catch {
+                this.Image = null;
+            }
+        }
+
+
+
+
+
+
+
+
+
     }
 }
