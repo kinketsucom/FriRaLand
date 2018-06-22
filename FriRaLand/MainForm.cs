@@ -42,6 +42,7 @@ namespace FriRaLand {
             FrilCommon.init();
             //new ItemRegisterForm().Show();
             FrilItemDBHelper DBhelper = new FrilItemDBHelper();
+            DBhelper.onCreate();
             AccountDBHelper accountDBHelper = new AccountDBHelper();
             accountDBHelper.onCreate();
             accountDBHelper.addNumberColumn(); //0->1
@@ -231,14 +232,14 @@ namespace FriRaLand {
             if (result != DialogResult.Yes) return;
             new FrilItemDBHelper().deleteItem(deleteIdList);
             //商品を削除した場合はその商品の出品予約も削除する
-            var reservationDBHelper = new ReservationDBHelper();
-            List<ReservationSettingForm.ReservationSetting> reservationList = reservationDBHelper.loadReservations();
+            //var reservationDBHelper = new ReservationDBHelper();
+            //List<ReservationSettingForm.ReservationSetting> reservationList = reservationDBHelper.loadReservations();
             var deleteItemIdArray = deleteIdList.ToArray();
             List<int> deleteReservationIdList = new List<int>();
-            foreach (var reservation in reservationList) if (Array.IndexOf(deleteItemIdArray, reservation.itemDBId) >= 0) deleteReservationIdList.Add(reservation.DBId);
-            reservationDBHelper.deleteReservation(deleteReservationIdList);
+            //foreach (var reservation in reservationList) if (Array.IndexOf(deleteItemIdArray, reservation.itemDBId) >= 0) deleteReservationIdList.Add(reservation.DBId);
+            //reservationDBHelper.deleteReservation(deleteReservationIdList);
             ReloadLocalItem("");
-            ReloadReservationItem("");
+            //ReloadReservationItem("");
         }
     }
 }

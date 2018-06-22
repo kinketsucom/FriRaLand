@@ -14,6 +14,7 @@ namespace FriRaLand {
         public string parent_id;
         public string child_id;
         public int zaikonum;
+        public int DBId; //DB上でのId;
 
 
         public string item_id;
@@ -92,26 +93,7 @@ namespace FriRaLand {
                 Console.WriteLine(ex);
             }
         }
-        public bool deleteItem(List<int> DBIdList) {
-            if (DBIdList.Count == 0) return true;
-            try {
-                string text = string.Join(",", DBIdList.ToArray());
-                this.conn.Open();
-                string commandText = "DELETE FROM items Where Id in (" + text + ");";
-                SQLiteCommand command = conn.CreateCommand();
-                command.CommandText = commandText;
-                command.ExecuteNonQuery();
-                command.Dispose();
-                conn.Close();
-                Log.Logger.Info("商品DBからの商品削除成功");
-                return true;
-            } catch (Exception ex) {
-                conn.Close();
-                Log.Logger.Error(ex.Message);
-                Log.Logger.Error("商品DBからの商品削除失敗");
-                return false;
-            }
-        }
+
 
 
 

@@ -12,10 +12,13 @@ using System.Windows.Forms;
 
 namespace FriRaLand {
     public partial class ItemRegisterForm : Form {
+        public bool is_editmode = false; //編集から開いた場合はis_editmode = true. 商品登録（新規）から開いた場合はfalse;
+        public MainForm mainform;
+        private int openItemDBId;
         public ItemRegisterForm() {
             InitializeComponent();
         }
-        public MainForm mainform;
+
         //private int openItemDBId;
         //public class FrilExhibitItem {
         //    public string itemid = "";//商品編集で使用する
@@ -49,7 +52,6 @@ namespace FriRaLand {
         //}
 
         //FrilExhibitItemからFrilItemを作成 画像の情報以外を渡す
-        //FIXIT:ExhibitItemの定義が不十分
         //static public FrilItem getFrilItemFromExhibitItem(FrilExhibitItem exhibititem) {
         //    if (exhibititem == null) return null;
         //    FrilItem res = new FrilItem();
@@ -381,9 +383,7 @@ namespace FriRaLand {
         private void SaveExhibitItemButton_Click(object sender, EventArgs e) {
             //GUIからItem情報を保存する
             FrilItem item = CollectSellSettingsFromGUI();
-            FrilItemDBHelper DbHelper = new FrilItemDBHelper();
-            DbHelper.onCreate();
-            DbHelper.addItem(item);
+
             
             //商品名が設定で制限した長さ以内か調べる
             //if (this.ItemNameTextBox.Text.Length > Settings.getItemNameMaxLength()) {
@@ -392,7 +392,7 @@ namespace FriRaLand {
             //}
             //string new_parent_id = this.parentIDTextBox.Text.Trim();
             //string new_child_id = this.childIDTextBox.Text.Trim();
-            //#region ItemFamilyValidate
+            #region ItemFamilyValidate
             //parent_idとchild_idを保存できるかをしらべる
             //if (new_parent_id != "" && new_child_id == "") {
             //    MessageBox.Show("親IDと子IDの両方を入力するか、両方を空にしてください", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -413,17 +413,17 @@ namespace FriRaLand {
             //        }
             //    }
             //}
-            //#endregion
+            #endregion
             //ItemFamilyDBHelper itemFamilyDBHelper = new ItemFamilyDBHelper();
             //ZaikoDBHelper zaikoDBHelper = new ZaikoDBHelper();
-            //FrilItemDBHelper Dbhelper = new FrilItemDBHelper();
+            FrilItemDBHelper Dbhelper = new FrilItemDBHelper();
             //商品情報の更新,新規追加をまず行う
-            //if (this.is_editmode) {
-            //    Dbhelper.updateItem(this.openItemDBId, item);
-            //} else {
-            //    Dbhelper.addItem(item);
-            //    this.openItemDBId = Dbhelper.getItemDBId(item);
-            //}
+            if (this.is_editmode) {
+                Dbhelper.updateItem(this.openItemDBId, item);
+            } else {
+                Dbhelper.addItem(item);
+                this.openItemDBId = Dbhelper.getItemDBId(item);
+            }
             //在庫情報および親子情報の更新,追加を行う
             //if (new_parent_id != "" && new_child_id != "") {
             //    if (this.parent_id == "" && this.child_id == "") {
@@ -439,7 +439,7 @@ namespace FriRaLand {
             //if (this.is_editmode && this.parent_id != "" && this.child_id != "" && new_parent_id == "" && new_child_id == "") {
             //    itemFamilyDBHelper.deleteItemFamily(this.parent_id, this.child_id);
             //}
-            //this.Close();
+            this.Close();
 
         }
 
