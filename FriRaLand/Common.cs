@@ -79,5 +79,19 @@ namespace FriRaLand {
                 return "";
             }
         }
+        static public string getUnixTimeStampFromDate(DateTime dt) {
+            dt = dt.ToUniversalTime();
+            Int32 unixTimestamp = (Int32)(dt.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+            return unixTimestamp.ToString();
+        }
+
+
+
+
+
+
+
+
+
     }
 }

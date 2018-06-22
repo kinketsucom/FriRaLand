@@ -40,13 +40,23 @@ namespace FriRaLand {
 
         private void MainForm_Load(object sender, EventArgs e) {
             FrilCommon.init();
+            new ItemRegisterForm().Show();
             FrilItemDBHelper DBhelper = new FrilItemDBHelper();
             AccountDBHelper accountDBHelper = new AccountDBHelper();
+            accountDBHelper.onCreate();
+            accountDBHelper.addNumberColumn(); //0->1
+            accountDBHelper.addExpirationDateColumn();//1->2
+            DBhelper.addNumberColumn();//13->14
             new ItemFamilyDBHelper().onCreate();
             new ZaikoDBHelper().onCreate();
             InitializeMainForm();//データ表示グリッドの初期化
             ReloadLocalItem("");
-            new ItemRegisterForm().Show();
+            
+            LocalItemDataGridView.AutoGenerateColumns = false;
+            ReservationDataGridView.AutoGenerateColumns = false;
+            ExhibittedDataGridView.AutoGenerateColumns = false;
+            ReloadLocalItem("");
+
             //new TestForm().Show();
 
 
@@ -197,7 +207,7 @@ namespace FriRaLand {
             LocalItemDataGridView.Refresh();
             LocalItemDataGridView.ClearSelection();
         }
-
+        
 
 
 

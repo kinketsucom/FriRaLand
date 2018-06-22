@@ -70,76 +70,70 @@ namespace FriRaLand.DBHelper {
             Console.WriteLine(max_number);
             return max_number;
         }
-        //public void addNumberColumn() {
-        //    int user_version = LoadUserVersion();
-        //    //更新
-        //    if (user_version < 14) {
-        //        conn.Open();
-        //        string commandText = "pragma user_version = 14;";
-        //        SQLiteCommand command = conn.CreateCommand();
-        //        command.CommandText = commandText;
-        //        command.ExecuteNonQuery();
-        //        command.Dispose();
-        //        conn.Close();
+        public void addNumberColumn() {
+            int user_version = LoadUserVersion();
+            //更新
+            if (user_version < 14) {
+                conn.Open();
+                string commandText = "pragma user_version = 14;";
+                SQLiteCommand command = conn.CreateCommand();
+                command.CommandText = commandText;
+                command.ExecuteNonQuery();
+                command.Dispose();
+                conn.Close();
 
-        //        conn.Open();
-        //        commandText = "alter table items add number INTEGER;";
-        //        command = conn.CreateCommand();
-        //        command.CommandText = commandText;
-        //        command.ExecuteNonQuery();
-        //        command.Dispose();
-        //        conn.Close();
+                conn.Open();
+                commandText = "alter table items add number INTEGER;";
+                command = conn.CreateCommand();
+                command.CommandText = commandText;
+                command.ExecuteNonQuery();
+                command.Dispose();
+                conn.Close();
 
-        //        conn.Open();
-        //        commandText = "update items set number = rowid;";
-        //        command = conn.CreateCommand();
-        //        command.CommandText = commandText;
-        //        command.ExecuteNonQuery();
-        //        command.Dispose();
-        //        conn.Close();
-        //    }
-        //}
+                conn.Open();
+                commandText = "update items set number = rowid;";
+                command = conn.CreateCommand();
+                command.CommandText = commandText;
+                command.ExecuteNonQuery();
+                command.Dispose();
+                conn.Close();
+            }
+        }
         public void addItem(FrilItem item) {
             //addするときはまずmax(number)を取得して+1の値をいれる
-            //int max_number = getMaxNumber();
-            //int new_number = 0;
-            //if (max_number < 0) {
-            //    //はじめてアカウントを追加する
-            //    new_number = 1;
-            //} else {
-            //    new_number = max_number + 1;
-            //}
+            int max_number = getMaxNumber();
+            int new_number = 0;
+            if (max_number < 0) {
+                //はじめてアカウントを追加する
+                new_number = 1;
+            } else {
+                new_number = max_number + 1;
+            }
             conn.Open();
-
-
             string commandText = "INSERT INTO items ("
                                     + "item_id, item_name, detail, s_price, status, t_status,"
                                     + "carriage, d_method, d_date, d_area, "
                                     + "user_id, created_at,screen_name,category_id, "
                                     + "category_p_id,size_id,size_name,brand_id,i_brand_id,"
-                                    + "comments_count,likes_count,Pic1,Pic2,Pic3,Pic4) "
-                                    + "VALUES ('" + item.item_id.Replace("'", "''") + "','" + item.item_name.Replace("'", "''") 
-                                    + "','" + item.detail + "'," + item.s_price.ToString() + "," + item.status.ToString() 
+                                    + "comments_count,likes_count,Pic1,Pic2,Pic3,Pic4,number) "
+                                    + "VALUES ('" + item.item_id.Replace("'", "''") + "','" + item.item_name.Replace("'", "''")
+                                    + "','" + item.detail + "'," + item.s_price.ToString() + "," + item.status.ToString()
                                     + "," + item.t_status.ToString() + ","
-                                    + item.carriage.ToString() + "," + item.d_method.ToString() + "," 
+                                    + item.carriage.ToString() + "," + item.d_method.ToString() + ","
                                     + item.d_date.ToString() + "," + item.d_area.ToString() + ",'"
                                     + item.user_id + "','" + item.created_at.ToString() + "','" + item.screen_name.ToString() + "',"
-                                    + item.category_id.ToString() + "," + item.category_p_id.ToString() + "," 
+                                    + item.category_id.ToString() + "," + item.category_p_id.ToString() + ","
                                     + item.size_id.ToString() + ",'" + item.size_name + "', "
                                     + item.brand_id.ToString() + "," + item.i_brand_id + ", "
                                     + item.comments_count.ToString() + "," + item.likes_count + ",' "
                                     + item.imagepaths[0].ToString() + "','" + item.imagepaths[1] + "','"
-                                    + item.imagepaths[2].ToString() + "','" + item.imagepaths[3] + "');";
+                                    + item.imagepaths[2].ToString() + "','" + item.imagepaths[3] + "'," + new_number.ToString() + ");";
 
             SQLiteCommand command = conn.CreateCommand();
             command.CommandText = commandText;
             command.ExecuteNonQuery();
             command.Dispose();
             conn.Close();
-
-
-
-
     }
 
         public List<FrilItem> loadItems() {

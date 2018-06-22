@@ -152,7 +152,7 @@
             this.Fril_ItemConditionComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.Fril_ItemConditionComboBox.Name = "Fril_ItemConditionComboBox";
             this.Fril_ItemConditionComboBox.Size = new System.Drawing.Size(212, 23);
-            this.Fril_ItemConditionComboBox.TabIndex = 70;
+            this.Fril_ItemConditionComboBox.TabIndex = 12;
             this.Fril_ItemConditionComboBox.Text = "選択してください";
             this.Fril_ItemConditionComboBox.Format += new System.Windows.Forms.ListControlConvertEventHandler(this.Fril_ItemConditionComboBox_Format);
             // 
@@ -163,7 +163,7 @@
             this.Fril_ShippingPayerComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.Fril_ShippingPayerComboBox.Name = "Fril_ShippingPayerComboBox";
             this.Fril_ShippingPayerComboBox.Size = new System.Drawing.Size(212, 23);
-            this.Fril_ShippingPayerComboBox.TabIndex = 71;
+            this.Fril_ShippingPayerComboBox.TabIndex = 13;
             this.Fril_ShippingPayerComboBox.Text = "選択してください";
             this.Fril_ShippingPayerComboBox.SelectedIndexChanged += new System.EventHandler(this.Fril_ShippingPayerComboBox_SelectedIndexChanged);
             this.Fril_ShippingPayerComboBox.Format += new System.Windows.Forms.ListControlConvertEventHandler(this.Fril_ShippingPayerComboBox_Format);
@@ -172,11 +172,12 @@
             // 
             this.Fril_SizeComboBox.Enabled = false;
             this.Fril_SizeComboBox.FormattingEnabled = true;
+            this.Fril_SizeComboBox.ItemHeight = 15;
             this.Fril_SizeComboBox.Location = new System.Drawing.Point(20, 190);
             this.Fril_SizeComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.Fril_SizeComboBox.Name = "Fril_SizeComboBox";
             this.Fril_SizeComboBox.Size = new System.Drawing.Size(212, 23);
-            this.Fril_SizeComboBox.TabIndex = 74;
+            this.Fril_SizeComboBox.TabIndex = 11;
             this.Fril_SizeComboBox.Text = "選択してください";
             this.Fril_SizeComboBox.Format += new System.Windows.Forms.ListControlConvertEventHandler(this.Fril_SizeComboBox_Format);
             // 
@@ -187,7 +188,7 @@
             this.Fril_CategoryComboBoxLevel1.Margin = new System.Windows.Forms.Padding(4);
             this.Fril_CategoryComboBoxLevel1.Name = "Fril_CategoryComboBoxLevel1";
             this.Fril_CategoryComboBoxLevel1.Size = new System.Drawing.Size(212, 23);
-            this.Fril_CategoryComboBoxLevel1.TabIndex = 77;
+            this.Fril_CategoryComboBoxLevel1.TabIndex = 7;
             this.Fril_CategoryComboBoxLevel1.Text = "選択してください";
             this.Fril_CategoryComboBoxLevel1.SelectedIndexChanged += new System.EventHandler(this.Fril_CategoryComboBoxLevel1_SelectedIndexChanged);
             this.Fril_CategoryComboBoxLevel1.Format += new System.Windows.Forms.ListControlConvertEventHandler(this.Fril_CategoryComboBoxLevel1_Format);
@@ -199,7 +200,7 @@
             this.Fril_CategoryComboBoxLevel2.Margin = new System.Windows.Forms.Padding(4);
             this.Fril_CategoryComboBoxLevel2.Name = "Fril_CategoryComboBoxLevel2";
             this.Fril_CategoryComboBoxLevel2.Size = new System.Drawing.Size(212, 23);
-            this.Fril_CategoryComboBoxLevel2.TabIndex = 78;
+            this.Fril_CategoryComboBoxLevel2.TabIndex = 8;
             this.Fril_CategoryComboBoxLevel2.Text = "選択してください";
             this.Fril_CategoryComboBoxLevel2.Visible = false;
             this.Fril_CategoryComboBoxLevel2.SelectedIndexChanged += new System.EventHandler(this.Fril_CategoryComboBoxLevel2_SelectedIndexChanged);
@@ -212,7 +213,7 @@
             this.Fril_CategoryComboBoxLevel3.Margin = new System.Windows.Forms.Padding(4);
             this.Fril_CategoryComboBoxLevel3.Name = "Fril_CategoryComboBoxLevel3";
             this.Fril_CategoryComboBoxLevel3.Size = new System.Drawing.Size(212, 23);
-            this.Fril_CategoryComboBoxLevel3.TabIndex = 79;
+            this.Fril_CategoryComboBoxLevel3.TabIndex = 9;
             this.Fril_CategoryComboBoxLevel3.Text = "選択してください";
             this.Fril_CategoryComboBoxLevel3.Visible = false;
             this.Fril_CategoryComboBoxLevel3.SelectedIndexChanged += new System.EventHandler(this.Fril_CategoryComboBoxLevel3_SelectedIndexChanged);
@@ -225,7 +226,7 @@
             this.Fril_CategoryComboBoxLevel4.Margin = new System.Windows.Forms.Padding(4);
             this.Fril_CategoryComboBoxLevel4.Name = "Fril_CategoryComboBoxLevel4";
             this.Fril_CategoryComboBoxLevel4.Size = new System.Drawing.Size(212, 23);
-            this.Fril_CategoryComboBoxLevel4.TabIndex = 80;
+            this.Fril_CategoryComboBoxLevel4.TabIndex = 10;
             this.Fril_CategoryComboBoxLevel4.Text = "選択してください";
             this.Fril_CategoryComboBoxLevel4.Visible = false;
             this.Fril_CategoryComboBoxLevel4.SelectedIndexChanged += new System.EventHandler(this.Fril_CategoryComboBoxLevel4_SelectedIndexChanged);
@@ -249,7 +250,7 @@
             this.ShippingDurationComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.ShippingDurationComboBox.Name = "ShippingDurationComboBox";
             this.ShippingDurationComboBox.Size = new System.Drawing.Size(212, 23);
-            this.ShippingDurationComboBox.TabIndex = 126;
+            this.ShippingDurationComboBox.TabIndex = 14;
             this.ShippingDurationComboBox.Text = "選択してください";
             this.ShippingDurationComboBox.Format += new System.Windows.Forms.ListControlConvertEventHandler(this.ShippingDurationComboBox_Format);
             // 
@@ -271,7 +272,7 @@
             this.ShippingAreaComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.ShippingAreaComboBox.Name = "ShippingAreaComboBox";
             this.ShippingAreaComboBox.Size = new System.Drawing.Size(212, 23);
-            this.ShippingAreaComboBox.TabIndex = 125;
+            this.ShippingAreaComboBox.TabIndex = 15;
             this.ShippingAreaComboBox.Text = "選択してください";
             this.ShippingAreaComboBox.Format += new System.Windows.Forms.ListControlConvertEventHandler(this.ShippingAreaComboBox_Format);
             // 
@@ -282,7 +283,7 @@
             this.Fril_ShippingMethodComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.Fril_ShippingMethodComboBox.Name = "Fril_ShippingMethodComboBox";
             this.Fril_ShippingMethodComboBox.Size = new System.Drawing.Size(211, 23);
-            this.Fril_ShippingMethodComboBox.TabIndex = 76;
+            this.Fril_ShippingMethodComboBox.TabIndex = 17;
             this.Fril_ShippingMethodComboBox.Text = "選択してください";
             this.Fril_ShippingMethodComboBox.Format += new System.Windows.Forms.ListControlConvertEventHandler(this.Fril_ShippingMethodComboBox_Format);
             // 
@@ -313,7 +314,7 @@
             this.Fril_BrandComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.Fril_BrandComboBox.Name = "Fril_BrandComboBox";
             this.Fril_BrandComboBox.Size = new System.Drawing.Size(212, 23);
-            this.Fril_BrandComboBox.TabIndex = 81;
+            this.Fril_BrandComboBox.TabIndex = 16;
             this.Fril_BrandComboBox.Text = "選択してください";
             this.Fril_BrandComboBox.Format += new System.Windows.Forms.ListControlConvertEventHandler(this.Fril_BrandComboBox_Format);
             // 
@@ -323,7 +324,7 @@
             this.childIDTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.childIDTextBox.Name = "childIDTextBox";
             this.childIDTextBox.Size = new System.Drawing.Size(132, 22);
-            this.childIDTextBox.TabIndex = 140;
+            this.childIDTextBox.TabIndex = 20;
             this.childIDTextBox.Visible = false;
             // 
             // label12
@@ -343,7 +344,7 @@
             this.parentIDTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.parentIDTextBox.Name = "parentIDTextBox";
             this.parentIDTextBox.Size = new System.Drawing.Size(132, 22);
-            this.parentIDTextBox.TabIndex = 138;
+            this.parentIDTextBox.TabIndex = 19;
             this.parentIDTextBox.Visible = false;
             // 
             // label11
@@ -363,7 +364,7 @@
             this.pic4Reset.Margin = new System.Windows.Forms.Padding(4);
             this.pic4Reset.Name = "pic4Reset";
             this.pic4Reset.Size = new System.Drawing.Size(100, 24);
-            this.pic4Reset.TabIndex = 136;
+            this.pic4Reset.TabIndex = 4;
             this.pic4Reset.Text = "画像リセット";
             this.pic4Reset.UseVisualStyleBackColor = true;
             this.pic4Reset.Click += new System.EventHandler(this.pic4Reset_Click);
@@ -374,7 +375,7 @@
             this.pic3Reset.Margin = new System.Windows.Forms.Padding(4);
             this.pic3Reset.Name = "pic3Reset";
             this.pic3Reset.Size = new System.Drawing.Size(100, 24);
-            this.pic3Reset.TabIndex = 135;
+            this.pic3Reset.TabIndex = 3;
             this.pic3Reset.Text = "画像リセット";
             this.pic3Reset.UseVisualStyleBackColor = true;
             this.pic3Reset.Click += new System.EventHandler(this.pic3Reset_Click);
@@ -385,7 +386,7 @@
             this.pic2Reset.Margin = new System.Windows.Forms.Padding(4);
             this.pic2Reset.Name = "pic2Reset";
             this.pic2Reset.Size = new System.Drawing.Size(100, 24);
-            this.pic2Reset.TabIndex = 134;
+            this.pic2Reset.TabIndex = 2;
             this.pic2Reset.Text = "画像リセット";
             this.pic2Reset.UseVisualStyleBackColor = true;
             this.pic2Reset.Click += new System.EventHandler(this.pic2Reset_Click);
@@ -396,7 +397,7 @@
             this.pic1Reset.Margin = new System.Windows.Forms.Padding(4);
             this.pic1Reset.Name = "pic1Reset";
             this.pic1Reset.Size = new System.Drawing.Size(100, 24);
-            this.pic1Reset.TabIndex = 133;
+            this.pic1Reset.TabIndex = 1;
             this.pic1Reset.Text = "画像リセット";
             this.pic1Reset.UseVisualStyleBackColor = true;
             this.pic1Reset.Click += new System.EventHandler(this.pic1Reset_Click);
@@ -409,7 +410,7 @@
             this.ApiListComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.ApiListComboBox.Name = "ApiListComboBox";
             this.ApiListComboBox.Size = new System.Drawing.Size(271, 31);
-            this.ApiListComboBox.TabIndex = 132;
+            this.ApiListComboBox.TabIndex = 21;
             this.ApiListComboBox.Text = "アカウントを選択";
             this.ApiListComboBox.Visible = false;
             // 
@@ -420,7 +421,7 @@
             this.ExhibitNowButton.Margin = new System.Windows.Forms.Padding(4);
             this.ExhibitNowButton.Name = "ExhibitNowButton";
             this.ExhibitNowButton.Size = new System.Drawing.Size(136, 45);
-            this.ExhibitNowButton.TabIndex = 131;
+            this.ExhibitNowButton.TabIndex = 1002;
             this.ExhibitNowButton.Text = "今すぐ出品";
             this.ExhibitNowButton.UseVisualStyleBackColor = true;
             this.ExhibitNowButton.Click += new System.EventHandler(this.ExhibitNowButton_Click);
@@ -431,7 +432,7 @@
             this.button3.Margin = new System.Windows.Forms.Padding(4);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(120, 29);
-            this.button3.TabIndex = 130;
+            this.button3.TabIndex = 1003;
             this.button3.Text = "デフォルトに設定";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Visible = false;
@@ -443,18 +444,18 @@
             this.SaveExhibitItemButton.Margin = new System.Windows.Forms.Padding(4);
             this.SaveExhibitItemButton.Name = "SaveExhibitItemButton";
             this.SaveExhibitItemButton.Size = new System.Drawing.Size(136, 45);
-            this.SaveExhibitItemButton.TabIndex = 129;
+            this.SaveExhibitItemButton.TabIndex = 1001;
             this.SaveExhibitItemButton.Text = "保存";
             this.SaveExhibitItemButton.UseVisualStyleBackColor = true;
             this.SaveExhibitItemButton.Click += new System.EventHandler(this.SaveExhibitItemButton_Click);
             // 
             // PriceTextBox
             // 
-            this.PriceTextBox.Location = new System.Drawing.Point(601, 481);
+            this.PriceTextBox.Location = new System.Drawing.Point(601, 540);
             this.PriceTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.PriceTextBox.Name = "PriceTextBox";
             this.PriceTextBox.Size = new System.Drawing.Size(212, 22);
-            this.PriceTextBox.TabIndex = 128;
+            this.PriceTextBox.TabIndex = 100;
             this.PriceTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PriceTextBox_KeyPress);
             // 
             // DescriptionTextBox
@@ -463,7 +464,7 @@
             this.DescriptionTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.DescriptionTextBox.Name = "DescriptionTextBox";
             this.DescriptionTextBox.Size = new System.Drawing.Size(556, 345);
-            this.DescriptionTextBox.TabIndex = 124;
+            this.DescriptionTextBox.TabIndex = 6;
             this.DescriptionTextBox.Text = "";
             // 
             // ItemNameTextBox
@@ -472,7 +473,7 @@
             this.ItemNameTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.ItemNameTextBox.Name = "ItemNameTextBox";
             this.ItemNameTextBox.Size = new System.Drawing.Size(556, 22);
-            this.ItemNameTextBox.TabIndex = 123;
+            this.ItemNameTextBox.TabIndex = 5;
             // 
             // pictureBox4
             // 
@@ -536,7 +537,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label10.Location = new System.Drawing.Point(588, 464);
+            this.label10.Location = new System.Drawing.Point(593, 521);
             this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(39, 15);

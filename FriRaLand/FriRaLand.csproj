@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common.cs" />
+    <Compile Include="DBHelper\AccountDBHelper.cs" />
     <Compile Include="DBHelper\FrilItemDBHelper.cs" />
     <Compile Include="DBHelper\ItemFamilyDBHelper.cs" />
     <Compile Include="DBHelper\ZaikoDBHelper.cs" />
