@@ -217,5 +217,28 @@ namespace FriRaLand {
                 f.mainform = this;
                 f.Show();
         }
+
+        private void deleteItemButton_Click(object sender, EventArgs e) {
+            //if (checkNowAutoMode()) return;
+            //if (!LicenseForm.checkCanUseWithErrorWindow()) return;
+            List<int> deleteIdList = new List<int>();
+            foreach (DataGridViewRow row in LocalItemDataGridView.SelectedRows) deleteIdList.Add(LocalItemDataBindList[row.Index].DBId);
+            if (deleteIdList.Count == 0) {
+                MessageBox.Show("商品が選択されていません");
+                return;
+            }
+            DialogResult result = MessageBox.Show("選択した" + deleteIdList.Count.ToString() + "件の商品を削除しますか?", "質問", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+            if (result != DialogResult.Yes) return;
+            new FrilItemDBHelper().deleteItem(deleteIdList);
+            //商品を削除した場合はその商品の出品予約も削除する
+            var reservationDBHelper = new ReservationDBHelper();
+            List<ReservationSettingForm.ReservationSetting> reservationList = reservationDBHelper.loadReservations();
+            var deleteItemIdArray = deleteIdList.ToArray();
+            List<int> deleteReservationIdList = new List<int>();
+            foreach (var reservation in reservationList) if (Array.IndexOf(deleteItemIdArray, reservation.itemDBId) >= 0) deleteReservationIdList.Add(reservation.DBId);
+            reservationDBHelper.deleteReservation(deleteReservationIdList);
+            ReloadLocalItem("");
+            ReloadReservationItem("");
+        }
     }
 }

@@ -473,6 +473,38 @@ namespace FriRaLand.DBHelper {
                 conn.Close();
             }
         }
+
+        public bool deleteItem(List<int> DBIdList) {
+            if (DBIdList.Count == 0) return true;
+            try {
+                string text = string.Join(",", DBIdList.ToArray());
+                this.conn.Open();
+                string commandText = "DELETE FROM items Where Id in (" + text + ");";
+                SQLiteCommand command = conn.CreateCommand();
+                command.CommandText = commandText;
+                command.ExecuteNonQuery();
+                command.Dispose();
+                conn.Close();
+                Log.Logger.Info("商品DBからの商品削除成功");
+                return true;
+            } catch (Exception ex) {
+                conn.Close();
+                Log.Logger.Error(ex.Message);
+                Log.Logger.Error("商品DBからの商品削除失敗");
+                return false;
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
     }
 }
 
