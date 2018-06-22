@@ -1,4 +1,5 @@
 ﻿using FriRaLand.DBHelper;
+using FriRaLand.Forms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,6 +18,7 @@ namespace FriRaLand {
 
         private List<FrilItem> LocalItemDataBindList = new List<FrilItem>();
         public const string ProductName = "Friland";
+        private List<ReservationSettingForm.ReservationSetting> ReservationDataBindList = new List<ReservationSettingForm.ReservationSetting>();
 
         public class Account {
             public int DBId;
@@ -47,15 +49,48 @@ namespace FriRaLand {
             accountDBHelper.onCreate();
             accountDBHelper.addNumberColumn(); //0->1
             accountDBHelper.addExpirationDateColumn();//1->2
+            ReservationDBHelper reservationDBhelper = new ReservationDBHelper();
+            reservationDBhelper.onCreate();
+            reservationDBhelper.addReexhibitFlagColumn();//2->3
+            accountDBHelper.addKengai_ExhibitCnt_LastExhibitTime_Column();//3->4
+            reservationDBhelper.addDelete2Column();//4->5
+            //GroupBelongDBHelper groupbelongDBHelper = new GroupBelongDBHelper();
+            //groupbelongDBHelper.onCreate();
+            //GroupKindDBHelper groupkindDBHelper = new GroupKindDBHelper();
+            //groupkindDBHelper.onCreate();
+            new SettingsDBHelper().onCreate();
+            Settings.updateTemplateSettingDBForAddTitle();
+            //new ShuppinRirekiDBHelper().onCreate();
+            //new ShuppinRirekiDBHelper().addCreatedDateColumn();//5->6
+            //new ShuppinRirekiDBHelper().addUretaColumn();//6->7
+            accountDBHelper.addHanbaiNumColumn();//7->8
+            accountDBHelper.addItemNameSpeccialSettingsColumn();//8->9
+            //new ShuppinRirekiDBHelper().addReexhibitFlag();//9->10
+            //new GroupKindDBHelper().addNumberColumn();//10->11
+            accountDBHelper.addDefaultBankAddressColumn();//11->12
+            accountDBHelper.addTokenUpdateDateColumn();//12->13
             DBhelper.addNumberColumn();//13->14
+            //new ItemNoteDBHelper().onCreate();
             new ItemFamilyDBHelper().onCreate();
             new ZaikoDBHelper().onCreate();
-            InitializeMainForm();//データ表示グリッドの初期化
-
+            //new DailyExhibitDBHelper().onCreate();
+            //new ExhibitLogDBHelper().onCreate();
+            //new ExhibitLogDBHelper().addItemIDColumn();//14->15
+            //new DefaultBankAddressBankDBHelper().onCreate();
+            //new DefaultBankAddressBankDBHelper().updateDefaultBankAddressToList();
+            //new NesageCntDBHelper().onCreate();
+            //new NesageLogDBHelper().onCreate();
             LocalItemDataGridView.AutoGenerateColumns = false;
             ReservationDataGridView.AutoGenerateColumns = false;
             ExhibittedDataGridView.AutoGenerateColumns = false;
             ReloadLocalItem("");
+            ReloadReservationItem("");
+            //ReloadDailyExhibit();
+            //InitializeAccountData();
+            InitializeMainForm();//データ表示グリッドの初期化
+            //SetAutoKengaiTimer();
+            //SetNotificationTimer();
+            //ライセンスチェックを行う
 
 
             //new TestForm().Show();
@@ -205,9 +240,29 @@ namespace FriRaLand {
             LocalItemDataGridView.Refresh();
             LocalItemDataGridView.ClearSelection();
         }
+        private async void ReloadReservationItem(string text) {
+            ReservationDBHelper reservationDBHelper = new ReservationDBHelper();
+            List<ReservationSettingForm.ReservationSetting> loadresult;
+            if (string.IsNullOrEmpty(text)) loadresult = await Task.Run(() => reservationDBHelper.loadReservations());
+            else loadresult = await Task.Run(() => reservationDBHelper.selectReservationFromName(text));
+            ReservationDataBindList.Clear();
+            foreach (var reservation in loadresult) {
+                //取消日時がデフォルト（取消しない）ものは取消日時文字列を空に
+                if (reservation.deleteDate.ToString() == ReservationSettingForm.ReservationSetting.dafaultDate) reservation.deleteDateString = "";
+                if (reservation.deleteDate2.ToString() == ReservationSettingForm.ReservationSetting.dafaultDate) reservation.deleteDateString2 = "";
+                ReservationDataBindList.Add(reservation);
+            }
+            ReservationDataGridView.RowCount = ReservationDataBindList.Count;
+            ReservationDataGridView.Refresh();
+            ReservationDataGridView.ClearSelection();
+        }
+
         public void OnBackFromItemExhibitForm() {
             ReloadLocalItem("");
-            //ReloadReservationItem("");
+            ReloadReservationItem("");
+        }
+        public void OnBackFromReservationSettingForm() {
+            ReloadReservationItem("");
         }
 
         private void register_button_Click(object sender, EventArgs e) {
@@ -240,6 +295,106 @@ namespace FriRaLand {
             //reservationDBHelper.deleteReservation(deleteReservationIdList);
             ReloadLocalItem("");
             //ReloadReservationItem("");
+        }
+        private int exhibit_success_num = 0;
+        private int exhibit_failed_num = 0;
+        private int delete_success_num = 0;
+        private int delete_failed_num = 0;
+        private int reexhibit_success_num = 0;
+        private int reexhibit_failed_num = 0;
+        private int zaikogire_num = 0;
+        private List<string> reservation_fail_logs = new List<string>();
+
+        private List<ReservationSettingForm.ReservationSetting> ReservationObjects = new List<ReservationSettingForm.ReservationSetting>(); //予約されるべき商品
+        private void ReservationToggleButton_Click(object sender, EventArgs e) {
+            //if (!LicenseForm.checkCanUseWithErrorWindow()) return;
+            if (ReservationTimer.Enabled) {
+                //ON->OFF
+                ReservationTimer.Enabled = false;
+                ReExhibitTimer.Enabled = false;
+                //キャンセルリクエストを送る
+                ReservationBackgroundWorker.CancelAsync();
+                ReExhibitBackgroundWorker3.CancelAsync();
+                ReservationToggleButton.Text = "予約実行";
+                ReservationToggleButton.BackColor = Color.Transparent;
+                ReloadReservationItem("");
+            } else {
+                //OFF->ON
+                ReExhibitTimer.Interval = Settings.getReexhibitCheckInterval() * 60 * 1000;
+                if (ReservationBackgroundWorker.IsBusy || ReExhibitBackgroundWorker3.IsBusy) {
+                    //前にキャンセルしたbackgroundWorkerがまだ動いているので無理
+                    MessageBox.Show("しばらく待ってから実行してください", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                } else {
+                    ReservationToggleButton.Text = "予約停止";
+                    ReservationToggleButton.BackColor = Color.Red;
+                    //現在時刻より後の商品だけを対象に追加する
+                    this.ReservationObjects.Clear();
+                    var allReservationList = new ReservationDBHelper().loadReservations();
+                    foreach (var reservation in allReservationList) {
+                        if (reservation.exhibitDate > DateTime.Now) {
+                            //出品する必要がある
+                            reservation.doexhibit_flag = true;
+                            //削除機能なしかチェック
+                            if (reservation.deleteDate == DateTime.Parse(ReservationSettingForm.ReservationSetting.dafaultDate)) reservation.docancel_flag = false;
+                            else reservation.docancel_flag = true;
+                            //削除機能2なしかチェック
+                            if (reservation.deleteDate2 == DateTime.Parse(ReservationSettingForm.ReservationSetting.dafaultDate)) reservation.docancel_flag2 = false;
+                            else reservation.docancel_flag2 = true;
+                            ReservationObjects.Add(reservation);
+                        } else {
+                            //出品はしない
+                            //削除する必要がなければcontinue
+                            if (reservation.deleteDate == DateTime.Parse(ReservationSettingForm.ReservationSetting.dafaultDate) && reservation.deleteDate2 == DateTime.Parse(ReservationSettingForm.ReservationSetting.dafaultDate)) continue;
+                            //1か2のどちらかを削除する
+                            reservation.doexhibit_flag = false;
+                            if (reservation.deleteDate != DateTime.Parse(ReservationSettingForm.ReservationSetting.dafaultDate)) {
+                                if (reservation.deleteDate > DateTime.Now) {
+                                    //削除1をする必要がある
+                                    reservation.docancel_flag = true;
+                                }
+                            }
+                            if (reservation.deleteDate2 != DateTime.Parse(ReservationSettingForm.ReservationSetting.dafaultDate)) {
+                                if (reservation.deleteDate2 > DateTime.Now) {
+                                    //削除2をする必要がある
+                                    reservation.docancel_flag2 = true;
+                                }
+                            }
+                            ReservationObjects.Add(reservation);
+                        }
+                    }
+                    exhibit_success_num = exhibit_failed_num = delete_success_num = delete_failed_num = reexhibit_success_num = reexhibit_failed_num = zaikogire_num = 0;
+                    exhibit_success_num_label.Text = delete_success_num_label.Text = reexhibit_success_num_label.Text = "0";
+                    exhibit_failed_num_label.Text = delete_failed_num_label.Text = reexhibit_failed_num_label.Text = "0";
+                    zaikogire_num_label.Text = "0";
+                    reservation_fail_logs.Clear();
+                    //（準備がちゃんとおわってからタイマースタートするように）
+                    //タイマースタート
+                    ReservationTimer.Enabled = true;
+                    ReExhibitTimer.Enabled = true;
+                }
+            }
+
+
+
+
+
+
+
+        }
+
+        private void exhibitRegisterButton_Click(object sender, EventArgs e) {
+            //if (!LicenseForm.checkCanUseWithErrorWindow()) return;
+            //if (checkNowAutoMode()) return;
+            List<int> selectIdList = new List<int>();
+            foreach (DataGridViewRow row in LocalItemDataGridView.SelectedRows) selectIdList.Add(LocalItemDataBindList[row.Index].DBId);
+            if (selectIdList.Count != 1) {
+                MessageBox.Show("出品登録する商品を1つだけ選択してください。");
+                return;
+            }
+            FrilItem item = new FrilItemDBHelper().selectItem(selectIdList)[0];
+            ReservationSettingForm f = new ReservationSettingForm(item, this);
+            f.Show();
         }
     }
 }
