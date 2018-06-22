@@ -396,5 +396,51 @@ namespace FriRaLand {
             ReservationSettingForm f = new ReservationSettingForm(item, this);
             f.Show();
         }
+        private bool checkNowAutoMode() {
+            if (this.ReservationToggleButton.BackColor == Color.Transparent) return false;
+            MessageBox.Show("現在予約実行中です", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return true;
+        }
+
+        private void アカウント管理ToolStripMenuItem_Click(object sender, EventArgs e) {
+
+        }
+
+        private void 通知一覧ToolStripMenuItem_Click(object sender, EventArgs e) {
+
+        }
+
+        private void 出金管理ToolStripMenuItem_Click(object sender, EventArgs e) {
+
+        }
+
+        private void 圏外チェックToolStripMenuItem_Click(object sender, EventArgs e) {
+
+        }
+
+        private void 条件指定による購入ToolStripMenuItem_Click(object sender, EventArgs e) {
+
+        }
+
+        private void dBメンテナンスToolStripMenuItem_Click(object sender, EventArgs e) {
+
+        }
+
+        private void ライセンスToolStripMenuItem_Click(object sender, EventArgs e) {
+
+        }
+
+        private void オプションToolStripMenuItem_Click(object sender, EventArgs e) {
+
+        }
+
+        private void アカウント管理ToolStripMenuItem_Click_1(object sender, EventArgs e) {
+            //if (!LicenseForm.checkCanUseWithErrorWindow()) return;
+            if (checkNowAutoMode()) return;
+            AccountManageForm f = new AccountManageForm();
+            f.mainform = this;
+            this.Enabled = false;
+            f.Show();
+        }
     }
 }

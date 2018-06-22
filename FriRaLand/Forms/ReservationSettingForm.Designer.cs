@@ -72,6 +72,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.registerReservationButton = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.autoDeleteDayNumeric2)).BeginInit();
@@ -619,11 +620,24 @@
             this.label1.TabIndex = 50;
             this.label1.Text = "商品名";
             // 
+            // registerReservationButton
+            // 
+            this.registerReservationButton.Font = new System.Drawing.Font("メイリオ", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.registerReservationButton.Location = new System.Drawing.Point(586, 112);
+            this.registerReservationButton.Margin = new System.Windows.Forms.Padding(4);
+            this.registerReservationButton.Name = "registerReservationButton";
+            this.registerReservationButton.Size = new System.Drawing.Size(193, 54);
+            this.registerReservationButton.TabIndex = 75;
+            this.registerReservationButton.Text = "出品登録";
+            this.registerReservationButton.UseVisualStyleBackColor = true;
+            this.registerReservationButton.Click += new System.EventHandler(this.registerReservationButton_Click);
+            // 
             // ReservationSettingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(859, 614);
+            this.ClientSize = new System.Drawing.Size(859, 612);
+            this.Controls.Add(this.registerReservationButton);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.reExhibitCheckBox1);
@@ -728,5 +742,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button registerReservationButton;
     }
 }

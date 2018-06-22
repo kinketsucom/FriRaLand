@@ -160,6 +160,5 @@ using FriRaLand.DBHelper;
             if (autoDeleteCheckBox2.Checked) panel2.Enabled = true;
             else panel2.Enabled = false;
         }
-
     }
 }
