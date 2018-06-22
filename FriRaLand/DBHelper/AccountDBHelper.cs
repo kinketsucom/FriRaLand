@@ -60,15 +60,19 @@ namespace FriRaLand.DBHelper {
             int max_number = -1;
             while (sQLiteDataReader.Read()) {
                 try {
-                    max_number = int.Parse(sQLiteDataReader["max(number)"].ToString());
+                    if (!string.IsNullOrEmpty(sQLiteDataReader["max(number)"].ToString())) {
+                        max_number = int.Parse(sQLiteDataReader["max(number)"].ToString());
+                    }
+                    
                 } catch (Exception ex) {
                     Log.Logger.Error("DBのnumberの最大値取得失敗");
+                    Console.WriteLine(ex);
                 }
             }
             sQLiteDataReader.Close();
             this.conn.Close();
             sQLiteCommand.Dispose();
-            Console.WriteLine(max_number);
+            Console.WriteLine("max_number:"+max_number.ToString());
             return max_number;
         }
         private int LoadUserVersion() {
@@ -117,7 +121,7 @@ namespace FriRaLand.DBHelper {
                 command.Dispose();
                 conn.Close();
             }
-            Console.WriteLine(user_version);
+            Console.WriteLine("user_version:"+user_version.ToString());
             getMaxNumber();
         }
 

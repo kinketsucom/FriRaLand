@@ -141,7 +141,7 @@ namespace FriRaLand.DBHelper {
             this.conn.Open();
             SQLiteCommand sQLiteCommand = new SQLiteCommand("select * from ((items it LEFT OUTER JOIN item_family if ON if.itemDBId = it.Id )  LEFT OUTER JOIN zaiko z ON z.parent_id = if.parent_id) order by number;", this.conn);
             SQLiteDataReader sQLiteDataReader = sQLiteCommand.ExecuteReader();
-            while (sQLiteDataReader.Read()) {
+           while (sQLiteDataReader.Read()) {
                 try {
                     FrilItem item = new FrilItem();
                     item.item_id = sQLiteDataReader["item_id"].ToString();
