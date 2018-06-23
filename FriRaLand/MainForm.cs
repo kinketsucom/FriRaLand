@@ -24,7 +24,7 @@ namespace FriRaLand {
             public int DBId;
             public string email;
             public string password;
-            public string access_token;
+            public string auth_token;
             public string sellerid;
             public int kengai_num;
             public int hanbai_num { get; set; }
@@ -90,7 +90,6 @@ namespace FriRaLand {
             //SetAutoKengaiTimer();
             //SetNotificationTimer();
             //ライセンスチェックを行う
-
 
             //new TestForm().Show();
 

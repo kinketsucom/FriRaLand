@@ -50,7 +50,7 @@ namespace FriRaLand.Forms {
             if (checkTokenRefreshNow()) return;
             //メルカリログイン試行
             CookieContainer cc = new CookieContainer();
-            FrilAPI api = new FrilAPI(TestForm.mail, TestForm.pass);
+            FrilAPI api = new FrilAPI(emailTextBox.Text, passwordTextBox.Text);
             try {
                 if (!api.tryFrilLogin(cc)) throw new Exception("ログイン失敗(mailかpassが間違っています)");
                 //ログイン成功
@@ -60,8 +60,8 @@ namespace FriRaLand.Forms {
                 MainForm.Account account = new MainForm.Account();
                 account.email = api.account.email;
                 account.password = api.account.password;
-                //account.access_token = api.account.access_token;//FIXIT:access_tokenは存在しない？
-                //account.global_access_token = m.global_access_token;//FIXIT:global_access_tokenは存在しない
+                account.auth_token = api.account.fril_auth_token;//FIXIT:auth_tokenは存在しない？
+                //account.global_auth_token = m.global_auth_token;//FIXIT:global_auth_tokenは存在しない
                 account.sellerid = api.account.userId;
                 account.nickname = api.account.nickname;
                 account.expiration_date = api.account.expirationDate;
@@ -78,6 +78,7 @@ namespace FriRaLand.Forms {
 
             } catch (Exception ex) {
                 Console.WriteLine(ex);
+                Log.Logger.Error(ex + ":accountAddButton_Click()");
                 //ログイン失敗
                 MessageBox.Show("ログインに失敗しました。\n（同じIPアドレスから連続でログインを試すとエラーが発生することがあります。\n15分おきに2つずつアカウントを登録するとエラーが起きにくいです。）", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
@@ -165,7 +166,7 @@ namespace FriRaLand.Forms {
         //        /*if (proxy_list.Length != 0) {
         //            for (int trynum = 0; trynum < 5; trynum++) {
         //                FrilAPI newapi = Common.checkFrilAPI(api, true, proxy_list[trynum]);
-        //                if (newapi.access_token != api.access_token) {
+        //                if (newapi.auth_token != api.auth_token) {
         //                    ok = true;
         //                    break;
         //                }
@@ -173,7 +174,7 @@ namespace FriRaLand.Forms {
         //        }
         //        else {*/
         //        FrilAPI newapi = Common.checkFrilAPI(api, true);
-        //        if (newapi.access_token != api.access_token) ok = true;
+        //        if (newapi.auth_token != api.auth_token) ok = true;
         //        //}
         //        if (ok) {
         //            MessageBox.Show("トークンを更新しました。", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);

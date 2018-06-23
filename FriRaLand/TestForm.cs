@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Net;
 
 namespace FriRaLand {
     public partial class TestForm : Form {
@@ -21,8 +22,9 @@ namespace FriRaLand {
         }
 
         private void TestForm_Load(object sender, EventArgs e) {
-            //FrilAPI api = new FrilAPI(mail, pass);
-            //api.tryFrilLogin();
+            CookieContainer cc= new CookieContainer();
+            FrilAPI api = new FrilAPI(mail, pass);
+            api.tryFrilLogin(cc);
         }
 
         private void button2_Click(object sender, EventArgs e) {

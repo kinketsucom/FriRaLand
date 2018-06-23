@@ -17,8 +17,8 @@ namespace FriRaLand.DBHelper {
         public void onCreate() {
             conn.Open();
             string commandText = "CREATE TABLE IF NOT EXISTS accounts ( Id INTEGER PRIMARY KEY AUTOINCREMENT,"
-                                + "email TEXT, password TEXT,access_token TEXT,"
-                                + "global_access_token TEXT,sellerid TEXT, nickname TEXT);";
+                                + "email TEXT, password TEXT,auth_token TEXT,"
+                                + "sellerid TEXT, nickname TEXT, number INTEGER);";
             SQLiteCommand command = conn.CreateCommand();
             command.CommandText = commandText;
             command.ExecuteNonQuery();
@@ -38,10 +38,10 @@ namespace FriRaLand.DBHelper {
             }
             conn.Open();
             string commandText = "INSERT INTO accounts ("
-                                + "email, password, access_token, sellerid, nickname, number, expiration_date, kengai_num, exhibit_cnt, hanbai_num, lastExhibitDate, addSpecialTextToItemName, insertEmptyStrToItemName, defaultbankaddressId, tokenupdatedate )"
+                                + "email, password, auth_token, sellerid, nickname, number, expiration_date, kengai_num, exhibit_cnt, hanbai_num, lastExhibitDate, addSpecialTextToItemName, insertEmptyStrToItemName, defaultbankaddressId, tokenupdatedate )"
                                 + "VALUES ('" + account.email.Replace("'", "''") + "','"
                                 + account.password.Replace("'", "''") + "','"
-                                + account.access_token.Replace("'", "''") + "','"
+                                + account.auth_token.Replace("'", "''") + "','"
                                 + account.sellerid.Replace("'", "''") + "','"
                                 + account.nickname.Replace("'", "''") + "', " + new_number.ToString() + ",'" + Common.getUnixTimeStampFromDate(account.expiration_date) + "', -1, 0,0, '','False','False', " + account.defaultbankaddressId.ToString() + ",'" + Common.getUnixTimeStampFromDate(account.token_update_date) + "'); ";
             SQLiteCommand command = conn.CreateCommand();
@@ -103,13 +103,13 @@ namespace FriRaLand.DBHelper {
                 command.Dispose();
                 conn.Close();
 
-                conn.Open();
-                commandText = "alter table accounts add number INTEGER;";
-                command = conn.CreateCommand();
-                command.CommandText = commandText;
-                command.ExecuteNonQuery();
-                command.Dispose();
-                conn.Close();
+                //conn.Open();
+                //commandText = "alter table accounts add number INTEGER;";
+                //command = conn.CreateCommand();
+                //command.CommandText = commandText;
+                //command.ExecuteNonQuery();
+                //command.Dispose();
+                //conn.Close();
 
                 conn.Open();
                 commandText = "update accounts set number = rowid;";
@@ -315,7 +315,7 @@ namespace FriRaLand.DBHelper {
                     account.DBId = int.Parse(sQLiteDataReader["Id"].ToString());
                     account.email = sQLiteDataReader["email"].ToString();
                     account.password = sQLiteDataReader["password"].ToString();
-                    account.access_token = sQLiteDataReader["access_token"].ToString();
+                    account.auth_token = sQLiteDataReader["auth_token"].ToString();
                     account.sellerid = sQLiteDataReader["sellerid"].ToString();
                     account.nickname = sQLiteDataReader["nickname"].ToString();
                     account.expiration_date = Common.getDateFromUnixTimeStamp(sQLiteDataReader["expiration_date"].ToString());
@@ -351,7 +351,7 @@ namespace FriRaLand.DBHelper {
                     account.DBId = int.Parse(sQLiteDataReader["Id"].ToString());
                     account.email = sQLiteDataReader["email"].ToString();
                     account.password = sQLiteDataReader["password"].ToString();
-                    account.access_token = sQLiteDataReader["access_token"].ToString();
+                    account.auth_token = sQLiteDataReader["auth_token"].ToString();
                     account.sellerid = sQLiteDataReader["sellerid"].ToString();
                     account.nickname = sQLiteDataReader["nickname"].ToString();
                     account.expiration_date = Common.getDateFromUnixTimeStamp(sQLiteDataReader["expiration_date"].ToString());
@@ -380,7 +380,7 @@ namespace FriRaLand.DBHelper {
                 string commandText = "UPDATE accounts SET "
                                     + "email = '" + account.email.Replace("'", "''") + "',"
                                     + "password = '" + account.password.Replace("'", "''") + "',"
-                                    + "access_token = '" + account.access_token + "',"
+                                    + "auth_token = '" + account.auth_token + "',"
                                     + "sellerid = '" + account.sellerid + "',"
                                     + "nickname = '" + account.nickname.Replace("'", "''") + "',"
                                     + "expiration_date = '" + Common.getUnixTimeStampFromDate(account.expiration_date) + "',"
@@ -504,7 +504,7 @@ namespace FriRaLand.DBHelper {
                     account.DBId = int.Parse(sQLiteDataReader["Id"].ToString());
                     account.email = sQLiteDataReader["email"].ToString();
                     account.password = sQLiteDataReader["password"].ToString();
-                    account.access_token = sQLiteDataReader["access_token"].ToString();
+                    account.auth_token = sQLiteDataReader["auth_token"].ToString();
                     account.sellerid = sQLiteDataReader["sellerid"].ToString();
                     account.nickname = sQLiteDataReader["nickname"].ToString();
                     account.expiration_date = Common.getDateFromUnixTimeStamp(sQLiteDataReader["expiration_date"].ToString());

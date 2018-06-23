@@ -17,7 +17,7 @@ namespace FriRaLand {
             public string email;
             public string password;
             public string fril_auth_token;
-            //public string rakuma_access_token;
+            //public string rakuma_auth_token;
             public string nickname;
             public string userId;
             public DateTime expirationDate;

@@ -147,6 +147,7 @@
             this.button6.TabIndex = 32;
             this.button6.Text = "下へ";
             this.button6.UseVisualStyleBackColor = true;
+            this.button6.Visible = false;
             // 
             // button5
             // 
@@ -482,6 +483,7 @@
             this.Controls.Add(this.accountDeleteButton);
             this.Name = "AccountManageForm";
             this.Text = "AccountManageForm";
+            this.Load += new System.EventHandler(this.AccountManageForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.accountDataGridView1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

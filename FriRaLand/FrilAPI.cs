@@ -17,8 +17,7 @@ namespace FriRaLand {
         private const string XPLATFORM = "android";
         private const string XAPPVERSION = "600";
 
-        public string access_token;
-        public string global_access_token;
+        public string auth_token;
         public string global_refresh_token; //未使用
         public string expiration_date;
         public string sellerid;
@@ -322,15 +321,8 @@ namespace FriRaLand {
                 req.Accept = "*/*";
                 req.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
                 req.ContentLength = (long)bytes.Length;
-
                 //クッキーコンテナの追加
                 req.CookieContainer = cc;
-                // クッキー確認
-                //foreach (Cookie c in cc.GetCookies(new Uri("https://api.fril.jp/api/"))) {
-                //    Console.WriteLine("クッキー名:" + c.Name.ToString());
-                //    Console.WriteLine("値:" + c.Value.ToString());
-                //    Console.WriteLine("ドメイン名:" + c.Domain.ToString());
-                //}
                 //プロキシの設定
                 if (string.IsNullOrEmpty(this.proxy) == false) {
                     System.Net.WebProxy proxy = new System.Net.WebProxy(this.proxy);
@@ -489,7 +481,7 @@ namespace FriRaLand {
             }
         }
         public bool updateProfilePhoto(string new_imagepath,CookieContainer cc) {
-            string url = string.Format("https://api.mercari.jp/users/update_profile?_access_token={0}&_global_access_token={1}", this.access_token, this.global_access_token);
+            string url = string.Format("https://api.mercari.jp/users/update_profile?_auth_token={0}&_global_auth_token={1}", this.auth_token);//FIXIT:frilにかえる
             Dictionary<string, string> param = new Dictionary<string, string>();
             param.Add("name", this.nickname);
             param.Add("introduction", this.getProfileIntroduction(cc));
@@ -499,8 +491,7 @@ namespace FriRaLand {
         public string getProfileIntroduction(CookieContainer cc) {
             Dictionary<string, string> param = new Dictionary<string, string>();
             param.Add("_user_format", "profile");
-            param.Add("_global_access_token", this.global_access_token);
-            param.Add("_access_token", this.access_token);
+            param.Add("_auth_token", this.auth_token);
             string url = "https://api.mercari.jp/users/get_profile";//FIXIT:フリルのものに変える
             FrilRawResponse res = getFrilAPI(url, param ,cc);
             if (res.error) {
