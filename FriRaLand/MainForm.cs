@@ -99,9 +99,6 @@ namespace FriRaLand {
         private void InitializeMainForm() {
             LocalItemDataGridView.VirtualMode = true;
             //データソースの設定
-            //ExhibittedDataGridView.DataSource = ExhibittedItemDataBindList;
-            //LocalItemDataGridView.DataSource = LocalItemDataBindList;
-            ReservationDataGridView.DataSource = ReservationDataBindList;
             ExhibittedDataGridView.AutoGenerateColumns = false;
             LocalItemDataGridView.AutoGenerateColumns = false;
             ReservationDataGridView.AutoGenerateColumns = false;
@@ -564,6 +561,21 @@ namespace FriRaLand {
             } catch {
 
             }
+        }
+
+        private void deleteReservationItem_Click(object sender, EventArgs e) {
+            //if (!LicenseForm.checkCanUseWithErrorWindow()) return;
+            if (checkNowAutoMode()) return;
+            List<int> deleteIdList = new List<int>();
+            foreach (DataGridViewRow row in ReservationDataGridView.SelectedRows) deleteIdList.Add(ReservationDataBindList[row.Index].DBId);
+            if (deleteIdList.Count == 0) {
+                MessageBox.Show("商品が選択されていません");
+                return;
+            }
+            DialogResult result = MessageBox.Show("選択した" + deleteIdList.Count.ToString() + "件の予約を削除しますか?", "質問", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+            if (result != DialogResult.Yes) return;
+            new ReservationDBHelper().deleteReservation(deleteIdList);
+            ReloadReservationItem("");
         }
     }
 }
