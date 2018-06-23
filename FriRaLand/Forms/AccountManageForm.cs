@@ -31,10 +31,20 @@ namespace FriRaLand.Forms {
             //アカウントリストクリア
             accountList.Clear();
             accountList = accountLoader();
+
             foreach (var a in accountList) {
                 //accountListBox1.Items.Add(a);
                 accountListBox2.Items.Add(a);
             }
+
+            #region FIXIT:1アカウント用
+            if (accountList.Count >= 1) {
+                accountAddButton.Enabled = false;
+            } else {
+                accountAddButton.Enabled = true;
+            }
+            #endregion
+            //FIXIT:複数アカウント用
             this.accountDataGridView1.DataSource = accountList;
             //DataSource設定したあとにしないと順序狂う
             this.accountDataGridView1.Columns["nickname"].DisplayIndex = 0;
