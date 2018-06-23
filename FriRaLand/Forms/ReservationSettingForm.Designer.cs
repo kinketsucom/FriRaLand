@@ -428,6 +428,7 @@
             this.accountComboBox.Name = "accountComboBox";
             this.accountComboBox.Size = new System.Drawing.Size(160, 31);
             this.accountComboBox.TabIndex = 69;
+            this.accountComboBox.Format += new System.Windows.Forms.ListControlConvertEventHandler(this.accountComboBox_Format);
             // 
             // label16
             // 

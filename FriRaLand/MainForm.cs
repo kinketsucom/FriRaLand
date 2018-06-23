@@ -485,5 +485,35 @@ namespace FriRaLand {
             this.Enabled = false;
             f.Show();
         }
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e) {
+            //タブが変更されたとき
+            //出品済みタブ以外では、グリッド右上の表の参照のボタンなどを表示する
+            if (tabControl1.SelectedIndex == 0) {
+                LocalItemDataGridView.Visible = true;
+                ExhibittedDataGridView.Visible = false;
+                ReservationDataGridView.Visible = false;
+                DailyExhibitDataGridView.Visible = false;
+            }
+            if (tabControl1.SelectedIndex == 1) {
+                LocalItemDataGridView.Visible = false;
+                ExhibittedDataGridView.Visible = false;
+                ReservationDataGridView.Visible = true;
+                DailyExhibitDataGridView.Visible = false;
+            }
+            if (tabControl1.SelectedIndex == 2) {
+                //出品済みタブ
+                ExhibittedDataGridView.Visible = true;
+                LocalItemDataGridView.Visible = false;
+                ReservationDataGridView.Visible = false;
+                DailyExhibitDataGridView.Visible = false;
+            }
+            if (tabControl1.SelectedIndex == 3) {
+                ExhibittedDataGridView.Visible = false;
+                LocalItemDataGridView.Visible = false;
+                ReservationDataGridView.Visible = false;
+                DailyExhibitDataGridView.Visible = true;
+            }
+        }
     }
 }
