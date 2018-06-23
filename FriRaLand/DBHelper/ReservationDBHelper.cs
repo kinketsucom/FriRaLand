@@ -171,11 +171,12 @@ namespace FriRaLand.DBHelper{
                     if (reservation.reexhibit_flag_str == "する") reservation.reexhibit_flag = true;
                     else reservation.reexhibit_flag = false;
                     reservation.accountNickName = sQLiteDataReader["nickname"].ToString();
-                    reservation.itemName = sQLiteDataReader["ItemName"].ToString();
+                    reservation.item_name = sQLiteDataReader["item_name"].ToString();
                     reservation.imagepath = sQLiteDataReader["Pic1"].ToString();
                     rst.Add(reservation);
                 } catch (Exception ex) {
                     Log.Logger.Error("予約読み込み中エラー : " + ex.Message);
+                    Console.WriteLine("予約読み込み中エラー : " + ex.Message);
                 }
             }
             sQLiteDataReader.Close();
@@ -222,7 +223,7 @@ namespace FriRaLand.DBHelper{
                     if (reservation.reexhibit_flag_str == "する") reservation.reexhibit_flag = true;
                     else reservation.reexhibit_flag = false;
                     reservation.accountNickName = sQLiteDataReader["nickname"].ToString();
-                    reservation.itemName = sQLiteDataReader["ItemName"].ToString();
+                    reservation.item_name = sQLiteDataReader["ItemName"].ToString();
                     reservation.imagepath = sQLiteDataReader["Pic1"].ToString();
                     rst.Add(reservation);
                 } catch (Exception ex) {
@@ -271,7 +272,7 @@ namespace FriRaLand.DBHelper{
                     if (reservation.reexhibit_flag_str == "する") reservation.reexhibit_flag = true;
                     else reservation.reexhibit_flag = false;
                     reservation.accountNickName = sQLiteDataReader["nickname"].ToString();
-                    reservation.itemName = sQLiteDataReader["ItemName"].ToString();
+                    reservation.item_name = sQLiteDataReader["ItemName"].ToString();
                     reservation.imagepath = sQLiteDataReader["Pic1"].ToString();
                     rst.Add(reservation);
                 } catch (Exception ex) {

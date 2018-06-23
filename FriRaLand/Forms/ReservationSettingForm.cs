@@ -92,7 +92,7 @@ using FriRaLand.DBHelper;
             public string consider_favorite_str2 { get; set; }
             public string consider_comment_str2 { get; set; }
             public string reexhibit_flag_str { get; set; }
-            public string itemName { get; set; }
+            public string item_name { get; set; }
             public Image itemImage { get; set; }
             public string accountNickName { get; set; }
             public void loadImageFromFile() {

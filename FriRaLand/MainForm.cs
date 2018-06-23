@@ -85,7 +85,7 @@ namespace FriRaLand {
             ReloadLocalItem("");
             ReloadReservationItem("");
             //ReloadDailyExhibit();
-            //InitializeAccountData();
+            InitializeAccountData();
             InitializeMainForm();//データ表示グリッドの初期化
             //SetAutoKengaiTimer();
             //SetNotificationTimer();
@@ -101,7 +101,7 @@ namespace FriRaLand {
             //データソースの設定
             //ExhibittedDataGridView.DataSource = ExhibittedItemDataBindList;
             //LocalItemDataGridView.DataSource = LocalItemDataBindList;
-            //ReservationDataGridView.DataSource = ReservationDataBindList;
+            ReservationDataGridView.DataSource = ReservationDataBindList;
             ExhibittedDataGridView.AutoGenerateColumns = false;
             LocalItemDataGridView.AutoGenerateColumns = false;
             ReservationDataGridView.AutoGenerateColumns = false;
@@ -244,12 +244,14 @@ namespace FriRaLand {
             if (string.IsNullOrEmpty(text)) loadresult = await Task.Run(() => reservationDBHelper.loadReservations());
             else loadresult = await Task.Run(() => reservationDBHelper.selectReservationFromName(text));
             ReservationDataBindList.Clear();
+            int row_num = 0;
             foreach (var reservation in loadresult) {
                 //取消日時がデフォルト（取消しない）ものは取消日時文字列を空に
                 if (reservation.deleteDate.ToString() == ReservationSettingForm.ReservationSetting.dafaultDate) reservation.deleteDateString = "";
                 if (reservation.deleteDate2.ToString() == ReservationSettingForm.ReservationSetting.dafaultDate) reservation.deleteDateString2 = "";
                 ReservationDataBindList.Add(reservation);
             }
+
             ReservationDataGridView.RowCount = ReservationDataBindList.Count;
             ReservationDataGridView.Refresh();
             ReservationDataGridView.ClearSelection();
@@ -285,14 +287,14 @@ namespace FriRaLand {
             if (result != DialogResult.Yes) return;
             new FrilItemDBHelper().deleteItem(deleteIdList);
             //商品を削除した場合はその商品の出品予約も削除する
-            //var reservationDBHelper = new ReservationDBHelper();
-            //List<ReservationSettingForm.ReservationSetting> reservationList = reservationDBHelper.loadReservations();
+            var reservationDBHelper = new ReservationDBHelper();
+            List<ReservationSettingForm.ReservationSetting> reservationList = reservationDBHelper.loadReservations();
             var deleteItemIdArray = deleteIdList.ToArray();
             List<int> deleteReservationIdList = new List<int>();
-            //foreach (var reservation in reservationList) if (Array.IndexOf(deleteItemIdArray, reservation.itemDBId) >= 0) deleteReservationIdList.Add(reservation.DBId);
-            //reservationDBHelper.deleteReservation(deleteReservationIdList);
+            foreach (var reservation in reservationList) if (Array.IndexOf(deleteItemIdArray, reservation.itemDBId) >= 0) deleteReservationIdList.Add(reservation.DBId);
+            reservationDBHelper.deleteReservation(deleteReservationIdList);
             ReloadLocalItem("");
-            //ReloadReservationItem("");
+            ReloadReservationItem("");
         }
         private int exhibit_success_num = 0;
         private int exhibit_failed_num = 0;
@@ -513,6 +515,54 @@ namespace FriRaLand {
                 LocalItemDataGridView.Visible = false;
                 ReservationDataGridView.Visible = false;
                 DailyExhibitDataGridView.Visible = true;
+            }
+        }
+
+        private void ReservationDataGridView_CellValueNeeded(object sender, DataGridViewCellValueEventArgs e) {
+            try {
+                if (ReservationDataBindList.Count <= e.RowIndex) return;
+                ReservationSettingForm.ReservationSetting reservation = ReservationDataBindList[e.RowIndex];
+                if (reservation.itemImage == null) reservation.loadImageFromFile();
+                switch (e.ColumnIndex) {
+                    case 0:
+                        e.Value = reservation.exhibit_status_str;
+                        break;
+                    case 1:
+                        e.Value = reservation.itemImage;
+                        break;
+                    case 2:
+                        e.Value = reservation.item_name;
+                        break;
+                    case 3:
+                        e.Value = reservation.accountNickName;
+                        break;
+                    case 4:
+                        e.Value = reservation.exhibitDateString;
+                        break;
+                    case 5:
+                        e.Value = reservation.deleteDateString;
+                        break;
+                    case 6:
+                        e.Value = reservation.consider_favorite_str;
+                        break;
+                    case 7:
+                        e.Value = reservation.consider_comment_str;
+                        break;
+                    case 8:
+                        e.Value = reservation.deleteDateString2;
+                        break;
+                    case 9:
+                        e.Value = reservation.consider_favorite_str2;
+                        break;
+                    case 10:
+                        e.Value = reservation.consider_comment_str2;
+                        break;
+                    case 11:
+                        e.Value = reservation.reexhibit_flag_str;
+                        break;
+                }
+            } catch {
+
             }
         }
     }
