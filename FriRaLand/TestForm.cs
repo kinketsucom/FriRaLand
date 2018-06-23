@@ -18,9 +18,7 @@ namespace FriRaLand {
         public static string pass = "";
 
         private void button1_Click(object sender, EventArgs e) {
-            RakumaAPI api = new RakumaAPI(mail, pass);
             api.tryRakumaLogin();
-            RakumaItem item = new RakumaItem();
             item.brandId = 1573;
             item.categoryId = new int[3]{281, 32, 3};
             item.conditionType = 1;
