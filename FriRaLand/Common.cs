@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -190,7 +192,20 @@ namespace FriRaLand {
             }
         }
 
+        public static void DownloadFileTo(string url, string fileName) {
+            if (System.IO.Directory.Exists("tmp") == false) System.IO.Directory.CreateDirectory("tmp");
+            var request = WebRequest.Create(url);
+            var response = request.GetResponse();
+            var stream = response.GetResponseStream();
 
+            using (var file = new FileStream(fileName, FileMode.OpenOrCreate, FileAccess.Write)) {
+                int read;
+                byte[] buffer = new byte[1024];
+                while ((read = stream.Read(buffer, 0, buffer.Length)) > 0) {
+                    file.Write(buffer, 0, read);
+                }
+            }
+        }
 
 
 

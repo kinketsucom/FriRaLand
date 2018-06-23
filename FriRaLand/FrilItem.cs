@@ -41,6 +41,11 @@ namespace FriRaLand {
         public int likes_count;
         public string[] imageurls = new string[]{"","","",""}; //画像URL
         public string[] imagepaths = new string[] { "", "", "", "" }; //ローカルの画像パス
+
+
+        public int num_likes { get; set; } //いいね数
+        public int num_comments { get; set; }//コメント数
+
         public FrilItem() {
 
         }
@@ -67,6 +72,10 @@ namespace FriRaLand {
                 this.size_name = info.size_name;
                 this.brand_id = (info.brand_id == null) ? -1 : (int)info.brand_id;
                 this.i_brand_id = (info.i_brand_id == null) ? -1 : (int)info.i_brand_id;
+                
+                
+                
+                
                 //image
                 for (int i = 0; i < 4; i++) imageurls[i] = "";
                 int num = 0;

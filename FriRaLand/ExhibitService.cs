@@ -130,10 +130,10 @@ namespace FriRaLand {
                 return false;
             }
             int rate = Settings.getNesageRate();
-            int discount = item.price * rate / 100;
+            int discount = item.s_price * rate / 100;
             discount = (discount % 10 == 0) ? discount : ((discount / 10) + 1) * 10; //10の位で切り上げ
-            int oldprice = item.price;
-            item.price -= discount;
+            int oldprice = item.s_price;
+            item.s_price -= discount;
             bool res = api.Edit(item, item.imageurls);
             if (res) {
                 //値下げ回数DB更新

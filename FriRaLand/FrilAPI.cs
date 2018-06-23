@@ -42,8 +42,6 @@ namespace FriRaLand {
         }
  
 
-
-
         //成功: itemID 失敗: null
         public string Sell(FrilItem item,CookieContainer cc) {
             try {
@@ -131,8 +129,6 @@ namespace FriRaLand {
             account.userId = ((long)json.user.id).ToString();
             return account;
         }
-
-
         public FrilItem getItemDetailInfo(string item_id,CookieContainer cc)
         {
             Dictionary<string, string> param = new Dictionary<string, string>();
@@ -149,8 +145,6 @@ namespace FriRaLand {
             FrilItem item = new FrilItem(resjson.item);
             return item;
         }
-
-
         //ブラウザの商品ページから商品IDを得る
         //成功:商品ID 失敗null
         public string getItemIDFromBrowserItemURL(string browserItemURL,CookieContainer cc)
@@ -177,7 +171,6 @@ namespace FriRaLand {
                 return null;
             }
         }
-
         //ユーザが出品している商品をすべて取得
         public List<FrilItem> getSellingItem(string userId,CookieContainer cc) {
             List<FrilItem> rst = new List<FrilItem>();
@@ -371,7 +364,6 @@ namespace FriRaLand {
                 return "";
             }
         }
-
         private string postMultipartFril(string url, Dictionary<string, string> param, string file,CookieContainer cc) {
             Encoding encoding = Encoding.GetEncoding("UTF-8");
             string text = Environment.TickCount.ToString();
@@ -440,8 +432,6 @@ namespace FriRaLand {
             }
             return result;
         }
-
-
         public static string getExhibitionImageFromPath(string path) {
             try {
                 //imgフォルダがなかったら作成
@@ -589,6 +579,118 @@ namespace FriRaLand {
             }
             return res;
         }
+
+
+        public bool Edit(FrilItem item, string[] imagelocation) {
+            FrilRawResponse res = new FrilRawResponse();
+            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+            try {
+                string url = string.Format("https://api.mercari.jp/items/edit?_access_token={0}&_global_access_token={1}", this.auth_token);
+
+                /*手数料を計算する*/
+                int sales_fee = GetSalesFee(item.s_price, item.category_id);
+
+                //dictionary.Add("_ignore_warning", "false");
+                dictionary.Add("id", item.item_id);
+                dictionary.Add("category_id", item.category_id.ToString());
+                dictionary.Add("description", item.detail);
+                //dictionary.Add("exhibit_token", MercariAPI.getCsrfToken());
+                dictionary.Add("item_condition", item.status.ToString());
+                dictionary.Add("name", item.item_name);
+                dictionary.Add("price", item.s_price.ToString());
+                dictionary.Add("sales_fee", sales_fee.ToString());
+                dictionary.Add("shipping_duration", item.d_date.ToString());
+                dictionary.Add("shipping_from_area", item.d_area.ToString());
+                dictionary.Add("shipping_payer", item.carriage.ToString());
+                dictionary.Add("shipping_method", item.d_method.ToString());
+                if (item.size_id > 0) dictionary.Add("size", item.size_id.ToString());
+                if (item.brand_id > 0) dictionary.Add("brand_name", item.brand_id.ToString());
+                //既にアップロード済みの画像のときはファイルを一時ファイルにダウンロード
+                Dictionary<int, string> dic = new Dictionary<int, string>();
+                if (!string.IsNullOrEmpty(imagelocation[0])) {
+                    if (imagelocation[0].IndexOf("https://static-mercari-jp") >= 0) {
+                        Common.DownloadFileTo(imagelocation[0], "tmp/tmp1.jpg");
+                        dic.Add(1, "tmp/tmp1.jpg");
+                    } else {
+                        dic.Add(1, imagelocation[0]);
+                    }
+                }
+                if (!string.IsNullOrEmpty(imagelocation[1])) {
+                    if (imagelocation[1].IndexOf("https://static-mercari-jp") >= 0) {
+                        Common.DownloadFileTo(imagelocation[1], "tmp/tmp2.jpg");
+                        dic.Add(2, "tmp/tmp2.jpg");
+                    } else {
+                        dic.Add(2, imagelocation[1]);
+                    }
+                }
+                if (!string.IsNullOrEmpty(imagelocation[2])) {
+                    if (imagelocation[2].IndexOf("https://static-mercari-jp") >= 0) {
+                        Common.DownloadFileTo(imagelocation[2], "tmp/tmp3.jpg");
+                        dic.Add(3, "tmp/tmp3.jpg");
+                    } else {
+                        dic.Add(3, imagelocation[2]);
+                    }
+                }
+                if (!string.IsNullOrEmpty(imagelocation[3])) {
+                    if (imagelocation[3].IndexOf("https://static-mercari-jp") >= 0) {
+                        Common.DownloadFileTo(imagelocation[3], "tmp/tmp4.jpg");
+                        dic.Add(4, "tmp/tmp4.jpg");
+                    } else {
+                        dic.Add(4, imagelocation[3]);
+                    }
+                }
+                res = postMercariAPIwithMultiPart(url, dictionary, dic);
+                if (res.error) throw new Exception();
+                return true;
+            } catch (Exception e) {
+                Log.Logger.Error("商品の編集に失敗 以下エラー内容詳細" + item.itemid);
+                if (res.error) {
+                    Log.Logger.Error("res.errorがtrue");
+
+                } else {
+                    Log.Logger.Error("res.errorはfalse");
+                }
+                if (!string.IsNullOrEmpty(res.response)) Log.Logger.Error("response: " + res.response);
+                else Log.Logger.Error("res.responseはnull");
+
+                Log.Logger.Error("出品内容:");
+                Log.Logger.Error(dictionary);
+                return false;
+            }
+        }
+        //最新の手数料のレートに応じて手数料を求める
+        //手数料取得失敗時は負の値が返る
+        public int GetSalesFee(int price, int category_id) {
+            try {
+                Dictionary<string, string> param = GetTokenParamListForFrilAPI();
+                FrilRawResponse rawres = getFrilAPI("https://api.mercari.jp/sales_fee/get", param);//FIXIT:Frilのものに変更しないと
+                dynamic resjson = DynamicJson.Parse(rawres.response);
+                object[] sales_cond = resjson.data.parameters;
+                /*カテゴリを再優先, 次に金額の条件を満たすか*/
+                for (int i = 0; i < sales_cond.Length; i++) {
+                    dynamic cond = sales_cond[i];
+                    /*カテゴリIDの条件があってそれを満たさない場合は次の条件へ*/
+                    if (cond.category_id() && (int)cond.category_id != category_id) continue;
+                    /*金額の条件を満たしていれば手数料決定*/
+                    int min_price = cond.min_price() ? (int)cond.min_price : -1;
+                    int max_price = cond.max_price() ? (int)cond.max_price : -1;
+                    int fixed_fee = cond.fixed_fee() ? (int)cond.fixed_fee : 0;
+                    if (min_price <= price && price <= max_price) {
+                        /*手数料計算*/
+                        double rate = cond.rate() ? (double)cond.rate : -1;
+                        int fee = (int)Math.Floor(rate * price) + fixed_fee;
+                        return fee;
+                    }
+                }
+                return (int)((double)price * 0.1); /*どの条件にもマッチしなかった場合はとりあえず10%返す*/
+            } catch (Exception e) {
+                Log.Logger.Error(string.Format("手数料計算に失敗:価格:{0},カテゴリID{1}", price, category_id));
+                return (int)((double)price * 0.1); ;
+            }
+        }
+
+
+
 
     }
 }
