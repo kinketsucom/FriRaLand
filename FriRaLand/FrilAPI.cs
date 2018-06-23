@@ -9,6 +9,7 @@ using System.IO;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Security.Cryptography;
 
 namespace FriRaLand {
     class FrilAPI {
@@ -40,7 +41,71 @@ namespace FriRaLand {
         public FrilAPI(Common.Account account) {
             this.account = account;
         }
- 
+        //get_items でのOption
+        private class GetItemsOption {
+            public string sellerid = "";
+            public List<int> status_list = new List<int>();
+            public Dictionary<string, string> ToPairList() {
+                //空文字列あるいは空リストの場合そのオプションはなし
+                Dictionary<string, string> rst = new Dictionary<string, string>();
+                if (this.sellerid != "") rst.Add("seller_id", this.sellerid);
+                if (this.status_list.Count != 0) rst.Add("status", FrilItem.ItemStatusListTostring(this.status_list));
+                return rst;
+            }
+        }
+
+        //商品の出品.要ログイン
+        //返り値: 成功:新しい商品オブジェクト 失敗:null
+        public FrilItem Sell(FrilItem item, string[] imagelocation) {
+            FrilRawResponse res = new FrilRawResponse();
+            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+            try {
+                string url = string.Format("https://api.mercari.jp/sellers/sell?_access_token={0}&_global_access_token={1}", this.auth_token);//FIXIT:Frilのものに変える
+
+                /*手数料を計算する*/
+                int sales_fee = GetSalesFee(item.s_price, item.category_id);
+
+                dictionary.Add("_ignore_warning", "false");
+                dictionary.Add("category_id", item.category_id.ToString());
+                dictionary.Add("description", item.detail);
+                dictionary.Add("exhibit_token", FrilAPI.getCsrfToken());
+                dictionary.Add("item_condition", item.status.ToString());
+                dictionary.Add("name", item.item_name);
+                dictionary.Add("price", item.s_price.ToString());
+                dictionary.Add("sales_fee", sales_fee.ToString());
+                dictionary.Add("shipping_duration", item.d_date.ToString());
+                dictionary.Add("shipping_from_area", item.d_area.ToString());
+                dictionary.Add("shipping_payer", item.carriage.ToString());
+                dictionary.Add("shipping_method", item.d_method.ToString());
+                if (item.size_id > 0) dictionary.Add("size", item.size_id.ToString());
+                if (item.brand_id > 0) dictionary.Add("brand_name", item.brand_id.ToString());
+                Dictionary<int, string> dic = new Dictionary<int, string>();
+                if (!string.IsNullOrEmpty(imagelocation[0])) dic.Add(1, imagelocation[0]);
+                if (!string.IsNullOrEmpty(imagelocation[1])) dic.Add(2, imagelocation[1]);
+                if (!string.IsNullOrEmpty(imagelocation[2])) dic.Add(3, imagelocation[2]);
+                if (!string.IsNullOrEmpty(imagelocation[3])) dic.Add(4, imagelocation[3]);
+
+                res = postFrilAPIwithMultiPart(url, dictionary, dic);
+                if (res.error) throw new Exception();
+                dynamic resjson = DynamicJson.Parse(res.response);
+                FrilItem rstitem = new FrilItem(resjson.data);
+                return rstitem;
+            } catch (Exception e) {
+                Log.Logger.Error("商品の出品に失敗 以下エラー内容詳細" + item.item_id);
+                if (res.error) {
+                    Log.Logger.Error("res.errorがtrue");
+
+                } else {
+                    Log.Logger.Error("res.errorはfalse");
+                }
+                if (!string.IsNullOrEmpty(res.response)) Log.Logger.Error("response: " + res.response);
+                else Log.Logger.Error("res.responseはnull");
+
+                Log.Logger.Error("出品内容:");
+                Log.Logger.Error(dictionary);
+                return null;
+            }
+        }
 
         //成功: itemID 失敗: null
         public string Sell(FrilItem item,CookieContainer cc) {
@@ -348,6 +413,99 @@ namespace FriRaLand {
                 return res;
             }
         }
+        //FrilAPIをMultiPartPOSTでたたく
+        private FrilRawResponse postFrilAPIwithMultiPart(string url, Dictionary<string, string> param, Dictionary<int, string> imagedic) {
+            FrilRawResponse res = new FrilRawResponse();
+
+            Encoding encoding = Encoding.GetEncoding("UTF-8");
+            string text = Environment.TickCount.ToString();
+            byte[] bytes = encoding.GetBytes("\r\n");
+            HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
+            httpWebRequest.UserAgent = FrilAPI.USER_AGENT;
+            httpWebRequest.Headers.Set("X-PLATFORM", FrilAPI.XPLATFORM);
+            httpWebRequest.Headers.Set("X-APP-VERSION", FrilAPI.XAPPVERSION);
+            httpWebRequest.Method = "POST";
+            httpWebRequest.ContentType = "multipart/form-data; boundary=" + text;
+            string text2 = "";
+            foreach (KeyValuePair<string, string> current in param) {
+                text2 = string.Concat(new string[]
+                {
+                    text2,
+                    "--",
+                    text,
+                    "\r\nContent-Disposition: form-data; name=\"",
+                    current.Key,
+                    "\"\r\n\r\n",
+                    current.Value,
+                    "\r\n"
+                });
+            }
+            byte[] bytes2 = encoding.GetBytes(text2);
+            List<byte[]> list = new List<byte[]>();
+            long num = 0L;
+            foreach (KeyValuePair<int, string> imagekey in imagedic) {
+                string text3 = imagekey.Value;
+                Path.GetFileName(text3);
+                string s = string.Concat(new object[]
+                {
+                    "--",
+                    text,
+                    "\r\nContent-Disposition: form-data; name=\"photo_",
+                    imagekey.Key,
+                    "\"; filename=\"photo_",
+                    imagekey.Key,
+                    ".jpg\"\r\nContent-Type: image/jpeg\r\n\r\n"
+                });
+                list.Add(encoding.GetBytes(s));
+                num += (long)encoding.GetBytes(s).Length + new FileInfo(text3).Length;
+            }
+            byte[] bytes3 = encoding.GetBytes("--" + text + "--\r\n");
+            httpWebRequest.ContentLength = (long)bytes2.Length + num + (long)(bytes.Length * imagedic.Count) + (long)bytes3.Length;
+            string result = "";
+            try {
+                using (Stream requestStream = httpWebRequest.GetRequestStream()) {
+                    requestStream.Write(bytes2, 0, bytes2.Length);
+                    int j = 0;
+                    foreach (KeyValuePair<int, string> imagekey in imagedic) {
+                        using (FileStream fileStream = new FileStream(imagekey.Value, FileMode.Open, FileAccess.Read)) {
+                            requestStream.Write(list[j], 0, list[j].Length);
+                            byte[] array = new byte[4096];
+                            while (true) {
+                                int num3 = fileStream.Read(array, 0, array.Length);
+                                if (num3 == 0) {
+                                    break;
+                                }
+                                requestStream.Write(array, 0, num3);
+                            }
+                            requestStream.Write(bytes, 0, bytes.Length);
+                        }
+                        j++;
+                    }
+                    requestStream.Write(bytes3, 0, bytes3.Length);
+                    WebResponse response = httpWebRequest.GetResponse();
+                    string text4 = "";
+                    using (Stream responseStream = response.GetResponseStream()) {
+                        using (StreamReader streamReader = new StreamReader(responseStream, Encoding.GetEncoding("UTF-8"))) {
+                            text4 = streamReader.ReadToEnd();
+                        }
+                    }
+                    res.response = text4;
+                    res.error = false;
+                }
+            } catch (WebException ex) {
+                if (ex.Status != WebExceptionStatus.ProtocolError) {
+                    throw ex;
+                }
+                HttpWebResponse httpWebResponse = (HttpWebResponse)ex.Response;
+                using (Stream responseStream2 = httpWebResponse.GetResponseStream()) {
+                    using (StreamReader streamReader2 = new StreamReader(responseStream2, Encoding.UTF8)) {
+                        res.response = streamReader2.ReadToEnd();
+                        res.error = true;
+                    }
+                }
+            }
+            return res;
+        }
         private string executePostRequest(ref HttpWebRequest req, byte[] bytes) {
             try {
                 using (Stream requestStream = req.GetRequestStream()) {
@@ -608,7 +766,7 @@ namespace FriRaLand {
                 //既にアップロード済みの画像のときはファイルを一時ファイルにダウンロード
                 Dictionary<int, string> dic = new Dictionary<int, string>();
                 if (!string.IsNullOrEmpty(imagelocation[0])) {
-                    if (imagelocation[0].IndexOf("https://static-mercari-jp") >= 0) {
+                    if (imagelocation[0].IndexOf("https://static-mercari-jp") >= 0) {//FIXIT:Frilのものにかえる
                         Common.DownloadFileTo(imagelocation[0], "tmp/tmp1.jpg");
                         dic.Add(1, "tmp/tmp1.jpg");
                     } else {
@@ -639,11 +797,11 @@ namespace FriRaLand {
                         dic.Add(4, imagelocation[3]);
                     }
                 }
-                res = postMercariAPIwithMultiPart(url, dictionary, dic);
+                res = postFrilAPIwithMultiPart(url, dictionary, dic);
                 if (res.error) throw new Exception();
                 return true;
             } catch (Exception e) {
-                Log.Logger.Error("商品の編集に失敗 以下エラー内容詳細" + item.itemid);
+                Log.Logger.Error("商品の編集に失敗 以下エラー内容詳細" + item.item_id);
                 if (res.error) {
                     Log.Logger.Error("res.errorがtrue");
 
@@ -662,8 +820,9 @@ namespace FriRaLand {
         //手数料取得失敗時は負の値が返る
         public int GetSalesFee(int price, int category_id) {
             try {
+                CookieContainer cc = new CookieContainer();//FIXIT:これいるんかなあ？意味のないクッキーかも？
                 Dictionary<string, string> param = GetTokenParamListForFrilAPI();
-                FrilRawResponse rawres = getFrilAPI("https://api.mercari.jp/sales_fee/get", param);//FIXIT:Frilのものに変更しないと
+                FrilRawResponse rawres = getFrilAPI("https://api.mercari.jp/sales_fee/get", param,cc);//FIXIT:Frilのものに変更しないと
                 dynamic resjson = DynamicJson.Parse(rawres.response);
                 object[] sales_cond = resjson.data.parameters;
                 /*カテゴリを再優先, 次に金額の条件を満たすか*/
@@ -688,6 +847,149 @@ namespace FriRaLand {
                 return (int)((double)price * 0.1); ;
             }
         }
+        //access_tokenとglobal_access_tokenのはいったListを返す関数
+        private Dictionary<string, string> GetTokenParamListForFrilAPI() {
+            Dictionary<string, string> param = new Dictionary<string, string>();
+            param.Add("_auth_token", this.auth_token);
+            return param;
+        }
+        //特定のitemIDの商品情報を取得
+        //このAPIではコメントなどの情報も取得できるが現時点では取り出していない
+        public FrilItem GetItemInfobyItemIDWithDetail(string item_id) {
+            try {
+                CookieContainer cc = new CookieContainer();//FIXIT:不要なクッキーコンテナかどうか調べる必要がある
+                Dictionary<string, string> param = GetTokenParamListForFrilAPI();
+                param.Add("id", item_id);
+                FrilRawResponse rawres = getFrilAPI("https://api.mercari.jp/items/get", param,cc);//FIXIT;Frilのものにかえる
+                //Logger.info(rawres.response);
+                dynamic resjson = DynamicJson.Parse(rawres.response);
+                dynamic iteminfo = resjson.data;
+                FrilItem item = new FrilItem(iteminfo);
+                return item;
+            } catch (Exception e) {
+                //e.printStackTrace();
+                return null;
+            }
+        }
+        //商品を削除する.要ログイン
+        //返り値: 成功:true 失敗:false
+        public bool Cancel(FrilItem item) {
+            return Cancel(item.item_id);
+        }
+        public bool Cancel(string item_id) {
+            try {
+                string url = string.Format("https://api.mercari.jp/items/update_status?_access_token={0}&_global_access_token={1}", this.auth_token);//FIXIT:Frilのものにかえる
+                Dictionary<string, string> param = new Dictionary<string, string>();
+                param.Add("item_id", item_id);
+                param.Add("status", "cancel");
+                CookieContainer cc = new CookieContainer();//FIXIT:不要なクッキーコンテナの可能性がある。
+                FrilRawResponse rawres = postFrilAPI(url, param,cc);
+                if (rawres.error) return false;
+                /*グローバルアクセストークンを更新*/
+                dynamic resjson = DynamicJson.Parse(rawres.response);
+                string result = resjson.result;
+                if (result != "OK") throw new Exception();
+                Log.Logger.Info("商品の削除に成功");
+                return true;
+            } catch (Exception e) {
+                Log.Logger.Error("商品の削除に失敗");
+                return false;
+            }
+        }
+        public bool Stop(string item_id) {
+            try {
+                CookieContainer cc = new CookieContainer();//FIXIT:不要なクッキーコンテナの可能性がある。
+                string url = string.Format("https://api.mercari.jp/items/update_status?_access_token={0}&_global_access_token={1}", this.auth_token);
+                Dictionary<string, string> param = new Dictionary<string, string>();
+                param.Add("item_id", item_id);
+                param.Add("status", "stop");
+
+                FrilRawResponse rawres = postFrilAPI(url, param,cc);
+                if (rawres.error) return false;
+                /*グローバルアクセストークンを更新*/
+                dynamic resjson = DynamicJson.Parse(rawres.response);
+                string result = resjson.result;
+                if (result != "OK") throw new Exception();
+                Log.Logger.Info("商品の出品停止に成功");
+                return true;
+            } catch (Exception e) {
+                Log.Logger.Error("商品の出品停止に失敗");
+                return false;
+            }
+        }
+        //商品を削除して出品する.要ログイン
+        //返り値: 成功:新しい商品オブジェクト 失敗:null
+        public FrilItem CancelandSell(string item_id) {
+            FrilItem item = GetItemInfobyItemIDWithDetail(item_id);
+            Cancel(item); //削除失敗した場合も出品はする
+            return null;
+        }
+        //特定のsellerIDの商品をすべて取得
+        //List<int> status_option := 商品の状態1:on_sale 2:trading 3:sold_out
+        public List<FrilItem> GetAllItemsWithSellers(string sellerid, List<int> status_list, bool notall = false, bool detailflag = false) {
+            GetItemsOption option = new GetItemsOption();
+            option.sellerid = sellerid;
+            option.status_list = status_list;
+            return GetItems(option, notall, detailflag);
+        }
+        //コンディションに応じて商品を取得する
+        //一度のリクエストで取れるのは最大で60個 60個を超える場合は複数回APIを叩いて結果を取得する.
+        private List<FrilItem> GetItems(GetItemsOption option, bool notall, bool detailflag) {
+            Dictionary<string, string> default_param = GetTokenParamListForFrilAPI();
+            default_param = default_param.Concat(option.ToPairList()).ToDictionary(x => x.Key, x => x.Value);
+            default_param.Add("limit", "60");
+            List<FrilItem> res = new List<FrilItem>();
+
+            //60個以上あるか
+            Boolean has_next = false;
+            //2回目以降でつかうmax_pager_id
+            string max_pager_id = "";
+            CookieContainer cc = new CookieContainer();//FIXIT:不必要なクッキーコンテナの可能性がある
+            do {
+                Dictionary<string, string> param = new Dictionary<string, string>();
+                param = param.Concat(default_param).ToDictionary(x => x.Key, x => x.Value);
+                if (max_pager_id != "") param.Add("max_pager_id", max_pager_id);
+                FrilRawResponse rawres = getFrilAPI("https://api.mercari.jp/items/get_items", param,cc);//FIXIT:Frilのものにかえる
+
+                if (rawres.error) return res;
+                try {
+                    dynamic resjson = DynamicJson.Parse(rawres.response);
+                    object[] datas = resjson.data;
+                    has_next = resjson.meta.has_next;
+                    //detailflagが立っていれば 1件ずつデータとりだし1つずつAPIを叩いて詳しい情報を取得する
+                    if (detailflag) {
+                        for (int i = 0; i < datas.Length; i++) {
+                            string item_id = ((dynamic)datas[i]).id;
+                            FrilItem item = GetItemInfobyItemIDWithDetail(item_id);
+                            res.Add(item);
+                            max_pager_id = item.pager_id.ToString();
+                        }
+                    } else {
+                        foreach (object data in datas) {
+                            FrilItem item = new FrilItem((dynamic)data);
+                            res.Add(item);
+                            max_pager_id = item.pager_id.ToString();
+                        }
+                    }
+                } catch (Exception e) {
+                    //e.printStackTrace();
+                    return res;
+                }
+            } while (has_next == true && notall == false);
+            return res;
+        }
+        private static string getCsrfToken() {
+            byte[] array = new byte[16];
+            new RNGCryptoServiceProvider().GetBytes(array);
+            StringBuilder stringBuilder = new StringBuilder();
+            for (int i = 0; i < array.Length; i++) {
+                stringBuilder.AppendFormat("{0:x2}", array[i]);
+            }
+            return stringBuilder.ToString();
+        }
+
+
+
 
 
 

@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Net;
 
 namespace FriRaLand {
     public partial class MainForm : Form {
@@ -667,7 +668,7 @@ namespace FriRaLand {
                         ReservationObjects[i].docancel_flag = false;
                         Account a = accountDBHelper.selectItem(new List<int> { reservation.accountDBId })[0];
                         Log.Logger.Info("自動削除用のアカウント取得成功");
-                        FrilAPI api = new FrilAPI(a);
+                        FrilAPI api = new FrilAPI(a.email,a.password);
                         api = Common.checkFrilAPI(api);
                         //削除を実行する
                         string deleteitemid = reservationDBHelper.selectReservation(new List<int> { reservation.DBId })[0].item_id;
@@ -733,7 +734,7 @@ namespace FriRaLand {
                         ReservationObjects[i].docancel_flag2 = false;
                         Account a = accountDBHelper.selectItem(new List<int> { reservation.accountDBId })[0];
                         Log.Logger.Info("自動削除2用のアカウント取得成功");
-                        FrilAPI api = new FrilAPI(a);
+                        FrilAPI api = new FrilAPI(a.email,a.password);
                         api = Common.checkFrilAPI(api);
                         //削除を実行する
                         string deleteitemid = reservationDBHelper.selectReservation(new List<int> { reservation.DBId })[0].item_id;
@@ -804,6 +805,28 @@ namespace FriRaLand {
                     Log.Logger.Error("自動出品ループ内で想定外のエラー発生" + ex.Message);
                 }
             }
+        }
+        //商品名に文字列を付加したり、空白文字列をいれて出品する
+        private FrilItem SellWithOption(Account a, FrilItem item) {
+            FrilItem cloneItem = item.Clone();
+            FrilAPI api = new FrilAPI(a.email,a.password);
+            api = Common.checkFrilAPI(api);
+            if (a.addSpecialTextToItemName) {
+                //商品名に文字列を付加する
+                string[] cloneItemNameHeaders = Settings.getItemNameHeaderList().ToArray();
+                if (cloneItemNameHeaders.Length > 0) {
+                    string header_str = cloneItemNameHeaders[Common.random.Next(cloneItemNameHeaders.Length)];
+                    cloneItem.item_name = header_str + cloneItem.item_name;
+                }
+            }
+            if (a.insertEmptyStrToItemName) {
+                //商品名のランダムな位置に空白を挿入する
+                int len = cloneItem.item_name.Length;
+                int insertIndex = Common.random.Next(len);
+                cloneItem.item_name = cloneItem.item_name.Insert(insertIndex, " ");
+            }
+            
+            return api.Sell(cloneItem, cloneItem.imagepaths);
         }
 
         private void ReservationbackgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e) {

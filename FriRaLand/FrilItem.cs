@@ -45,9 +45,12 @@ namespace FriRaLand {
 
         public int num_likes { get; set; } //いいね数
         public int num_comments { get; set; }//コメント数
-
+        public long pager_id; //FIXIT:不必要なパラメータの可能性がある//商品ページのインデックス?,get_itemsで60件以上あるときは最後のitemのpager_idを使って2回目以降叩く
         public FrilItem() {
 
+        }
+        public FrilItem Clone() {
+            return (FrilItem)MemberwiseClone();
         }
         public FrilItem(dynamic json) {
             try {
@@ -89,6 +92,18 @@ namespace FriRaLand {
             catch (Exception ex) {
                 Log.Logger.Error("フリル商品jsonパース失敗" + ex.Message);
             }
+        }
+        //商品のstatusのリストからリクエスト用の文字列を作成する
+        static public string ItemStatusListTostring(List<int> op) {
+            List<string> t = new List<string>();
+            foreach (int o in op) {
+                if (o == 0) t.Add("stop");
+                if (o == 1) t.Add("on_sale");
+                if (o == 2) t.Add("trading");
+                if (o == 3) t.Add("sold_out");
+            }
+            if (t.Count == 0) return "";
+            else return string.Join(",", t);
         }
 
 

@@ -18,11 +18,11 @@ namespace FriRaLand.DBHelper {
             public string parent_id;
             public string child_id;
             public string status;
-            public string itemid;
+            public string item_id;
             public ExhibitLog() {
-                this.nickname = this.exhibit_day = this.sold_day = this.sold_time = this.parent_id = this.child_id = this.status = this.itemid = "";
+                this.nickname = this.exhibit_day = this.sold_day = this.sold_time = this.parent_id = this.child_id = this.status = this.item_id = "";
             }
-            public ExhibitLog(string nickname, string exhibit_day, string exhibit_time, string sold_day, string sold_time, string parent_id, string child_id, string status, string itemid) {
+            public ExhibitLog(string nickname, string exhibit_day, string exhibit_time, string sold_day, string sold_time, string parent_id, string child_id, string status, string item_id) {
                 this.nickname = nickname;
                 this.exhibit_day = exhibit_day;
                 this.exhibit_time = exhibit_time;
@@ -31,7 +31,7 @@ namespace FriRaLand.DBHelper {
                 this.parent_id = parent_id;
                 this.child_id = child_id;
                 this.status = status;
-                this.itemid = itemid;
+                this.item_id = item_id;
             }
         }
 
@@ -82,7 +82,7 @@ namespace FriRaLand.DBHelper {
                 conn.Close();
 
                 conn.Open();
-                commandText = "alter table exhibitlog add itemid TEXT;";
+                commandText = "alter table exhibitlog add item_id TEXT;";
                 command = conn.CreateCommand();
                 command.CommandText = commandText;
                 command.ExecuteNonQuery();
@@ -94,7 +94,7 @@ namespace FriRaLand.DBHelper {
         private void addExhibitLogDB(ExhibitLog log) {
             try {
                 conn.Open();
-                string commandText = "INSERT INTO exhibitlog (nickname, exhibit_day, exhibit_time, sold_day, sold_time, parent_id, child_id, status, itemid) VALUES"
+                string commandText = "INSERT INTO exhibitlog (nickname, exhibit_day, exhibit_time, sold_day, sold_time, parent_id, child_id, status, item_id) VALUES"
                                 + "('" + log.nickname.Replace("'", "''") + "',"
                                 + "'" + log.exhibit_day.Replace("'", "''") + "',"
                                 + "'" + log.exhibit_time.Replace("'", "''") + "',"
@@ -103,7 +103,7 @@ namespace FriRaLand.DBHelper {
                                 + "'" + log.parent_id.Replace("'", "''") + "',"
                                 + "'" + log.child_id.Replace("'", "''") + "',"
                                 + "'" + log.status.Replace("'", "''") + "',"
-                                + "'" + log.itemid + "');";
+                                + "'" + log.item_id + "');";
                 SQLiteCommand command = conn.CreateCommand();
                 command.CommandText = commandText;
                 command.ExecuteNonQuery();
@@ -115,7 +115,7 @@ namespace FriRaLand.DBHelper {
             }
         }
 
-        public void addExhibitLog(string nickname, DateTime exhibitDate, ItemFamilyDBHelper.ItemFamily itemfamily, string itemid) {
+        public void addExhibitLog(string nickname, DateTime exhibitDate, ItemFamilyDBHelper.ItemFamily itemfamily, string item_id) {
             ExhibitLog log = new ExhibitLog();
             log.nickname = nickname;
             log.exhibit_day = exhibitDate.ToString("yyyy/MM/dd");
@@ -125,10 +125,10 @@ namespace FriRaLand.DBHelper {
             log.parent_id = (itemfamily == null ? "" : itemfamily.parent_id);
             log.child_id = (itemfamily == null ? "" : itemfamily.child_id);
             log.status = "出品";
-            log.itemid = itemid;
+            log.item_id = item_id;
             addExhibitLogDB(log);
         }
-        public void addReexhibitLog(string nickname, DateTime exhibitDate, ItemFamilyDBHelper.ItemFamily itemfamily, string itemid) {
+        public void addReexhibitLog(string nickname, DateTime exhibitDate, ItemFamilyDBHelper.ItemFamily itemfamily, string item_id) {
             ExhibitLog log = new ExhibitLog();
             log.nickname = nickname;
             log.exhibit_day = exhibitDate.ToString("yyyy/MM/dd");
@@ -138,10 +138,10 @@ namespace FriRaLand.DBHelper {
             log.parent_id = (itemfamily == null ? "" : itemfamily.parent_id);
             log.child_id = (itemfamily == null ? "" : itemfamily.child_id);
             log.status = "再出品";
-            log.itemid = itemid;
+            log.item_id = item_id;
             addExhibitLogDB(log);
         }
-        public void addSoldLog(string nickname, DateTime exhibitDate, DateTime soldDate, ItemFamilyDBHelper.ItemFamily itemfamily, string itemid) {
+        public void addSoldLog(string nickname, DateTime exhibitDate, DateTime soldDate, ItemFamilyDBHelper.ItemFamily itemfamily, string item_id) {
             ExhibitLog log = new ExhibitLog();
             log.nickname = nickname;
             log.exhibit_day = exhibitDate.ToString("yyyy/MM/dd");
@@ -151,7 +151,7 @@ namespace FriRaLand.DBHelper {
             log.parent_id = (itemfamily == null ? "" : itemfamily.parent_id);
             log.child_id = (itemfamily == null ? "" : itemfamily.child_id);
             log.status = "販売";
-            log.itemid = itemid;
+            log.item_id = item_id;
             addExhibitLogDB(log);
         }
         public bool deleteExhibitLog(List<int> DBIdList) {
@@ -192,7 +192,7 @@ namespace FriRaLand.DBHelper {
                     log.child_id = sQLiteDataReader["child_id"].ToString();
                     log.status = sQLiteDataReader["status"].ToString();
                     log.DBId = int.Parse(sQLiteDataReader["Id"].ToString());
-                    log.itemid = sQLiteDataReader["itemid"].ToString();
+                    log.item_id = sQLiteDataReader["item_id"].ToString();
                     rst.Add(log);
                 } catch (Exception ex) {
                     Log.Logger.Error("ログ読み込み中エラー : " + ex.Message);
@@ -206,10 +206,10 @@ namespace FriRaLand.DBHelper {
 
         //履歴からIDを指定して親IDを取得
         //返り値: 成功：親ID 失敗:空文字列
-        public string getParentIDFromExhibitLog(string itemid) {
+        public string getParentIDFromExhibitLog(string item_id) {
             string rst = "";
             this.conn.Open();
-            SQLiteCommand sQLiteCommand = new SQLiteCommand("select parent_id from exhibitlog where itemid = '" + itemid + "';", this.conn);
+            SQLiteCommand sQLiteCommand = new SQLiteCommand("select parent_id from exhibitlog where item_id = '" + item_id + "';", this.conn);
             SQLiteDataReader sQLiteDataReader = sQLiteCommand.ExecuteReader();
             while (sQLiteDataReader.Read()) {
                 try {

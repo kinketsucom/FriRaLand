@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using FriRaLand.DBHelper;
 
 namespace FriRaLand {
     class Common {
@@ -206,7 +207,68 @@ namespace FriRaLand {
                 }
             }
         }
+        static public FrilAPI checkFrilAPI(FrilAPI api, bool force = false, string proxy = "") {
+            //オプションで自動更新行わない設定にされていたら自動更新を行わない
+            if (Settings.getDoNotAutoTokenRefresh() == true) {
+                Log.Logger.Info("自動更新を行わない設定になっているので行わない");
+                return api;
+            }
+            var accountDBHelper = new AccountDBHelper();
+            //有効期限が切れていないか調べる 強制フラグがたっていればかならず更新を行う
+            if (Common.getDateFromUnixTimeStamp(api.expiration_date).Year == 1970) {
+                Log.Logger.Warn("警告: api.expiration_dateが1970/1/1になっている,　バグの可能性大.");
+                Log.Logger.Info("とりあえずapiそのまま返す");
+                return api;
+            }
+            MainForm.Account account = accountDBHelper.getAccountFromSellerid(api.sellerid);
 
+            if (account.token_update_date < DateTime.Now || force) {
+                int retrynum = 1;
+                //プロキシを使用する場合はリトライ回数を5回に
+                //if (Settings.getUseProxyAuto() && force == false) retrynum = 5;
+
+                for (int i = 0; i < retrynum; i++) {
+                    try {
+                        /*if (Settings.getUseProxyAuto() && force == false) {
+                            Log.Logger.Info("プロキシを使用する設定なのでプロキシリスト取得");
+                            string[] proxy_list = getProxyServer().ToArray();
+                            if (proxy_list.Length != 0) {
+                                proxy = proxy_list[random.Next(proxy_list.Length)];
+                            }
+                        }*/
+
+                        CookieContainer cc = new CookieContainer();//FIXIT:意味のないクッキーコンテナかもしれない
+                        if (force == false) Log.Logger.Info(api.nickname + "のトークンの有効期限切れを確認.トークン更新を実施");
+                        else Log.Logger.Info("トークンの強制更新実施");
+                        FrilAPI newapi = new FrilAPI(account.email,account.password);
+                        if (newapi.auth_token == null) throw new Exception("new FrilAPI() error");
+                        bool loginres = newapi.tryFrilLogin(cc);
+                        if (loginres) {
+                            //アカウントデータ変更
+                            account.auth_token = newapi.auth_token;
+                            account.nickname = newapi.nickname;
+                            account.expiration_date = Common.getDateFromUnixTimeStamp(newapi.expiration_date);
+                            account.token_update_date = account.expiration_date;
+                            //DB更新
+                            if (accountDBHelper.updateAccount(account.DBId, account)) {
+                                Log.Logger.Info(newapi.nickname + "のトークン更新に成功");
+                                return newapi;
+                            } else {
+                                //失敗
+                                Log.Logger.Error(api.nickname + "のトークン更新に成功したがDB更新に失敗");
+                                return api;
+                            }
+                        } else {
+                            throw new Exception("login error");
+                        }
+                    } catch (Exception ex) {
+                        Log.Logger.Error(ex.Message);
+                        Log.Logger.Error(api.nickname + "のトークン更新に失敗");
+                    }
+                }
+            }
+            return api;
+        }
 
 
 

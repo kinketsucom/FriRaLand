@@ -19,7 +19,7 @@ namespace FriRaLand.DBHelper{
         public void onCreate() {
             conn.Open();
             string commandText = "CREATE TABLE IF NOT EXISTS reservations ( Id INTEGER PRIMARY KEY AUTOINCREMENT,"
-                                + "itemDBId INTEGER, accountDBId INTEGER, status INTEGER, exhibitDate TEXT, deleteDate TEXT, itemid TEXT, "
+                                + "itemDBId INTEGER, accountDBId INTEGER, status INTEGER, exhibitDate TEXT, deleteDate TEXT, item_id TEXT, "
                                 + "check_favorite TEXT, check_comment TEXT);";
             SQLiteCommand command = conn.CreateCommand();
             command.CommandText = commandText;
@@ -114,13 +114,13 @@ namespace FriRaLand.DBHelper{
             string check_comment2 = reservation.consider_comment2 ? "見る" : "見ない";
             string reexhibit_str = reservation.reexhibit_flag ? "する" : "しない";
             string commandText = "INSERT INTO reservations ("
-                                + "itemDBId, accountDBId,status, exhibitDate, deleteDate, itemid, check_favorite, check_comment, reexhibit_flag, deleteDate2, check_favorite2, check_comment2)"
+                                + "itemDBId, accountDBId,status, exhibitDate, deleteDate, item_id, check_favorite, check_comment, reexhibit_flag, deleteDate2, check_favorite2, check_comment2)"
                                 + "VALUES ( " + reservation.itemDBId.ToString() + ","
                                 + reservation.accountDBId.ToString() + ","
                                 + reservation.exhibit_status + ",'"
                                 + reservation.exhibitDate.ToString() + "','"
                                 + reservation.deleteDate.ToString() + "','"
-                                + reservation.itemid.ToString() + "','"
+                                + reservation.item_id.ToString() + "','"
                                 + check_favorite + "','"
                                 + check_comment + "','"
                                 + reexhibit_str + "','"
@@ -137,7 +137,7 @@ namespace FriRaLand.DBHelper{
         public List<ReservationSettingForm.ReservationSetting> loadReservations() {
             List<ReservationSettingForm.ReservationSetting> rst = new List<ReservationSettingForm.ReservationSetting>();
             this.conn.Open();
-            SQLiteCommand sQLiteCommand = new SQLiteCommand("SELECT r.Id, r.itemDBId, r.accountDBId, r.status, r.exhibitDate, r.deleteDate, r.deleteDate2, r.itemid, r.check_favorite, r.check_favorite2, r.check_comment, r.check_comment2, r.reexhibit_flag , i.item_name, i.Pic1, a.nickname from ((reservations r JOIN items i ON r.itemDBId = i.Id )  INNER JOIN accounts a ON a.Id = r.accountDBId);", this.conn);
+            SQLiteCommand sQLiteCommand = new SQLiteCommand("SELECT r.Id, r.itemDBId, r.accountDBId, r.status, r.exhibitDate, r.deleteDate, r.deleteDate2, r.item_id, r.check_favorite, r.check_favorite2, r.check_comment, r.check_comment2, r.reexhibit_flag , i.item_name, i.Pic1, a.nickname from ((reservations r JOIN items i ON r.itemDBId = i.Id )  INNER JOIN accounts a ON a.Id = r.accountDBId);", this.conn);
             SQLiteDataReader sQLiteDataReader = sQLiteCommand.ExecuteReader();
             while (sQLiteDataReader.Read()) {
                 try {
@@ -153,7 +153,7 @@ namespace FriRaLand.DBHelper{
                     reservation.deleteDate = DateTime.Parse(reservation.deleteDateString);
                     reservation.deleteDateString2 = sQLiteDataReader["deleteDate2"].ToString();
                     reservation.deleteDate2 = DateTime.Parse(reservation.deleteDateString2);
-                    reservation.itemid = sQLiteDataReader["itemid"].ToString();
+                    reservation.item_id = sQLiteDataReader["item_id"].ToString();
                     reservation.consider_comment_str = sQLiteDataReader["check_comment"].ToString();
                     reservation.consider_comment_str2 = sQLiteDataReader["check_comment2"].ToString();
                     reservation.consider_favorite_str = sQLiteDataReader["check_favorite"].ToString();
@@ -190,7 +190,7 @@ namespace FriRaLand.DBHelper{
             if (DBIdList.Count == 0) return rst;
             string text = string.Join(",", DBIdList.ToArray());
             this.conn.Open();
-            SQLiteCommand sQLiteCommand = new SQLiteCommand("SELECT r.Id, r.itemDBId, r.accountDBId, r.status, r.exhibitDate, r.deleteDate, r.deleteDate2, r.itemid, r.check_favorite, r.check_favorite2, r.check_comment, r.check_comment2, r.reexhibit_flag , i.ItemName, i.Pic1, a.nickname from ((reservations r JOIN items i ON r.itemDBId = i.Id )  INNER JOIN accounts a ON a.Id = r.accountDBId) where r.Id in (" + text + ");", this.conn);
+            SQLiteCommand sQLiteCommand = new SQLiteCommand("SELECT r.Id, r.itemDBId, r.accountDBId, r.status, r.exhibitDate, r.deleteDate, r.deleteDate2, r.item_id, r.check_favorite, r.check_favorite2, r.check_comment, r.check_comment2, r.reexhibit_flag , i.ItemName, i.Pic1, a.nickname from ((reservations r JOIN items i ON r.itemDBId = i.Id )  INNER JOIN accounts a ON a.Id = r.accountDBId) where r.Id in (" + text + ");", this.conn);
             SQLiteDataReader sQLiteDataReader = sQLiteCommand.ExecuteReader();
             while (sQLiteDataReader.Read()) {
                 try {
@@ -206,7 +206,7 @@ namespace FriRaLand.DBHelper{
                     reservation.deleteDate = DateTime.Parse(reservation.deleteDateString);
                     reservation.deleteDateString2 = sQLiteDataReader["deleteDate2"].ToString();
                     reservation.deleteDate2 = DateTime.Parse(reservation.deleteDateString2);
-                    reservation.itemid = sQLiteDataReader["itemid"].ToString();
+                    reservation.item_id = sQLiteDataReader["item_id"].ToString();
                     reservation.consider_comment_str = sQLiteDataReader["check_comment"].ToString();
                     reservation.consider_favorite_str = sQLiteDataReader["check_favorite"].ToString();
                     reservation.consider_comment_str2 = sQLiteDataReader["check_comment2"].ToString();
@@ -239,7 +239,7 @@ namespace FriRaLand.DBHelper{
         public List<ReservationSettingForm.ReservationSetting> selectReservationFromName(string text) {
             List<ReservationSettingForm.ReservationSetting> rst = new List<ReservationSettingForm.ReservationSetting>();
             this.conn.Open();
-            SQLiteCommand sQLiteCommand = new SQLiteCommand("SELECT r.Id, r.itemDBId, r.accountDBId, r.status, r.exhibitDate, r.deleteDate, r.deleteDate2, r.itemid, r.check_favorite, r.check_favorite2, r.check_comment, r.check_comment2, i.ItemName, i.Pic1, a.nickname from ((reservations r JOIN items i ON r.itemDBId = i.Id )  INNER JOIN accounts a ON a.Id = r.accountDBId) where i.ItemName like '%" + text + "%';", this.conn);
+            SQLiteCommand sQLiteCommand = new SQLiteCommand("SELECT r.Id, r.itemDBId, r.accountDBId, r.status, r.exhibitDate, r.deleteDate, r.deleteDate2, r.item_id, r.check_favorite, r.check_favorite2, r.check_comment, r.check_comment2, i.ItemName, i.Pic1, a.nickname from ((reservations r JOIN items i ON r.itemDBId = i.Id )  INNER JOIN accounts a ON a.Id = r.accountDBId) where i.ItemName like '%" + text + "%';", this.conn);
             SQLiteDataReader sQLiteDataReader = sQLiteCommand.ExecuteReader();
             while (sQLiteDataReader.Read()) {
                 try {
@@ -255,7 +255,7 @@ namespace FriRaLand.DBHelper{
                     reservation.deleteDate = DateTime.Parse(reservation.deleteDateString);
                     reservation.deleteDateString2 = sQLiteDataReader["deleteDate2"].ToString();
                     reservation.deleteDate2 = DateTime.Parse(reservation.deleteDateString2);
-                    reservation.itemid = sQLiteDataReader["itemid"].ToString();
+                    reservation.item_id = sQLiteDataReader["item_id"].ToString();
                     reservation.consider_comment_str = sQLiteDataReader["check_comment"].ToString();
                     reservation.consider_favorite_str = sQLiteDataReader["check_favorite"].ToString();
                     reservation.consider_comment_str2 = sQLiteDataReader["check_comment2"].ToString();
@@ -306,11 +306,11 @@ namespace FriRaLand.DBHelper{
             }
         }
 
-        public bool updateItemID(int DBId, string itemid) {
+        public bool updateItemID(int DBId, string item_id) {
             try {
                 conn.Open();
                 string commandText = "UPDATE reservations SET "
-                                    + "itemid = '" + itemid + "'"
+                                    + "item_id = '" + item_id + "'"
                                     + " WHERE Id = " + DBId.ToString() + ";";
                 SQLiteCommand command = conn.CreateCommand();
                 command.CommandText = commandText;

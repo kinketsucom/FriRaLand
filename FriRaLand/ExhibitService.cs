@@ -160,7 +160,7 @@ namespace FriRaLand {
             var nesage_accoutns = new AccountDBHelper().selectItem(nesage_accountid_list);
             foreach (MainForm.Account account in nesage_accoutns) {
                 //アカウントが出品している商品を詳細含めて取得
-                FrilAPI api = Common.checkFrilAPI(new FrilAPI(account));
+                FrilAPI api = Common.checkFrilAPI(new FrilAPI(account.email,account.password));
                 var on_sale_items = api.GetAllItemsWithSellers(api.sellerid, new List<int> { 1 }, false, true);
                 foreach (var item in on_sale_items) {
                     bool res = ExecuteNesage(item, api, nesage_ng_list);

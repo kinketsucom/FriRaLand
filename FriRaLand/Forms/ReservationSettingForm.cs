@@ -74,7 +74,7 @@ using FriRaLand.DBHelper;
             public bool consider_favorite2 = false;
             public bool consider_comment2 = false;
             public bool reexhibit_flag = false;
-            public string itemid = "";
+            public string item_id = "";
             public int exhibit_status; //出品成功or失敗or未実行
             public string imagepath;
 

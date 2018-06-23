@@ -73,8 +73,12 @@
     <Compile Include="DBHelper\AccountDBHelper.cs" />
     <Compile Include="DBHelper\ExhibitLogDBHelper.cs" />
     <Compile Include="DBHelper\FrilItemDBHelper.cs" />
+    <Compile Include="DBHelper\GroupBelongDBHelper.cs" />
     <Compile Include="DBHelper\GroupKindDBHelper.cs" />
     <Compile Include="DBHelper\ItemFamilyDBHelper.cs" />
+    <Compile Include="DBHelper\ItemNoteDBHelper.cs" />
+    <Compile Include="DBHelper\NesageCntDBHelper.cs" />
+    <Compile Include="DBHelper\NesageLogDBHelper.cs" />
     <Compile Include="DBHelper\ReservationDBHelper.cs" />
     <Compile Include="DBHelper\SettingsDBHelper.cs" />
     <Compile Include="DBHelper\ShuppinRirekiDBHelper.cs" />
