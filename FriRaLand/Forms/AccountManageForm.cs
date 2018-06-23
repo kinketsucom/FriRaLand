@@ -210,7 +210,7 @@ namespace FriRaLand.Forms {
             e.Value = ac.nickname;
         }
         //アカウント画像変更ボタン
-        private void button1_Click(object sender, EventArgs e) {
+        private void button1_Click(object sender, EventArgs e,CookieContainer cc) {
             if (checkTokenRefreshNow()) return;
             if (accountDataGridView1.SelectedRows.Count != 1) {
                 MessageBox.Show("アカウントを1つだけ選択してください", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -225,10 +225,10 @@ namespace FriRaLand.Forms {
             if (ofd.ShowDialog() == DialogResult.OK) {
                 //OKボタンがクリックされたとき、選択されたファイル名を表示する
                 MainForm.Account selectedAccount = accountList[this.accountDataGridView1.SelectedRows[0].Index];
-                FrilAPI api = new FrilAPI(selectedAccount);
+                FrilAPI api = new FrilAPI(selectedAccount.email,selectedAccount.password);
                 string filename = ofd.FileName;
                 string path = FrilAPI.getExhibitionImageFromPath(filename);
-                bool rst = api.updateProfilePhoto(path);
+                bool rst = api.updateProfilePhoto(path,cc);
                 if (rst) {
                     MessageBox.Show("プロフィール画像を更新しました。", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 } else {

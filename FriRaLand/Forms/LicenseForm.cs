@@ -11,9 +11,9 @@ using System.Windows.Forms;
 namespace FriRaLand.Forms {
     public partial class License : Form {
 
-        public License() {
-            InitializeComponent();
-        }
+        //public License() {
+        //    InitializeComponent();
+        //}
 
 
 

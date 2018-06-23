@@ -14,6 +14,8 @@ namespace FriRaLand {
     class FrilAPI {
         private const string USER_AGENT = "Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_3 like Mac OS X) AppleWebKit/603.3.8 (KHTML, like Gecko) Mobile/14G60 Fril/7.2.0";
         private string proxy;
+        private const string XPLATFORM = "android";
+        private const string XAPPVERSION = "600";
 
         public string access_token;
         public string global_access_token;
@@ -486,7 +488,116 @@ namespace FriRaLand {
                 return "";
             }
         }
+        public bool updateProfilePhoto(string new_imagepath,CookieContainer cc) {
+            string url = string.Format("https://api.mercari.jp/users/update_profile?_access_token={0}&_global_access_token={1}", this.access_token, this.global_access_token);
+            Dictionary<string, string> param = new Dictionary<string, string>();
+            param.Add("name", this.nickname);
+            param.Add("introduction", this.getProfileIntroduction(cc));
+            FrilRawResponse res = updateProfilePhotoPost(url, param, new_imagepath);
+            return !res.error;
+        }
+        public string getProfileIntroduction(CookieContainer cc) {
+            Dictionary<string, string> param = new Dictionary<string, string>();
+            param.Add("_user_format", "profile");
+            param.Add("_global_access_token", this.global_access_token);
+            param.Add("_access_token", this.access_token);
+            string url = "https://api.mercari.jp/users/get_profile";//FIXIT:フリルのものに変える
+            FrilRawResponse res = getFrilAPI(url, param ,cc);
+            if (res.error) {
+                return "";
+            }
+            dynamic resjson = DynamicJson.Parse(res.response);
+            try {
+                return (string)resjson.data.introduction;
+            } catch (Exception e) {
+                return "";
+            }
+        }
+        //プロフィール更新用に
+        private FrilRawResponse updateProfilePhotoPost(string url, Dictionary<string, string> param, string imagepath) {
+            FrilRawResponse res = new FrilRawResponse();
 
+            Encoding encoding = Encoding.GetEncoding("UTF-8");
+            string text = Environment.TickCount.ToString();
+            byte[] bytes = encoding.GetBytes("\r\n");
+            HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
+            httpWebRequest.UserAgent = FrilAPI.USER_AGENT;
+            httpWebRequest.Headers.Set("X-PLATFORM", FrilAPI.XPLATFORM);
+            httpWebRequest.Headers.Set("X-APP-VERSION", FrilAPI.XAPPVERSION);
+            httpWebRequest.Method = "POST";
+            httpWebRequest.ContentType = "multipart/form-data; boundary=" + text;
+            string text2 = "";
+            foreach (KeyValuePair<string, string> current in param) {
+                text2 = string.Concat(new string[]
+                {
+                    text2,
+                    "--",
+                    text,
+                    "\r\nContent-Disposition: form-data; name=\"",
+                    current.Key,
+                    "\"\r\n\r\n",
+                    current.Value,
+                    "\r\n"
+                });
+            }
+            byte[] bytes2 = encoding.GetBytes(text2);
+
+            long num = 0L;
+            int num2 = 1;
+            string text3 = imagepath;
+            Path.GetFileName(text3);
+            string s = string.Concat(new object[]
+                {
+                    "--",
+                    text,
+                    "\r\nContent-Disposition: form-data; name=\"photo\"; filename=\"photo.jpg\"\r\nContent-Type: image/jpeg\r\n\r\n"
+                });
+            byte[] bytedata = encoding.GetBytes(s);
+            num += (long)encoding.GetBytes(s).Length + new FileInfo(text3).Length;
+            num2++;
+            byte[] bytes3 = encoding.GetBytes("--" + text + "--\r\n");
+            httpWebRequest.ContentLength = (long)bytes2.Length + num + (long)(bytes.Length) + (long)bytes3.Length;
+            string result = "";
+            try {
+                using (Stream requestStream = httpWebRequest.GetRequestStream()) {
+                    requestStream.Write(bytes2, 0, bytes2.Length);
+                    using (FileStream fileStream = new FileStream(imagepath, FileMode.Open, FileAccess.Read)) {
+                        requestStream.Write(bytedata, 0, bytedata.Length);
+                        byte[] array = new byte[4096];
+                        while (true) {
+                            int num3 = fileStream.Read(array, 0, array.Length);
+                            if (num3 == 0) {
+                                break;
+                            }
+                            requestStream.Write(array, 0, num3);
+                        }
+                        requestStream.Write(bytes, 0, bytes.Length);
+                    }
+                    requestStream.Write(bytes3, 0, bytes3.Length);
+                    WebResponse response = httpWebRequest.GetResponse();
+                    string text4 = "";
+                    using (Stream responseStream = response.GetResponseStream()) {
+                        using (StreamReader streamReader = new StreamReader(responseStream, Encoding.GetEncoding("UTF-8"))) {
+                            text4 = streamReader.ReadToEnd();
+                        }
+                    }
+                    res.response = text4;
+                    res.error = false;
+                }
+            } catch (WebException ex) {
+                if (ex.Status != WebExceptionStatus.ProtocolError) {
+                    throw ex;
+                }
+                HttpWebResponse httpWebResponse = (HttpWebResponse)ex.Response;
+                using (Stream responseStream2 = httpWebResponse.GetResponseStream()) {
+                    using (StreamReader streamReader2 = new StreamReader(responseStream2, Encoding.UTF8)) {
+                        res.response = streamReader2.ReadToEnd();
+                        res.error = false;
+                    }
+                }
+            }
+            return res;
+        }
 
     }
 }
