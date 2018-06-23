@@ -74,7 +74,7 @@ namespace FriRaLand {
             new ZaikoDBHelper().onCreate();
             //new DailyExhibitDBHelper().onCreate();
             //new ExhibitLogDBHelper().onCreate();
-            //new ExhibitLogDBHelper().addItemIDColumn();//14->15
+            //new ExhibitLogDBHelper().additem_idColumn();//14->15
             //new DefaultBankAddressBankDBHelper().onCreate();
             //new DefaultBankAddressBankDBHelper().updateDefaultBankAddressToList();
             //new NesageCntDBHelper().onCreate();
@@ -384,10 +384,10 @@ namespace FriRaLand {
             ////アカウントリストの読み込み,APIリストの作成
             //this.sellerIDtoAPIDictionary.Clear();
             //this.accountListComboBox.Items.Clear();
-            //mercariAPIList.Clear();
+            //FrilAPIList.Clear();
             //var accountList = AccountManageForm.accountLoader();
-            //mercariAPIDictionary = new Dictionary<int, MercariAPI>(); //accountDBId, mercariAPI
-            //mercariAccountDictionary = new Dictionary<int, Account>(); //accountDBId, Account
+            //FrilAPIDictionary = new Dictionary<int, FrilAPI>(); //accountDBId, FrilAPI
+            //FrilAccountDictionary = new Dictionary<int, Account>(); //accountDBId, Account
             //foreach (var a in accountList) {
             //    var api = new MercariAPI(a);
             //    this.accountListComboBox.Items.Add(api);
@@ -576,6 +576,242 @@ namespace FriRaLand {
             if (result != DialogResult.Yes) return;
             new ReservationDBHelper().deleteReservation(deleteIdList);
             ReloadReservationItem("");
+        }
+
+        private void ReservationTimer_Tick(object sender, EventArgs e) {
+            //既に予約処理が実行中ならば実行しない
+            if (ReservationBackgroundWorker.IsBusy) return;
+            ReservationBackgroundWorker.RunWorkerAsync();
+        }
+
+        private BackgroundWorker bgWorker;
+        private void ReservationbackgroundWorker_DoWork(object sender, DoWorkEventArgs e) {
+            bgWorker = (BackgroundWorker)sender;
+            var accountDBHelper = new AccountDBHelper();
+            var reservationDBHelper = new ReservationDBHelper();
+            //var shuppinrirekiDBHelper = new ShuppinRirekiDBHelper();
+            var itemDBHelper = new FrilItemDBHelper();
+            var zaikoDBHelper = new ZaikoDBHelper();
+            var itemfamilyDBHelper = new ItemFamilyDBHelper();
+            //var exhibitLogDBHelper = new ExhibitLogDBHelper();
+            var reservation = new ReservationSettingForm.ReservationSetting();
+            for (int i = 0; i < this.ReservationObjects.Count; i++) {
+                //キャンセルリクエストがあったら即キャンセル
+                if (bgWorker.CancellationPending) {
+                    e.Cancel = true;
+                    return;
+                }
+                try {
+                    reservation = this.ReservationObjects[i];
+                    if (reservation.doexhibit_flag && DateTime.Now > reservation.exhibitDate) {
+                        //出品成功しようが失敗しようがフラグを折る（二度以上リトライしないように）
+                        ReservationObjects[i].doexhibit_flag = false;
+                        //自動出品ルーチン
+                        Account a = accountDBHelper.selectItem(new List<int> { reservation.accountDBId })[0];
+                        Log.Logger.Info("自動出品用のアカウント取得成功");
+                        FrilAPI api = new FrilAPI(a.email,a.password);
+                        //api = Common.checkFrilAPI(api);//FIXIT:これは自動更新用なので
+                        FrilItem item = itemDBHelper.selectItem(new List<int> { reservation.itemDBId })[0];
+                        Log.Logger.Info("自動出品対象の商品をDBから取得成功");
+                        var family = itemfamilyDBHelper.getItemFamilyFromItemDBId(item.DBId);
+                        string parent_id = (family == null ? "" : family.parent_id);
+                        string child_id = (family == null ? "" : family.child_id);
+                        //出品できるか調べる
+                        if (ExhibitService.canExhibitItem(a, item) < 0) {
+                            if (ExhibitService.canExhibitItem(a, item) == -1) {
+                                reservation_fail_logs.Add(string.Format("{0}:{1}:親ID:{2}子ID:{3}:出品失敗:圏外数オーバー", DateTime.Now.ToString(), api.nickname, parent_id, child_id));
+                                exhibit_failed_num++;
+                            } else if (ExhibitService.canExhibitItem(a, item) == -2) {
+                                reservation_fail_logs.Add(string.Format("{0}:{1}:親ID:{2}子ID:{3}:出品失敗:在庫切れ", DateTime.Now.ToString(), api.nickname, parent_id, child_id));
+                                zaikogire_num++;
+                            }
+                            continue;
+                        }
+                        //出品実行
+                        FrilItem result = SellWithOption(a, item);
+                        if (result != null) {
+                            //出品した商品に関するIDを更新
+                            Log.Logger.Info("自動出品に成功 : " + result.item_id);
+                            reservationDBHelper.updateItemID(reservation.DBId, result.item_id);
+                            reservationDBHelper.updateExhibitStatus(reservation.DBId, ReservationSettingForm.Status.Success);
+                            //出品後の共通DB操作実行
+                            ExhibitService.updateDBOnExhibitCommon(a, api, result, item.DBId, reservation.reexhibit_flag);
+                            //バインドリストのstatus_str更新～
+                            for (int k = 0; k < ReservationDataBindList.Count; k++) {
+                                if (ReservationDataBindList[k].DBId == reservation.DBId) {
+                                    ReservationDataBindList[k].exhibit_status_str =
+                                        ReservationSettingForm.get_exhibit_status_str(ReservationSettingForm.Status.Success);
+                                    bgWorker.ReportProgress(i * 100 / ReservationObjects.Count); //GUI更新リクエスト
+                                    break;
+                                }
+                            }
+                            exhibit_success_num++;
+                        } else {
+                            //出品失敗
+                            Log.Logger.Error("自動出品失敗");
+                            reservationDBHelper.updateExhibitStatus(reservation.DBId, ReservationSettingForm.Status.Failed);
+                            for (int k = 0; k < ReservationDataBindList.Count; k++) {
+                                if (ReservationDataBindList[k].DBId == reservation.DBId) {
+                                    ReservationDataBindList[k].exhibit_status_str =
+                                        ReservationSettingForm.get_exhibit_status_str(ReservationSettingForm.Status.Failed);
+                                    bgWorker.ReportProgress(i * 100 / ReservationObjects.Count); //GUI更新リクエスト
+                                    break;
+                                }
+                            }
+                            exhibit_failed_num++;
+                            if (a.expiration_date < DateTime.Now) reservation_fail_logs.Add(string.Format("{0}:{1}:親ID:{2}子ID:{3}:出品失敗:トークン有効期限切れ", DateTime.Now.ToString(), api.nickname, parent_id, child_id));
+                            else reservation_fail_logs.Add(string.Format("{0}:{1}:親ID:{2}子ID:{3}:出品失敗:リクエスト失敗", DateTime.Now.ToString(), api.nickname, parent_id, child_id));
+                        }
+                    } else if (reservation.docancel_flag && DateTime.Now > reservation.deleteDate) {
+                        //削除（停止）成功しようが失敗しようがフラグを折る（二度以上リトライしないように）
+                        ReservationObjects[i].docancel_flag = false;
+                        Account a = accountDBHelper.selectItem(new List<int> { reservation.accountDBId })[0];
+                        Log.Logger.Info("自動削除用のアカウント取得成功");
+                        FrilAPI api = new FrilAPI(a);
+                        api = Common.checkFrilAPI(api);
+                        //削除を実行する
+                        string deleteitemid = reservationDBHelper.selectReservation(new List<int> { reservation.DBId })[0].item_id;
+                        Log.Logger.Info("自動削除対象の商品をDBから取得成功");
+                        int deleteitemDBId = reservationDBHelper.selectReservation(new List<int> { reservation.DBId })[0].DBId;
+                        var family = itemfamilyDBHelper.getItemFamilyFromItemDBId(deleteitemDBId);
+                        string parent_id = (family == null ? "" : family.parent_id);
+                        string child_id = (family == null ? "" : family.child_id);
+                        if (deleteitemid != "") {
+                            //現在の商品の状態を取得する
+                            FrilItem item = api.GetItemInfobyItemIDWithDetail(deleteitemid);
+                            if (item == null) {
+                                Log.Logger.Error("商品情報取得失敗により削除(停止)失敗");
+                                reservation_fail_logs.Add(string.Format("{0}:{1}:親ID:{2}子ID:{3}:削除失敗:削除対象の商品情報取得失敗", DateTime.Now.ToString(), api.nickname, parent_id, child_id));
+                                delete_failed_num++;
+                            } else {
+                                if (reservation.consider_comment && item.num_comments > 0) {
+                                    Log.Logger.Info("コメントが付いているので削除(停止)しない");
+                                    //continue; なんども実行されることになるのでコメントがついてるので削除(停止)しないならそれでもうおわり
+                                } else if (reservation.consider_favorite && item.num_likes > 0) {
+                                    Log.Logger.Info("いいねが付いているので削除(停止)しない");
+                                    //continue; なんども実行されることになるのでいいねがついてるので削除(停止)しないならそれでもうおわり
+                                } else {
+                                    if (this.isStopCheckBox.Checked == false) {
+                                        bool result = api.Cancel(deleteitemid);
+                                        if (result) {
+                                            Log.Logger.Info("削除成功 : " + deleteitemid);
+                                            //削除・停止後の共通DB操作を行う
+                                            ExhibitService.updateDBOnCancelOrStop(item);
+                                            delete_success_num++;
+                                        } else {
+                                            Log.Logger.Error("削除失敗 : " + deleteitemid);
+                                            delete_failed_num++;
+                                            if (a.expiration_date < DateTime.Now) reservation_fail_logs.Add(string.Format("{0}:{1}:親ID:{2}子ID:{3}:削除失敗:トークン有効期限切れ", DateTime.Now.ToString(), api.nickname, parent_id, child_id));
+                                            else reservation_fail_logs.Add(string.Format("{0}:{1}:親ID:{2}子ID:{3}:削除失敗:リクエスト失敗", DateTime.Now.ToString(), api.nickname, parent_id, child_id));
+                                        }
+                                    } else {
+                                        bool result = api.Stop(deleteitemid);
+                                        if (result) {
+                                            Log.Logger.Info("停止成功 : " + deleteitemid);
+                                            //削除・停止後の共通DB操作を行う
+                                            ExhibitService.updateDBOnCancelOrStop(item);
+                                            delete_success_num++;
+                                        } else {
+                                            Log.Logger.Error("停止失敗 : " + deleteitemid);
+                                            delete_failed_num++;
+                                            if (a.expiration_date < DateTime.Now) reservation_fail_logs.Add(string.Format("{0}:{1}:親ID:{2}子ID:{3}:停止失敗:トークン有効期限切れ", DateTime.Now.ToString(), api.nickname, parent_id, child_id));
+                                            else reservation_fail_logs.Add(string.Format("{0}:{1}:親ID:{2}子ID:{3}:停止失敗:リクエスト失敗", DateTime.Now.ToString(), api.nickname, parent_id, child_id));
+                                        }
+                                    }
+                                }
+                            }
+                        } else {
+                            //商品ID不明
+                            Log.Logger.Error("商品ID不明により削除失敗");
+                            reservation_fail_logs.Add(string.Format("{0}:{1}:親ID:{2}子ID:{3}:削除(停止)失敗:商品ID不明", DateTime.Now.ToString(), api.nickname, parent_id, child_id));
+                            delete_failed_num++;
+                        }
+                        bgWorker.ReportProgress(i * 100 / ReservationObjects.Count); //GUI更新リクエスト
+                        //いいね考慮とか
+                    } else if (reservation.docancel_flag2 && DateTime.Now > reservation.deleteDate2) {
+                        //削除（停止）成功しようが失敗しようがフラグを折る（二度以上リトライしないように）
+                        ReservationObjects[i].docancel_flag2 = false;
+                        Account a = accountDBHelper.selectItem(new List<int> { reservation.accountDBId })[0];
+                        Log.Logger.Info("自動削除2用のアカウント取得成功");
+                        FrilAPI api = new FrilAPI(a);
+                        api = Common.checkFrilAPI(api);
+                        //削除を実行する
+                        string deleteitemid = reservationDBHelper.selectReservation(new List<int> { reservation.DBId })[0].item_id;
+                        Log.Logger.Info("自動削除2対象の商品をDBから取得成功");
+                        int deleteitemDBId = reservationDBHelper.selectReservation(new List<int> { reservation.DBId })[0].DBId;
+                        var family = itemfamilyDBHelper.getItemFamilyFromItemDBId(deleteitemDBId);
+                        string parent_id = (family == null ? "" : family.parent_id);
+                        string child_id = (family == null ? "" : family.child_id);
+                        if (deleteitemid != "") {
+                            //現在の商品の状態を取得する
+                            FrilItem item = api.GetItemInfobyItemIDWithDetail(deleteitemid);
+                            if (item == null) {
+                                Log.Logger.Error("商品情報取得失敗により削除2(停止)失敗");
+                                delete_failed_num++;
+                            } else {
+                                if (reservation.consider_comment2 && item.num_comments > 0) {
+                                    Log.Logger.Info("コメントが付いているので削除2(停止)しない");
+                                    //continue; なんども実行されることになるのでコメントがついてるので削除(停止)しないならそれでもうおわり
+                                } else if (reservation.consider_favorite2 && item.num_likes > 0) {
+                                    Log.Logger.Info("いいねが付いているので削除2(停止)しない");
+                                    //continue; なんども実行されることになるのでいいねがついてるので削除(停止)しないならそれでもうおわり
+                                } else {
+                                    if (this.isStopCheckBox.Checked == false) {
+                                        bool result = api.Cancel(deleteitemid);
+                                        if (result) {
+                                            Log.Logger.Info("削除2成功 : " + deleteitemid);
+                                            //削除・停止後の共通DB操作を行う
+                                            ExhibitService.updateDBOnCancelOrStop(item);
+                                            delete_success_num++;
+                                        } else {
+                                            Log.Logger.Error("削除2失敗 : " + deleteitemid);
+                                            delete_failed_num++;
+                                            if (a.expiration_date < DateTime.Now) reservation_fail_logs.Add(string.Format("{0}:{1}:親ID:{2}子ID:{3}:削除2失敗:トークン有効期限切れ", DateTime.Now.ToString(), api.nickname, parent_id, child_id));
+                                            else reservation_fail_logs.Add(string.Format("{0}:{1}:親ID:{2}子ID:{3}:削除2失敗:リクエスト失敗", DateTime.Now.ToString(), api.nickname, parent_id, child_id));
+                                        }
+                                    } else {
+                                        bool result = api.Stop(deleteitemid);
+                                        if (result) {
+                                            Log.Logger.Info("停止2成功 : " + deleteitemid);
+                                            //削除・停止後の共通DB操作を行う
+                                            ExhibitService.updateDBOnCancelOrStop(item);
+                                            delete_success_num++;
+                                        } else {
+                                            Log.Logger.Error("停止2失敗 : " + deleteitemid);
+                                            delete_failed_num++;
+                                            if (a.expiration_date < DateTime.Now) reservation_fail_logs.Add(string.Format("{0}:{1}:親ID:{2}子ID:{3}:停止2失敗:トークン有効期限切れ", DateTime.Now.ToString(), api.nickname, parent_id, child_id));
+                                            else reservation_fail_logs.Add(string.Format("{0}:{1}:親ID:{2}子ID:{3}:停止2失敗:リクエスト失敗", DateTime.Now.ToString(), api.nickname, parent_id, child_id));
+                                        }
+                                    }
+                                }
+                            }
+                        } else {
+                            //商品ID不明
+                            Log.Logger.Error("商品ID不明により削除2失敗");
+                            delete_failed_num++;
+                        }
+                        bgWorker.ReportProgress(i * 100 / ReservationObjects.Count); //GUI更新リクエスト
+                    }
+                } catch (Exception ex) {
+                    if (reservation != null && reservation.doexhibit_flag) {
+                        exhibit_failed_num++;
+                        reservation_fail_logs.Add(string.Format("{0}:出品失敗:予期せぬエラー", DateTime.Now.ToString()));
+                    }
+                    if (reservation != null && (reservation.docancel_flag || reservation.docancel_flag2)) {
+                        delete_failed_num++;
+                        reservation_fail_logs.Add(string.Format("{0}:削除(停止)失敗:予期せぬエラー", DateTime.Now.ToString()));
+                    }
+                    Log.Logger.Error("自動出品ループ内で想定外のエラー発生" + ex.Message);
+                }
+            }
+        }
+
+        private void ReservationbackgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e) {
+
+        }
+
+        private void ReservationbackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
+
         }
     }
 }

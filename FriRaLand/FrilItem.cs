@@ -15,6 +15,7 @@ namespace FriRaLand {
         public string child_id;
         public int zaikonum;
         public int DBId; //DB上でのId;
+        public DateTime created_date;
 
 
         public string item_id;

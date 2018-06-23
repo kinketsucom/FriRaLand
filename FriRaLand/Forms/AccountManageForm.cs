@@ -58,7 +58,7 @@ namespace FriRaLand.Forms {
 
         private void accountAddButton_Click(object sender, EventArgs e) {
             if (checkTokenRefreshNow()) return;
-            //メルカリログイン試行
+            //フリルログイン試行
             CookieContainer cc = new CookieContainer();
             FrilAPI api = new FrilAPI(emailTextBox.Text, passwordTextBox.Text);
             try {

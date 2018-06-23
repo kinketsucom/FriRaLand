@@ -71,13 +71,16 @@
   <ItemGroup>
     <Compile Include="Common.cs" />
     <Compile Include="DBHelper\AccountDBHelper.cs" />
+    <Compile Include="DBHelper\ExhibitLogDBHelper.cs" />
     <Compile Include="DBHelper\FrilItemDBHelper.cs" />
     <Compile Include="DBHelper\GroupKindDBHelper.cs" />
     <Compile Include="DBHelper\ItemFamilyDBHelper.cs" />
     <Compile Include="DBHelper\ReservationDBHelper.cs" />
     <Compile Include="DBHelper\SettingsDBHelper.cs" />
+    <Compile Include="DBHelper\ShuppinRirekiDBHelper.cs" />
     <Compile Include="DBHelper\ZaikoDBHelper.cs" />
     <Compile Include="DynamicJson.cs" />
+    <Compile Include="ExhibitService.cs" />
     <Compile Include="Forms\AccountManageForm.cs">
       <SubType>Form</SubType>
     </Compile>
