@@ -72,11 +72,24 @@
     <Compile Include="Common.cs" />
     <Compile Include="DBHelper\AccountDBHelper.cs" />
     <Compile Include="DBHelper\FrilItemDBHelper.cs" />
+    <Compile Include="DBHelper\GroupKindDBHelper.cs" />
     <Compile Include="DBHelper\ItemFamilyDBHelper.cs" />
     <Compile Include="DBHelper\ReservationDBHelper.cs" />
     <Compile Include="DBHelper\SettingsDBHelper.cs" />
     <Compile Include="DBHelper\ZaikoDBHelper.cs" />
     <Compile Include="DynamicJson.cs" />
+    <Compile Include="Forms\AccountManageForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AccountManageForm.Designer.cs">
+      <DependentUpon>AccountManageForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\LicenseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\LicenseForm.Designer.cs">
+      <DependentUpon>LicenseForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ReservationSettingForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -110,6 +123,9 @@
     <Compile Include="TestForm.Designer.cs">
       <DependentUpon>TestForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Forms\AccountManageForm.resx">
+      <DependentUpon>AccountManageForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ReservationSettingForm.resx">
       <DependentUpon>ReservationSettingForm.cs</DependentUpon>
     </EmbeddedResource>

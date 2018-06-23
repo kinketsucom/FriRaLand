@@ -19,6 +19,7 @@ namespace FriRaLand {
             InitializeComponent();
         }
 
+        #region いらないとおもいました
         //private int openItemDBId;
         //public class FrilExhibitItem {
         //    public string itemid = "";//商品編集で使用する
@@ -50,7 +51,8 @@ namespace FriRaLand {
         //    public int shipping_area_selected_index;
         //    public int price;
         //}
-
+        #endregion
+        #region いらないとおもいました
         //FrilExhibitItemからFrilItemを作成 画像の情報以外を渡す
         //static public FrilItem getFrilItemFromExhibitItem(FrilExhibitItem exhibititem) {
         //    if (exhibititem == null) return null;
@@ -72,7 +74,7 @@ namespace FriRaLand {
         //    //res.status_message = exhibititem.can_exhibit ? "出品可" : "出品不可";
         //    return res;
         //}
-
+        #endregion
 
         private void ItemRegisterForm_Load(object sender, EventArgs e) {
             //フリル側
@@ -105,7 +107,7 @@ namespace FriRaLand {
             }
         }
         FrilCommon.FrilCategory nowfril_selectedCategory; //フリルの最下層選択中カテゴリ
-        FrilCommon.RakumaCategory nowrakuma_selectedCategory; //ラクマの最下層選択中カテゴリ
+        //FrilCommon.RakumaCategory nowrakuma_selectedCategory; //ラクマの最下層選択中カテゴリ
         #region GUIFormat
         private void Fril_CategoryComboBoxLevel1_Format(object sender, ListControlConvertEventArgs e) {
             e.Value = ((FrilCommon.FrilCategory)e.ListItem).name;
@@ -443,7 +445,7 @@ namespace FriRaLand {
 
         }
 
-        //
+        //GUIからitem情報を得る
         private FrilItem CollectSellSettingsFromGUI() {
 
             FrilItem item_data = new FrilItem();

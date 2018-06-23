@@ -38,11 +38,10 @@ namespace FriRaLand.DBHelper {
             }
             conn.Open();
             string commandText = "INSERT INTO accounts ("
-                                + "email, password, access_token, global_access_token, sellerid, nickname, number, expiration_date, kengai_num, exhibit_cnt, hanbai_num, lastExhibitDate, addSpecialTextToItemName, insertEmptyStrToItemName, defaultbankaddressId, tokenupdatedate )"
+                                + "email, password, access_token, sellerid, nickname, number, expiration_date, kengai_num, exhibit_cnt, hanbai_num, lastExhibitDate, addSpecialTextToItemName, insertEmptyStrToItemName, defaultbankaddressId, tokenupdatedate )"
                                 + "VALUES ('" + account.email.Replace("'", "''") + "','"
                                 + account.password.Replace("'", "''") + "','"
                                 + account.access_token.Replace("'", "''") + "','"
-                                + account.global_access_token.Replace("'", "''") + "','"
                                 + account.sellerid.Replace("'", "''") + "','"
                                 + account.nickname.Replace("'", "''") + "', " + new_number.ToString() + ",'" + Common.getUnixTimeStampFromDate(account.expiration_date) + "', -1, 0,0, '','False','False', " + account.defaultbankaddressId.ToString() + ",'" + Common.getUnixTimeStampFromDate(account.token_update_date) + "'); ";
             SQLiteCommand command = conn.CreateCommand();
@@ -317,7 +316,6 @@ namespace FriRaLand.DBHelper {
                     account.email = sQLiteDataReader["email"].ToString();
                     account.password = sQLiteDataReader["password"].ToString();
                     account.access_token = sQLiteDataReader["access_token"].ToString();
-                    account.global_access_token = sQLiteDataReader["global_access_token"].ToString();
                     account.sellerid = sQLiteDataReader["sellerid"].ToString();
                     account.nickname = sQLiteDataReader["nickname"].ToString();
                     account.expiration_date = Common.getDateFromUnixTimeStamp(sQLiteDataReader["expiration_date"].ToString());
@@ -354,7 +352,6 @@ namespace FriRaLand.DBHelper {
                     account.email = sQLiteDataReader["email"].ToString();
                     account.password = sQLiteDataReader["password"].ToString();
                     account.access_token = sQLiteDataReader["access_token"].ToString();
-                    account.global_access_token = sQLiteDataReader["global_access_token"].ToString();
                     account.sellerid = sQLiteDataReader["sellerid"].ToString();
                     account.nickname = sQLiteDataReader["nickname"].ToString();
                     account.expiration_date = Common.getDateFromUnixTimeStamp(sQLiteDataReader["expiration_date"].ToString());
@@ -384,7 +381,6 @@ namespace FriRaLand.DBHelper {
                                     + "email = '" + account.email.Replace("'", "''") + "',"
                                     + "password = '" + account.password.Replace("'", "''") + "',"
                                     + "access_token = '" + account.access_token + "',"
-                                    + "global_access_token = '" + account.global_access_token + "',"
                                     + "sellerid = '" + account.sellerid + "',"
                                     + "nickname = '" + account.nickname.Replace("'", "''") + "',"
                                     + "expiration_date = '" + Common.getUnixTimeStampFromDate(account.expiration_date) + "',"
@@ -509,7 +505,6 @@ namespace FriRaLand.DBHelper {
                     account.email = sQLiteDataReader["email"].ToString();
                     account.password = sQLiteDataReader["password"].ToString();
                     account.access_token = sQLiteDataReader["access_token"].ToString();
-                    account.global_access_token = sQLiteDataReader["global_access_token"].ToString();
                     account.sellerid = sQLiteDataReader["sellerid"].ToString();
                     account.nickname = sQLiteDataReader["nickname"].ToString();
                     account.expiration_date = Common.getDateFromUnixTimeStamp(sQLiteDataReader["expiration_date"].ToString());

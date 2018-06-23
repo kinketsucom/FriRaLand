@@ -11,13 +11,13 @@ namespace FriRaLand {
     class Common {
         public class Account {
             public const int Fril_Account = 0;
-            public const int Rakuma_Account = 1;
+            //public const int Rakuma_Account = 1;
             public int DBId;
             public int kind;
             public string email;
             public string password;
             public string fril_auth_token;
-            public string rakuma_access_token;
+            //public string rakuma_access_token;
             public string nickname;
             public string userId;
             public DateTime expirationDate;

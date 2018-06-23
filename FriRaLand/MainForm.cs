@@ -25,7 +25,6 @@ namespace FriRaLand {
             public string email;
             public string password;
             public string access_token;
-            public string global_access_token;
             public string sellerid;
             public int kengai_num;
             public int hanbai_num { get; set; }
@@ -269,7 +268,7 @@ namespace FriRaLand {
                 //if (!LicenseForm.checkCanUseWithErrorWindow()) return;
                 //if (checkNowAutoMode()) return;
                 ItemRegisterForm f = new ItemRegisterForm();
-                //f.apilist = mercariAPIList;
+                //f.apilist = FrilAPIList;
                 f.mainform = this;
                 f.Show();
         }
@@ -376,11 +375,56 @@ namespace FriRaLand {
             }
 
 
+        }
+        public void OnBackFromAccountManageForm() {
+            //アカウント管理画面から戻って来たときに行う処理
+            //アカウント情報をもう一度読み込む
+            //アカウント情報コンテナの再設定
+            //InitializeAccountData();
+        }
+        private void InitializeAccountData() {
+            ////アカウントリストの読み込み,APIリストの作成
+            //this.sellerIDtoAPIDictionary.Clear();
+            //this.accountListComboBox.Items.Clear();
+            //mercariAPIList.Clear();
+            //var accountList = AccountManageForm.accountLoader();
+            //mercariAPIDictionary = new Dictionary<int, MercariAPI>(); //accountDBId, mercariAPI
+            //mercariAccountDictionary = new Dictionary<int, Account>(); //accountDBId, Account
+            //foreach (var a in accountList) {
+            //    var api = new MercariAPI(a);
+            //    this.accountListComboBox.Items.Add(api);
+            //    mercariAPIList.Add(api);
+            //    mercariAPIDictionary[a.DBId] = api;
+            //    mercariAccountDictionary[a.DBId] = a;
+            //    this.sellerIDtoAPIDictionary[a.sellerid] = api;
+            //}
+            //if (accountList != null && accountList.Count > 0) accountListComboBox.SelectedIndex = 0;
 
-
-
-
-
+            ////グループリストの読み込み
+            //this.groupListComboBox.Items.Clear();
+            //groupList.Clear();
+            //var groupBelongDictionary = new GroupBelongDBHelper().loadGroupBelongDictionary();
+            //var groupKindDictionary = new GroupKindDBHelper().loadGroupKindDictionary();
+            //foreach (KeyValuePair<int, string> p in groupKindDictionary) {
+            //    try {
+            //        List<int> belongs = groupBelongDictionary[p.Key];
+            //        Group tmpGroup = new Group();
+            //        tmpGroup.groupname = p.Value;
+            //        tmpGroup.accountList = new List<Account>();
+            //        tmpGroup.apiList = new List<MercariAPI>();
+            //        foreach (int belong in belongs) {
+            //            tmpGroup.accountList.Add(mercariAccountDictionary[belong]);
+            //            tmpGroup.apiList.Add(mercariAPIDictionary[belong]);
+            //        }
+            //        groupList.Add(tmpGroup);
+            //        this.groupListComboBox.Items.Add(tmpGroup);
+            //    } catch (Exception ex) {
+            //        Log.Logger.Error(ex.Message);
+            //        Log.Logger.Error("グループリストの作成に失敗");
+            //        MessageBox.Show("グループリストの作成に失敗しました", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    }
+            //}
+            //if (groupList != null && groupList.Count > 0) groupListComboBox.SelectedIndex = 0;
         }
 
         private void exhibitRegisterButton_Click(object sender, EventArgs e) {

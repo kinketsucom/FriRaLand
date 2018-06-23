@@ -59,6 +59,7 @@
             this.accountListBox2 = new System.Windows.Forms.ListBox();
             this.addAccountToNewGroup = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.accountDataGridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -73,6 +74,8 @@
             this.token_update_date_modifyButton.TabIndex = 34;
             this.token_update_date_modifyButton.Text = "トークン更新日時変更";
             this.token_update_date_modifyButton.UseVisualStyleBackColor = true;
+            this.token_update_date_modifyButton.Visible = false;
+            this.token_update_date_modifyButton.Click += new System.EventHandler(this.token_update_date_modifyButton_Click);
             // 
             // accountDataGridView1
             // 
@@ -154,6 +157,7 @@
             this.button5.TabIndex = 31;
             this.button5.Text = "上へ";
             this.button5.UseVisualStyleBackColor = true;
+            this.button5.Visible = false;
             // 
             // withdrawbutton
             // 
@@ -164,6 +168,7 @@
             this.withdrawbutton.TabIndex = 28;
             this.withdrawbutton.Text = "出金";
             this.withdrawbutton.UseVisualStyleBackColor = true;
+            this.withdrawbutton.Visible = false;
             // 
             // button1
             // 
@@ -184,6 +189,7 @@
             this.accountTokenRefleshButton.TabIndex = 27;
             this.accountTokenRefleshButton.Text = "トークン更新";
             this.accountTokenRefleshButton.UseVisualStyleBackColor = true;
+            this.accountTokenRefleshButton.Visible = false;
             // 
             // groupBox1
             // 
@@ -230,6 +236,7 @@
             this.accountAddButton.TabIndex = 13;
             this.accountAddButton.Text = "追加";
             this.accountAddButton.UseVisualStyleBackColor = true;
+            this.accountAddButton.Click += new System.EventHandler(this.accountAddButton_Click);
             // 
             // emailTextBox
             // 
@@ -267,6 +274,7 @@
             this.accountDeleteButton.TabIndex = 30;
             this.accountDeleteButton.Text = "削除";
             this.accountDeleteButton.UseVisualStyleBackColor = true;
+            this.accountDeleteButton.Visible = false;
             // 
             // editGroupButton
             // 
@@ -277,6 +285,7 @@
             this.editGroupButton.TabIndex = 41;
             this.editGroupButton.Text = "編集";
             this.editGroupButton.UseVisualStyleBackColor = true;
+            this.editGroupButton.Visible = false;
             // 
             // button2
             // 
@@ -287,6 +296,7 @@
             this.button2.TabIndex = 40;
             this.button2.Text = "下へ";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Visible = false;
             // 
             // button3
             // 
@@ -297,6 +307,7 @@
             this.button3.TabIndex = 39;
             this.button3.Text = "上へ";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Visible = false;
             // 
             // deleteGroupButton
             // 
@@ -307,6 +318,7 @@
             this.deleteGroupButton.TabIndex = 37;
             this.deleteGroupButton.Text = "削除";
             this.deleteGroupButton.UseVisualStyleBackColor = true;
+            this.deleteGroupButton.Visible = false;
             // 
             // groupListBox
             // 
@@ -317,6 +329,7 @@
             this.groupListBox.Name = "groupListBox";
             this.groupListBox.Size = new System.Drawing.Size(425, 109);
             this.groupListBox.TabIndex = 36;
+            this.groupListBox.Visible = false;
             // 
             // groupBox2
             // 
@@ -337,6 +350,7 @@
             this.groupBox2.TabIndex = 38;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "グループ作成・編集";
+            this.groupBox2.Visible = false;
             // 
             // deleteAccountToNewGroup
             // 
@@ -437,6 +451,12 @@
             this.label4.Size = new System.Drawing.Size(84, 15);
             this.label4.TabIndex = 35;
             this.label4.Text = "グループ一覧";
+            this.label4.Visible = false;
+            // 
+            // backgroundWorker1
+            // 
+            this.backgroundWorker1.WorkerReportsProgress = true;
+            this.backgroundWorker1.WorkerSupportsCancellation = true;
             // 
             // AccountManageForm
             // 
@@ -510,5 +530,6 @@
         private System.Windows.Forms.ListBox accountListBox2;
         private System.Windows.Forms.Button addAccountToNewGroup;
         private System.Windows.Forms.Label label4;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }

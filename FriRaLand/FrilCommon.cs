@@ -142,53 +142,54 @@ namespace FriRaLand {
             cancelOption.Add("見る", "1");
             cancelOption.Add("見ない", "2");
         }
-        public struct RakumaCategory {
-            public int id;
-            public int type;
-            public string name;
-            public int parent;
-            public int brandType;
-            public int sizeType;
-            public int hasChild;
-            public int level;
-            public int seq;
-        }
+        #region　いらないとおもいました
+        //public struct RakumaCategory {
+        //    public int id;
+        //    public int type;
+        //    public string name;
+        //    public int parent;
+        //    public int brandType;
+        //    public int sizeType;
+        //    public int hasChild;
+        //    public int level;
+        //    public int seq;
+        //}
         //public static List<RakumaCategory> rakuma_categories = new List<RakumaCategory>();
-        public static Dictionary<int, List<RakumaCategory>> rakuma_categoryDictionary = new Dictionary<int, List<RakumaCategory>>();
-        public static Dictionary<int, List<RakumaSize>> rakuma_sizeDictionary = new Dictionary<int, List<RakumaSize>>();//sizeType(CategoryID) -> List<RakumaSize>
-        static void getRakumaCategories() {
-            //rakuma_categories = new List<RakumaCategory>();
-            rakuma_categoryDictionary = new Dictionary<int, List<RakumaCategory>>();
-            string jsonstr = "";
-            using (WebClient webClient = new WebClient()) {
-                byte[] bytes = webClient.DownloadData("http://www.rakufuri.com/data/category.json");
-                jsonstr = Encoding.UTF8.GetString(bytes);
-            }
-            dynamic json = DynamicJson.Parse(jsonstr);
-            foreach (var data in json) {
-                RakumaCategory c = new RakumaCategory();
-                c.id = (int)data.id;
-                c.type = (int)data.type;
-                c.name = data.name;
-                c.parent = (int)data.parent;
-                c.brandType = (int)data.brandType;
-                c.sizeType = (int)data.sizeType;
-                c.hasChild = (int)data.hasChild;
-                c.level = (int)data.level;
-                c.seq = (int)data.seq;
-                //rakuma_categories.Add(c);
-                //dictionary作成
-                if (rakuma_categoryDictionary.ContainsKey(c.parent) == false) rakuma_categoryDictionary[c.parent] = new List<RakumaCategory>();
-                rakuma_categoryDictionary[c.parent].Add(c);
-            }
-            Log.Logger.Info("ラクマカテゴリリスト読み込み完了");
-        }
-        public struct RakumaSize {
-            public int id;
-            public int type;
-            public string title;
-            public int seq;
-        }
+        //public static Dictionary<int, List<RakumaCategory>> rakuma_categoryDictionary = new Dictionary<int, List<RakumaCategory>>();
+        //public static Dictionary<int, List<RakumaSize>> rakuma_sizeDictionary = new Dictionary<int, List<RakumaSize>>();//sizeType(CategoryID) -> List<RakumaSize>
+        //static void getRakumaCategories() {
+        //    //rakuma_categories = new List<RakumaCategory>();
+        //    rakuma_categoryDictionary = new Dictionary<int, List<RakumaCategory>>();
+        //    string jsonstr = "";
+        //    using (WebClient webClient = new WebClient()) {
+        //        byte[] bytes = webClient.DownloadData("http://www.rakufuri.com/data/category.json");
+        //        jsonstr = Encoding.UTF8.GetString(bytes);
+        //    }
+        //    dynamic json = DynamicJson.Parse(jsonstr);
+        //    foreach (var data in json) {
+        //        RakumaCategory c = new RakumaCategory();
+        //        c.id = (int)data.id;
+        //        c.type = (int)data.type;
+        //        c.name = data.name;
+        //        c.parent = (int)data.parent;
+        //        c.brandType = (int)data.brandType;
+        //        c.sizeType = (int)data.sizeType;
+        //        c.hasChild = (int)data.hasChild;
+        //        c.level = (int)data.level;
+        //        c.seq = (int)data.seq;
+        //        //rakuma_categories.Add(c);
+        //        //dictionary作成
+        //        if (rakuma_categoryDictionary.ContainsKey(c.parent) == false) rakuma_categoryDictionary[c.parent] = new List<RakumaCategory>();
+        //        rakuma_categoryDictionary[c.parent].Add(c);
+        //    }
+        //    Log.Logger.Info("ラクマカテゴリリスト読み込み完了");
+        //}
+        //public struct RakumaSize {
+        //    public int id;
+        //    public int type;
+        //    public string title;
+        //    public int seq;
+        //}
         //static void getRakumaSizeTypes() {
         //    rakuma_sizeDictionary = new Dictionary<int, List<RakumaSize>>();
         //    string jsonstr = "";
@@ -209,6 +210,8 @@ namespace FriRaLand {
         //    }
         //    Log.Logger.Info("ラクマサイズリスト読み込み完了");
         //}
+
+        #endregion
         public struct FrilCategory {
             public int id;
             public int parent_id;//0なら根カテゴリ
