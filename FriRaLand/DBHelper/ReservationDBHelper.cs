@@ -19,9 +19,9 @@ namespace FriRaLand.DBHelper{
         public void onCreate() {
             conn.Open();
             string commandText = "CREATE TABLE IF NOT EXISTS reservations ( Id INTEGER PRIMARY KEY AUTOINCREMENT,"
-                                + "itemDBId INTEGER, accountDBId INTEGER, status INTEGER, exhibitDate TEXT, deleteDate TEXT, item_id TEXT, "
-                                + "check_favorite TEXT, check_comment TEXT);";
-            SQLiteCommand command = conn.CreateCommand();
+                                + "itemDBId INTEGER, accountDBId INTEGER, status INTEGER, exhibitDate TEXT, deleteDate TEXT,deleteDate2 TEXT, item_id TEXT, "
+                                + "check_favorite TEXT, check_favorite2 TEXT,check_comment TEXT,check_comment2 TEXT,reexhibit_flag TEXT);";
+             SQLiteCommand command = conn.CreateCommand();
             command.CommandText = commandText;
             command.ExecuteNonQuery();
             command.Dispose();

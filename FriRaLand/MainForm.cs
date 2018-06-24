@@ -60,22 +60,22 @@ namespace FriRaLand {
             //groupkindDBHelper.onCreate();
             new SettingsDBHelper().onCreate();
             Settings.updateTemplateSettingDBForAddTitle();
-            //new ShuppinRirekiDBHelper().onCreate();
-            //new ShuppinRirekiDBHelper().addCreatedDateColumn();//5->6
-            //new ShuppinRirekiDBHelper().addUretaColumn();//6->7
+            new ShuppinRirekiDBHelper().onCreate();
+            new ShuppinRirekiDBHelper().addCreatedDateColumn();//5->6
+            new ShuppinRirekiDBHelper().addUretaColumn();//6->7
             accountDBHelper.addHanbaiNumColumn();//7->8
             accountDBHelper.addItemNameSpeccialSettingsColumn();//8->9
-            //new ShuppinRirekiDBHelper().addReexhibitFlag();//9->10
+            new ShuppinRirekiDBHelper().addReexhibitFlag();//9->10
             //new GroupKindDBHelper().addNumberColumn();//10->11
             accountDBHelper.addDefaultBankAddressColumn();//11->12
             accountDBHelper.addTokenUpdateDateColumn();//12->13
             DBhelper.addNumberColumn();//13->14
-            //new ItemNoteDBHelper().onCreate();
+            new ItemNoteDBHelper().onCreate();
             new ItemFamilyDBHelper().onCreate();
             new ZaikoDBHelper().onCreate();
             //new DailyExhibitDBHelper().onCreate();
-            //new ExhibitLogDBHelper().onCreate();
-            //new ExhibitLogDBHelper().additem_idColumn();//14->15
+            new ExhibitLogDBHelper().onCreate();
+            new ExhibitLogDBHelper().addItemIDColumn();//14->15
             //new DefaultBankAddressBankDBHelper().onCreate();
             //new DefaultBankAddressBankDBHelper().updateDefaultBankAddressToList();
             //new NesageCntDBHelper().onCreate();
