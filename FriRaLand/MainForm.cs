@@ -840,5 +840,9 @@ namespace FriRaLand {
         private void ReservationbackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
 
         }
+
+        private void accountListComboBox_Format(object sender, ListControlConvertEventArgs e) {
+            e.Value = ((FrilAPI)e.ListItem).nickname;
+        }
     }
 }
