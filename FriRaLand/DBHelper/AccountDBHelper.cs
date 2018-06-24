@@ -18,7 +18,7 @@ namespace FriRaLand.DBHelper {
             conn.Open();
             string commandText = "CREATE TABLE IF NOT EXISTS accounts ( Id INTEGER PRIMARY KEY AUTOINCREMENT,"
                                 + "email TEXT, password TEXT,auth_token TEXT,"
-                                + "sellerid TEXT, nickname TEXT, number INTEGER);";
+                                + "sellerid TEXT, nickname TEXT, number INTEGER,expiration_date);";
             SQLiteCommand command = conn.CreateCommand();
             command.CommandText = commandText;
             command.ExecuteNonQuery();
@@ -38,12 +38,22 @@ namespace FriRaLand.DBHelper {
             }
             conn.Open();
             string commandText = "INSERT INTO accounts ("
-                                + "email, password, auth_token, sellerid, nickname, number, expiration_date, kengai_num, exhibit_cnt, hanbai_num, lastExhibitDate, addSpecialTextToItemName, insertEmptyStrToItemName, defaultbankaddressId, tokenupdatedate )"
+                                + "email, password," +
+                                " auth_token, sellerid, nickname, " +
+                                "number, expiration_date, kengai_num, " +
+                                "exhibit_cnt, hanbai_num, lastExhibitDate, " +
+                                "addSpecialTextToItemName, insertEmptyStrToItemName, " +
+                                "defaultbankaddressId, expiration_date )"
                                 + "VALUES ('" + account.email.Replace("'", "''") + "','"
                                 + account.password.Replace("'", "''") + "','"
                                 + account.auth_token.Replace("'", "''") + "','"
                                 + account.sellerid.Replace("'", "''") + "','"
-                                + account.nickname.Replace("'", "''") + "', " + new_number.ToString() + ",'" + Common.getUnixTimeStampFromDate(account.expiration_date) + "', -1, 0,0, '','False','False', " + account.defaultbankaddressId.ToString() + ",'" + Common.getUnixTimeStampFromDate(account.token_update_date) + "'); ";
+                                + account.nickname.Replace("'", "''") + "', " 
+                                + new_number.ToString() + ",'" 
+                                + Common.getUnixTimeStampFromDate(account.expiration_date) 
+                                + "', -1, 0,0, '','False','False', " 
+                                + account.defaultbankaddressId.ToString() + ",'" 
+                                + Common.getUnixTimeStampFromDate(account.token_update_date) + "'); ";
             SQLiteCommand command = conn.CreateCommand();
             command.CommandText = commandText;
             command.ExecuteNonQuery();

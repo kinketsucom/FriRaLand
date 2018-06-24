@@ -40,6 +40,10 @@ namespace FriRaLand {
         }
 
 
+        System.Random random = new System.Random();
+        private List<FrilAPI> FrilAPIList = new List<FrilAPI>();
+        private Dictionary<string, FrilAPI> sellerIDtoAPIDictionary = new Dictionary<string, FrilAPI>(); //sellerid -> API
+
         private void MainForm_Load(object sender, EventArgs e) {
             FrilCommon.init();
             //new ItemRegisterForm().Show();
@@ -47,13 +51,12 @@ namespace FriRaLand {
             DBhelper.onCreate();
             AccountDBHelper accountDBHelper = new AccountDBHelper();
             accountDBHelper.onCreate();
-            accountDBHelper.addNumberColumn(); //0->1
-            accountDBHelper.addExpirationDateColumn();//1->2
+ 
             ReservationDBHelper reservationDBhelper = new ReservationDBHelper();
             reservationDBhelper.onCreate();
-            reservationDBhelper.addReexhibitFlagColumn();//2->3
+            //reservationDBhelper.addReexhibitFlagColumn();//2->3
             accountDBHelper.addKengai_ExhibitCnt_LastExhibitTime_Column();//3->4
-            reservationDBhelper.addDelete2Column();//4->5
+            //reservationDBhelper.addDelete2Column();//4->5//追加したので不要
             //GroupBelongDBHelper groupbelongDBHelper = new GroupBelongDBHelper();
             //groupbelongDBHelper.onCreate();
             //GroupKindDBHelper groupkindDBHelper = new GroupKindDBHelper();
@@ -68,7 +71,6 @@ namespace FriRaLand {
             new ShuppinRirekiDBHelper().addReexhibitFlag();//9->10
             //new GroupKindDBHelper().addNumberColumn();//10->11
             accountDBHelper.addDefaultBankAddressColumn();//11->12
-            accountDBHelper.addTokenUpdateDateColumn();//12->13
             DBhelper.addNumberColumn();//13->14
             new ItemNoteDBHelper().onCreate();
             new ItemFamilyDBHelper().onCreate();
@@ -379,25 +381,27 @@ namespace FriRaLand {
             //アカウント管理画面から戻って来たときに行う処理
             //アカウント情報をもう一度読み込む
             //アカウント情報コンテナの再設定
-            //InitializeAccountData();
+            InitializeAccountData();
         }
+        Dictionary<int, FrilAPI> FrilAPIDictionary = new Dictionary<int, FrilAPI>(); //accountDBId, FrilAPI
+        Dictionary<int, Account> FrilAccountDictionary = new Dictionary<int, Account>(); //accountDBId, Account
         private void InitializeAccountData() {
-            ////アカウントリストの読み込み,APIリストの作成
-            //this.sellerIDtoAPIDictionary.Clear();
-            //this.accountListComboBox.Items.Clear();
-            //FrilAPIList.Clear();
-            //var accountList = AccountManageForm.accountLoader();
-            //FrilAPIDictionary = new Dictionary<int, FrilAPI>(); //accountDBId, FrilAPI
-            //FrilAccountDictionary = new Dictionary<int, Account>(); //accountDBId, Account
-            //foreach (var a in accountList) {
-            //    var api = new MercariAPI(a);
-            //    this.accountListComboBox.Items.Add(api);
-            //    mercariAPIList.Add(api);
-            //    mercariAPIDictionary[a.DBId] = api;
-            //    mercariAccountDictionary[a.DBId] = a;
-            //    this.sellerIDtoAPIDictionary[a.sellerid] = api;
-            //}
-            //if (accountList != null && accountList.Count > 0) accountListComboBox.SelectedIndex = 0;
+            //アカウントリストの読み込み,APIリストの作成
+            this.sellerIDtoAPIDictionary.Clear();
+            this.accountListComboBox.Items.Clear();
+            FrilAPIList.Clear();
+            var accountList = AccountManageForm.accountLoader();
+            FrilAPIDictionary = new Dictionary<int, FrilAPI>(); //accountDBId, FrilAPI
+            FrilAccountDictionary = new Dictionary<int, Account>(); //accountDBId, Account
+            foreach (var a in accountList) {
+                var api = new FrilAPI(a.email,a.password);
+                this.accountListComboBox.Items.Add(api);
+                FrilAPIList.Add(api);
+                FrilAPIDictionary[a.DBId] = api;
+                FrilAccountDictionary[a.DBId] = a;
+                this.sellerIDtoAPIDictionary[a.sellerid] = api;
+            }
+            if (accountList != null && accountList.Count > 0) accountListComboBox.SelectedIndex = 0;
 
             ////グループリストの読み込み
             //this.groupListComboBox.Items.Clear();

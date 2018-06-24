@@ -483,6 +483,8 @@
             this.Controls.Add(this.accountDeleteButton);
             this.Name = "AccountManageForm";
             this.Text = "AccountManageForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AccountManageForm_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.AccountManageForm_FormClosed);
             this.Load += new System.EventHandler(this.AccountManageForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.accountDataGridView1)).EndInit();
             this.groupBox1.ResumeLayout(false);

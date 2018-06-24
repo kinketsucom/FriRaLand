@@ -88,13 +88,13 @@ namespace FriRaLand.DBHelper{
                 command.Dispose();
                 conn.Close();
 
-                conn.Open();
-                commandText = "alter table reservations add deleteDate2 TEXT; alter table reservations add check_favorite2 TEXT; alter table reservations add check_comment2 TEXT;";
-                command = conn.CreateCommand();
-                command.CommandText = commandText;
-                command.ExecuteNonQuery();
-                command.Dispose();
-                conn.Close();
+                //conn.Open();
+                //commandText = "alter table reservations add deleteDate2 TEXT; alter table reservations add check_favorite2 TEXT; alter table reservations add check_comment2 TEXT;";
+                //command = conn.CreateCommand();
+                //command.CommandText = commandText;
+                //command.ExecuteNonQuery();
+                //command.Dispose();
+                //conn.Close();
 
                 conn.Open();
                 commandText = "update reservations set deleteDate2 = '1970/01/01 0:00:00'; update reservations set check_favorite2 = '見る'; update reservations set check_comment2 = '見る';";

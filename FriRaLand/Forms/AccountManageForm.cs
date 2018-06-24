@@ -202,6 +202,7 @@ namespace FriRaLand.Forms {
 
         private void AccountManageForm_FormClosed(object sender, FormClosedEventArgs e) {
             this.mainform.Enabled = true;
+            Console.WriteLine("fuga");
             this.mainform.OnBackFromAccountManageForm();
         }
 
@@ -585,6 +586,5 @@ namespace FriRaLand.Forms {
             MessageBox.Show(selectedAccount.email);
         }
 
- 
     }
 }
