@@ -39,6 +39,7 @@ namespace FriRaLand {
             this.account.password = password;
 
 
+<<<<<<< HEAD
 
 
         }
@@ -53,6 +54,37 @@ namespace FriRaLand {
             this.account.password = account.password;
             this.account.fril_auth_token = account.auth_token;
         }
+=======
+            public int DBId;
+            public string email;
+            public string password;
+            public string auth_token;
+            public string sellerid;
+            public int kengai_num;
+            public int hanbai_num { get; set; }
+            public int exhibit_cnt { get; set; }
+            public string last_exhibitTime_str;
+            public string nickname { get; set; }
+            public bool addSpecialTextToItemName;
+            public bool insertEmptyStrToItemName;
+            public int defaultbankaddressId = -1;
+            public DateTime token_update_date { get; set; }
+            public DateTime expiration_date { get; set; }
+
+
+    }
+        public FrilAPI(Common.Account account) {
+            this.account = account;
+
+        }
+        public FrilAPI(MainForm.Account account) {//Mainformのaaccountから取ってくるよう
+            this.account = new Common.Account();
+            this.account.kind = Common.Account.Fril_Account;
+            this.account.email = account.email;
+            this.account.password = account.password;
+            this.account.fril_auth_token = account.auth_token;
+        }
+>>>>>>> 899d440e01c846715980df7e8666cea32b463800
 
 
         //get_items でのOption
