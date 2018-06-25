@@ -147,8 +147,8 @@ using FriRaLand.DBHelper;
             }
             MessageBox.Show("出品予約を追加しました", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
             //作ったら閉じる
-            //this.Close();
-            //this.mainform.OnBackFromReservationSettingForm();
+            this.Close();
+            this.mainform.OnBackFromReservationSettingForm();
             //this.mainform.tabControl1.SelectedIndex = 1; //出品ページみせる
         }
 
