@@ -83,6 +83,7 @@
     <Compile Include="DBHelper\SettingsDBHelper.cs" />
     <Compile Include="DBHelper\ShuppinRirekiDBHelper.cs" />
     <Compile Include="DBHelper\ZaikoDBHelper.cs" />
+    <Compile Include="Dev.cs" />
     <Compile Include="DynamicJson.cs" />
     <Compile Include="ExhibitService.cs" />
     <Compile Include="Forms\AccountManageForm.cs">

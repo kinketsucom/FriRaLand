@@ -58,6 +58,8 @@ namespace FriRaLand {
         public bool is_buyitem = false;
 
 
+
+
         private static readonly DateTime UNIX_EPOCH = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc); //UnixTimeの開始時刻
         public string buyer_name = ""; //購入者アカウント名
         public DateTime buyer_comment_time = UNIX_EPOCH;
@@ -78,6 +80,7 @@ namespace FriRaLand {
             try {
                 //info
                 var info = json.info;
+                //this.seller = new FrilSeller(json.seller);
                 this.item_id = ((long)info.item_id).ToString();
                 this.item_name = info.item_name;
                 this.detail = info.detail;

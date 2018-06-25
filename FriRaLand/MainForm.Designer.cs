@@ -24,18 +24,18 @@
         /// </summary>
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle49 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle50 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle51 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle52 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle53 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle54 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle55 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle56 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle57 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle58 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle59 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle60 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle61 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle62 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle63 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle64 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle65 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle66 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle67 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle68 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle69 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle70 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle71 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle72 = new System.Windows.Forms.DataGridViewCellStyle();
             this.DailyExhibitDataGridView = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -228,8 +228,8 @@
             // dataGridViewTextBoxColumn3
             // 
             this.dataGridViewTextBoxColumn3.DataPropertyName = "name";
-            dataGridViewCellStyle49.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewTextBoxColumn3.DefaultCellStyle = dataGridViewCellStyle49;
+            dataGridViewCellStyle61.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewTextBoxColumn3.DefaultCellStyle = dataGridViewCellStyle61;
             this.dataGridViewTextBoxColumn3.HeaderText = "商品名";
             this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
             this.dataGridViewTextBoxColumn3.ReadOnly = true;
@@ -295,8 +295,8 @@
             // LocalItemDataGridView_name
             // 
             this.LocalItemDataGridView_name.DataPropertyName = "name";
-            dataGridViewCellStyle50.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.LocalItemDataGridView_name.DefaultCellStyle = dataGridViewCellStyle50;
+            dataGridViewCellStyle62.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.LocalItemDataGridView_name.DefaultCellStyle = dataGridViewCellStyle62;
             this.LocalItemDataGridView_name.FillWeight = 298.928F;
             this.LocalItemDataGridView_name.HeaderText = "商品名";
             this.LocalItemDataGridView_name.Name = "LocalItemDataGridView_name";
@@ -306,8 +306,8 @@
             // LocalItemDataGridView_description
             // 
             this.LocalItemDataGridView_description.DataPropertyName = "description";
-            dataGridViewCellStyle51.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.LocalItemDataGridView_description.DefaultCellStyle = dataGridViewCellStyle51;
+            dataGridViewCellStyle63.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.LocalItemDataGridView_description.DefaultCellStyle = dataGridViewCellStyle63;
             this.LocalItemDataGridView_description.FillWeight = 218.0931F;
             this.LocalItemDataGridView_description.HeaderText = "商品説明";
             this.LocalItemDataGridView_description.Name = "LocalItemDataGridView_description";
@@ -317,10 +317,10 @@
             // LocalItemDataGridView_price
             // 
             this.LocalItemDataGridView_price.DataPropertyName = "price";
-            dataGridViewCellStyle52.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle52.Format = "C0";
-            dataGridViewCellStyle52.NullValue = null;
-            this.LocalItemDataGridView_price.DefaultCellStyle = dataGridViewCellStyle52;
+            dataGridViewCellStyle64.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle64.Format = "C0";
+            dataGridViewCellStyle64.NullValue = null;
+            this.LocalItemDataGridView_price.DefaultCellStyle = dataGridViewCellStyle64;
             this.LocalItemDataGridView_price.FillWeight = 54.86601F;
             this.LocalItemDataGridView_price.HeaderText = "価格";
             this.LocalItemDataGridView_price.Name = "LocalItemDataGridView_price";
@@ -409,8 +409,8 @@
             // ReservationDataGridView_itemName
             // 
             this.ReservationDataGridView_itemName.DataPropertyName = "itemName";
-            dataGridViewCellStyle53.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.ReservationDataGridView_itemName.DefaultCellStyle = dataGridViewCellStyle53;
+            dataGridViewCellStyle65.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.ReservationDataGridView_itemName.DefaultCellStyle = dataGridViewCellStyle65;
             this.ReservationDataGridView_itemName.FillWeight = 298.928F;
             this.ReservationDataGridView_itemName.HeaderText = "商品名";
             this.ReservationDataGridView_itemName.Name = "ReservationDataGridView_itemName";
@@ -420,8 +420,8 @@
             // ReservationDataGridView_nickname
             // 
             this.ReservationDataGridView_nickname.DataPropertyName = "accountNickName";
-            dataGridViewCellStyle54.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.ReservationDataGridView_nickname.DefaultCellStyle = dataGridViewCellStyle54;
+            dataGridViewCellStyle66.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.ReservationDataGridView_nickname.DefaultCellStyle = dataGridViewCellStyle66;
             this.ReservationDataGridView_nickname.FillWeight = 218.0931F;
             this.ReservationDataGridView_nickname.HeaderText = "出品アカウント";
             this.ReservationDataGridView_nickname.Name = "ReservationDataGridView_nickname";
@@ -431,10 +431,10 @@
             // ReservationDataGridView_exhibitDateString
             // 
             this.ReservationDataGridView_exhibitDateString.DataPropertyName = "exhibitDateString";
-            dataGridViewCellStyle55.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle55.Format = "C0";
-            dataGridViewCellStyle55.NullValue = null;
-            this.ReservationDataGridView_exhibitDateString.DefaultCellStyle = dataGridViewCellStyle55;
+            dataGridViewCellStyle67.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle67.Format = "C0";
+            dataGridViewCellStyle67.NullValue = null;
+            this.ReservationDataGridView_exhibitDateString.DefaultCellStyle = dataGridViewCellStyle67;
             this.ReservationDataGridView_exhibitDateString.FillWeight = 54.86601F;
             this.ReservationDataGridView_exhibitDateString.HeaderText = "出品日時";
             this.ReservationDataGridView_exhibitDateString.Name = "ReservationDataGridView_exhibitDateString";
@@ -444,8 +444,8 @@
             // ReservationDataGridView_deleteDateString
             // 
             this.ReservationDataGridView_deleteDateString.DataPropertyName = "deleteDateString";
-            dataGridViewCellStyle56.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.ReservationDataGridView_deleteDateString.DefaultCellStyle = dataGridViewCellStyle56;
+            dataGridViewCellStyle68.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.ReservationDataGridView_deleteDateString.DefaultCellStyle = dataGridViewCellStyle68;
             this.ReservationDataGridView_deleteDateString.FillWeight = 33.26188F;
             this.ReservationDataGridView_deleteDateString.HeaderText = "取消日時";
             this.ReservationDataGridView_deleteDateString.Name = "ReservationDataGridView_deleteDateString";
@@ -560,8 +560,8 @@
             // ExhibittedDataGridView_name
             // 
             this.ExhibittedDataGridView_name.DataPropertyName = "name";
-            dataGridViewCellStyle57.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.ExhibittedDataGridView_name.DefaultCellStyle = dataGridViewCellStyle57;
+            dataGridViewCellStyle69.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.ExhibittedDataGridView_name.DefaultCellStyle = dataGridViewCellStyle69;
             this.ExhibittedDataGridView_name.HeaderText = "商品名";
             this.ExhibittedDataGridView_name.Name = "ExhibittedDataGridView_name";
             this.ExhibittedDataGridView_name.ReadOnly = true;
@@ -570,8 +570,8 @@
             // ExhibittedDataGridView_description
             // 
             this.ExhibittedDataGridView_description.DataPropertyName = "description";
-            dataGridViewCellStyle58.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.ExhibittedDataGridView_description.DefaultCellStyle = dataGridViewCellStyle58;
+            dataGridViewCellStyle70.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.ExhibittedDataGridView_description.DefaultCellStyle = dataGridViewCellStyle70;
             this.ExhibittedDataGridView_description.HeaderText = "商品説明";
             this.ExhibittedDataGridView_description.Name = "ExhibittedDataGridView_description";
             this.ExhibittedDataGridView_description.ReadOnly = true;
@@ -580,10 +580,10 @@
             // ExhibittedDataGridView_price
             // 
             this.ExhibittedDataGridView_price.DataPropertyName = "price";
-            dataGridViewCellStyle59.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle59.Format = "C0";
-            dataGridViewCellStyle59.NullValue = null;
-            this.ExhibittedDataGridView_price.DefaultCellStyle = dataGridViewCellStyle59;
+            dataGridViewCellStyle71.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle71.Format = "C0";
+            dataGridViewCellStyle71.NullValue = null;
+            this.ExhibittedDataGridView_price.DefaultCellStyle = dataGridViewCellStyle71;
             this.ExhibittedDataGridView_price.HeaderText = "価格";
             this.ExhibittedDataGridView_price.Name = "ExhibittedDataGridView_price";
             this.ExhibittedDataGridView_price.ReadOnly = true;
@@ -613,8 +613,8 @@
             // ExhibittedDataGridView_created_str
             // 
             this.ExhibittedDataGridView_created_str.DataPropertyName = "created_str";
-            dataGridViewCellStyle60.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.ExhibittedDataGridView_created_str.DefaultCellStyle = dataGridViewCellStyle60;
+            dataGridViewCellStyle72.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.ExhibittedDataGridView_created_str.DefaultCellStyle = dataGridViewCellStyle72;
             this.ExhibittedDataGridView_created_str.HeaderText = "出品日時";
             this.ExhibittedDataGridView_created_str.Name = "ExhibittedDataGridView_created_str";
             this.ExhibittedDataGridView_created_str.Width = 112;
@@ -1261,6 +1261,7 @@
             this.CheckItemAllCancel.TabIndex = 9;
             this.CheckItemAllCancel.Text = "出品取消";
             this.CheckItemAllCancel.UseVisualStyleBackColor = true;
+            this.CheckItemAllCancel.Click += new System.EventHandler(this.CheckItemAllCancel_Click);
             // 
             // CheckAllItemReviewButton
             // 

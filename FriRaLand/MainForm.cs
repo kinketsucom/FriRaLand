@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net;
 using static FriRaLand.Common;
+using System.Diagnostics;
 
 namespace FriRaLand {
     public partial class MainForm : Form {
@@ -565,7 +566,12 @@ namespace FriRaLand {
                         e.Value = reservation.reexhibit_flag_str;
                         break;
                 }
-            } catch {
+            } catch(Exception ex) {
+                StackTrace trace = new StackTrace(ex, true); //第二引数のtrueがファイルや行番号をキャプチャするため必要
+                foreach (var frame in trace.GetFrames()) {
+                    Console.WriteLine(frame.GetFileName());     //filename
+                    Console.WriteLine(frame.GetFileLineNumber());   //line number
+                }
 
             }
         }
@@ -702,7 +708,7 @@ namespace FriRaLand {
                                     //continue; なんども実行されることになるのでいいねがついてるので削除(停止)しないならそれでもうおわり
                                 } else {
                                     if (this.isStopCheckBox.Checked == false) {
-                                        bool result = api.Cancel(deleteitemid);
+                                        bool result = api.Cancel(deleteitemid,api.account);
                                         if (result) {
                                             Log.Logger.Info("削除成功 : " + deleteitemid);
                                             //削除・停止後の共通DB操作を行う
@@ -767,7 +773,7 @@ namespace FriRaLand {
                                     //continue; なんども実行されることになるのでいいねがついてるので削除(停止)しないならそれでもうおわり
                                 } else {
                                     if (this.isStopCheckBox.Checked == false) {
-                                        bool result = api.Cancel(deleteitemid);
+                                        bool result = api.Cancel(deleteitemid,api.account);
                                         if (result) {
                                             Log.Logger.Info("削除2成功 : " + deleteitemid);
                                             //削除・停止後の共通DB操作を行う
@@ -969,7 +975,7 @@ namespace FriRaLand {
                         e.Value = item.status_message;
                         break;
                     case 2:
-                        e.Value = item.   seller.name;
+                        e.Value = item.seller.name;//詳細取得ボックスが空だとseller.nameがnullになる
                         break;
                     case 3:
                         e.Value = item.item_name;
@@ -1023,9 +1029,62 @@ namespace FriRaLand {
                         e.Value = item.item_id;
                         break;
                 }
-            } catch {
-
+            } catch(Exception ex) {
+               Dev.printE(ex);
             }
         }
+
+        private async void CheckItemAllCancel_Click(object sender, EventArgs e) {
+           //if (!LicenseForm.checkCanUseWithErrorWindow()) return;
+            //選択商品の一括取り消し
+            DialogResult dr = MessageBox.Show("選択商品の一括取り消しを行いますか？", MainForm.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (dr == DialogResult.No) {
+                return;
+            }
+            this.toolStripStatusLabel1.Text = "一括取り消し開始";
+            DisableAllButton();
+            var res = await Task.Run(() => DoAllCancel());
+            //表の更新(成功0個のときは更新不要）
+            int successnum = res.Value; string message = res.Key;
+            //結果を表示
+            MessageBox.Show(message, "一括取り消し", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //出品一覧更新
+            var selectedAPIs = getNowSelectedAPIs();
+            if (selectedAPIs.Count != 0) UpdateSelling(selectedAPIs);
+            this.toolStripStatusLabel1.Text = "一括取り消し完了(" + message + ")";
+            ExhibittedDataGridView.RowCount = ExhibittedItemDataBindList.Count;
+            ExhibittedDataGridView.ClearSelection();
+            ExhibittedDataGridView.Refresh();
+            EnableAllButton();
+        }
+        private KeyValuePair<string, int> DoAllCancel() {
+            int trynum = 0;
+            int successnum = 0;
+            var itemNoteDBHelper = new ItemNoteDBHelper();
+            var shuppinrirekiDBHelper = new ShuppinRirekiDBHelper();
+            foreach (DataGridViewRow row in ExhibittedDataGridView.SelectedRows) {
+                FrilItem item = ExhibittedItemDataBindList[row.Index];
+                trynum++;
+                //取引中の商品は取り消した場合エラーになる
+                //商品に該当するapiを使用して商品を取り消す
+                if (!item.is_sellitem) continue;//購入した商品の場合は出品取消できない
+                bool res = false;
+                if (sellerIDtoAPIDictionary.ContainsKey(item.user_id)) {
+                    var api = sellerIDtoAPIDictionary[item.user_id];
+                    var api2 = Common.checkFrilAPI(api);
+                    res = api2.Cancel(item.item_id,api.account);
+                    //出品履歴,商品備考データが存在する場合は該当レコードを削除
+                    itemNoteDBHelper.deleteItemNote(item.item_id);
+                    shuppinrirekiDBHelper.deleteRireki(item.item_id);
+                }
+                if (res) successnum++;
+                System.Threading.Thread.Sleep(Settings.getIkkatuTorikesiInterval() * 1000);
+            }
+            return new KeyValuePair<string, int>(string.Format("成功: {0} 失敗:{1}", successnum, trynum - successnum), successnum);
+        }
+
+
+
+
     }
 }

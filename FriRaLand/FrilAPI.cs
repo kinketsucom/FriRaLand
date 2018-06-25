@@ -879,15 +879,15 @@ namespace FriRaLand {
         }
         //商品を削除する.要ログイン
         //返り値: 成功:true 失敗:false
-        public bool Cancel(FrilItem item) {
-            return Cancel(item.item_id);
-        }
-        public bool Cancel(string item_id) {
+        //public bool Cancel(FrilItem item,account) {
+        //    return Cancel(item.item_id,account);
+        //}
+        public bool Cancel(string item_id,Common.Account account) {
             try {
-                string url = string.Format("https://api.mercari.jp/items/update_status?_access_token={0}&_global_access_token={1}", this.account.auth_token);//FIXIT:Frilのものにかえる
+                string url = "https://api.fril.jp/api/items/delete";//FIXIT:Frilのものにかえる
                 Dictionary<string, string> param = new Dictionary<string, string>();
                 param.Add("item_id", item_id);
-                param.Add("status", "cancel");
+                param.Add("auth_token", account.auth_token);
                 CookieContainer cc = new CookieContainer();//FIXIT:不要なクッキーコンテナの可能性がある。
                 FrilRawResponse rawres = postFrilAPI(url, param,cc);
                 if (rawres.error) return false;
@@ -927,7 +927,7 @@ namespace FriRaLand {
         //返り値: 成功:新しい商品オブジェクト 失敗:null
         public FrilItem CancelandSell(string item_id) {
             FrilItem item = GetItemInfobyItemIDWithDetail(item_id);
-            Cancel(item); //削除失敗した場合も出品はする
+            Cancel(item.item_id,account); //削除失敗した場合も出品はする
             return null;
         }
         //特定のuserIdの商品をすべて取得
