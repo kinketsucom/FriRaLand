@@ -76,7 +76,7 @@ namespace FriRaLand.Forms {
                 account.password = api.account.password;
                 account.auth_token = api.account.auth_token;//FIXIT:auth_tokenは存在しない？
                 //account.global_auth_token = m.global_auth_token;//FIXIT:global_auth_tokenは存在しない
-                account.sellerid = api.account.userId;
+                account.userId = api.account.userId;
                 account.nickname = api.account.nickname;
                 account.expiration_date = api.account.expirationDate;
 

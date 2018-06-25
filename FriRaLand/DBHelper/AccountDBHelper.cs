@@ -525,7 +525,7 @@ namespace FriRaLand.DBHelper {
                     account.addSpecialTextToItemName = bool.Parse(sQLiteDataReader["addSpecialTextToItemName"].ToString());
                     account.insertEmptyStrToItemName = bool.Parse(sQLiteDataReader["insertEmptyStrToItemName"].ToString());
                     account.defaultbankaddressId = int.Parse(sQLiteDataReader["defaultbankaddressId"].ToString());
-                    account.token_update_date = Common.getDateFromUnixTimeStamp(sQLiteDataReader["tokenupdatedate"].ToString());
+                    account.token_update_date = Common.getDateFromUnixTimeStamp(sQLiteDataReader["expiration_date"].ToString());//FIXIT:token_update_date関連はなおさないとね
                 }
                 sQLiteDataReader.Close();
                 this.conn.Close();

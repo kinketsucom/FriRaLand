@@ -10,6 +10,7 @@ using System.Drawing;        //json
 
 namespace FriRaLand {
     public class FrilItem {
+        public string buyer_simei;
         public System.Drawing.Image Image { get; set; } //アプリケーション内使用用パラメータ//表示用の画像
         public string parent_id;
         public string child_id;
@@ -42,14 +43,20 @@ namespace FriRaLand {
         public int likes_count;
         public string[] imageurls = new string[]{"","","",""}; //画像URL
         public string[] imagepaths = new string[] { "", "", "", "" }; //ローカルの画像パス
+        public int item_pv; //なにこれ？？たぶんアクセス数
 
 
         public int num_likes { get; set; } //いいね数
         public int num_comments { get; set; }//コメント数
         public long pager_id; //FIXIT:不必要なパラメータの可能性がある//商品ページのインデックス?,get_itemsで60件以上あるときは最後のitemのpager_idを使って2回目以降叩く
+        public string status_message { get; set; } //表示用の状態「出品中・停止中・支払い待ち・発送待ち・評価待ち」
+        public string created_str { get; set; }//FIXIT:なにこれ
+
+        public  FrilSeller seller;
 
         public bool is_sellitem = false;
         public bool is_buyitem = false;
+
 
         private static readonly DateTime UNIX_EPOCH = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc); //UnixTimeの開始時刻
         public string buyer_name = ""; //購入者アカウント名
@@ -131,6 +138,20 @@ namespace FriRaLand {
             } catch(Exception ex) {
                 this.Image = null;
                 Console.WriteLine(ex);
+            }
+        }
+        //表で表示するための画像を読み込む
+        public void loadImageFromThumbnail() {
+            try {
+                using (WebClient webClient = new WebClient()) {
+                    this.imageurls[0] = this.imageurls[0].Replace("f=webp", "f=jpeg");
+                    Stream stream = webClient.OpenRead(this.imageurls[0]);
+                    var bitmap = new Bitmap(stream);
+                    this.Image = FrilCommon.ResizeImage(bitmap, 50, 50);
+                    bitmap.Dispose();
+                }
+            } catch (Exception ex) {
+                this.Image = null;
             }
         }
 

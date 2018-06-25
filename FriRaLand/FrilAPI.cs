@@ -930,7 +930,7 @@ namespace FriRaLand {
             Cancel(item); //削除失敗した場合も出品はする
             return null;
         }
-        //特定のsellerIDの商品をすべて取得
+        //特定のuserIdの商品をすべて取得
         //List<int> status_option := 商品の状態1:on_sale 2:trading 3:sold_out
         public List<FrilItem> GetAllItemsWithSellers(string sellerid, List<int> status_list, bool notall = false, bool detailflag = false) {
             GetItemsOption option = new GetItemsOption();
@@ -955,7 +955,7 @@ namespace FriRaLand {
                 Dictionary<string, string> param = new Dictionary<string, string>();
                 param = param.Concat(default_param).ToDictionary(x => x.Key, x => x.Value);
                 if (max_pager_id != "") param.Add("max_pager_id", max_pager_id);
-                FrilRawResponse rawres = getFrilAPI("https://api.mercari.jp/items/get_items", param,cc);//FIXIT:Frilのものにかえる
+                FrilRawResponse rawres = getFrilAPI("http://api.fril.jp/api/v3/items/show", param,cc);//FIXIT:Frilのものにかえる
 
                 if (rawres.error) return res;
                 try {

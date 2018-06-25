@@ -918,16 +918,19 @@ namespace FriRaLand {
             //出品中の商品を取得する
             List<FrilItem> items = new List<FrilItem>();
             var itemNoteDBHelper = new ItemNoteDBHelper();
+         
             foreach (var api in apis) {
+                CookieContainer cc = new CookieContainer();
                 var api2 = Common.checkFrilAPI(api);
-                var user_items = api2.GetAllItemsWithSellers(api2.account.sellerid, new List<int> { 1 });
+                var user_items = api2.getSellingItem(api2.account.sellerid,cc);
+                //var user_items = api2.GetAllItemsWithSellers(api2.account.sellerid, new List<int> { 1 });
                 if (detailflag) {
                     //購入者コメント時間と出品者コメント時間を取得
                     for (int i = 0; i < user_items.Count; i++) {
                         var comments = api2.GetComments(user_items[i].item_id);
                         //一番新しいものを取得する
                         foreach (var comment in comments) {
-                            if (comment.userid == api2.account.sellerid) {
+                            if (comment.userid == api2.account.userId) {
                                 if (user_items[i].seller_comment_time < comment.created) user_items[i].seller_comment_time = comment.created;
                             } else {
                                 if (user_items[i].buyer_comment_time < comment.created) user_items[i].buyer_comment_time = comment.created;
@@ -950,6 +953,79 @@ namespace FriRaLand {
                 items.AddRange(user_items);
             }
             return items;
+        }
+
+        private void ExhibittedDataGridView_CellValueNeeded(object sender, DataGridViewCellValueEventArgs e) {
+            try {
+                if (ExhibittedItemDataBindList.Count <= e.RowIndex) return;
+                FrilItem item = ExhibittedItemDataBindList[e.RowIndex];
+                if (item.Image == null) item.loadImageFromThumbnail();
+                //出品中,停止中
+                switch (e.ColumnIndex) {
+                    case 0:
+                        e.Value = item.Image;
+                        break;
+                    case 1:
+                        e.Value = item.status_message;
+                        break;
+                    case 2:
+                        e.Value = item.   seller.name;
+                        break;
+                    case 3:
+                        e.Value = item.item_name;
+                        break;
+                    case 4:
+                        e.Value = item.detail;
+                        break;
+                    case 5:
+                        e.Value = item.s_price;
+                        break;
+                    case 6:
+                        e.Value = item.num_likes;
+                        break;
+                    case 7:
+                        e.Value = item.num_comments;
+                        break;
+                    case 8:
+                        e.Value = (item.item_pv >= 0) ? item.item_pv.ToString() : "";
+                        break;
+                    case 9:
+                        e.Value = item.created_str;
+                        break;
+                    case 10:
+                        e.Value = (item.buyer_comment_time != Common.UNIX_EPOCH) ? item.buyer_comment_time.ToString() : "";
+                        break;
+                    case 11:
+                        e.Value = (item.seller_comment_time != Common.UNIX_EPOCH) ? item.seller_comment_time.ToString() : "";
+                        break;
+                    case 12:
+                        e.Value = (item.transaction_message_num >= 0) ? item.transaction_message_num.ToString() : "";
+                        break;
+                    case 13:
+                        e.Value = (item.buyer_transaction_message_time != Common.UNIX_EPOCH) ? item.buyer_transaction_message_time.ToString() : "";
+                        break;
+                    case 14:
+                        e.Value = (item.seller_transaction_message_time != Common.UNIX_EPOCH) ? item.seller_transaction_message_time.ToString() : "";
+                        break;
+                    case 15:
+                        e.Value = item.bikou;
+                        break;
+                    case 16:
+                        e.Value = item.address_copyed;
+                        break;
+                    case 17:
+                        e.Value = item.buyer_simei;
+                        break;
+                    case 18:
+                        e.Value = item.buyer_name;
+                        break;
+                    case 19:
+                        e.Value = item.item_id;
+                        break;
+                }
+            } catch {
+
+            }
         }
     }
 }

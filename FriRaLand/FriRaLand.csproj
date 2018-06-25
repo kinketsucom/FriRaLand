@@ -106,6 +106,7 @@
     <Compile Include="FrilAPI.cs" />
     <Compile Include="FrilItem.cs" />
     <Compile Include="FrilCommon.cs" />
+    <Compile Include="FrilSeller.cs" />
     <Compile Include="ItemRegisterForm.cs">
       <SubType>Form</SubType>
     </Compile>

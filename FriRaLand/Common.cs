@@ -230,7 +230,7 @@ namespace FriRaLand {
             }
             Common.Account account = accountDBHelper.getAccountFromSellerid(api.account.sellerid);
 
-            if (account.token_update_date < DateTime.Now || force) {
+            if (account.expiration_date < DateTime.Now || force) {
                 int retrynum = 1;
                 //プロキシを使用する場合はリトライ回数を5回に
                 //if (Settings.getUseProxyAuto() && force == false) retrynum = 5;
