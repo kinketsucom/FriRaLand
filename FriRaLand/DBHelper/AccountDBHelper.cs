@@ -372,7 +372,7 @@ namespace FriRaLand.DBHelper {
                     account.addSpecialTextToItemName = bool.Parse(sQLiteDataReader["addSpecialTextToItemName"].ToString());
                     account.insertEmptyStrToItemName = bool.Parse(sQLiteDataReader["insertEmptyStrToItemName"].ToString());
                     account.defaultbankaddressId = int.Parse(sQLiteDataReader["defaultbankaddressId"].ToString());
-                    account.token_update_date = Common.getDateFromUnixTimeStamp(sQLiteDataReader["tokenupdatedate"].ToString());
+                    account.token_update_date = Common.getDateFromUnixTimeStamp(sQLiteDataReader["expiration_date"].ToString());
                     rst.Add(account);
                 } catch (Exception ex) {
                     Log.Logger.Error("アカウントリスト読み込み中エラー : " + ex.Message);

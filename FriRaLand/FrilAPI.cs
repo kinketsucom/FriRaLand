@@ -37,10 +37,21 @@ namespace FriRaLand {
             this.account.kind = Common.Account.Fril_Account;
             this.account.email = email;
             this.account.password = password;
+
         }
         public FrilAPI(Common.Account account) {
             this.account = account;
+
         }
+        public FrilAPI(MainForm.Account account) {//Mainformのaaccountから取ってくるよう
+            this.account = new Common.Account();
+            this.account.kind = Common.Account.Fril_Account;
+            this.account.email = account.email;
+            this.account.password = account.password;
+            this.account.fril_auth_token = account.auth_token;
+        }
+
+
         //get_items でのOption
         private class GetItemsOption {
             public string sellerid = "";

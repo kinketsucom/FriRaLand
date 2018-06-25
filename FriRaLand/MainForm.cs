@@ -598,7 +598,7 @@ namespace FriRaLand {
             var itemDBHelper = new FrilItemDBHelper();
             var zaikoDBHelper = new ZaikoDBHelper();
             var itemfamilyDBHelper = new ItemFamilyDBHelper();
-            //var exhibitLogDBHelper = new ExhibitLogDBHelper();
+            var exhibitLogDBHelper = new ExhibitLogDBHelper();
             var reservation = new ReservationSettingForm.ReservationSetting();
             for (int i = 0; i < this.ReservationObjects.Count; i++) {
                 //キャンセルリクエストがあったら即キャンセル
@@ -614,7 +614,7 @@ namespace FriRaLand {
                         //自動出品ルーチン
                         Account a = accountDBHelper.selectItem(new List<int> { reservation.accountDBId })[0];
                         Log.Logger.Info("自動出品用のアカウント取得成功");
-                        FrilAPI api = new FrilAPI(a.email,a.password);
+                        FrilAPI api = new FrilAPI(a);
                         //api = Common.checkFrilAPI(api);//FIXIT:これは自動更新用なので
                         FrilItem item = itemDBHelper.selectItem(new List<int> { reservation.itemDBId })[0];
                         Log.Logger.Info("自動出品対象の商品をDBから取得成功");
@@ -633,14 +633,16 @@ namespace FriRaLand {
                             continue;
                         }
                         //出品実行
-                        FrilItem result = SellWithOption(a, item);
-                        if (result != null) {
+                        //FrilItem result = SellWithOption(a, item);
+                        CookieContainer cc = new CookieContainer();
+                        string result_item_id = api.Sell(item, cc);
+                        if (result_item_id != null) {
                             //出品した商品に関するIDを更新
-                            Log.Logger.Info("自動出品に成功 : " + result.item_id);
-                            reservationDBHelper.updateItemID(reservation.DBId, result.item_id);
+                            Log.Logger.Info("自動出品に成功 : " + result_item_id);
+                            reservationDBHelper.updateItemID(reservation.DBId, result_item_id);
                             reservationDBHelper.updateExhibitStatus(reservation.DBId, ReservationSettingForm.Status.Success);
                             //出品後の共通DB操作実行
-                            ExhibitService.updateDBOnExhibitCommon(a, api, result, item.DBId, reservation.reexhibit_flag);
+                            ExhibitService.updateDBOnExhibitCommon(a, api, item, item.DBId, reservation.reexhibit_flag);
                             //バインドリストのstatus_str更新～
                             for (int k = 0; k < ReservationDataBindList.Count; k++) {
                                 if (ReservationDataBindList[k].DBId == reservation.DBId) {
@@ -829,12 +831,20 @@ namespace FriRaLand {
                 int insertIndex = Common.random.Next(len);
                 cloneItem.item_name = cloneItem.item_name.Insert(insertIndex, " ");
             }
-            
+
             return api.Sell(cloneItem, cloneItem.imagepaths);
         }
 
         private void ReservationbackgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e) {
-
+            //GUI更新
+            this.ReservationDataGridView.Refresh();
+            this.exhibit_success_num_label.Text = this.exhibit_success_num.ToString();
+            this.exhibit_failed_num_label.Text = this.exhibit_failed_num.ToString();
+            this.delete_success_num_label.Text = this.delete_success_num.ToString();
+            this.delete_failed_num_label.Text = this.delete_failed_num.ToString();
+            this.zaikogire_num_label.Text = this.zaikogire_num.ToString();
+            this.reexhibit_success_num_label.Text = this.reexhibit_success_num.ToString();
+            this.reexhibit_failed_num_label.Text = this.reexhibit_failed_num.ToString();
         }
 
         private void ReservationbackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
