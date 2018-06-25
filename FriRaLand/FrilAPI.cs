@@ -893,12 +893,13 @@ namespace FriRaLand {
                 if (rawres.error) return false;
                 /*グローバルアクセストークンを更新*/
                 dynamic resjson = DynamicJson.Parse(rawres.response);
-                string result = resjson.result;
-                if (result != "OK") throw new Exception();
+                bool result = resjson.result;
+                if (!result) throw new Exception();
                 Log.Logger.Info("商品の削除に成功");
                 return true;
-            } catch (Exception e) {
+            } catch (Exception ex) {
                 Log.Logger.Error("商品の削除に失敗");
+                Console.WriteLine(ex);
                 return false;
             }
         }

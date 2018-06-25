@@ -975,7 +975,7 @@ namespace FriRaLand {
                         e.Value = item.status_message;
                         break;
                     case 2:
-                        e.Value = item.seller.name;//詳細取得ボックスが空だとseller.nameがnullになる
+                        e.Value = item.seller.name;
                         break;
                     case 3:
                         e.Value = item.item_name;

@@ -532,6 +532,7 @@ namespace FriRaLand.DBHelper {
                 sQLiteCommand.Dispose();
                 return account;
             } catch (Exception ex) {
+                Dev.printE(ex);
                 this.conn.Close();
                 return null;
             }
