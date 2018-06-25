@@ -26,7 +26,7 @@ namespace FriRaLand.DBHelper {
             conn.Close();
         }
 
-        public void addAccount(MainForm.Account account) {
+        public void addAccount(Common.Account account) {
             //addするときはまずmax(number)を取得して+1の値をいれる
             int max_number = getMaxNumber();
             int new_number = 0;

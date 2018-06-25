@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net;
+using static FriRaLand.Common;
 
 namespace FriRaLand {
     public partial class MainForm : Form {
@@ -21,23 +22,23 @@ namespace FriRaLand {
         public const string ProductName = "Friland";
         private List<ReservationSettingForm.ReservationSetting> ReservationDataBindList = new List<ReservationSettingForm.ReservationSetting>();
 
-        public class Account {
-            public int DBId;
-            public string email;
-            public string password;
-            public string auth_token;
-            public string sellerid;
-            public int kengai_num;
-            public int hanbai_num { get; set; }
-            public int exhibit_cnt { get; set; }
-            public string last_exhibitTime_str; 
-            public string nickname { get; set; }
-            public bool addSpecialTextToItemName;
-            public bool insertEmptyStrToItemName;
-            public int defaultbankaddressId = -1;
-            public DateTime token_update_date { get; set; }
-            public DateTime expiration_date { get; set; }
-        }
+        //public class Account {
+        //    public int DBId;
+        //    public string email;
+        //    public string password;
+        //    public string auth_token;
+        //    public string sellerid;
+        //    public int kengai_num;
+        //    public int hanbai_num { get; set; }
+        //    public int exhibit_cnt { get; set; }
+        //    public string last_exhibitTime_str; 
+        //    public string nickname { get; set; }
+        //    public bool addSpecialTextToItemName;
+        //    public bool insertEmptyStrToItemName;
+        //    public int defaultbankaddressId = -1;
+        //    public DateTime token_update_date { get; set; }
+        //    public DateTime expiration_date { get; set; }
+        //}
 
 
         System.Random random = new System.Random();
@@ -384,7 +385,7 @@ namespace FriRaLand {
             InitializeAccountData();
         }
         Dictionary<int, FrilAPI> FrilAPIDictionary = new Dictionary<int, FrilAPI>(); //accountDBId, FrilAPI
-        Dictionary<int, Account> FrilAccountDictionary = new Dictionary<int, Account>(); //accountDBId, Account
+        Dictionary<int, Common.Account> FrilAccountDictionary = new Dictionary<int, Common.Account>(); //accountDBId, Account
         private void InitializeAccountData() {
             //アカウントリストの読み込み,APIリストの作成
             this.sellerIDtoAPIDictionary.Clear();
@@ -392,7 +393,7 @@ namespace FriRaLand {
             FrilAPIList.Clear();
             var accountList = AccountManageForm.accountLoader();
             FrilAPIDictionary = new Dictionary<int, FrilAPI>(); //accountDBId, FrilAPI
-            FrilAccountDictionary = new Dictionary<int, Account>(); //accountDBId, Account
+            FrilAccountDictionary = new Dictionary<int, Common.Account>(); //accountDBId, Account
             foreach (var a in accountList) {
                 var api = new FrilAPI(a.email,a.password);
                 this.accountListComboBox.Items.Add(api);

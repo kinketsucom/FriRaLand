@@ -15,14 +15,14 @@ namespace FriRaLand.Forms {
         public AccountManageForm() {
             InitializeComponent();
         }
-        private List<MainForm.Account> accountList = new List<MainForm.Account>();
+        private List<Common.Account> accountList = new List<Common.Account>();
         public MainForm mainform;
         private void AccountManageForm_Load(object sender, EventArgs e) {
             accountColumnBoxReflesh();
             //groupListBoxRefresh();
         }
 
-        static public List<MainForm.Account> accountLoader() {
+        static public List<Common.Account> accountLoader() {
             return new AccountDBHelper().loadAccounts();
         }
         private void accountColumnBoxReflesh() {
@@ -67,7 +67,7 @@ namespace FriRaLand.Forms {
                 MessageBox.Show("ログインに成功しました。", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 //既にあったら追加しない
                 AccountDBHelper accountDBHelper = new AccountDBHelper();
-                MainForm.Account account = new MainForm.Account();
+                Common.Account account = new Common.Account();
                 account.email = api.account.email;
                 account.password = api.account.password;
                 account.auth_token = api.account.fril_auth_token;//FIXIT:auth_tokenは存在しない？
@@ -168,7 +168,7 @@ namespace FriRaLand.Forms {
         //        MessageBoxDefaultButton.Button2);
         //    if (result == DialogResult.Yes) {
         //        AccountDBHelper accountDBHelper = new AccountDBHelper();
-        //        MainForm.Account updateAccount = accountList[this.accountDataGridView1.SelectedRows[0].Index];
+        //        Common.Account updateAccount = accountList[this.accountDataGridView1.SelectedRows[0].Index];
 
         //        FrilAPI api = new FrilAPI(updateAccount);
         //        //string[] proxy_list = Common.getProxyServer().ToArray();
@@ -218,7 +218,7 @@ namespace FriRaLand.Forms {
         }
 
         private void accountListBox1_Format(object sender, ListControlConvertEventArgs e) {
-            MainForm.Account ac = (MainForm.Account)e.ListItem;
+            Common.Account ac = (Common.Account)e.ListItem;
             e.Value = ac.nickname;
         }
         //アカウント画像変更ボタン
@@ -236,7 +236,7 @@ namespace FriRaLand.Forms {
             //ダイアログを表示する
             if (ofd.ShowDialog() == DialogResult.OK) {
                 //OKボタンがクリックされたとき、選択されたファイル名を表示する
-                MainForm.Account selectedAccount = accountList[this.accountDataGridView1.SelectedRows[0].Index];
+                Common.Account selectedAccount = accountList[this.accountDataGridView1.SelectedRows[0].Index];
                 FrilAPI api = new FrilAPI(selectedAccount.email,selectedAccount.password);
                 string filename = ofd.FileName;
                 string path = FrilAPI.getExhibitionImageFromPath(filename);
@@ -255,14 +255,14 @@ namespace FriRaLand.Forms {
         //        MessageBox.Show("アカウントを1つだけ選択してください", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
         //        return;
         //    }
-        //    MainForm.Account selectedAccount = accountList[this.accountDataGridView1.SelectedRows[0].Index];
+        //    Common.Account selectedAccount = accountList[this.accountDataGridView1.SelectedRows[0].Index];
         //    FrilAPI api = new FrilAPI(selectedAccount);
         //    WithDrawForm f = new WithDrawForm(api);
         //    f.Show();
         //}
 
         private void accountListBox2_Format(object sender, ListControlConvertEventArgs e) {
-            MainForm.Account ac = (MainForm.Account)e.ListItem;
+            Common.Account ac = (Common.Account)e.ListItem;
             e.Value = ac.nickname;
         }
 
@@ -270,9 +270,9 @@ namespace FriRaLand.Forms {
             //アカウント一覧から新しくつくるグループに加えるメンバを追加
             if (accountListBox2.SelectedItems.Count <= 0) return;
             //現在すでにメンバにいるやつは追加しない
-            Dictionary<int, MainForm.Account> existBelongListBoxDic = new Dictionary<int, MainForm.Account>();
-            foreach (MainForm.Account account in GroupBelongListBox.Items) existBelongListBoxDic[account.DBId] = account;
-            foreach (MainForm.Account account in accountListBox2.SelectedItems) {
+            Dictionary<int, Common.Account> existBelongListBoxDic = new Dictionary<int, Common.Account>();
+            foreach (Common.Account account in GroupBelongListBox.Items) existBelongListBoxDic[account.DBId] = account;
+            foreach (Common.Account account in accountListBox2.SelectedItems) {
                 if (!existBelongListBoxDic.ContainsKey(account.DBId)) {
                     //追加する
                     GroupBelongListBox.Items.Add(account);
@@ -283,7 +283,7 @@ namespace FriRaLand.Forms {
         }
 
         private void newGroupListBox_Format(object sender, ListControlConvertEventArgs e) {
-            MainForm.Account ac = (MainForm.Account)e.ListItem;
+            Common.Account ac = (Common.Account)e.ListItem;
             e.Value = ac.nickname;
         }
 
@@ -319,7 +319,7 @@ namespace FriRaLand.Forms {
         //        //グループ配属情報を追加
         //        foreach (var item in GroupBelongListBox.Items) {
         //            GroupBelongDBHelper.GroupBelong gb = new GroupBelongDBHelper.GroupBelong();
-        //            gb.AccountID = ((MainForm.Account)item).DBId;
+        //            gb.AccountID = ((Common.Account)item).DBId;
         //            gb.GroupID = groupid;
         //            groupbelongDBHelper.addGroupBelong(gb);
         //        }
@@ -349,7 +349,7 @@ namespace FriRaLand.Forms {
         //        new GroupBelongDBHelper().deleteGroupBelongByGroupID(this.edittingGroupId); //一旦配属メンバーすべて削除
         //        foreach (var item in GroupBelongListBox.Items) {
         //            GroupBelongDBHelper.GroupBelong gb = new GroupBelongDBHelper.GroupBelong();
-        //            gb.AccountID = ((MainForm.Account)item).DBId;
+        //            gb.AccountID = ((Common.Account)item).DBId;
         //            gb.GroupID = this.edittingGroupId;
         //            groupbelongDBHelper.addGroupBelong(gb);
         //        }
@@ -547,7 +547,7 @@ namespace FriRaLand.Forms {
         //    this.edittingGroupId = selectedGroupKind.GroupId;
         //    this.groupNameTextBox.Text = selectedGroupKind.GroupName;
         //    List<int> groupBelongAccountDBIdList = new GroupBelongDBHelper().loadGroupBelongDictionary()[selectedGroupKind.GroupId];
-        //    List<MainForm.Account> belongAccountList = new AccountDBHelper().selectItem(groupBelongAccountDBIdList);
+        //    List<Common.Account> belongAccountList = new AccountDBHelper().selectItem(groupBelongAccountDBIdList);
         //    foreach (var account in belongAccountList) this.GroupBelongListBox.Items.Add(account);
         //}
         //private bool checkGroupEditMode() {
@@ -569,7 +569,7 @@ namespace FriRaLand.Forms {
             //    MessageBox.Show("トークン更新日時を変更するアカウントを選択してください", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
             //    return;
             //}
-            //List<MainForm.Account> updateaccounts = new List<MainForm.Account>();
+            //List<Common.Account> updateaccounts = new List<Common.Account>();
             //foreach (DataGridViewRow row in this.accountDataGridView1.SelectedRows) {
             //    updateaccounts.Add(accountList[((DataGridViewRow)row).Index]);
             //}
@@ -582,7 +582,7 @@ namespace FriRaLand.Forms {
                 MessageBox.Show("アカウントを1つだけ選択してください", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            MainForm.Account selectedAccount = accountList[this.accountDataGridView1.SelectedRows[0].Index];
+            Common.Account selectedAccount = accountList[this.accountDataGridView1.SelectedRows[0].Index];
             MessageBox.Show(selectedAccount.email);
         }
 

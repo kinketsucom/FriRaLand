@@ -15,10 +15,10 @@ namespace FriRaLand {
             var shuppinrirekiDic = new ShuppinRirekiDBHelper().loadRirekiDictionary();
             if (shuppinrirekiDic.ContainsKey(soldFrilItem.item_id) == false) return;
             int itemDBId = shuppinrirekiDic[soldFrilItem.item_id].itemDBId;
-            MainForm.Account account = new AccountDBHelper().getAccountFromSellerid(soldFrilItem.user_id.ToString());
+            Common.Account account = new AccountDBHelper().getAccountFromSellerid(soldFrilItem.user_id.ToString());
             updateDBOnSold(account, api, soldFrilItem, itemDBId);
         }
-        public static void updateDBOnSold(MainForm.Account account, FrilAPI api, FrilItem soldFrilItem, int merlandItemDBId) {
+        public static void updateDBOnSold(Common.Account account, FrilAPI api, FrilItem soldFrilItem, int merlandItemDBId) {
             ItemFamilyDBHelper itemfamilyDBHelper = new ItemFamilyDBHelper();
             AccountDBHelper accountDBHelper = new AccountDBHelper();
             ShuppinRirekiDBHelper shuppinRirekiDBHelper = new ShuppinRirekiDBHelper();
@@ -52,7 +52,7 @@ namespace FriRaLand {
         }
 
         //商品を出品することができるのか
-        public static int canExhibitItem(MainForm.Account account, FrilItem merlandItem) {
+        public static int canExhibitItem(Common.Account account, FrilItem merlandItem) {
             //圏外数がオプションで設定した値を超えているNG
             if (Settings.getCheckKengaiStatusOnExhibit() && account.kengai_num != -1 && account.kengai_num >= Settings.getKengaiNotExhibitBorder()) {
                 Log.Logger.Info(account.nickname + "の圏外数は" + account.kengai_num + "のため出品スキップ");
@@ -70,7 +70,7 @@ namespace FriRaLand {
         }
 
         //出品成功した際の共通DB操作 予約情報にIDを書き込む操作は書かれていない
-        public static void updateDBOnExhibitCommon(MainForm.Account account, FrilAPI api, FrilItem exhibittedFrilItem, int merlandItemDBId, bool reexhibit_flag = false) {
+        public static void updateDBOnExhibitCommon(Common.Account account, FrilAPI api, FrilItem exhibittedFrilItem, int merlandItemDBId, bool reexhibit_flag = false) {
             ShuppinRirekiDBHelper shuppinRirekiDBHelper = new ShuppinRirekiDBHelper();
             ExhibitLogDBHelper exhibitLogDBHelper = new ExhibitLogDBHelper();
             AccountDBHelper accountDBHelper = new AccountDBHelper();
@@ -85,7 +85,7 @@ namespace FriRaLand {
             accountDBHelper.updateAccount(account.DBId, account);
         }
         //再出品成功した際のDB操作
-        public static void updateDBOnReExhibit(MainForm.Account account, FrilAPI api, FrilItem exhibittedFrilItem, int merlandItemDBId, bool reexhibit_flag) {
+        public static void updateDBOnReExhibit(Common.Account account, FrilAPI api, FrilItem exhibittedFrilItem, int merlandItemDBId, bool reexhibit_flag) {
             ShuppinRirekiDBHelper shuppinRirekiDBHelper = new ShuppinRirekiDBHelper();
             ExhibitLogDBHelper exhibitLogDBHelper = new ExhibitLogDBHelper();
             AccountDBHelper accountDBHelper = new AccountDBHelper();
@@ -158,7 +158,7 @@ namespace FriRaLand {
             //値下げ実行対象のアカウントリスト取得
             foreach (var gb in nesage_group_belongs) nesage_accountid_list.Add(gb.AccountID);
             var nesage_accoutns = new AccountDBHelper().selectItem(nesage_accountid_list);
-            foreach (MainForm.Account account in nesage_accoutns) {
+            foreach (Common.Account account in nesage_accoutns) {
                 //アカウントが出品している商品を詳細含めて取得
                 FrilAPI api = Common.checkFrilAPI(new FrilAPI(account.email,account.password));
                 var on_sale_items = api.GetAllItemsWithSellers(api.sellerid, new List<int> { 1 }, false, true);

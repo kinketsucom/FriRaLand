@@ -21,9 +21,21 @@ namespace FriRaLand {
             public string password;
             public string fril_auth_token;
             //public string rakuma_auth_token;
-            public string nickname;
+            //public string nickname;
             public string userId;
             public DateTime expirationDate;
+            public string auth_token;
+            public string sellerid;
+            public int kengai_num;
+            public int hanbai_num { get; set; }
+            public int exhibit_cnt { get; set; }
+            public string last_exhibitTime_str;
+            public string nickname { get; set; }
+            public bool addSpecialTextToItemName;
+            public bool insertEmptyStrToItemName;
+            public int defaultbankaddressId = -1;
+            public DateTime token_update_date { get; set; }
+            public DateTime expiration_date { get; set; }
         }
 
         public static System.Random random = new System.Random(1000);
