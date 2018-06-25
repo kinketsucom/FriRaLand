@@ -38,6 +38,9 @@ namespace FriRaLand {
             this.account.email = email;
             this.account.password = password;
 
+
+
+
         }
         public FrilAPI(Common.Account account) {
             this.account = account;
