@@ -248,7 +248,7 @@ namespace FriRaLand {
                         CookieContainer cc = new CookieContainer();//FIXIT:意味のないクッキーコンテナかもしれない
                         if (force == false) Log.Logger.Info(api.account.nickname + "のトークンの有効期限切れを確認.トークン更新を実施");
                         else Log.Logger.Info("トークンの強制更新実施");
-                        FrilAPI newapi = new FrilAPI(account.email,account.password);
+                        FrilAPI newapi = new FrilAPI(account);
                         if (newapi.account.auth_token == null) throw new Exception("new FrilAPI() error");
                         bool loginres = newapi.tryFrilLogin(cc);
                         if (loginres) {

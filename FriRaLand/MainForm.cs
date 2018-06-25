@@ -824,7 +824,7 @@ namespace FriRaLand {
         //商品名に文字列を付加したり、空白文字列をいれて出品する
         private FrilItem SellWithOption(Account a, FrilItem item) {
             FrilItem cloneItem = item.Clone();
-            FrilAPI api = new FrilAPI(a.email,a.password);
+            FrilAPI api = new FrilAPI(a);
             api = Common.checkFrilAPI(api);
             if (a.addSpecialTextToItemName) {
                 //商品名に文字列を付加する
@@ -840,8 +840,9 @@ namespace FriRaLand {
                 int insertIndex = Common.random.Next(len);
                 cloneItem.item_name = cloneItem.item_name.Insert(insertIndex, " ");
             }
-
-            return api.Sell(cloneItem, cloneItem.imagepaths);
+            CookieContainer cc = new CookieContainer();
+            item.item_id = api.Sell(cloneItem, cc);
+            return item;
         }
 
         private void ReservationbackgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e) {
@@ -975,7 +976,7 @@ namespace FriRaLand {
                         e.Value = item.status_message;
                         break;
                     case 2:
-                        e.Value = item.seller.name;
+                        e.Value = item.seller.name;//詳細チェックなしのnullがすごく気に入らない
                         break;
                     case 3:
                         e.Value = item.item_name;
@@ -1083,8 +1084,77 @@ namespace FriRaLand {
             return new KeyValuePair<string, int>(string.Format("成功: {0} 失敗:{1}", successnum, trynum - successnum), successnum);
         }
 
+        private void SelectItemAllExhibitButtonFromReservationTab_Click(object sender, EventArgs e) {
+            //if (!LicenseForm.checkCanUseWithErrorWindow()) return;
+            if (checkNowAutoMode()) return;
+            //選択商品の一括出品を行う
+            //確認画面を表示
+            DialogResult dr = MessageBox.Show("選択商品の一括出品を行いますか？\n注:画面左上で選択したアカウントではなく予約で設定されているアカウントから出品します", MainForm.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (dr == DialogResult.No) {
+                return;
+            }
+            this.toolStripStatusLabel1.Text = "一括出品開始";
+            exhibit_success_num = exhibit_failed_num = 0;
+            this.exhibit_success_num_label.Text = "0";
+            this.exhibit_failed_num_label.Text = "0";
+            DisableAllButton();
+            this.backgroundWorker2.RunWorkerAsync();
+        }
 
-
-
+        BackgroundWorker bgWorker2;
+        private void backgroundWorker2_DoWork(object sender, DoWorkEventArgs e) {
+            bgWorker2 = (BackgroundWorker)sender;
+            exhibit_success_num = exhibit_failed_num = 0;
+            FrilItemDBHelper itemDBHelper = new FrilItemDBHelper();
+            AccountDBHelper accountDBHelper = new AccountDBHelper();
+            ShuppinRirekiDBHelper shuppinRirekiDBHelper = new ShuppinRirekiDBHelper();
+            ZaikoDBHelper zaikoDBHelper = new ZaikoDBHelper();
+            ItemFamilyDBHelper itemfamilyDBHelper = new ItemFamilyDBHelper();
+            ExhibitLogDBHelper exhibitLogDBHelper = new ExhibitLogDBHelper();
+            int num = 0;
+            foreach (DataGridViewRow row in ReservationDataGridView.SelectedRows) {
+                var reservation = ReservationDataBindList[row.Index];
+                FrilItem item = itemDBHelper.selectItem(new List<int> { reservation.itemDBId })[0];
+                Account a = accountDBHelper.selectItem(new List<int> { reservation.accountDBId })[0];
+                FrilAPI api = new FrilAPI(a);
+                int zaikonum = zaikoDBHelper.getZaikoNum(item.parent_id);
+                bool parent_exist = zaikoDBHelper.isexistParentid(item.parent_id);
+                //親IDが存在し、在庫が0なら出品しない
+                if (parent_exist && zaikonum <= 0) {
+                    exhibit_failed_num++;
+                    continue;
+                }
+                api = Common.checkFrilAPI(api);
+                //this.toolStripStatusLabel1.Text = ("出品中: " + item.name);
+                FrilItem res = SellWithOption(a, item);
+                if (res != null) {
+                    var sr = new ShuppinRirekiDBHelper.ShuppinRireki();
+                    sr.itemDBId = item.DBId;
+                    sr.item_id = res.item_id;
+                    sr.accountDBId = a.DBId;
+                    shuppinRirekiDBHelper.addShuppinRireki(sr);
+                    exhibit_success_num++;
+                    //出品ログを追加
+                    var itemfamily = itemfamilyDBHelper.getItemFamilyFromItemDBId(item.DBId);
+                    exhibitLogDBHelper.addExhibitLog(api.account.nickname, item.created_date, itemfamily, res.item_id);
+                    //GUIだけ更新してDBには入れない
+                    ReservationDataBindList[row.Index].exhibit_status_str = ReservationSettingForm.get_exhibit_status_str(ReservationSettingForm.Status.Success);
+                } else {
+                    exhibit_failed_num++;
+                }
+                num++;
+                bgWorker2.ReportProgress(num * 100 / ReservationDataGridView.SelectedRows.Count); //GUI更新リクエスト
+                System.Threading.Thread.Sleep(Settings.getIkkatuShuppinInterval() * 1000);
+            }
+        }
+        private void backgroundWorker2_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
+            this.toolStripStatusLabel1.Text = string.Format("一括出品完了(成功{0}, 失敗{1})", exhibit_success_num, exhibit_failed_num);
+            EnableAllButton();
+        }
+        private void backgroundWorker2_ProgressChanged(object sender, ProgressChangedEventArgs e) {
+            this.ReservationDataGridView.Refresh();
+            this.exhibit_success_num_label.Text = exhibit_success_num.ToString();
+            this.exhibit_failed_num_label.Text = exhibit_failed_num.ToString();
+        }
     }
 }
