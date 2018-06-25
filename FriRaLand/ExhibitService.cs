@@ -30,7 +30,7 @@ namespace FriRaLand {
 
             //集計ログに「販売」を追加                      
             var itemfamily = itemfamilyDBHelper.getItemFamilyFromItemDBId(merlandItemDBId); //商品の在庫familyを取得 
-            exhibitLogDBHelper.addSoldLog(api.nickname, soldFrilItem.created_date, DateTime.Now, itemfamily, soldFrilItem.item_id);
+            exhibitLogDBHelper.addSoldLog(api.account.nickname, soldFrilItem.created_date, DateTime.Now, itemfamily, soldFrilItem.item_id);
             //アカウントの販売数を+1
             account.hanbai_num++;
             //最終出品時刻を更新
@@ -79,7 +79,7 @@ namespace FriRaLand {
             shuppinRirekiDBHelper.addShuppinRireki(new ShuppinRirekiDBHelper.ShuppinRireki(merlandItemDBId, account.DBId, exhibittedFrilItem.item_id, reexhibit_flag));
             //集計ログに「出品」を追加
             var itemfamily = itemFamilyDBHelper.getItemFamilyFromItemDBId(merlandItemDBId);
-            exhibitLogDBHelper.addExhibitLog(api.nickname, exhibittedFrilItem.created_date, itemfamily, exhibittedFrilItem.item_id);
+            exhibitLogDBHelper.addExhibitLog(api.account.nickname, exhibittedFrilItem.created_date, itemfamily, exhibittedFrilItem.item_id);
             //アカウントの出品数を+1
             account.exhibit_cnt++;
             accountDBHelper.updateAccount(account.DBId, account);
@@ -94,7 +94,7 @@ namespace FriRaLand {
             shuppinRirekiDBHelper.addShuppinRireki(new ShuppinRirekiDBHelper.ShuppinRireki(merlandItemDBId, account.DBId, exhibittedFrilItem.item_id, reexhibit_flag));
             //集計ログに「再出品」を追加
             var itemfamily = itemFamilyDBHelper.getItemFamilyFromItemDBId(merlandItemDBId);
-            exhibitLogDBHelper.addReexhibitLog(api.nickname, exhibittedFrilItem.created_date, itemfamily, exhibittedFrilItem.item_id);
+            exhibitLogDBHelper.addReexhibitLog(api.account.nickname, exhibittedFrilItem.created_date, itemfamily, exhibittedFrilItem.item_id);
             //アカウントの出品数を+1
             account.exhibit_cnt++;
             accountDBHelper.updateAccount(account.DBId, account);
@@ -139,7 +139,7 @@ namespace FriRaLand {
                 //値下げ回数DB更新
                 new NesageCntDBHelper().nesageCntIncrement(item.item_id);
                 //値下げログ追加
-                new NesageLogDBHelper().addNesageLog(item, api.nickname, oldprice, item.s_price, old_nesage_cnt + 1);
+                new NesageLogDBHelper().addNesageLog(item, api.account.nickname, oldprice, item.s_price, old_nesage_cnt + 1);
                 Log.Logger.Info("値下げ成功 :" + item.item_id);
                 return true;
             } else {
@@ -161,7 +161,7 @@ namespace FriRaLand {
             foreach (Common.Account account in nesage_accoutns) {
                 //アカウントが出品している商品を詳細含めて取得
                 FrilAPI api = Common.checkFrilAPI(new FrilAPI(account.email,account.password));
-                var on_sale_items = api.GetAllItemsWithSellers(api.sellerid, new List<int> { 1 }, false, true);
+                var on_sale_items = api.GetAllItemsWithSellers(api.account.sellerid, new List<int> { 1 }, false, true);
                 foreach (var item in on_sale_items) {
                     bool res = ExecuteNesage(item, api, nesage_ng_list);
                     //値下げ間隔スリープ

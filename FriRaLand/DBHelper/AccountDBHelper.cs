@@ -314,14 +314,14 @@ namespace FriRaLand.DBHelper {
                 conn.Close();
             }
         }
-        public List<MainForm.Account> loadAccounts() {
-            List<MainForm.Account> rst = new List<MainForm.Account>();
+        public List<Common.Account> loadAccounts() {
+            List<Common.Account> rst = new List<Common.Account>();
             this.conn.Open();
             SQLiteCommand sQLiteCommand = new SQLiteCommand("select * from accounts order by number;", this.conn);
             SQLiteDataReader sQLiteDataReader = sQLiteCommand.ExecuteReader();
             while (sQLiteDataReader.Read()) {
                 try {
-                    MainForm.Account account = new MainForm.Account();
+                    Common.Account account = new Common.Account();
                     account.DBId = int.Parse(sQLiteDataReader["Id"].ToString());
                     account.email = sQLiteDataReader["email"].ToString();
                     account.password = sQLiteDataReader["password"].ToString();
@@ -348,8 +348,8 @@ namespace FriRaLand.DBHelper {
             return rst;
         }
 
-        public List<MainForm.Account> selectItem(List<int> DBIdList) {
-            List<MainForm.Account> rst = new List<MainForm.Account>();
+        public List<Common.Account> selectItem(List<int> DBIdList) {
+            List<Common.Account> rst = new List<Common.Account>();
             if (DBIdList.Count == 0) return rst;
             string text = string.Join(",", DBIdList.ToArray());
             this.conn.Open();
@@ -357,7 +357,7 @@ namespace FriRaLand.DBHelper {
             SQLiteDataReader sQLiteDataReader = sQLiteCommand.ExecuteReader();
             while (sQLiteDataReader.Read()) {
                 try {
-                    MainForm.Account account = new MainForm.Account();
+                    Common.Account account = new Common.Account();
                     account.DBId = int.Parse(sQLiteDataReader["Id"].ToString());
                     account.email = sQLiteDataReader["email"].ToString();
                     account.password = sQLiteDataReader["password"].ToString();
@@ -384,7 +384,7 @@ namespace FriRaLand.DBHelper {
             return rst;
         }
 
-        public bool updateAccount(int DBId, MainForm.Account account) {
+        public bool updateAccount(int DBId, Common.Account account) {
             try {
                 conn.Open();
                 string commandText = "UPDATE accounts SET "
@@ -440,7 +440,7 @@ namespace FriRaLand.DBHelper {
         }
 
         //アカウントDBにIDがあればDBを返す (なければ0を返す) emailが一致していれば同じとみなす！
-        public int getAccountDBId(MainForm.Account account) {
+        public int getAccountDBId(Common.Account account) {
             int rst = 0;
             this.conn.Open();
             try {
@@ -502,9 +502,9 @@ namespace FriRaLand.DBHelper {
             }
         }
 
-        //なければnew MainForm.Accountを返す
-        public MainForm.Account getAccountFromSellerid(string sellerid) {
-            MainForm.Account account = new MainForm.Account();
+        //なければnew Common.Accountを返す
+        public Common.Account getAccountFromSellerid(string sellerid) {
+            Common.Account account = new Common.Account();
             this.conn.Open();
             try {
                 SQLiteCommand sQLiteCommand = new SQLiteCommand("select * from accounts i where"

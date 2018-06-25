@@ -22,7 +22,7 @@ using FriRaLand.DBHelper;
             this.item.loadImageFromFile();
             this.itemNameLabel.Text = item.item_name;
             this.itemPictureBox.Image = item.Image;
-            List<MainForm.Account> accountList = new AccountDBHelper().loadAccounts();
+            List<Common.Account> accountList = new AccountDBHelper().loadAccounts();
             foreach (var ac in accountList) this.accountComboBox.Items.Add(ac);
             if (accountList.Count != 0) this.accountComboBox.SelectedIndex = 0;
 
@@ -111,7 +111,7 @@ using FriRaLand.DBHelper;
         }
 
         private void accountComboBox_Format(object sender, ListControlConvertEventArgs e) {
-            MainForm.Account ac = (MainForm.Account)e.ListItem;
+            Common.Account ac = (Common.Account)e.ListItem;
             e.Value = ac.nickname;
         }
 
@@ -128,7 +128,7 @@ using FriRaLand.DBHelper;
             for (int i = 0; i < (int)this.exhibitTimeNumeric.Value; i++) {
                 ReservationSetting rs = new ReservationSetting();
                 rs.itemDBId = item.DBId;
-                rs.accountDBId = ((MainForm.Account)this.accountComboBox.SelectedItem).DBId;
+                rs.accountDBId = ((Common.Account)this.accountComboBox.SelectedItem).DBId;
                 rs.exhibitDate = exhibitTime;
                 if (this.autoDeleteCheckBox.Checked) rs.deleteDate = exhibitTime.AddDays((int)this.autoDeleteDayNumeric.Value).AddHours((int)this.autoDeleteHourNumeric.Value).AddMinutes((int)this.autoDeleteMinuteNumeric.Value);
                 else rs.deleteDate = DateTime.Parse(ReservationSetting.dafaultDate);

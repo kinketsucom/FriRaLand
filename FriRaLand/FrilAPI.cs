@@ -12,17 +12,13 @@ using System.Drawing.Imaging;
 using System.Security.Cryptography;
 
 namespace FriRaLand {
-    class FrilAPI {
+    public class FrilAPI {
         private const string USER_AGENT = "Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_3 like Mac OS X) AppleWebKit/603.3.8 (KHTML, like Gecko) Mobile/14G60 Fril/7.2.0";
         private string proxy;
         private const string XPLATFORM = "android";
         private const string XAPPVERSION = "600";
 
-        public string auth_token;
         public string global_refresh_token; //未使用
-        public string expiration_date;
-        public string sellerid;
-        public string nickname;
         //private CookieContainer cc = new CookieContainer();
 
         //GET,POSTのRequestのResponse
@@ -41,12 +37,12 @@ namespace FriRaLand {
         public FrilAPI(Common.Account account) {
             this.account = account;
         }
-        //public FrilAPI(MainForm.Account account) {//Mainformのaaccountから取ってくるよう
+        //public FrilAPI(Common.Account account) {//Mainformのaaccountから取ってくるよう
         //    this.account = new Common.Account();
         //    this.account.kind = Common.Account.Fril_Account;
         //    this.account.email = account.email;
         //    this.account.password = account.password;
-        //    this.account.fril_auth_token = account.auth_token;
+        //    this.account.fril_auth_token = accountaccount.auth_token;
         //}
 
 
@@ -70,7 +66,7 @@ namespace FriRaLand {
             FrilRawResponse res = new FrilRawResponse();
             Dictionary<string, string> dictionary = new Dictionary<string, string>();
             try {
-                string url = string.Format("https://api.mercari.jp/sellers/sell?_access_token={0}&_global_access_token={1}", this.auth_token);//FIXIT:Frilのものに変える
+                string url = string.Format("https://api.mercari.jp/sellers/sell?_access_token={0}&_global_access_token={1}", this.account.auth_token);//FIXIT:Frilのものに変える
 
                 /*手数料を計算する*/
                 int sales_fee = GetSalesFee(item.s_price, item.category_id);
@@ -639,9 +635,9 @@ namespace FriRaLand {
             }
         }
         public bool updateProfilePhoto(string new_imagepath,CookieContainer cc) {
-            string url = string.Format("https://api.mercari.jp/users/update_profile?_auth_token={0}&_global_auth_token={1}", this.auth_token);//FIXIT:frilにかえる
+            string url = string.Format("https://api.mercari.jp/users/update_profile?_auth_token={0}&_global_auth_token={1}", this.account.auth_token);//FIXIT:frilにかえる
             Dictionary<string, string> param = new Dictionary<string, string>();
-            param.Add("name", this.nickname);
+            param.Add("name", this.account.nickname);
             param.Add("introduction", this.getProfileIntroduction(cc));
             FrilRawResponse res = updateProfilePhotoPost(url, param, new_imagepath);
             return !res.error;
@@ -649,7 +645,7 @@ namespace FriRaLand {
         public string getProfileIntroduction(CookieContainer cc) {
             Dictionary<string, string> param = new Dictionary<string, string>();
             param.Add("_user_format", "profile");
-            param.Add("_auth_token", this.auth_token);
+            param.Add("_auth_token", this.account.auth_token);
             string url = "https://api.mercari.jp/users/get_profile";//FIXIT:フリルのものに変える
             FrilRawResponse res = getFrilAPI(url, param ,cc);
             if (res.error) {
@@ -753,7 +749,7 @@ namespace FriRaLand {
             FrilRawResponse res = new FrilRawResponse();
             Dictionary<string, string> dictionary = new Dictionary<string, string>();
             try {
-                string url = string.Format("https://api.mercari.jp/items/edit?_access_token={0}&_global_access_token={1}", this.auth_token);
+                string url = string.Format("https://api.mercari.jp/items/edit?_access_token={0}&_global_access_token={1}", this.account.auth_token);
 
                 /*手数料を計算する*/
                 int sales_fee = GetSalesFee(item.s_price, item.category_id);
@@ -860,7 +856,7 @@ namespace FriRaLand {
         //access_tokenとglobal_access_tokenのはいったListを返す関数
         private Dictionary<string, string> GetTokenParamListForFrilAPI() {
             Dictionary<string, string> param = new Dictionary<string, string>();
-            param.Add("_auth_token", this.auth_token);
+            param.Add("_auth_token", this.account.auth_token);
             return param;
         }
         //特定のitemIDの商品情報を取得
@@ -888,7 +884,7 @@ namespace FriRaLand {
         }
         public bool Cancel(string item_id) {
             try {
-                string url = string.Format("https://api.mercari.jp/items/update_status?_access_token={0}&_global_access_token={1}", this.auth_token);//FIXIT:Frilのものにかえる
+                string url = string.Format("https://api.mercari.jp/items/update_status?_access_token={0}&_global_access_token={1}", this.account.auth_token);//FIXIT:Frilのものにかえる
                 Dictionary<string, string> param = new Dictionary<string, string>();
                 param.Add("item_id", item_id);
                 param.Add("status", "cancel");
@@ -909,7 +905,7 @@ namespace FriRaLand {
         public bool Stop(string item_id) {
             try {
                 CookieContainer cc = new CookieContainer();//FIXIT:不要なクッキーコンテナの可能性がある。
-                string url = string.Format("https://api.mercari.jp/items/update_status?_access_token={0}&_global_access_token={1}", this.auth_token);
+                string url = string.Format("https://api.mercari.jp/items/update_status?_access_token={0}&_global_access_token={1}", this.account.auth_token);
                 Dictionary<string, string> param = new Dictionary<string, string>();
                 param.Add("item_id", item_id);
                 param.Add("status", "stop");

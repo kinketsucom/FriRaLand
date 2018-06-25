@@ -11,20 +11,17 @@ using System.Threading.Tasks;
 using FriRaLand.DBHelper;
 
 namespace FriRaLand {
-    class Common {
+    public class Common {
         public class Account {
             public const int Fril_Account = 0;
-            //public const int Rakuma_Account = 1;
             public int DBId;
             public int kind;
             public string email;
             public string password;
             public string fril_auth_token;
-            //public string rakuma_auth_token;
-            //public string nickname;
             public string userId;
             public DateTime expirationDate;
-            public string auth_token;
+            public string auth_token { get; set; }
             public string sellerid;
             public int kengai_num;
             public int hanbai_num { get; set; }
@@ -227,12 +224,12 @@ namespace FriRaLand {
             }
             var accountDBHelper = new AccountDBHelper();
             //有効期限が切れていないか調べる 強制フラグがたっていればかならず更新を行う
-            if (Common.getDateFromUnixTimeStamp(api.expiration_date).Year == 1970) {
+            if (api.account.expiration_date.Year == 1970) {
                 Log.Logger.Warn("警告: api.expiration_dateが1970/1/1になっている,　バグの可能性大.");
                 Log.Logger.Info("とりあえずapiそのまま返す");
                 return api;
             }
-            MainForm.Account account = accountDBHelper.getAccountFromSellerid(api.sellerid);
+            Common.Account account = accountDBHelper.getAccountFromSellerid(api.account.sellerid);
 
             if (account.token_update_date < DateTime.Now || force) {
                 int retrynum = 1;
@@ -250,24 +247,24 @@ namespace FriRaLand {
                         }*/
 
                         CookieContainer cc = new CookieContainer();//FIXIT:意味のないクッキーコンテナかもしれない
-                        if (force == false) Log.Logger.Info(api.nickname + "のトークンの有効期限切れを確認.トークン更新を実施");
+                        if (force == false) Log.Logger.Info(api.account.nickname + "のトークンの有効期限切れを確認.トークン更新を実施");
                         else Log.Logger.Info("トークンの強制更新実施");
                         FrilAPI newapi = new FrilAPI(account.email,account.password);
-                        if (newapi.auth_token == null) throw new Exception("new FrilAPI() error");
+                        if (newapi.account.auth_token == null) throw new Exception("new FrilAPI() error");
                         bool loginres = newapi.tryFrilLogin(cc);
                         if (loginres) {
                             //アカウントデータ変更
-                            account.auth_token = newapi.auth_token;
-                            account.nickname = newapi.nickname;
-                            account.expiration_date = Common.getDateFromUnixTimeStamp(newapi.expiration_date);
+                            account.auth_token = newapi.account.auth_token;
+                            account.nickname = newapi.account.nickname;
+                            account.expiration_date = newapi.account.expiration_date;
                             account.token_update_date = account.expiration_date;
                             //DB更新
                             if (accountDBHelper.updateAccount(account.DBId, account)) {
-                                Log.Logger.Info(newapi.nickname + "のトークン更新に成功");
+                                Log.Logger.Info(newapi.account.nickname + "のトークン更新に成功");
                                 return newapi;
                             } else {
                                 //失敗
-                                Log.Logger.Error(api.nickname + "のトークン更新に成功したがDB更新に失敗");
+                                Log.Logger.Error(api.account.nickname + "のトークン更新に成功したがDB更新に失敗");
                                 return api;
                             }
                         } else {
@@ -275,7 +272,7 @@ namespace FriRaLand {
                         }
                     } catch (Exception ex) {
                         Log.Logger.Error(ex.Message);
-                        Log.Logger.Error(api.nickname + "のトークン更新に失敗");
+                        Log.Logger.Error(api.account.nickname + "のトークン更新に失敗");
                     }
                 }
             }

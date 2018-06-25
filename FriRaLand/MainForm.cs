@@ -625,10 +625,10 @@ namespace FriRaLand {
                         //出品できるか調べる
                         if (ExhibitService.canExhibitItem(a, item) < 0) {
                             if (ExhibitService.canExhibitItem(a, item) == -1) {
-                                reservation_fail_logs.Add(string.Format("{0}:{1}:親ID:{2}子ID:{3}:出品失敗:圏外数オーバー", DateTime.Now.ToString(), api.nickname, parent_id, child_id));
+                                reservation_fail_logs.Add(string.Format("{0}:{1}:親ID:{2}子ID:{3}:出品失敗:圏外数オーバー", DateTime.Now.ToString(), api.account.nickname, parent_id, child_id));
                                 exhibit_failed_num++;
                             } else if (ExhibitService.canExhibitItem(a, item) == -2) {
-                                reservation_fail_logs.Add(string.Format("{0}:{1}:親ID:{2}子ID:{3}:出品失敗:在庫切れ", DateTime.Now.ToString(), api.nickname, parent_id, child_id));
+                                reservation_fail_logs.Add(string.Format("{0}:{1}:親ID:{2}子ID:{3}:出品失敗:在庫切れ", DateTime.Now.ToString(), api.account.nickname, parent_id, child_id));
                                 zaikogire_num++;
                             }
                             continue;
@@ -667,8 +667,8 @@ namespace FriRaLand {
                                 }
                             }
                             exhibit_failed_num++;
-                            if (a.expiration_date < DateTime.Now) reservation_fail_logs.Add(string.Format("{0}:{1}:親ID:{2}子ID:{3}:出品失敗:トークン有効期限切れ", DateTime.Now.ToString(), api.nickname, parent_id, child_id));
-                            else reservation_fail_logs.Add(string.Format("{0}:{1}:親ID:{2}子ID:{3}:出品失敗:リクエスト失敗", DateTime.Now.ToString(), api.nickname, parent_id, child_id));
+                            if (a.expiration_date < DateTime.Now) reservation_fail_logs.Add(string.Format("{0}:{1}:親ID:{2}子ID:{3}:出品失敗:トークン有効期限切れ", DateTime.Now.ToString(), api.account.nickname, parent_id, child_id));
+                            else reservation_fail_logs.Add(string.Format("{0}:{1}:親ID:{2}子ID:{3}:出品失敗:リクエスト失敗", DateTime.Now.ToString(), api.account.nickname, parent_id, child_id));
                         }
                     } else if (reservation.docancel_flag && DateTime.Now > reservation.deleteDate) {
                         //削除（停止）成功しようが失敗しようがフラグを折る（二度以上リトライしないように）
@@ -689,7 +689,7 @@ namespace FriRaLand {
                             FrilItem item = api.GetItemInfobyItemIDWithDetail(deleteitemid);
                             if (item == null) {
                                 Log.Logger.Error("商品情報取得失敗により削除(停止)失敗");
-                                reservation_fail_logs.Add(string.Format("{0}:{1}:親ID:{2}子ID:{3}:削除失敗:削除対象の商品情報取得失敗", DateTime.Now.ToString(), api.nickname, parent_id, child_id));
+                                reservation_fail_logs.Add(string.Format("{0}:{1}:親ID:{2}子ID:{3}:削除失敗:削除対象の商品情報取得失敗", DateTime.Now.ToString(), api.account.nickname, parent_id, child_id));
                                 delete_failed_num++;
                             } else {
                                 if (reservation.consider_comment && item.num_comments > 0) {
@@ -709,8 +709,8 @@ namespace FriRaLand {
                                         } else {
                                             Log.Logger.Error("削除失敗 : " + deleteitemid);
                                             delete_failed_num++;
-                                            if (a.expiration_date < DateTime.Now) reservation_fail_logs.Add(string.Format("{0}:{1}:親ID:{2}子ID:{3}:削除失敗:トークン有効期限切れ", DateTime.Now.ToString(), api.nickname, parent_id, child_id));
-                                            else reservation_fail_logs.Add(string.Format("{0}:{1}:親ID:{2}子ID:{3}:削除失敗:リクエスト失敗", DateTime.Now.ToString(), api.nickname, parent_id, child_id));
+                                            if (a.expiration_date < DateTime.Now) reservation_fail_logs.Add(string.Format("{0}:{1}:親ID:{2}子ID:{3}:削除失敗:トークン有効期限切れ", DateTime.Now.ToString(), api.account.nickname, parent_id, child_id));
+                                            else reservation_fail_logs.Add(string.Format("{0}:{1}:親ID:{2}子ID:{3}:削除失敗:リクエスト失敗", DateTime.Now.ToString(), api.account.nickname, parent_id, child_id));
                                         }
                                     } else {
                                         bool result = api.Stop(deleteitemid);
@@ -722,8 +722,8 @@ namespace FriRaLand {
                                         } else {
                                             Log.Logger.Error("停止失敗 : " + deleteitemid);
                                             delete_failed_num++;
-                                            if (a.expiration_date < DateTime.Now) reservation_fail_logs.Add(string.Format("{0}:{1}:親ID:{2}子ID:{3}:停止失敗:トークン有効期限切れ", DateTime.Now.ToString(), api.nickname, parent_id, child_id));
-                                            else reservation_fail_logs.Add(string.Format("{0}:{1}:親ID:{2}子ID:{3}:停止失敗:リクエスト失敗", DateTime.Now.ToString(), api.nickname, parent_id, child_id));
+                                            if (a.expiration_date < DateTime.Now) reservation_fail_logs.Add(string.Format("{0}:{1}:親ID:{2}子ID:{3}:停止失敗:トークン有効期限切れ", DateTime.Now.ToString(), api.account.nickname, parent_id, child_id));
+                                            else reservation_fail_logs.Add(string.Format("{0}:{1}:親ID:{2}子ID:{3}:停止失敗:リクエスト失敗", DateTime.Now.ToString(), api.account.nickname, parent_id, child_id));
                                         }
                                     }
                                 }
@@ -731,7 +731,7 @@ namespace FriRaLand {
                         } else {
                             //商品ID不明
                             Log.Logger.Error("商品ID不明により削除失敗");
-                            reservation_fail_logs.Add(string.Format("{0}:{1}:親ID:{2}子ID:{3}:削除(停止)失敗:商品ID不明", DateTime.Now.ToString(), api.nickname, parent_id, child_id));
+                            reservation_fail_logs.Add(string.Format("{0}:{1}:親ID:{2}子ID:{3}:削除(停止)失敗:商品ID不明", DateTime.Now.ToString(), api.account.nickname, parent_id, child_id));
                             delete_failed_num++;
                         }
                         bgWorker.ReportProgress(i * 100 / ReservationObjects.Count); //GUI更新リクエスト
@@ -774,8 +774,8 @@ namespace FriRaLand {
                                         } else {
                                             Log.Logger.Error("削除2失敗 : " + deleteitemid);
                                             delete_failed_num++;
-                                            if (a.expiration_date < DateTime.Now) reservation_fail_logs.Add(string.Format("{0}:{1}:親ID:{2}子ID:{3}:削除2失敗:トークン有効期限切れ", DateTime.Now.ToString(), api.nickname, parent_id, child_id));
-                                            else reservation_fail_logs.Add(string.Format("{0}:{1}:親ID:{2}子ID:{3}:削除2失敗:リクエスト失敗", DateTime.Now.ToString(), api.nickname, parent_id, child_id));
+                                            if (a.expiration_date < DateTime.Now) reservation_fail_logs.Add(string.Format("{0}:{1}:親ID:{2}子ID:{3}:削除2失敗:トークン有効期限切れ", DateTime.Now.ToString(), api.account.nickname, parent_id, child_id));
+                                            else reservation_fail_logs.Add(string.Format("{0}:{1}:親ID:{2}子ID:{3}:削除2失敗:リクエスト失敗", DateTime.Now.ToString(), api.account.nickname, parent_id, child_id));
                                         }
                                     } else {
                                         bool result = api.Stop(deleteitemid);
@@ -787,8 +787,8 @@ namespace FriRaLand {
                                         } else {
                                             Log.Logger.Error("停止2失敗 : " + deleteitemid);
                                             delete_failed_num++;
-                                            if (a.expiration_date < DateTime.Now) reservation_fail_logs.Add(string.Format("{0}:{1}:親ID:{2}子ID:{3}:停止2失敗:トークン有効期限切れ", DateTime.Now.ToString(), api.nickname, parent_id, child_id));
-                                            else reservation_fail_logs.Add(string.Format("{0}:{1}:親ID:{2}子ID:{3}:停止2失敗:リクエスト失敗", DateTime.Now.ToString(), api.nickname, parent_id, child_id));
+                                            if (a.expiration_date < DateTime.Now) reservation_fail_logs.Add(string.Format("{0}:{1}:親ID:{2}子ID:{3}:停止2失敗:トークン有効期限切れ", DateTime.Now.ToString(), api.account.nickname, parent_id, child_id));
+                                            else reservation_fail_logs.Add(string.Format("{0}:{1}:親ID:{2}子ID:{3}:停止2失敗:リクエスト失敗", DateTime.Now.ToString(), api.account.nickname, parent_id, child_id));
                                         }
                                     }
                                 }
@@ -853,7 +853,7 @@ namespace FriRaLand {
         }
 
         private void accountListComboBox_Format(object sender, ListControlConvertEventArgs e) {
-            e.Value = ((FrilAPI)e.ListItem).nickname;
+            e.Value = ((FrilAPI)e.ListItem).account.nickname;
         }
     }
 }
