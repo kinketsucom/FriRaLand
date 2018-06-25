@@ -395,7 +395,7 @@ namespace FriRaLand {
             FrilAPIDictionary = new Dictionary<int, FrilAPI>(); //accountDBId, FrilAPI
             FrilAccountDictionary = new Dictionary<int, Common.Account>(); //accountDBId, Account
             foreach (var a in accountList) {
-                var api = new FrilAPI(a.email,a.password);
+                var api = new FrilAPI(a);
                 this.accountListComboBox.Items.Add(api);
                 FrilAPIList.Add(api);
                 FrilAPIDictionary[a.DBId] = api;
@@ -615,6 +615,7 @@ namespace FriRaLand {
                         //自動出品ルーチン
                         Account a = accountDBHelper.selectItem(new List<int> { reservation.accountDBId })[0];
                         Log.Logger.Info("自動出品用のアカウント取得成功");
+
                         FrilAPI api = new FrilAPI(a);
                         //api = Common.checkFrilAPI(api);//FIXIT:これは自動更新用なので
                         FrilItem item = itemDBHelper.selectItem(new List<int> { reservation.itemDBId })[0];

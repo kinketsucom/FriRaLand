@@ -60,7 +60,11 @@ namespace FriRaLand.Forms {
             if (checkTokenRefreshNow()) return;
             //フリルログイン試行
             CookieContainer cc = new CookieContainer();
-            FrilAPI api = new FrilAPI(emailTextBox.Text, passwordTextBox.Text);
+            Common.Account acc = new Common.Account();
+            acc.email = emailTextBox.Text;
+            acc.password = passwordTextBox.Text;
+
+            FrilAPI api = new FrilAPI(acc);
             try {
                 if (!api.tryFrilLogin(cc)) throw new Exception("ログイン失敗(mailかpassが間違っています)");
                 //ログイン成功
@@ -70,7 +74,7 @@ namespace FriRaLand.Forms {
                 Common.Account account = new Common.Account();
                 account.email = api.account.email;
                 account.password = api.account.password;
-                account.auth_token = api.account.fril_auth_token;//FIXIT:auth_tokenは存在しない？
+                account.auth_token = api.account.auth_token;//FIXIT:auth_tokenは存在しない？
                 //account.global_auth_token = m.global_auth_token;//FIXIT:global_auth_tokenは存在しない
                 account.sellerid = api.account.userId;
                 account.nickname = api.account.nickname;
@@ -202,7 +206,6 @@ namespace FriRaLand.Forms {
 
         private void AccountManageForm_FormClosed(object sender, FormClosedEventArgs e) {
             this.mainform.Enabled = true;
-            Console.WriteLine("fuga");
             this.mainform.OnBackFromAccountManageForm();
         }
 

@@ -18,7 +18,6 @@ namespace FriRaLand {
             public int kind;
             public string email;
             public string password;
-            public string fril_auth_token;
             public string userId;
             public DateTime expirationDate;
             public string auth_token { get; set; }

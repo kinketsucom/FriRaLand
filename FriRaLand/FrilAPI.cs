@@ -42,7 +42,7 @@ namespace FriRaLand {
         //    this.account.kind = Common.Account.Fril_Account;
         //    this.account.email = account.email;
         //    this.account.password = account.password;
-        //    this.account.fril_auth_token = accountaccount.auth_token;
+        //    this.account.fril_fril_auth_token = accountaccount.auth_token;
         //}
 
 
@@ -119,7 +119,7 @@ namespace FriRaLand {
                 //商品情報をまず送る
                 string url = "https://api.fril.jp/api/items/request";
                 Dictionary<string, string> param = new Dictionary<string, string>();
-                param.Add("auth_token", this.account.fril_auth_token);
+                param.Add("auth_token", this.account.auth_token);
                 param.Add("carriage", item.carriage.ToString());
                 param.Add("category", item.category_id.ToString());
                 param.Add("delivery_area", item.d_area.ToString());
@@ -153,7 +153,7 @@ namespace FriRaLand {
                 for (int num = 1; num <= total_img_num; num++) {
                     string image_url = "https://api.fril.jp/api/items/request_img";
                     Dictionary<string, string> req_img_param = new Dictionary<string, string>();
-                    req_img_param.Add("auth_token", this.account.fril_auth_token);
+                    req_img_param.Add("auth_token", this.account.auth_token);
                     req_img_param.Add("item_id", item_id);
                     req_img_param.Add("current_num", num.ToString());
                     req_img_param.Add("total_num", total_img_num.ToString());
@@ -179,7 +179,7 @@ namespace FriRaLand {
             if (rawres.error) return false;
             try {
                 dynamic resjson = DynamicJson.Parse(rawres.response);
-                this.account.fril_auth_token = resjson.auth_token;
+                this.account.auth_token = resjson.auth_token;
                 this.account.expirationDate = DateTime.Now.AddDays(90.0);
                 this.account = getProfile(account,cc);
                 Console.WriteLine("フリルログイン成功");
@@ -193,7 +193,7 @@ namespace FriRaLand {
         }
         private Common.Account getProfile(Common.Account account,CookieContainer cc) {
             Dictionary<string, string> param = new Dictionary<string, string>();
-            param.Add("auth_token", account.fril_auth_token);
+            param.Add("auth_token", account.auth_token);
             FrilRawResponse res = getFrilAPI("http://api.fril.jp/api/v2/users", param,cc);
             var json = DynamicJson.Parse(res.response);
             account.nickname = json.user.screen_name;   
@@ -203,7 +203,7 @@ namespace FriRaLand {
         public FrilItem getItemDetailInfo(string item_id,CookieContainer cc)
         {
             Dictionary<string, string> param = new Dictionary<string, string>();
-            param.Add("auth_token", this.account.fril_auth_token);
+            param.Add("auth_token", this.account.auth_token);
             param.Add("item_id", item_id);
             string url = "http://api.fril.jp/api/v3/items/show";
             FrilRawResponse rawres = getFrilAPI(url, param,cc);
@@ -635,7 +635,7 @@ namespace FriRaLand {
             }
         }
         public bool updateProfilePhoto(string new_imagepath,CookieContainer cc) {
-            string url = string.Format("https://api.mercari.jp/users/update_profile?_auth_token={0}&_global_auth_token={1}", this.account.auth_token);//FIXIT:frilにかえる
+            string url = string.Format("https://api.mercari.jp/users/update_profile?_fril_auth_token={0}&_global_fril_auth_token={1}", this.account.auth_token);//FIXIT:frilにかえる
             Dictionary<string, string> param = new Dictionary<string, string>();
             param.Add("name", this.account.nickname);
             param.Add("introduction", this.getProfileIntroduction(cc));
@@ -645,7 +645,7 @@ namespace FriRaLand {
         public string getProfileIntroduction(CookieContainer cc) {
             Dictionary<string, string> param = new Dictionary<string, string>();
             param.Add("_user_format", "profile");
-            param.Add("_auth_token", this.account.auth_token);
+            param.Add("_fril_auth_token", this.account.auth_token);
             string url = "https://api.mercari.jp/users/get_profile";//FIXIT:フリルのものに変える
             FrilRawResponse res = getFrilAPI(url, param ,cc);
             if (res.error) {
@@ -856,7 +856,7 @@ namespace FriRaLand {
         //access_tokenとglobal_access_tokenのはいったListを返す関数
         private Dictionary<string, string> GetTokenParamListForFrilAPI() {
             Dictionary<string, string> param = new Dictionary<string, string>();
-            param.Add("_auth_token", this.account.auth_token);
+            param.Add("_fril_auth_token", this.account.auth_token);
             return param;
         }
         //特定のitemIDの商品情報を取得
