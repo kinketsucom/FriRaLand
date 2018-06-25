@@ -16,7 +16,8 @@ namespace FriRaLand {
         public int zaikonum;
         public int DBId; //DB上でのId;
         public DateTime created_date;
-
+        public string bikou;
+        public bool address_copyed;
 
         public string item_id;
         public string item_name;
@@ -46,6 +47,20 @@ namespace FriRaLand {
         public int num_likes { get; set; } //いいね数
         public int num_comments { get; set; }//コメント数
         public long pager_id; //FIXIT:不必要なパラメータの可能性がある//商品ページのインデックス?,get_itemsで60件以上あるときは最後のitemのpager_idを使って2回目以降叩く
+
+        public bool is_sellitem = false;
+        public bool is_buyitem = false;
+
+        private static readonly DateTime UNIX_EPOCH = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc); //UnixTimeの開始時刻
+        public string buyer_name = ""; //購入者アカウント名
+        public DateTime buyer_comment_time = UNIX_EPOCH;
+        public DateTime seller_comment_time = UNIX_EPOCH;
+        public int transaction_message_num = -1;
+        public DateTime buyer_transaction_message_time = UNIX_EPOCH;
+        public DateTime seller_transaction_message_time = UNIX_EPOCH;
+
+
+
         public FrilItem() {
 
         }

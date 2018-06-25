@@ -993,7 +993,40 @@ namespace FriRaLand {
             }
             return stringBuilder.ToString();
         }
-
+        //コメント用の構造体
+        public struct Comment {
+            public DateTime created;
+            public string nickname;
+            public string message;
+            public string userid;
+            public string id;
+        }
+        //商品のコメントを取得する
+        public List<Comment> GetComments(string itemid) {
+            var res = new List<Comment>();
+            try {
+                Dictionary<string, string> param = GetTokenParamListForFrilAPI();
+                param.Add("item_id", itemid);
+                CookieContainer cc = new CookieContainer();//不必要なクッキーコンテナの可能性がある。
+                FrilRawResponse rawres = getFrilAPI("https://api.mercari.jp/comments/gets", param,cc);//FIXIT:Frilのものに変える
+                dynamic resjson = DynamicJson.Parse(rawres.response);
+                int commentnum = ((object[])resjson.data).Length;
+                for (int i = 0; i < commentnum; i++) {
+                    Comment c = new Comment();
+                    c.nickname = resjson.data[i].user.name;
+                    c.userid = ((long)resjson.data[i].user.id).ToString();
+                    c.id = ((long)resjson.data[i].id).ToString();
+                    c.message = resjson.data[i].message;
+                    c.created = Common.getDateFromUnixTimeStamp((long)resjson.data[i].created);
+                    res.Add(c);
+                }
+                Log.Logger.Info("コメント取得成功: " + itemid);
+                return res;
+            } catch (Exception e) {
+                Log.Logger.Error("コメント取得失敗: " + itemid);
+                return res;
+            }
+        }
 
 
 

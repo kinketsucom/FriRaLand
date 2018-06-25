@@ -21,8 +21,9 @@ namespace FriRaLand {
         private List<FrilItem> LocalItemDataBindList = new List<FrilItem>();
         public const string ProductName = "Friland";
         private List<ReservationSettingForm.ReservationSetting> ReservationDataBindList = new List<ReservationSettingForm.ReservationSetting>();
-
-        //public class Account {
+        private List<FrilItem> ExhibittedItemDataBindList = new List<FrilItem>(); //表にバインドする商品リスト 絞り込み結果はこっち
+        private List<FrilItem> ExhibittedItemDataBackBindList = new List<FrilItem>(); //こっちは絞り込んでも減らない
+        //public class Account {//FIXIT:移行したのでおそらく不必要
         //    public int DBId;
         //    public string email;
         //    public string password;
@@ -855,6 +856,100 @@ namespace FriRaLand {
 
         private void accountListComboBox_Format(object sender, ListControlConvertEventArgs e) {
             e.Value = ((FrilAPI)e.ListItem).account.nickname;
+        }
+
+        private void get_selling_button_Click(object sender, EventArgs e) {
+            //if (!LicenseForm.checkCanUseWithErrorWindow()) return;
+            var selectedAPIs = getNowSelectedAPIs();
+            if (selectedAPIs.Count == 0) return;
+            UpdateSelling(selectedAPIs);
+        }
+        private List<FrilAPI> getNowSelectedAPIs() {
+            //アカウントがDB上になくなにも選択されていないときは空リストかえす
+            List<FrilAPI> rst = new List<FrilAPI>();
+            if (this.radioButton1.Checked) {
+                if (this.accountListComboBox.SelectedItem != null) rst.Add((FrilAPI)this.accountListComboBox.SelectedItem);
+
+            } 
+            //こちらグループアカウント処理なのでいまはコメントアウト
+            //else if (this.radioButton2.Checked) {
+            //    if (this.groupListComboBox.SelectedItem != null) {
+            //        Group g = (Group)this.groupListComboBox.SelectedItem;
+            //        foreach (FrilAPI api in g.apiList) rst.Add(api);
+            //    }
+            //}
+            return rst;
+        }
+        private async void UpdateSelling(List<FrilAPI> apis) {
+            this.toolStripStatusLabel1.Text = "出品中商品取得開始";
+            DisableAllButton();
+            var items = await Task.Run(() => DoGetSelling(apis, this.detailInfoGetCheckBox.Checked));
+            if (items == null) {
+                EnableAllButton();
+                return;
+            }
+            ExhibittedItemDataBindList.Clear();
+            ExhibittedItemDataBackBindList.Clear();
+            foreach (var item in items) {
+                item.is_sellitem = true;
+                ExhibittedItemDataBindList.Add(item);
+                ExhibittedItemDataBackBindList.Add(item);
+            }
+            this.toolStripStatusLabel1.Text = "出品中商品取得完了 : " + items.Count.ToString() + "件";
+            ExhibittedDataGridView.RowCount = ExhibittedItemDataBindList.Count;
+            ExhibittedDataGridView.ClearSelection();
+            ExhibittedDataGridView.Refresh();
+            ToggleExhibittedDataGridView(true);
+            EnableAllButton();
+        }
+        private void DisableAllButton() {
+            //this.ShiboriButton.Enabled = false;
+            panel1.Enabled = panel2.Enabled = panel3.Enabled = false;
+            this.LocalItemDataGridView.Enabled = this.ReservationDataGridView.Enabled = this.ExhibittedDataGridView.Enabled = false;
+            accountListComboBox.Enabled = false;
+        }
+        private void EnableAllButton() {
+            //this.ShiboriButton.Enabled = true;
+            panel1.Enabled = panel2.Enabled = panel3.Enabled = true;
+            this.LocalItemDataGridView.Enabled = this.ReservationDataGridView.Enabled = this.ExhibittedDataGridView.Enabled = true;
+            accountListComboBox.Enabled = true;
+        }
+        private List<FrilItem> DoGetSelling(List<FrilAPI> apis, bool detailflag = false) {
+            //出品中の商品を取得する
+            List<FrilItem> items = new List<FrilItem>();
+            var itemNoteDBHelper = new ItemNoteDBHelper();
+            foreach (var api in apis) {
+                var api2 = Common.checkFrilAPI(api);
+                var user_items = api2.GetAllItemsWithSellers(api2.account.sellerid, new List<int> { 1 });
+                if (detailflag) {
+                    //購入者コメント時間と出品者コメント時間を取得
+                    for (int i = 0; i < user_items.Count; i++) {
+                        var comments = api2.GetComments(user_items[i].item_id);
+                        //一番新しいものを取得する
+                        foreach (var comment in comments) {
+                            if (comment.userid == api2.account.sellerid) {
+                                if (user_items[i].seller_comment_time < comment.created) user_items[i].seller_comment_time = comment.created;
+                            } else {
+                                if (user_items[i].buyer_comment_time < comment.created) user_items[i].buyer_comment_time = comment.created;
+                            }
+                        }
+                    }
+                }
+                //商品備考をセットする
+                var itemnoteDictionary = itemNoteDBHelper.loadItemNotesDictionary();
+                for (int i = 0; i < user_items.Count; i++) {
+                    if (itemnoteDictionary.ContainsKey(user_items[i].item_id)) {
+                        var note = itemnoteDictionary[user_items[i].item_id];
+                        user_items[i].bikou = note.bikou;
+                        user_items[i].address_copyed = note.address_copyed;
+                    } else {
+                        user_items[i].bikou = "";
+                        user_items[i].address_copyed = false;
+                    }
+                }
+                items.AddRange(user_items);
+            }
+            return items;
         }
     }
 }
