@@ -1220,8 +1220,8 @@ namespace FriRaLand {
                 int index = this.ExhibittedDataGridView.SelectedRows[0].Index;
                 FrilItem item = this.ExhibittedItemDataBindList[index];
                 if (item.item_status_in_fril == "selling") {
-                    if (sellerIDtoAPIDictionary.ContainsKey(item.seller.id.ToString())) {
-                        var api = sellerIDtoAPIDictionary[item.seller.id.ToString()];
+                    if (sellerIDtoAPIDictionary.ContainsKey(item.user_id.ToString())) {//自分なのでseller.id = userid
+                        var api = sellerIDtoAPIDictionary[item.user_id.ToString()];
                         var api2 = Common.checkFrilAPI(api);
                         CommentForm f = new CommentForm(api2, item.item_id, this);
                         f.Show();

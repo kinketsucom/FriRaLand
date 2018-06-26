@@ -275,6 +275,7 @@ namespace FriRaLand {
                 dynamic resjson = DynamicJson.Parse(rawres.response);
                 foreach (dynamic data in resjson.items) {
                     FrilItem item = new FrilItem();
+                    item.item_status_in_fril = resjson.type;
                     item.item_id = ((long)data.item_id).ToString();
                     item.imageurls[0] = data.img_url;
                     item.item_name = data.item_name;
@@ -838,7 +839,7 @@ namespace FriRaLand {
         public int GetSalesFee(int price, int category_id) {
             try {
                 CookieContainer cc = new CookieContainer();//FIXIT:これいるんかなあ？意味のないクッキーかも？
-                Dictionary<string, string> param = GetTokenParamListForFrilAPI();
+                Dictionary<string, string> param = new Dictionary<string, string>(); //GetTokenParamListForFrilAPI();
                 FrilRawResponse rawres = getFrilAPI("https://api.mercari.jp/sales_fee/get", param,cc);//FIXIT:Frilのものに変更しないと
                 dynamic resjson = DynamicJson.Parse(rawres.response);
                 object[] sales_cond = resjson.data.parameters;
@@ -864,23 +865,25 @@ namespace FriRaLand {
                 return (int)((double)price * 0.1); ;
             }
         }
+        //FIXIT:おそらく不必要です。
         //access_tokenとglobal_access_tokenのはいったListを返す関数
-        private Dictionary<string, string> GetTokenParamListForFrilAPI() {
-            Dictionary<string, string> param = new Dictionary<string, string>();
-            param.Add("_fril_auth_token", this.account.auth_token);
-            return param;
-        }
+        //private Dictionary<string, string> GetTokenParamListForFrilAPI() {
+        //    Dictionary<string, string> param = new Dictionary<string, string>();
+        //    param.Add("_fril_auth_token", this.account.auth_token);
+        //    return param;
+        //}
         //特定のitemIDの商品情報を取得
         //このAPIではコメントなどの情報も取得できるが現時点では取り出していない
         public FrilItem GetItemInfobyItemIDWithDetail(string item_id) {
             try {
                 CookieContainer cc = new CookieContainer();//FIXIT:不要なクッキーコンテナかどうか調べる必要がある
-                Dictionary<string, string> param = GetTokenParamListForFrilAPI();
-                param.Add("id", item_id);
-                FrilRawResponse rawres = getFrilAPI("https://api.mercari.jp/items/get", param,cc);//FIXIT;Frilのものにかえる
+                Dictionary<string, string> param = new Dictionary<string, string>(); //GetTokenParamListForFrilAPI();
+                param.Add("auth_token", this.account.auth_token);
+                param.Add("item_id", item_id);
+                FrilRawResponse rawres = getFrilAPI("http://api.fril.jp/api/v3/items/show", param,cc);//FIXIT;Frilのものにかえる
                 //Logger.info(rawres.response);
                 dynamic resjson = DynamicJson.Parse(rawres.response);
-                dynamic iteminfo = resjson.data;
+                dynamic iteminfo = resjson.item;
                 FrilItem item = new FrilItem(iteminfo);
                 return item;
             } catch (Exception e) {
@@ -954,7 +957,7 @@ namespace FriRaLand {
         //一度のリクエストで取れるのは最大で60個 60個を超える場合は複数回APIを叩いて結果を取得する.
         //FIXIT:この60とかいう数字コメントアウトしてるいま
         private List<FrilItem> GetItems(GetItemsOption option, bool notall, bool detailflag) {
-            Dictionary<string, string> default_param = GetTokenParamListForFrilAPI();
+            Dictionary<string, string> default_param = new Dictionary<string, string>(); //GetTokenParamListForFrilAPI();
             default_param = default_param.Concat(option.ToPairList()).ToDictionary(x => x.Key, x => x.Value);
             default_param.Add("limit", "60");
             List<FrilItem> res = new List<FrilItem>();
@@ -968,6 +971,7 @@ namespace FriRaLand {
                 Dictionary<string, string> param = new Dictionary<string, string>();
                 param = param.Concat(default_param).ToDictionary(x => x.Key, x => x.Value);
                 if (max_pager_id != "") param.Add("max_pager_id", max_pager_id);
+                param.Add("auth_token", this.account.auth_token);
                 FrilRawResponse rawres = getFrilAPI("http://api.fril.jp/api/v3/items/show", param, cc);
 
                 if (rawres.error) return res;
@@ -1111,8 +1115,9 @@ namespace FriRaLand {
         public List<Comment> GetComments(string itemid) {
             var res = new List<Comment>();
             try {
-                Dictionary<string, string> param = GetTokenParamListForFrilAPI();
+                Dictionary<string, string> param = new Dictionary<string, string>(); //GetTokenParamListForFrilAPI();
                 param.Add("item_id", itemid);
+                param.Add("auth_token", this.account.auth_token);
                 CookieContainer cc = new CookieContainer();//不必要なクッキーコンテナの可能性がある。
                 FrilRawResponse rawres = getFrilAPI("https://api.mercari.jp/comments/gets", param,cc);//FIXIT:Frilのものに変える
                 dynamic resjson = DynamicJson.Parse(rawres.response);

@@ -23,8 +23,8 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.ignoreNesageCheckBox = new System.Windows.Forms.CheckBox();
             this.reSaleItemButton = new System.Windows.Forms.Button();
             this.saveWindowSizeCheckbox = new System.Windows.Forms.CheckBox();
@@ -316,8 +316,8 @@
             // 
             // Column1
             // 
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.Column1.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.Column1.DefaultCellStyle = dataGridViewCellStyle3;
             this.Column1.HeaderText = "名前";
             this.Column1.Name = "Column1";
             this.Column1.ReadOnly = true;
@@ -332,8 +332,8 @@
             // 
             // Column2
             // 
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.Column2.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.Column2.DefaultCellStyle = dataGridViewCellStyle4;
             this.Column2.HeaderText = "コメント内容";
             this.Column2.Name = "Column2";
             this.Column2.ReadOnly = true;
@@ -374,6 +374,8 @@
             this.Controls.Add(this.pictureBox1);
             this.Name = "CommentForm";
             this.Text = "CommentForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CommentForm_FormClosing);
+            this.Load += new System.EventHandler(this.CommentForm_Load);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.panel1.ResumeLayout(false);

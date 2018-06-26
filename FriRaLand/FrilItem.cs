@@ -168,6 +168,7 @@ namespace FriRaLand {
                 }
             } catch (Exception ex) {
                 this.Image = null;
+                Console.WriteLine(ex);
             }
         }
 

@@ -34,7 +34,7 @@ namespace FriRaLand.Forms {
             //商品情報をGUIに反映
             this.pictureBox1.Image = item.Image;
             this.itemNameLabel.Text = item.item_name;
-            this.sellerLabel.Text = item.seller.name;
+            this.sellerLabel.Text = item.;//FIXIT:seller.nameをへんこうしたけど
             this.kakakuTextBox.Text = item.s_price.ToString();// +"円";
             this.riekiTextBox.Text = Common.getRieki(item.s_price).ToString();
             //コメントを取得
