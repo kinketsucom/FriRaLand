@@ -183,6 +183,13 @@ namespace FriRaLand {
             Dictionary<string, string> param = new Dictionary<string, string>();
             param.Add("email", this.account.email);
             param.Add("password", this.account.password);
+            //installation_idをランダムに作成し新しい端末でのログインとする
+            string rand1 = Guid.NewGuid().ToString("N").Replace("-", "").Substring(0, 8);
+            string rand2 = Guid.NewGuid().ToString("N").Replace("-", "").Substring(0, 4);
+            string rand3 = Guid.NewGuid().ToString("N").Replace("-", "").Substring(0, 4);
+            string rand4 = Guid.NewGuid().ToString("N").Replace("-", "").Substring(0, 12);
+            string dummy_installation_id = string.Join("-", new string[] { rand1, rand2, rand3, rand4 });
+            param.Add("installation_id", dummy_installation_id);
             string url = "https://api.fril.jp/api/v4/users/sign_in";
             FrilRawResponse rawres = postFrilAPI(url, param, cc);
             if (rawres.error) return false;
