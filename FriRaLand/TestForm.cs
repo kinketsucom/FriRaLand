@@ -22,9 +22,9 @@ namespace FriRaLand {
         }
 
         private void TestForm_Load(object sender, EventArgs e) {
-            CookieContainer cc= new CookieContainer();
-            FrilAPI api = new FrilAPI(mail, pass);
-            api.tryFrilLogin(cc);
+            
+            //FrilAPI api = new FrilAPI(mail, pass);
+            //api.tryFrilLogin(cc);
         }
 
         private void button2_Click(object sender, EventArgs e) {

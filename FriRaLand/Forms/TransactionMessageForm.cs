@@ -53,12 +53,12 @@ namespace FriRaLand.Forms {
             //商品情報を取得
             this.item = Frilapi.GetItemInfobyItemIDWithDetail(itemid);
             SetGUIParams();
-            //ウインドウサイズを記憶するか
-            this.saveWindowSizeCheckbox.Checked = Settings.getSaveMessageWindowSize();
-            if (Settings.getSaveMessageWindowSize()) {
-                this.Width = Settings.getMessageWIndowSizeWidth();
-                this.Height = Settings.getMessageWIndowSizeHeight();
-            }
+            ////ウインドウサイズを記憶するか
+            //this.saveWindowSizeCheckbox.Checked = Settings.getSaveMessageWindowSize();
+            //if (Settings.getSaveMessageWindowSize()) {
+            //    this.Width = Settings.getMessageWIndowSizeWidth();
+            //    this.Height = Settings.getMessageWIndowSizeHeight();
+            //}
             //販売されたときのDB操作を行う
             ExhibitService.updateDBOnSold(Frilapi, item);
             AdjustGUISize();
@@ -76,7 +76,7 @@ namespace FriRaLand.Forms {
             //商品情報をGUIに反映
             this.pictureBox1.Image = item.Image;
             this.itemNameLabel.Text = item.item_name;
-            this.sellerLabel.Text = item.seller.name;
+            this.sellerLabel.Text = item.screen_name;
             this.buyerAccountNickNameTextBox.Text = item.buyer_name;
             this.kakakuTextBox.Text = item.s_price.ToString();// +"円";
             this.riekiTextBox.Text = Common.getRieki(item.s_price).ToString();

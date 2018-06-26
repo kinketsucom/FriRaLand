@@ -24,6 +24,8 @@ namespace FriRaLand {
         private List<ReservationSettingForm.ReservationSetting> ReservationDataBindList = new List<ReservationSettingForm.ReservationSetting>();
         private List<FrilItem> ExhibittedItemDataBindList = new List<FrilItem>(); //表にバインドする商品リスト 絞り込み結果はこっち
         private List<FrilItem> ExhibittedItemDataBackBindList = new List<FrilItem>(); //こっちは絞り込んでも減らない
+
+
         //public class Account {//FIXIT:移行したのでおそらく不必要
         //    public int DBId;
         //    public string email;
@@ -98,6 +100,7 @@ namespace FriRaLand {
             //ライセンスチェックを行う
 
             //new TestForm().Show();
+            
 
         }
 
@@ -611,8 +614,8 @@ namespace FriRaLand {
                         }
                         //出品実行
                         //FrilItem result = SellWithOption(a, item);
-                        CookieContainer cc = new CookieContainer();
-                        string result_item_id = api.Sell(item, cc);
+                      
+                        string result_item_id = api.Sell(item, api.account.cc);
                         if (result_item_id != null) {
                             //出品した商品に関するIDを更新
                             Log.Logger.Info("自動出品に成功 : " + result_item_id);
@@ -808,8 +811,8 @@ namespace FriRaLand {
                 int insertIndex = Common.random.Next(len);
                 cloneItem.item_name = cloneItem.item_name.Insert(insertIndex, " ");
             }
-            CookieContainer cc = new CookieContainer();
-            item.item_id = api.Sell(cloneItem, cc);
+           
+            item.item_id = api.Sell(cloneItem, api.account.cc);
             return item;
         }
 
@@ -896,9 +899,8 @@ namespace FriRaLand {
             var itemNoteDBHelper = new ItemNoteDBHelper();
          
             foreach (var api in apis) {
-                CookieContainer cc = new CookieContainer();
                 var api2 = Common.checkFrilAPI(api);
-                var user_items = api2.getSellingItem(api2.account.sellerid,get_item_type,cc);
+                var user_items = api2.getSellingItem(api2.account.sellerid,get_item_type,api2.account.cc);
                 //var user_items = api2.GetAllItemsWithSellers(api2.account.sellerid, new List<int> { 1 });
                 if (detailflag) {
                     //購入者コメント時間と出品者コメント時間を取得
@@ -1227,7 +1229,7 @@ namespace FriRaLand {
                         f.Show();
                     }
                 } else if (item.item_status_in_fril == "trading") {
-                    var api = sellerIDtoAPIDictionary[item.seller.id.ToString()];
+                    var api = sellerIDtoAPIDictionary[item.user_id.ToString()];
                     var api2 = Common.checkFrilAPI(api);
                     TransactionMessageForm f = new TransactionMessageForm(api2, item.item_id);
                     f.Show();

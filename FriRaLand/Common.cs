@@ -32,6 +32,7 @@ namespace FriRaLand {
             public int defaultbankaddressId = -1;
             public DateTime token_update_date { get; set; }
             public DateTime expiration_date { get; set; }
+            public CookieContainer cc;
         }
 
         public static System.Random random = new System.Random(1000);
@@ -228,7 +229,7 @@ namespace FriRaLand {
                 Log.Logger.Info("とりあえずapiそのまま返す");
                 return api;
             }
-            Common.Account account = accountDBHelper.getAccountFromSellerid(api.account.sellerid);
+            Common.Account account = api.account;//accountDBHelper.getAccountFromSellerid(api.account.sellerid);
 
             if (account.expiration_date < DateTime.Now || force) {
                 int retrynum = 1;
@@ -245,12 +246,12 @@ namespace FriRaLand {
                             }
                         }*/
 
-                        CookieContainer cc = new CookieContainer();//FIXIT:意味のないクッキーコンテナかもしれない
+                     
                         if (force == false) Log.Logger.Info(api.account.nickname + "のトークンの有効期限切れを確認.トークン更新を実施");
                         else Log.Logger.Info("トークンの強制更新実施");
                         FrilAPI newapi = new FrilAPI(account);
                         if (newapi.account.auth_token == null) throw new Exception("new FrilAPI() error");
-                        bool loginres = newapi.tryFrilLogin(cc);
+                        bool loginres = newapi.tryFrilLogin(api.account.cc);
                         if (loginres) {
                             //アカウントデータ変更
                             account.auth_token = newapi.account.auth_token;

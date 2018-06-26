@@ -59,14 +59,13 @@ namespace FriRaLand.Forms {
         private void accountAddButton_Click(object sender, EventArgs e) {
             if (checkTokenRefreshNow()) return;
             //フリルログイン試行
-            CookieContainer cc = new CookieContainer();
             Common.Account acc = new Common.Account();
             acc.email = emailTextBox.Text;
             acc.password = passwordTextBox.Text;
 
             FrilAPI api = new FrilAPI(acc);
             try {
-                if (!api.tryFrilLogin(cc)) throw new Exception("ログイン失敗(mailかpassが間違っています)");
+                if (!api.tryFrilLogin(api.account.cc)) throw new Exception("ログイン失敗(mailかpassが間違っています)");
                 //ログイン成功
                 MessageBox.Show("ログインに成功しました。", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 //既にあったら追加しない
@@ -84,7 +83,7 @@ namespace FriRaLand.Forms {
                     MessageBox.Show("既にアカウントが存在します。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                account.token_update_date = account.expiration_date;
+                account.token_update_date = account.expiration_date;//FIXME:このへん例外投げてる、たぶんtoken_update_dateとexpiration_dateがごっちゃになってるから
                 accountDBHelper.addAccount(account);
                 //ComboBoxリフレッシュ
                 accountColumnBoxReflesh();

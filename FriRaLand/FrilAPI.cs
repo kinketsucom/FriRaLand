@@ -19,7 +19,6 @@ namespace FriRaLand {
         private const string XAPPVERSION = "600";
 
         public string global_refresh_token; //未使用
-        //private CookieContainer cc = new CookieContainer();
 
         //GET,POSTのRequestのResponse
         private class FrilRawResponse {
@@ -838,9 +837,8 @@ namespace FriRaLand {
         //手数料取得失敗時は負の値が返る
         public int GetSalesFee(int price, int category_id) {
             try {
-                CookieContainer cc = new CookieContainer();//FIXIT:これいるんかなあ？意味のないクッキーかも？
                 Dictionary<string, string> param = new Dictionary<string, string>(); //GetTokenParamListForFrilAPI();
-                FrilRawResponse rawres = getFrilAPI("https://api.mercari.jp/sales_fee/get", param,cc);//FIXIT:Frilのものに変更しないと
+                FrilRawResponse rawres = getFrilAPI("https://api.mercari.jp/sales_fee/get", param, this.account.cc);//FIXIT:Frilのものに変更しないと
                 dynamic resjson = DynamicJson.Parse(rawres.response);
                 object[] sales_cond = resjson.data.parameters;
                 /*カテゴリを再優先, 次に金額の条件を満たすか*/
@@ -876,11 +874,10 @@ namespace FriRaLand {
         //このAPIではコメントなどの情報も取得できるが現時点では取り出していない
         public FrilItem GetItemInfobyItemIDWithDetail(string item_id) {
             try {
-                CookieContainer cc = new CookieContainer();//FIXIT:不要なクッキーコンテナかどうか調べる必要がある
                 Dictionary<string, string> param = new Dictionary<string, string>(); //GetTokenParamListForFrilAPI();
                 param.Add("auth_token", this.account.auth_token);
                 param.Add("item_id", item_id);
-                FrilRawResponse rawres = getFrilAPI("http://api.fril.jp/api/v3/items/show", param,cc);//FIXIT;Frilのものにかえる
+                FrilRawResponse rawres = getFrilAPI("http://api.fril.jp/api/v3/items/show", param,this.account.cc);//FIXIT;Frilのものにかえる
                 //Logger.info(rawres.response);
                 dynamic resjson = DynamicJson.Parse(rawres.response);
                 dynamic iteminfo = resjson.item;
@@ -902,8 +899,7 @@ namespace FriRaLand {
                 Dictionary<string, string> param = new Dictionary<string, string>();
                 param.Add("item_id", item_id);
                 param.Add("auth_token", account.auth_token);
-                CookieContainer cc = new CookieContainer();//FIXIT:不要なクッキーコンテナの可能性がある。
-                FrilRawResponse rawres = postFrilAPI(url, param,cc);
+                FrilRawResponse rawres = postFrilAPI(url, param,this.account.cc);
                 if (rawres.error) return false;
                 /*グローバルアクセストークンを更新*/
                 dynamic resjson = DynamicJson.Parse(rawres.response);
@@ -919,13 +915,12 @@ namespace FriRaLand {
         }
         public bool Stop(string item_id) {
             try {
-                CookieContainer cc = new CookieContainer();//FIXIT:不要なクッキーコンテナの可能性がある。
                 string url = string.Format("https://api.mercari.jp/items/update_status?_access_token={0}&_global_access_token={1}", this.account.auth_token);
                 Dictionary<string, string> param = new Dictionary<string, string>();
                 param.Add("item_id", item_id);
                 param.Add("status", "stop");
 
-                FrilRawResponse rawres = postFrilAPI(url, param,cc);
+                FrilRawResponse rawres = postFrilAPI(url, param,this.account.cc);
                 if (rawres.error) return false;
                 /*グローバルアクセストークンを更新*/
                 dynamic resjson = DynamicJson.Parse(rawres.response);
@@ -966,13 +961,12 @@ namespace FriRaLand {
             Boolean has_next = false;
             //2回目以降でつかうmax_pager_id
             string max_pager_id = "";
-            CookieContainer cc = new CookieContainer();//FIXIT:不必要なクッキーコンテナの可能性がある
             do {
                 Dictionary<string, string> param = new Dictionary<string, string>();
                 param = param.Concat(default_param).ToDictionary(x => x.Key, x => x.Value);
                 if (max_pager_id != "") param.Add("max_pager_id", max_pager_id);
                 param.Add("auth_token", this.account.auth_token);
-                FrilRawResponse rawres = getFrilAPI("http://api.fril.jp/api/v3/items/show", param, cc);
+                FrilRawResponse rawres = getFrilAPI("http://api.fril.jp/api/v3/items/show", param, this.account.cc);
 
                 if (rawres.error) return res;
                 try {
@@ -1020,12 +1014,9 @@ namespace FriRaLand {
             List<Comment> res = new List<Comment>();
             try {
                 Dictionary<string, string> param = new Dictionary<string, string>();
-                string url = "https://api.mercari.jp/transaction_messages/get_messages";
+                string url = "https://web.fril.jp/v2/sale/shipping/item";
                 param.Add("item_id", itemid);
-                param.Add("t", FrilAPI.getUNIXTimeStamp());
-                param.Add("_access_token", this.account.auth_token);
-                CookieContainer cc = new CookieContainer();
-                FrilRawResponse rawres = getFrilAPI(url, param,cc);
+                FrilRawResponse rawres = getFrilAPI(url, param,this.account.cc);
                 if (rawres.error) throw new Exception();
                 dynamic resjson = DynamicJson.Parse(rawres.response);
                 int commentnum = ((object[])resjson.comments).Length;
@@ -1068,8 +1059,7 @@ namespace FriRaLand {
                 param.Add("item_id", itemid);
                 param.Add("t", FrilAPI.getUNIXTimeStamp());
                 param.Add("_access_token", this.account.auth_token);
-                CookieContainer cc = new CookieContainer();
-                FrilRawResponse rawres = getFrilAPI(url, param,cc);
+                FrilRawResponse rawres = getFrilAPI(url, param,this.account.cc);
                 if (rawres.error) throw new Exception();
                 dynamic resjson = DynamicJson.Parse(rawres.response);
                 //JSONから情報取り出し
@@ -1120,8 +1110,8 @@ namespace FriRaLand {
                 Dictionary<string, string> param = new Dictionary<string, string>(); //GetTokenParamListForFrilAPI();
                 param.Add("auth_token", this.account.auth_token);
                 param.Add("item_id", item_id);
-                CookieContainer cc = new CookieContainer();//不必要なクッキーコンテナの可能性がある。
-                FrilRawResponse rawres = getFrilAPI("https://api.fril.jp/api/v3/comments", param,cc);
+ 
+                FrilRawResponse rawres = getFrilAPI("https://api.fril.jp/api/v3/comments", param,this.account.cc);
                 dynamic resjson = DynamicJson.Parse(rawres.response);
                 int commentnum = ((object[])resjson.comments).Length;
                 for (int i = 0; i < commentnum; i++) {
@@ -1156,8 +1146,7 @@ namespace FriRaLand {
                 param.Add("comment", message);
                 param.Add("item_id", item_id);
                 //param.Add("status", "1"); //?たぶんいらん
-                CookieContainer cc = new CookieContainer();
-                FrilRawResponse rawres = postFrilAPI(url, param,cc);
+                FrilRawResponse rawres = postFrilAPI(url, param,this.account.cc);
                 if (rawres.error) throw new Exception();
                 Log.Logger.Info("コメント追加成功");
                 return true;
@@ -1174,8 +1163,7 @@ namespace FriRaLand {
                 string url = "https://api.fril.jp/api/v3/comments/";
                 //param.Add("item_id", itemid);
                 param.Add("id", commentid);
-                CookieContainer cc = new CookieContainer();//FIXIT:不要なクッキーコンテナの可能性がある。
-                FrilRawResponse rawres = postFrilAPI(url, param,cc);
+                FrilRawResponse rawres = postFrilAPI(url, param,this.account.cc);
                 if (rawres.error) throw new Exception();
                 Log.Logger.Info("コメント削除成功");
                 return true;
@@ -1194,8 +1182,7 @@ namespace FriRaLand {
                 param.Add("body", message);
                 param.Add("t", FrilAPI.getUNIXTimeStamp());
                 param.Add("_access_token", this.account.auth_token);
-                CookieContainer cc = new CookieContainer();//FIXIT:不要なクッキーコンテナの可能性がある。
-                FrilRawResponse rawres = postFrilAPI(url, param,cc);
+                FrilRawResponse rawres = postFrilAPI(url, param,this.account.cc);
                 if (rawres.error) throw new Exception();
                 Log.Logger.Info("取引メッセージ送信成功");
             } catch (Exception ex) {
@@ -1211,8 +1198,7 @@ namespace FriRaLand {
                 param.Add("transaction_evidence_id", this.GetTransactionInfo(itemid).transaction_id);
                 param.Add("t",FrilAPI.getUNIXTimeStamp());
                 param.Add("_access_token", this.account.auth_token);
-                CookieContainer cc = new CookieContainer();//FIXIT:不要なクッキーコンテナの可能性がある。
-                FrilRawResponse rawres = postFrilAPI(url, param,cc);
+                FrilRawResponse rawres = postFrilAPI(url, param,this.account.cc);
                 if (rawres.error) throw new Exception();
                 Log.Logger.Info("商品の発送通知に成功");
                 return true;
@@ -1236,8 +1222,7 @@ namespace FriRaLand {
                 param.Add("_app_version", XAPPVERSION);
                 param.Add("t",FrilAPI.getUNIXTimeStamp());
                 param.Add("_access_token", this.account.auth_token);
-                CookieContainer cc = new CookieContainer();//FIXIT:不要なクッキーコンテナの可能性がある。
-               FrilRawResponse rawres = postFrilAPI(url, param,cc);
+               FrilRawResponse rawres = postFrilAPI(url, param,this.account.cc);
                 if (rawres.error) throw new Exception();
                 Log.Logger.Info("購入者の評価に成功");
                 return true;
@@ -1257,8 +1242,7 @@ namespace FriRaLand {
                 param.Add("_app_version", XAPPVERSION);
                 param.Add("t", FrilAPI.getUNIXTimeStamp());
                 param.Add("_access_token", this.account.auth_token);
-                CookieContainer cc = new CookieContainer();
-                FrilRawResponse rawres = postFrilAPI(url, param,cc);
+                FrilRawResponse rawres = postFrilAPI(url, param,this.account.cc);
                 if (rawres.error) throw new Exception();
                 Log.Logger.Info("取引のキャンセルに成功");
                 return true;

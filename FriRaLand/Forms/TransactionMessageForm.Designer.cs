@@ -23,8 +23,8 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             this.cancelTransactionButton = new System.Windows.Forms.Button();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.copyButton2 = new System.Windows.Forms.Button();
@@ -113,6 +113,7 @@
             this.saveWindowSizeCheckbox.TabIndex = 84;
             this.saveWindowSizeCheckbox.Text = "ウィンドウサイズを記憶する";
             this.saveWindowSizeCheckbox.UseVisualStyleBackColor = true;
+            this.saveWindowSizeCheckbox.Visible = false;
             // 
             // buyerAccountNickNameTextBox
             // 
@@ -143,6 +144,7 @@
             this.address_copyed_checkbox.TabIndex = 81;
             this.address_copyed_checkbox.Text = "住所転記済";
             this.address_copyed_checkbox.UseVisualStyleBackColor = true;
+            this.address_copyed_checkbox.Visible = false;
             // 
             // panel2
             // 
@@ -153,6 +155,7 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(492, 126);
             this.panel2.TabIndex = 80;
+            this.panel2.Visible = false;
             // 
             // BikouTextBox
             // 
@@ -248,6 +251,7 @@
             this.copyButton.TabIndex = 72;
             this.copyButton.Text = "コピー";
             this.copyButton.UseVisualStyleBackColor = true;
+            this.copyButton.Visible = false;
             // 
             // panel1
             // 
@@ -431,8 +435,8 @@
             // 
             // Column1
             // 
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.Column1.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.Column1.DefaultCellStyle = dataGridViewCellStyle9;
             this.Column1.HeaderText = "名前";
             this.Column1.Name = "Column1";
             this.Column1.ReadOnly = true;
@@ -447,8 +451,8 @@
             // 
             // Column2
             // 
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.Column2.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.Column2.DefaultCellStyle = dataGridViewCellStyle10;
             this.Column2.HeaderText = "取引メッセージ";
             this.Column2.Name = "Column2";
             this.Column2.ReadOnly = true;
@@ -500,6 +504,8 @@
             this.Controls.Add(this.pictureBox1);
             this.Name = "TransactionMessageForm";
             this.Text = "TransactionMessageForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TransactionMessageForm_FormClosing);
+            this.Load += new System.EventHandler(this.TransactionMessage_Load);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.panel1.ResumeLayout(false);
