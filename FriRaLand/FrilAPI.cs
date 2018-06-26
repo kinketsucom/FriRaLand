@@ -350,12 +350,17 @@ namespace FriRaLand {
                 StreamReader sr = new StreamReader(s);
                 string content = sr.ReadToEnd();
                 return content;
-            }
-            catch {
+            } catch (WebException ex) {
+                using (Stream responseStream = ex.Response.GetResponseStream()) {
+                    using (StreamReader streamReader = new StreamReader(responseStream, Encoding.GetEncoding("UTF-8"))) {
+                        return streamReader.ReadToEnd();
+                    }
+                }
+            } catch (Exception ex) {
                 return "";
             }
         }
-        private string executePostRequest(HttpWebRequest req, byte[] bytes) {
+        private string executePostRequest(ref HttpWebRequest req, byte[] bytes) {
             try {
                 using (Stream requestStream = req.GetRequestStream()) {
                     requestStream.Write(bytes, 0, bytes.Length);
@@ -367,8 +372,13 @@ namespace FriRaLand {
                         return streamReader.ReadToEnd();
                     }
                 }
-            }
-            catch {
+            } catch (WebException ex) {
+                using (Stream responseStream = ex.Response.GetResponseStream()) {
+                    using (StreamReader streamReader = new StreamReader(responseStream, Encoding.GetEncoding("UTF-8"))) {
+                        return streamReader.ReadToEnd();
+                    }
+                }
+            } catch (Exception ex) {
                 return "";
             }
         }
@@ -522,22 +532,6 @@ namespace FriRaLand {
                 }
             }
             return res;
-        }
-        private string executePostRequest(ref HttpWebRequest req, byte[] bytes) {
-            try {
-                using (Stream requestStream = req.GetRequestStream()) {
-                    requestStream.Write(bytes, 0, bytes.Length);
-                }
-                //結果取得
-                using (Stream responseStream = req.GetResponse().GetResponseStream()) {
-                    using (StreamReader streamReader = new StreamReader(responseStream, Encoding.GetEncoding("UTF-8"))) {
-                        return streamReader.ReadToEnd();
-                    }
-                }
-            }
-            catch {
-                return "";
-            }
         }
         private string postMultipartFril(string url, Dictionary<string, string> param, string file,CookieContainer cc) {
             Encoding encoding = Encoding.GetEncoding("UTF-8");
