@@ -25,7 +25,6 @@ namespace FriRaLand {
         private List<FrilItem> ExhibittedItemDataBindList = new List<FrilItem>(); //表にバインドする商品リスト 絞り込み結果はこっち
         private List<FrilItem> ExhibittedItemDataBackBindList = new List<FrilItem>(); //こっちは絞り込んでも減らない
 
-
         //public class Account {//FIXIT:移行したのでおそらく不必要
         //    public int DBId;
         //    public string email;
@@ -405,7 +404,7 @@ namespace FriRaLand {
                 FrilAPIList.Add(api);
                 FrilAPIDictionary[a.DBId] = api;
                 FrilAccountDictionary[a.DBId] = a;
-                this.sellerIDtoAPIDictionary[a.sellerid] = api;
+                this.sellerIDtoAPIDictionary[a.userId] = api;
             }
             if (accountList != null && accountList.Count > 0) accountListComboBox.SelectedIndex = 0;
 
@@ -1235,6 +1234,22 @@ namespace FriRaLand {
                     f.Show();
                 }
             }
+        }
+
+        private void editItemButton_Click(object sender, EventArgs e) {
+            if (checkNowAutoMode()) return;
+            //if (!LicenseForm.checkCanUseWithErrorWindow()) return;
+            List<int> selectIdList = new List<int>();
+            foreach (DataGridViewRow row in LocalItemDataGridView.SelectedRows) selectIdList.Add(LocalItemDataBindList[row.Index].DBId);
+            if (selectIdList.Count != 1) {
+                MessageBox.Show("編集する商品を1つだけ選択してください。");
+                return;
+            }
+            FrilItem item = new FrilItemDBHelper().selectRegisterItem(selectIdList)[0];
+            ItemRegisterForm f = new ItemRegisterForm(item, selectIdList[0]);
+            f.mainform = this;
+            f.apilist = this.FrilAPIList;
+            f.Show();
         }
     }
 }

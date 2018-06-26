@@ -18,6 +18,8 @@ namespace FriRaLand {
         public ItemRegisterForm() {
             InitializeComponent();
         }
+        public List<FrilAPI> apilist;
+
 
         #region いらないとおもいました
         //private int openItemDBId;
@@ -443,6 +445,15 @@ namespace FriRaLand {
             this.Close();
 
         }
+        private FrilItem openItem;
+        //編集モード
+        public ItemRegisterForm(FrilItem loaditem, int DBId) {
+            InitializeComponent();
+            this.openItem = loaditem;
+            this.is_editmode = true;
+            this.openItemDBId = DBId;
+        }
+
 
         //GUIからitem情報を得る
         private FrilItem CollectSellSettingsFromGUI() {
