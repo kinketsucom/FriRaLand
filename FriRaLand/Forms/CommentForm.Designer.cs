@@ -23,8 +23,8 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             this.ignoreNesageCheckBox = new System.Windows.Forms.CheckBox();
             this.reSaleItemButton = new System.Windows.Forms.Button();
             this.saveWindowSizeCheckbox = new System.Windows.Forms.CheckBox();
@@ -135,6 +135,7 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(493, 126);
             this.panel2.TabIndex = 68;
+            this.panel2.Visible = false;
             // 
             // BikouTextBox
             // 
@@ -234,6 +235,7 @@
             this.label4.Size = new System.Drawing.Size(131, 15);
             this.label4.TabIndex = 37;
             this.label4.Text = "定型コメントから選択";
+            this.label4.Visible = false;
             // 
             // comboBox1
             // 
@@ -273,6 +275,7 @@
             this.submit.TabIndex = 12;
             this.submit.Text = "送信";
             this.submit.UseVisualStyleBackColor = true;
+            this.submit.Click += new System.EventHandler(this.submit_Click);
             // 
             // label3
             // 
@@ -316,8 +319,8 @@
             // 
             // Column1
             // 
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.Column1.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.Column1.DefaultCellStyle = dataGridViewCellStyle9;
             this.Column1.HeaderText = "名前";
             this.Column1.Name = "Column1";
             this.Column1.ReadOnly = true;
@@ -332,8 +335,8 @@
             // 
             // Column2
             // 
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.Column2.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.Column2.DefaultCellStyle = dataGridViewCellStyle10;
             this.Column2.HeaderText = "コメント内容";
             this.Column2.Name = "Column2";
             this.Column2.ReadOnly = true;

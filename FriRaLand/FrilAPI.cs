@@ -1028,13 +1028,13 @@ namespace FriRaLand {
                 FrilRawResponse rawres = getFrilAPI(url, param,cc);
                 if (rawres.error) throw new Exception();
                 dynamic resjson = DynamicJson.Parse(rawres.response);
-                int commentnum = ((object[])resjson.data).Length;
+                int commentnum = ((object[])resjson.comments).Length;
                 for (int i = 0; i < commentnum; i++) {
                     Comment c = new Comment();
-                    c.nickname = resjson.data[i].user.name;
-                    c.userid = ((long)resjson.data[i].user.id).ToString();
-                    c.message = resjson.data[i].body;
-                    c.created = Common.getDateFromUnixTimeStamp((long)resjson.data[i].created);
+                    c.screen_name = resjson.comment[i].user.name;
+                    c.user_id = ((long)resjson.comment[i].user.id).ToString();
+                    c.comment = resjson.comment[i].body;
+                    c.created_at = Common.getDateFromUnixTimeStamp((long)resjson.comment[i].created);
                     res.Add(c);
                 }
                 Log.Logger.Info("取引メッセージの取得に成功");
@@ -1105,55 +1105,64 @@ namespace FriRaLand {
 
         //コメント用の構造体
         public struct Comment {
-            public DateTime created;
-            public string nickname;
-            public string message;
-            public string userid;
             public string id;
+            public string item_id;
+            public string user_id;
+            public string comment;
+            public DateTime created_at;
+            public string screen_name;
+            public string profile_img;//REVIEW:一応書いておいたけどラクランドでは使わない
         }
         //商品のコメントを取得する
-        public List<Comment> GetComments(string itemid) {
+        public List<Comment> GetComments(string item_id) {
             var res = new List<Comment>();
             try {
                 Dictionary<string, string> param = new Dictionary<string, string>(); //GetTokenParamListForFrilAPI();
-                param.Add("item_id", itemid);
                 param.Add("auth_token", this.account.auth_token);
+                param.Add("item_id", item_id);
                 CookieContainer cc = new CookieContainer();//不必要なクッキーコンテナの可能性がある。
-                FrilRawResponse rawres = getFrilAPI("https://api.mercari.jp/comments/gets", param,cc);//FIXIT:Frilのものに変える
+                FrilRawResponse rawres = getFrilAPI("https://api.fril.jp/api/v3/comments", param,cc);
                 dynamic resjson = DynamicJson.Parse(rawres.response);
-                int commentnum = ((object[])resjson.data).Length;
+                int commentnum = ((object[])resjson.comments).Length;
                 for (int i = 0; i < commentnum; i++) {
                     Comment c = new Comment();
-                    c.nickname = resjson.data[i].user.name;
-                    c.userid = ((long)resjson.data[i].user.id).ToString();
-                    c.id = ((long)resjson.data[i].id).ToString();
-                    c.message = resjson.data[i].message;
-                    c.created = Common.getDateFromUnixTimeStamp((long)resjson.data[i].created);
+                    c.id = ((long)resjson.comments[i].id).ToString();
+                    c.item_id = ((long)resjson.comments[i].item_id).ToString();
+                    c.user_id = ((long)resjson.comments[i].user_id).ToString();
+                    c.comment = resjson.comments[i].comment;
+                    string time = resjson.comments[i].created_at;
+                    time = time.Substring(0, time.IndexOf("+"));
+                    time = time.Replace("-", "/");
+                    time = time.Replace("T", " ");
+                    c.created_at = DateTime.Parse(time);
+                    c.screen_name = resjson.comments[i].screen_name;
+                    
                     res.Add(c);
                 }
-                Log.Logger.Info("コメント取得成功: " + itemid);
+                Log.Logger.Info("コメント取得成功: " + item_id);
                 return res;
-            } catch (Exception e) {
-                Log.Logger.Error("コメント取得失敗: " + itemid);
+            } catch (Exception ex) {
+                Log.Logger.Error("コメント取得失敗: " + item_id);
+                Console.WriteLine(ex);
                 return res;
             }
         }
         //コメントを追加
-        public bool AddComment(string itemid, string message) {
+        public bool AddComment(string item_id, string message) {
             try {
                 Dictionary<string, string> param = new Dictionary<string, string>();
                 string url = "https://api.fril.jp/api/v3/comments/";
-                param.Add("item_id", itemid);
-                param.Add("user_id", this.account.userId);
-                param.Add("message", message);
-                param.Add("status", "1"); //?
+                param.Add("auth_token", this.account.auth_token);
+                param.Add("comment", message);
+                param.Add("item_id", item_id);
+                //param.Add("status", "1"); //?たぶんいらん
                 CookieContainer cc = new CookieContainer();
                 FrilRawResponse rawres = postFrilAPI(url, param,cc);
                 if (rawres.error) throw new Exception();
                 Log.Logger.Info("コメント追加成功");
                 return true;
             } catch (Exception ex) {
-                Log.Logger.Error("コメント追加失敗: " + itemid);
+                Log.Logger.Error("コメント追加失敗: " + item_id);
                 Log.Logger.Error(ex.Message);
                 return false;
             }

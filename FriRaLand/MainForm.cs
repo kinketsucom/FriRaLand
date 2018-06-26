@@ -906,10 +906,10 @@ namespace FriRaLand {
                         var comments = api2.GetComments(user_items[i].item_id);
                         //一番新しいものを取得する
                         foreach (var comment in comments) {
-                            if (comment.userid == api2.account.userId) {
-                                if (user_items[i].seller_comment_time < comment.created) user_items[i].seller_comment_time = comment.created;
+                            if (comment.user_id == api2.account.userId) {
+                                if (user_items[i].seller_comment_time < comment.created_at) user_items[i].seller_comment_time = comment.created_at;
                             } else {
-                                if (user_items[i].buyer_comment_time < comment.created) user_items[i].buyer_comment_time = comment.created;
+                                if (user_items[i].buyer_comment_time < comment.created_at) user_items[i].buyer_comment_time = comment.created_at;
                             }
                         }
                     }
@@ -1176,10 +1176,10 @@ namespace FriRaLand {
                         var comments = api2.GetTransactionMessages(user_items[i].item_id);
                         //一番新しいものを取得する
                         foreach (var comment in comments) {
-                            if (comment.userid == api2.account.sellerid) {
-                                if (user_items[i].seller_transaction_message_time < comment.created) user_items[i].seller_transaction_message_time = comment.created;
+                            if (comment.user_id == api2.account.sellerid) {
+                                if (user_items[i].seller_transaction_message_time < comment.created_at) user_items[i].seller_transaction_message_time = comment.created_at;
                             } else {
-                                if (user_items[i].buyer_transaction_message_time < comment.created) user_items[i].buyer_transaction_message_time = comment.created;
+                                if (user_items[i].buyer_transaction_message_time < comment.created_at) user_items[i].buyer_transaction_message_time = comment.created_at;
                             }
                         }
                         user_items[i].transaction_message_num = comments.Count;

@@ -34,7 +34,7 @@ namespace FriRaLand.Forms {
             //商品情報をGUIに反映
             this.pictureBox1.Image = item.Image;
             this.itemNameLabel.Text = item.item_name;
-            this.sellerLabel.Text = item.;//FIXIT:seller.nameをへんこうしたけど
+            this.sellerLabel.Text = item.screen_name;//FIXIT:seller.nameをへんこうしたけど
             this.kakakuTextBox.Text = item.s_price.ToString();// +"円";
             this.riekiTextBox.Text = Common.getRieki(item.s_price).ToString();
             //コメントを取得
@@ -109,7 +109,7 @@ namespace FriRaLand.Forms {
             comments.Reverse();
             foreach (var c in comments) {
 
-                this.dataGridView1.Rows.Add(c.nickname, c.created.ToString("MM/dd HH:mm"), c.message);
+                this.dataGridView1.Rows.Add(c.screen_name, c.created_at.ToString("MM/dd HH:mm"), c.comment);
             }
         }
 

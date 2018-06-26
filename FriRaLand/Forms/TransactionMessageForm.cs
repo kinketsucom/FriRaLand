@@ -67,7 +67,7 @@ namespace FriRaLand.Forms {
             this.dataGridView1.Rows.Clear();
             foreach (var c in comments) {
 
-                this.dataGridView1.Rows.Add(c.nickname, c.created.ToString("MM/dd HH:mm"), c.message);
+                this.dataGridView1.Rows.Add(c.screen_name, c.created_at.ToString("MM/dd HH:mm"), c.comment);
             }
         }
         //商品情報や取引情報をもとにGUIにパラメータ設定
