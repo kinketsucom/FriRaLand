@@ -32,7 +32,7 @@ namespace FriRaLand {
             public int defaultbankaddressId = -1;
             public DateTime token_update_date { get; set; }
             public DateTime expiration_date { get; set; }
-            public CookieContainer cc;
+            public CookieContainer cc = new CookieContainer();
         }
 
         public static System.Random random = new System.Random(1000);
