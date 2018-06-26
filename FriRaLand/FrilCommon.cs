@@ -33,19 +33,11 @@ namespace FriRaLand {
 
 
         public static void init() {
+
             //Masterデータの読み込み
             getFrilCategories();
             getFrilSizeGroup();
             getFrilBrands();
-            //getRakumaCategories();
-            //getRakumaSizeTypes();
-            //conditionTypeRakuma = new Dictionary<string, string>();
-            //conditionTypeRakuma.Add("新品、未使用", "1");
-            //conditionTypeRakuma.Add("未使用に近い", "2");
-            //conditionTypeRakuma.Add("目立った傷や汚れなし", "3");
-            //conditionTypeRakuma.Add("やや傷や汚れあり", "4");
-            //conditionTypeRakuma.Add("傷や汚れあり", "5");
-            //conditionTypeRakuma.Add("全体的に状態が悪い", "6");
             conditionTypeFril = new Dictionary<string, string>();
             conditionTypeFril.Add("新品、未使用", "5");
             conditionTypeFril.Add("未使用に近い", "4");
@@ -53,25 +45,9 @@ namespace FriRaLand {
             conditionTypeFril.Add("やや傷や汚れあり", "3");
             conditionTypeFril.Add("傷や汚れあり", "2");
             conditionTypeFril.Add("全体的に状態が悪い", "1");
-            //shippingPayersRakuma = new Dictionary<string, string>();
-            //shippingPayersRakuma.Add("送料込み(出品者負担)", "2");
-            //shippingPayersRakuma.Add("着払い(購入者負担)", "1");
             shippingPayersFril = new Dictionary<string, string>();
             shippingPayersFril.Add("送料込み(あなたが負担)", "1");
             shippingPayersFril.Add("着払い(購入者が負担)", "2");
-            //shippingMethodsSellerRakuma = new Dictionary<string, string>();
-            //shippingMethodsSellerRakuma.Add("未定", "1");
-            //shippingMethodsSellerRakuma.Add("ラクマ定額パック（日本郵便）", "14");
-            //shippingMethodsSellerRakuma.Add("ラクマ定額パック（ヤマト運輸）", "12");
-            //shippingMethodsSellerRakuma.Add("クリックポスト", "10");
-            //shippingMethodsSellerRakuma.Add("ゆうメール", "2");
-            //shippingMethodsSellerRakuma.Add("ゆうパケット", "13");
-            //shippingMethodsSellerRakuma.Add("レターパック", "4");
-            //shippingMethodsSellerRakuma.Add("普通郵便（定型、定型外）", "5");
-            //shippingMethodsSellerRakuma.Add("ゆうパック", "7");
-            //shippingMethodsSellerRakuma.Add("宅急便コンパクト", "11");
-            //shippingMethodsSellerRakuma.Add("宅急便", "6");
-            //shippingMethodsSellerRakuma.Add("はこBOON", "9");
             shippingMethodsSellerFril = new Dictionary<string, string>();
             shippingMethodsSellerFril.Add("未定", "9");
             shippingMethodsSellerFril.Add("かんたんフリルパック", "15");
@@ -85,11 +61,6 @@ namespace FriRaLand {
             shippingMethodsSellerFril.Add("ゆうパケット", "17");
             shippingMethodsSellerFril.Add("ゆうメール元払い", "12");
             shippingMethodsSellerFril.Add("スマートレター", "16");
-            //shippingMethodsBuyerRakuma = new Dictionary<string, string>();
-            //shippingMethodsBuyerRakuma.Add("未定", "1");
-            //shippingMethodsBuyerRakuma.Add("ゆうメール", "5");
-            //shippingMethodsBuyerRakuma.Add("ゆうパック", "4");
-            //shippingMethodsBuyerRakuma.Add("宅急便", "3");
             shippingMethodsBuyerFril = new Dictionary<string, string>();
             shippingMethodsBuyerFril.Add("未定", "9");
             shippingMethodsBuyerFril.Add("ゆうパック着払い", "8");

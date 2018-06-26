@@ -476,28 +476,7 @@ namespace FriRaLand {
             this.pictureBox2.ImageLocation = loaditem.imagepaths[1];
             this.pictureBox3.ImageLocation = loaditem.imagepaths[2];
             this.pictureBox4.ImageLocation = loaditem.imagepaths[3];
-            //カテゴリレベルまで保存してないので
-            //if (loaditem.category_level1_id >= 0) this.CategoryComboBoxLevel1.SelectedIndex = MercariCommon.CategoryIdToSelectedIndexDictionary[loaditem.category_level1_id];
-            //if (loaditem.category_level2_id >= 0) this.CategoryComboBoxLevel2.SelectedIndex = MercariCommon.CategoryIdToSelectedIndexDictionary[loaditem.category_level2_id];
-            //if (loaditem.category_level3_id >= 0) this.CategoryComboBoxLevel3.SelectedIndex = MercariCommon.CategoryIdToSelectedIndexDictionary[loaditem.category_level3_id];
-            //if (loaditem.category_level4_id >= 0) this.CategoryComboBoxLevel4.SelectedIndex = MercariCommon.CategoryIdToSelectedIndexDictionary[loaditem.category_level4_id];
-            //カテゴリがきまればサイズとブランドの候補はきまるので候補からIDが一致するSelectedIndexを見つければいい
-            if (loaditem.brand_id >= 0 && Fril_BrandComboBox.Enabled) {
-                for (int i = 0; i < Fril_BrandComboBox.Items.Count; i++) {
-                    FrilCommon.Brand bd = (FrilCommon.Brand)Fril_BrandComboBox.Items[i];
-                    if (bd.id == loaditem.brand_id) {
-                        Fril_BrandComboBox.SelectedIndex = i;
-                    }
-                }
-            }
-            if (loaditem.size_id >= 0 && Fril_SizeComboBox.Enabled) {
-                for (int i = 0; i < Fril_SizeComboBox.Items.Count; i++) {
-                    FrilCommon.SizeInfo si = (FrilCommon.SizeInfo)Fril_SizeComboBox.Items[i];
-                    if (si.id == loaditem.size_id) {
-                        Fril_SizeComboBox.SelectedIndex = i;
-                    }
-                }
-            }
+
             if (loaditem.status >= 0) this.Fril_ItemConditionComboBox.SelectedIndex = FrilCommon.ItemConditionIdToSelectedIndex[loaditem.status];
             if (loaditem.carriage >= 0) this.Fril_ShippingPayerComboBox.SelectedIndex = FrilCommon.ShippingPayerIdToSelectedIndexDictionary[loaditem.carriage];
             if (loaditem.d_method >= 0) this.Fril_ShippingMethodComboBox.SelectedIndex = FrilCommon.ShippingMethodIdToSelectedIndex[loaditem.d_method];
@@ -506,7 +485,33 @@ namespace FriRaLand {
             if (loaditem.s_price <= 0) this.PriceTextBox.Text = "";
             else this.PriceTextBox.Text = loaditem.s_price.ToString();
 
-        }catch (Exception ex) {
+                //if (loaditem.category_level1_id >= 0) this.CategoryComboBoxLevel1.SelectedIndex = MercariCommon.CategoryIdToSelectedIndexDictionary[loaditem.category_level1_id];
+                //if (loaditem.category_level2_id >= 0) this.CategoryComboBoxLevel2.SelectedIndex = MercariCommon.CategoryIdToSelectedIndexDictionary[loaditem.category_level2_id];
+                //if (loaditem.category_level3_id >= 0) this.CategoryComboBoxLevel3.SelectedIndex = MercariCommon.CategoryIdToSelectedIndexDictionary[loaditem.category_level3_id];
+                //if (loaditem.category_level4_id >= 0) this.CategoryComboBoxLevel4.SelectedIndex = MercariCommon.CategoryIdToSelectedIndexDictionary[loaditem.category_level4_id];
+                //カテゴリがきまればサイズとブランドの候補はきまるので候補からIDが一致するSelectedIndexを見つければいい
+                if (loaditem.brand_id >= 0 && Fril_BrandComboBox.Enabled) {
+                    for (int i = 0; i < Fril_BrandComboBox.Items.Count; i++) {
+                        FrilCommon.Brand bd = (FrilCommon.Brand)Fril_BrandComboBox.Items[i];
+                        if (bd.id == loaditem.brand_id) {
+                            Fril_BrandComboBox.SelectedIndex = i;
+                        }
+                    }
+                }
+                if (loaditem.size_id >= 0 && Fril_SizeComboBox.Enabled) {
+                    for (int i = 0; i < Fril_SizeComboBox.Items.Count; i++) {
+                        FrilCommon.SizeInfo si = (FrilCommon.SizeInfo)Fril_SizeComboBox.Items[i];
+                        if (si.id == loaditem.size_id) {
+                            Fril_SizeComboBox.SelectedIndex = i;
+                        }
+                    }
+                }
+
+
+
+
+
+            } catch (Exception ex) {
                 Log.Logger.Error(ex.Message);
                 Log.Logger.Error("メルカリ商品からGUIセットに失敗");
                 MessageBox.Show("商品の読み込みに失敗しました.", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
