@@ -614,6 +614,7 @@
             this.Text = "商品の登録";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ItemRegisterForm_FormClosing);
             this.Load += new System.EventHandler(this.ItemRegisterForm_Load);
+            this.Shown += new System.EventHandler(this.ItemRegisterForm_Shown);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();

@@ -246,7 +246,6 @@
             this.emailTextBox.Name = "emailTextBox";
             this.emailTextBox.Size = new System.Drawing.Size(405, 22);
             this.emailTextBox.TabIndex = 11;
-            this.emailTextBox.Text = "ishiyuka0824@gmail.com";
             // 
             // passwordTextBox
             // 
@@ -256,7 +255,6 @@
             this.passwordTextBox.PasswordChar = '*';
             this.passwordTextBox.Size = new System.Drawing.Size(405, 22);
             this.passwordTextBox.TabIndex = 12;
-            this.passwordTextBox.Text = "kirinremon";
             // 
             // label1
             // 

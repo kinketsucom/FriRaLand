@@ -109,9 +109,6 @@ namespace FriRaLand {
             }
 
 
-            if (is_editmode) {
-                SetGUIFromItem(this.openItem);
-            }
 
 
 
@@ -466,38 +463,76 @@ namespace FriRaLand {
             this.is_editmode = true;
             this.openItemDBId = DBId;
         }
+
+        private int TabIndexFromDictionary(Dictionary<string,string> dic,int target) {
+            int index = 0;
+            foreach (var val in dic) {
+                if (int.Parse(val.Value) == target) {
+                    break;
+                }
+                index = index + 1;
+            }
+            return index;
+        }
+
+
+
+
+        private int TabIndexFromList(List<FrilCommon.FrilBrand> brand_list, int target) {//ブランドリスト
+            int index = 0;
+            foreach (var val in brand_list) {
+                if (val.id == target) {
+                    break;
+                }
+                index = index + 1;
+            }
+            return index;
+        }
+        private int TabIndexFromList(List<FrilCommon.FrilCategory> category_list, int target) {//カテゴリリスト
+            int index = 0;
+            foreach (var val in category_list) {
+                if (val.id == target) {
+                    break;
+                }
+                index = index + 1;
+            }
+            return index;
+        }
+
+
         //編集モードのときにGUIへ情報をセットする
         private void SetGUIFromItem(FrilItem loaditem) {
             try { 
-            //GUIにセット（ComboBoxのSelectedIndexをプログラムから書き換えた場合もイベントは呼ばれるのでindexを変えるだけでいい）
-            this.ItemNameTextBox.Text = loaditem.item_name;
-            this.DescriptionTextBox.Text = loaditem.detail;
-            this.pictureBox1.ImageLocation = loaditem.imagepaths[0];
-            this.pictureBox2.ImageLocation = loaditem.imagepaths[1];
-            this.pictureBox3.ImageLocation = loaditem.imagepaths[2];
-            this.pictureBox4.ImageLocation = loaditem.imagepaths[3];
+                //GUIにセット（ComboBoxのSelectedIndexをプログラムから書き換えた場合もイベントは呼ばれるのでindexを変えるだけでいい）
+                this.ItemNameTextBox.Text = loaditem.item_name;
+                this.DescriptionTextBox.Text = loaditem.detail;
+                this.pictureBox1.ImageLocation = loaditem.imagepaths[0];
+                this.pictureBox2.ImageLocation = loaditem.imagepaths[1];
+                this.pictureBox3.ImageLocation = loaditem.imagepaths[2];
+                this.pictureBox4.ImageLocation = loaditem.imagepaths[3];
 
-            if (loaditem.status >= 0) this.Fril_ItemConditionComboBox.SelectedIndex = FrilCommon.ItemConditionIdToSelectedIndex[loaditem.status];
-            if (loaditem.carriage >= 0) this.Fril_ShippingPayerComboBox.SelectedIndex = FrilCommon.ShippingPayerIdToSelectedIndexDictionary[loaditem.carriage];
-            if (loaditem.d_method >= 0) this.Fril_ShippingMethodComboBox.SelectedIndex = FrilCommon.ShippingMethodIdToSelectedIndex[loaditem.d_method];
-            if (loaditem.d_area >= 0) this.ShippingAreaComboBox.SelectedIndex = FrilCommon.PrefectureIdToSelectedIndex[loaditem.d_area];
-            if (loaditem.d_date >= 0) this.ShippingDurationComboBox.SelectedIndex = FrilCommon.ShippingDurationIdToSelectedIndexDictionary[loaditem.d_date];
-            if (loaditem.s_price <= 0) this.PriceTextBox.Text = "";
-            else this.PriceTextBox.Text = loaditem.s_price.ToString();
-
-                //if (loaditem.category_level1_id >= 0) this.CategoryComboBoxLevel1.SelectedIndex = MercariCommon.CategoryIdToSelectedIndexDictionary[loaditem.category_level1_id];
-                //if (loaditem.category_level2_id >= 0) this.CategoryComboBoxLevel2.SelectedIndex = MercariCommon.CategoryIdToSelectedIndexDictionary[loaditem.category_level2_id];
-                //if (loaditem.category_level3_id >= 0) this.CategoryComboBoxLevel3.SelectedIndex = MercariCommon.CategoryIdToSelectedIndexDictionary[loaditem.category_level3_id];
-                //if (loaditem.category_level4_id >= 0) this.CategoryComboBoxLevel4.SelectedIndex = MercariCommon.CategoryIdToSelectedIndexDictionary[loaditem.category_level4_id];
-                //カテゴリがきまればサイズとブランドの候補はきまるので候補からIDが一致するSelectedIndexを見つければいい
-                if (loaditem.brand_id >= 0 && Fril_BrandComboBox.Enabled) {
-                    for (int i = 0; i < Fril_BrandComboBox.Items.Count; i++) {
-                        FrilCommon.Brand bd = (FrilCommon.Brand)Fril_BrandComboBox.Items[i];
-                        if (bd.id == loaditem.brand_id) {
-                            Fril_BrandComboBox.SelectedIndex = i;
-                        }
-                    }
+                if (loaditem.status >= 0) this.Fril_ItemConditionComboBox.SelectedIndex = TabIndexFromDictionary(FrilCommon.conditionTypeFril, loaditem.status);
+                if (loaditem.carriage >= 0) this.Fril_ShippingPayerComboBox.SelectedIndex = TabIndexFromDictionary(FrilCommon.shippingPayersFril, loaditem.carriage);
+                if (loaditem.d_method >= 0) this.Fril_ShippingMethodComboBox.SelectedIndex = TabIndexFromDictionary(FrilCommon.shippingMethodsBuyerFril,loaditem.d_method);
+                if (loaditem.d_area >= 0) this.ShippingAreaComboBox.SelectedIndex = TabIndexFromDictionary(FrilCommon.shippingFromAreas,loaditem.d_area);
+                if (loaditem.d_date >= 0) this.ShippingDurationComboBox.SelectedIndex = TabIndexFromDictionary(FrilCommon.shippingFromAreas, loaditem.d_date);
+                if (loaditem.s_price <= 0) this.PriceTextBox.Text = "";
+                else this.PriceTextBox.Text = loaditem.s_price.ToString();
+                if (loaditem.brand_id >= 0) this.Fril_BrandComboBox.SelectedIndex = TabIndexFromList(FrilCommon.fril_brands, loaditem.brand_id);
+                if (loaditem.category_level1_id >= 0) {
+                    this.Fril_CategoryComboBoxLevel1.SelectedIndex = TabIndexFromList(FrilCommon.fril_categoryDictionary[0], loaditem.category_level1_id);
+                    this.Fril_CategoryComboBoxLevel2.Enabled = true;   
                 }
+                if (loaditem.category_level2_id >= 0) {
+                    this.Fril_CategoryComboBoxLevel2.SelectedIndex = TabIndexFromList(FrilCommon.fril_categoryDictionary[1], loaditem.category_level2_id);
+                    this.Fril_CategoryComboBoxLevel3.Enabled = true;       
+                 }
+                if (loaditem.category_level3_id >= 0) {
+                    this.Fril_CategoryComboBoxLevel3.SelectedIndex = TabIndexFromList(FrilCommon.fril_categoryDictionary[2], loaditem.category_level3_id);
+                    this.Fril_CategoryComboBoxLevel4.Enabled = true;
+                }
+                if (loaditem.category_level4_id >= 0) this.Fril_CategoryComboBoxLevel4.SelectedIndex = TabIndexFromList(FrilCommon.fril_categoryDictionary[3], loaditem.category_level4_id);
+                //カテゴリがきまればサイズとブランドの候補はきまるので候補からIDが一致するSelectedIndexを見つければいい
                 if (loaditem.size_id >= 0 && Fril_SizeComboBox.Enabled) {
                     for (int i = 0; i < Fril_SizeComboBox.Items.Count; i++) {
                         FrilCommon.SizeInfo si = (FrilCommon.SizeInfo)Fril_SizeComboBox.Items[i];
@@ -508,11 +543,23 @@ namespace FriRaLand {
                 }
 
 
+                //if (loaditem.brand_id >= 0 && Fril_BrandComboBox.Enabled) {
+                //    for (int i = 0; i < Fril_BrandComboBox.Items.Count; i++) {
+                //        FrilCommon.Brand bd = (FrilCommon.Brand)Fril_BrandComboBox.Items[i];
+                //        if (bd.id == loaditem.brand_id) {
+                //            Fril_BrandComboBox.SelectedIndex = i;
+                //        }
+                //    }
+                //}
+
+
+
 
 
 
             } catch (Exception ex) {
                 Log.Logger.Error(ex.Message);
+                Console.WriteLine(ex);
                 Log.Logger.Error("メルカリ商品からGUIセットに失敗");
                 MessageBox.Show("商品の読み込みに失敗しました.", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -576,24 +623,27 @@ namespace FriRaLand {
             //FIXIT:created_at;//ex)2017-09-27T09:12:57+09:00
             //FIXIT:screen_name; //出品者アカウント名
             //カテゴリレベル１
-            //if (this.Fril_CategoryComboBoxLevel1.SelectedItem != null) {
-            //    FriRaCommon.FrilCategory category1 = (FriRaCommon.FrilCategory)this.Fril_CategoryComboBoxLevel1.SelectedItem;
-            //    //item_data.category_p_id = category1.id;
-            //}
+            if (this.Fril_CategoryComboBoxLevel1.SelectedItem != null) {
+                FrilCommon.FrilCategory category1 = (FrilCommon.FrilCategory)this.Fril_CategoryComboBoxLevel1.SelectedItem;
+                item_data.category_level1_id = category1.id;
+            }
             //カテゴリレベル２ category_p_idになる
             if (this.Fril_CategoryComboBoxLevel2.SelectedItem != null) {
                 FrilCommon.FrilCategory category2 = (FrilCommon.FrilCategory)this.Fril_CategoryComboBoxLevel2.SelectedItem;
                 item_data.category_p_id = category2.id;//p_categoryはおそらくこれ
+                item_data.category_level2_id = category2.id;
             }
             //カテゴリレベル３
             if (this.Fril_CategoryComboBoxLevel3.SelectedItem != null) {
                 FrilCommon.FrilCategory category3 = (FrilCommon.FrilCategory)this.Fril_CategoryComboBoxLevel3.SelectedItem;
                 item_data.category_id = category3.id;
+                item_data.category_level3_id = category3.id;
             }
             //カテゴリレベル４
             if (this.Fril_CategoryComboBoxLevel4.SelectedItem != null) {
                 FrilCommon.FrilCategory category4 = (FrilCommon.FrilCategory)this.Fril_CategoryComboBoxLevel4.SelectedItem;
                 item_data.category_id = category4.id;
+                item_data.category_level4_id = category4.id;
             }
             //サイズID,サイズ名
             if (this.Fril_SizeComboBox.SelectedItem != null) {
@@ -649,6 +699,13 @@ namespace FriRaLand {
 
         private void ItemRegisterForm_FormClosing(object sender, FormClosingEventArgs e) {
             this.mainform.OnBackFromItemExhibitForm();
+        }
+
+        private void ItemRegisterForm_Shown(object sender, EventArgs e) {
+
+            if (is_editmode) {
+                SetGUIFromItem(this.openItem);
+            }
         }
     }
 

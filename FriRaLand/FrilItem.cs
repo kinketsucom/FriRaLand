@@ -34,7 +34,7 @@ namespace FriRaLand {
         public DateTime created_at;//ex)2017-09-27T09:12:57+09:00
         public string screen_name = ""; //出品者アカウント名
         public int category_id;
-        public int category_p_id;//parent?
+        public int category_p_id;//category2らしいが。。。
         public int size_id; //19999=>なし
         public string size_name;
         public int brand_id; //null
@@ -44,7 +44,10 @@ namespace FriRaLand {
         public string[] imageurls = new string[]{"","","",""}; //画像URL
         public string[] imagepaths = new string[] { "", "", "", "" }; //ローカルの画像パス
         public int item_pv; //なにこれ？？たぶんアクセス数
-
+        public int category_level1_id;
+        public int category_level2_id;
+        public int category_level3_id;
+        public int category_level4_id;
 
         public int num_likes { get; set; } //いいね数
         public int num_comments { get; set; }//コメント数

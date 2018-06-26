@@ -10,13 +10,9 @@ using System.Drawing;
 
 namespace FriRaLand {
     class FrilCommon {
-        public static Dictionary<string, string> conditionTypeRakuma = new Dictionary<string, string>();
         public static Dictionary<string, string> conditionTypeFril = new Dictionary<string, string>();
-        public static Dictionary<string, string> shippingPayersRakuma = new Dictionary<string, string>();
         public static Dictionary<string, string> shippingPayersFril = new Dictionary<string, string>();
-        public static Dictionary<string, string> shippingMethodsSellerRakuma = new Dictionary<string, string>();
         public static Dictionary<string, string> shippingMethodsSellerFril = new Dictionary<string, string>();
-        public static Dictionary<string, string> shippingMethodsBuyerRakuma = new Dictionary<string, string>();
         public static Dictionary<string, string> shippingMethodsBuyerFril = new Dictionary<string, string>();
         public static Dictionary<string, string> shippingFromAreas = new Dictionary<string, string>();
         public static Dictionary<string, string> shippingDurations = new Dictionary<string, string>();
