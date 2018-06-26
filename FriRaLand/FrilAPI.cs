@@ -1021,20 +1021,9 @@ namespace FriRaLand {
             try {
                 Dictionary<string, string> param = new Dictionary<string, string>();
                 string url = "https://web.fril.jp/transaction";
-                //string url = "https://web.fril.jp/v2/sale/shipping/item";
                 param.Add("item_id", itemid);
                 FrilRawResponse rawres = getFrilAPI(url, param,this.account.cc, true);
-                if (rawres.error) throw new Exception();
-                dynamic resjson = DynamicJson.Parse(rawres.response);
-                int commentnum = ((object[])resjson.comments).Length;
-                for (int i = 0; i < commentnum; i++) {
-                    Comment c = new Comment();
-                    c.screen_name = resjson.comment[i].user.name;
-                    c.user_id = ((long)resjson.comment[i].user.id).ToString();
-                    c.comment = resjson.comment[i].body;
-                    c.created_at = Common.getDateFromUnixTimeStamp((long)resjson.comment[i].created);
-                    res.Add(c);
-                }
+                Console.WriteLine(rawres.response);
                 Log.Logger.Info("取引メッセージの取得に成功");
                 return res;
             } catch (Exception ex) {
