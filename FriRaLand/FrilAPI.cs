@@ -308,7 +308,7 @@ namespace FriRaLand {
             return rst;
         }
         //FrilAPIをGETでたたく
-        private FrilRawResponse getFrilAPI(string url, Dictionary<string, string> param, CookieContainer cc) {
+        private FrilRawResponse getFrilAPI(string url, Dictionary<string, string> param, CookieContainer cc, bool webmode = false) {
             System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
             //ストップウォッチを開始する
             sw.Start();
@@ -329,6 +329,8 @@ namespace FriRaLand {
                 req.CookieContainer = cc;
                 req.UserAgent = FrilAPI.USER_AGENT;
                 req.Method = "GET";
+                //webモードのときはauth_tokenをヘッダにいれる
+                if (webmode && !string.IsNullOrEmpty(this.account.auth_token)) req.Headers.Add("Authorization", this.account.auth_token);
                 //プロキシの設定
                 if (string.IsNullOrEmpty(this.proxy) == false) {
                     System.Net.WebProxy proxy = new System.Net.WebProxy(this.proxy);
@@ -392,7 +394,7 @@ namespace FriRaLand {
             }
         }
         //FrilAPIをPOSTでたたく
-        private FrilRawResponse postFrilAPI(string url, Dictionary<string, string> param,CookieContainer cc) {
+        private FrilRawResponse postFrilAPI(string url, Dictionary<string, string> param,CookieContainer cc, bool webmode = false) {
             FrilRawResponse res = new FrilRawResponse();
             try {
                 string text = "";
@@ -415,6 +417,8 @@ namespace FriRaLand {
                 req.Accept = "*/*";
                 req.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
                 req.ContentLength = (long)bytes.Length;
+                //webモードのときはauth_tokenをヘッダにいれる
+                if (webmode && !string.IsNullOrEmpty(this.account.auth_token)) req.Headers.Add("Authorization", this.account.auth_token);
                 //クッキーコンテナの追加
                 req.CookieContainer = cc;
                 //プロキシの設定
@@ -1019,7 +1023,7 @@ namespace FriRaLand {
                 string url = "https://web.fril.jp/transaction";
                 //string url = "https://web.fril.jp/v2/sale/shipping/item";
                 param.Add("item_id", itemid);
-                FrilRawResponse rawres = getFrilAPI(url, param,this.account.cc);
+                FrilRawResponse rawres = getFrilAPI(url, param,this.account.cc, true);
                 if (rawres.error) throw new Exception();
                 dynamic resjson = DynamicJson.Parse(rawres.response);
                 int commentnum = ((object[])resjson.comments).Length;
