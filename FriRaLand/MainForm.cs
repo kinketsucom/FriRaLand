@@ -452,38 +452,6 @@ namespace FriRaLand {
             return true;
         }
 
-        private void アカウント管理ToolStripMenuItem_Click(object sender, EventArgs e) {
-
-        }
-
-        private void 通知一覧ToolStripMenuItem_Click(object sender, EventArgs e) {
-
-        }
-
-        private void 出金管理ToolStripMenuItem_Click(object sender, EventArgs e) {
-
-        }
-
-        private void 圏外チェックToolStripMenuItem_Click(object sender, EventArgs e) {
-
-        }
-
-        private void 条件指定による購入ToolStripMenuItem_Click(object sender, EventArgs e) {
-
-        }
-
-        private void dBメンテナンスToolStripMenuItem_Click(object sender, EventArgs e) {
-
-        }
-
-        private void ライセンスToolStripMenuItem_Click(object sender, EventArgs e) {
-
-        }
-
-        private void オプションToolStripMenuItem_Click(object sender, EventArgs e) {
-
-        }
-
         private void アカウント管理ToolStripMenuItem_Click_1(object sender, EventArgs e) {
             //if (!LicenseForm.checkCanUseWithErrorWindow()) return;
             if (checkNowAutoMode()) return;
@@ -869,7 +837,8 @@ namespace FriRaLand {
             //if (!LicenseForm.checkCanUseWithErrorWindow()) return;
             var selectedAPIs = getNowSelectedAPIs();
             if (selectedAPIs.Count == 0) return;
-            UpdateSelling(selectedAPIs);
+            string get_item_type = "selling";
+            UpdateSelling(selectedAPIs,get_item_type);
         }
         private List<FrilAPI> getNowSelectedAPIs() {
             //アカウントがDB上になくなにも選択されていないときは空リストかえす
@@ -887,10 +856,10 @@ namespace FriRaLand {
             //}
             return rst;
         }
-        private async void UpdateSelling(List<FrilAPI> apis) {
-            this.toolStripStatusLabel1.Text = "出品中商品取得開始";
+        private async void UpdateSelling(List<FrilAPI> apis,string get_item_type) {
+            this.toolStripStatusLabel1.Text = "商品情報取得開始";
             DisableAllButton();
-            var items = await Task.Run(() => DoGetSelling(apis, this.detailInfoGetCheckBox.Checked));
+            var items = await Task.Run(() => DoGetSelling(apis, get_item_type, this.detailInfoGetCheckBox.Checked));
             if (items == null) {
                 EnableAllButton();
                 return;
@@ -902,7 +871,7 @@ namespace FriRaLand {
                 ExhibittedItemDataBindList.Add(item);
                 ExhibittedItemDataBackBindList.Add(item);
             }
-            this.toolStripStatusLabel1.Text = "出品中商品取得完了 : " + items.Count.ToString() + "件";
+            this.toolStripStatusLabel1.Text = "商品情報取得完了 : " + items.Count.ToString() + "件";
             ExhibittedDataGridView.RowCount = ExhibittedItemDataBindList.Count;
             ExhibittedDataGridView.ClearSelection();
             ExhibittedDataGridView.Refresh();
@@ -921,7 +890,7 @@ namespace FriRaLand {
             this.LocalItemDataGridView.Enabled = this.ReservationDataGridView.Enabled = this.ExhibittedDataGridView.Enabled = true;
             accountListComboBox.Enabled = true;
         }
-        private List<FrilItem> DoGetSelling(List<FrilAPI> apis, bool detailflag = false) {
+        private List<FrilItem> DoGetSelling(List<FrilAPI> apis,string get_item_type, bool detailflag = false) {
             //出品中の商品を取得する
             List<FrilItem> items = new List<FrilItem>();
             var itemNoteDBHelper = new ItemNoteDBHelper();
@@ -929,7 +898,7 @@ namespace FriRaLand {
             foreach (var api in apis) {
                 CookieContainer cc = new CookieContainer();
                 var api2 = Common.checkFrilAPI(api);
-                var user_items = api2.getSellingItem(api2.account.sellerid,cc);
+                var user_items = api2.getSellingItem(api2.account.sellerid,get_item_type,cc);
                 //var user_items = api2.GetAllItemsWithSellers(api2.account.sellerid, new List<int> { 1 });
                 if (detailflag) {
                     //購入者コメント時間と出品者コメント時間を取得
@@ -1051,7 +1020,8 @@ namespace FriRaLand {
             MessageBox.Show(message, "一括取り消し", MessageBoxButtons.OK, MessageBoxIcon.Information);
             //出品一覧更新
             var selectedAPIs = getNowSelectedAPIs();
-            if (selectedAPIs.Count != 0) UpdateSelling(selectedAPIs);
+            string get_item_type = "selling";
+            if (selectedAPIs.Count != 0) UpdateSelling(selectedAPIs,get_item_type);
             this.toolStripStatusLabel1.Text = "一括取り消し完了(" + message + ")";
             ExhibittedDataGridView.RowCount = ExhibittedItemDataBindList.Count;
             ExhibittedDataGridView.ClearSelection();
@@ -1155,6 +1125,114 @@ namespace FriRaLand {
             this.ReservationDataGridView.Refresh();
             this.exhibit_success_num_label.Text = exhibit_success_num.ToString();
             this.exhibit_failed_num_label.Text = exhibit_failed_num.ToString();
+        }
+
+        private void get_trading_button_Click(object sender, EventArgs e) {
+            //if (!LicenseForm.checkCanUseWithErrorWindow()) return;
+            var selectedAPIs = getNowSelectedAPIs();
+            if (selectedAPIs.Count == 0) return;
+            string get_item_type = "trading";
+            UpdateSelling(selectedAPIs, get_item_type);
+            //UpdateTrading(selectedAPIs,get_item_type);
+        }
+        private async void UpdateTrading(List<FrilAPI> apis) {
+            this.toolStripStatusLabel1.Text = "取引中商品取得開始";
+            DisableAllButton();
+            var items = await Task.Run(() => DoGetTrading(apis, this.detailInfoGetCheckBox.Checked));
+            if (items == null) {
+                EnableAllButton();
+                return;
+            }
+            ExhibittedItemDataBindList.Clear();
+            ExhibittedItemDataBackBindList.Clear();
+            foreach (var item in items) {
+                item.is_sellitem = true;
+                ExhibittedItemDataBindList.Add(item);
+                ExhibittedItemDataBackBindList.Add(item);
+            }
+            this.toolStripStatusLabel1.Text = "取引中商品取得完了 : " + items.Count.ToString() + "件";
+            ExhibittedDataGridView.RowCount = ExhibittedItemDataBindList.Count;
+            ExhibittedDataGridView.ClearSelection();
+            ExhibittedDataGridView.Refresh();
+            EnableAllButton();
+            ToggleExhibittedDataGridView(false);
+            ReloadLocalItem("");
+        }
+        private List<FrilItem> DoGetTrading(List<FrilAPI> apis, bool detailflag = false) {
+            //出品履歴を取得
+            var shuppinrirekiDBHelper = new ShuppinRirekiDBHelper();
+            var zaikoDBHelper = new ZaikoDBHelper();
+            var shuppinrirekiDic = shuppinrirekiDBHelper.loadRirekiDictionary();
+            var itemParentDic = new ItemFamilyDBHelper().getItemIdToParentIdDictionary();
+            var itemNoteDBHelper = new ItemNoteDBHelper();
+            //取引中の商品を取得する
+            List<FrilItem> items = new List<FrilItem>();
+            foreach (var api in apis) {
+                var api2 = Common.checkFrilAPI(api);
+                var user_items = api2.GetAllItemsWithSellers(api2.account.sellerid, new List<int> { 2 });
+                if (detailflag) {
+                    //購入者取引メッセージ時間と出品者取引メッセージ時間を取得
+                    for (int i = 0; i < user_items.Count; i++) {
+                        var comments = api2.GetTransactionMessages(user_items[i].item_id);
+                        //一番新しいものを取得する
+                        foreach (var comment in comments) {
+                            if (comment.userid == api2.account.sellerid) {
+                                if (user_items[i].seller_transaction_message_time < comment.created) user_items[i].seller_transaction_message_time = comment.created;
+                            } else {
+                                if (user_items[i].buyer_transaction_message_time < comment.created) user_items[i].buyer_transaction_message_time = comment.created;
+                            }
+                        }
+                        user_items[i].transaction_message_num = comments.Count;
+                        //購入者氏名を調べる
+                        var info = api2.GetTransactionInfo(user_items[i].item_id);
+                        if (string.IsNullOrEmpty(info.buyername) == false) user_items[i].buyer_simei = info.buyername;
+                    }
+
+                }
+                //商品備考をセットする
+                var itemnoteDictionary = itemNoteDBHelper.loadItemNotesDictionary();
+                for (int i = 0; i < user_items.Count; i++) {
+                    if (itemnoteDictionary.ContainsKey(user_items[i].item_id)) {
+                        var note = itemnoteDictionary[user_items[i].item_id];
+                        user_items[i].bikou = note.bikou;
+                        user_items[i].address_copyed = note.address_copyed;
+                    } else {
+                        user_items[i].bikou = "";
+                        user_items[i].address_copyed = false;
+                    }
+                }
+                items.AddRange(user_items);
+                var accountDBHelper = new AccountDBHelper();
+                var exhibitLogDBHelper = new ExhibitLogDBHelper();
+                var itemfamilyDBHelper = new ItemFamilyDBHelper();
+                //各商品について売れていた場合の処理を実行
+                foreach (var item in user_items) {
+                    ExhibitService.updateDBOnSold(api2, item);
+                }
+                //shuppinrirekiDBHelper.updateShuppinRireki(uretaItemIDList, true);
+            }
+            return items;
+        }
+
+        private void ExhibittedDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e) {
+            //出品中商品の場合はダブルクリックでコメントを開く
+            if (this.ExhibittedDataGridView.SelectedRows.Count == 1) {
+                int index = this.ExhibittedDataGridView.SelectedRows[0].Index;
+                FrilItem item = this.ExhibittedItemDataBindList[index];
+                if (item.item_status_in_fril == "selling") {
+                    if (sellerIDtoAPIDictionary.ContainsKey(item.seller.id.ToString())) {
+                        var api = sellerIDtoAPIDictionary[item.seller.id.ToString()];
+                        var api2 = Common.checkFrilAPI(api);
+                        CommentForm f = new CommentForm(api2, item.item_id, this);
+                        f.Show();
+                    }
+                } else if (item.item_status_in_fril == "trading") {
+                    var api = sellerIDtoAPIDictionary[item.seller.id.ToString()];
+                    var api2 = Common.checkFrilAPI(api);
+                    TransactionMessageForm f = new TransactionMessageForm(api2, item.itemid);
+                    f.Show();
+                }
+            }
         }
     }
 }

@@ -244,17 +244,20 @@ namespace FriRaLand {
             }
         }
         //ユーザが出品している商品をすべて取得
-        public List<FrilItem> getSellingItem(string userId,CookieContainer cc) {
+        public List<FrilItem> getSellingItem(string userId,string get_item_type ,CookieContainer cc) {
             List<FrilItem> rst = new List<FrilItem>();
             bool has_next = true;
             string max_id = "0"; //二回目以降で「この商品IDより後」の商品を取得する
             do {
                 Dictionary<string, string> param = new Dictionary<string, string>();
-                param.Add("include_sold_out", "0");
-                param.Add("limit", "60");
-                param.Add("max_id", max_id);
-                param.Add("user_id", userId);
-                string url = "https://api.fril.jp/api/v3/items/list";
+                //param.Add("include_sold_out", "0");
+                //param.Add("limit", "60");
+                //param.Add("max_id", max_id);
+                //param.Add("user_id", userId);
+                param.Add("auth_token", this.account.auth_token);
+                param.Add("status", get_item_type);
+                string url = "https://api.fril.jp/api/v3/items/sell";
+                //string url = "https://api.fril.jp/api/v3/items/list";
                 FrilRawResponse rawres = getFrilAPI(url, param,cc);
                 if (rawres.error) {
                     Log.Logger.Error("フリル出品中商品の取得に失敗: UserID: " + this.account.userId);
@@ -266,7 +269,7 @@ namespace FriRaLand {
                     item.item_id = ((long)data.item_id).ToString();
                     item.imageurls[0] = data.img_url;
                     item.item_name = data.item_name;
-                    item.detail = data.item_detail;
+                    //item.detail = data.item_detail;//FIXIT:商品説明のとりかたわかんないっす・・・
                     item.s_price = (int)data.price;
                     item.t_status = (int)data.t_status;
                     item.user_id = ((long)data.user_id).ToString();
@@ -279,7 +282,8 @@ namespace FriRaLand {
                     rst.Add(item);
                     max_id = item.item_id;
                 }
-                has_next = (bool)resjson.paging.has_next;
+                has_next = false;//FIXIT:ここわかんなかったんでfalseいれてるだけで絶対ダメ
+                //has_next = (bool)resjson.paging.has_next;//FIXIT:ここもわかりませんでした
             } while (has_next);
             return rst;
         }
@@ -303,9 +307,6 @@ namespace FriRaLand {
                 //HttpWebRequestの作成
                 HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
                 req.CookieContainer = cc;
-
-
-
 
                 req.UserAgent = FrilAPI.USER_AGENT;
                 req.Method = "GET";
@@ -942,6 +943,7 @@ namespace FriRaLand {
         }
         //コンディションに応じて商品を取得する
         //一度のリクエストで取れるのは最大で60個 60個を超える場合は複数回APIを叩いて結果を取得する.
+        //FIXIT:この60とかいう数字コメントアウトしてるいま
         private List<FrilItem> GetItems(GetItemsOption option, bool notall, bool detailflag) {
             Dictionary<string, string> default_param = GetTokenParamListForFrilAPI();
             default_param = default_param.Concat(option.ToPairList()).ToDictionary(x => x.Key, x => x.Value);
@@ -957,7 +959,7 @@ namespace FriRaLand {
                 Dictionary<string, string> param = new Dictionary<string, string>();
                 param = param.Concat(default_param).ToDictionary(x => x.Key, x => x.Value);
                 if (max_pager_id != "") param.Add("max_pager_id", max_pager_id);
-                FrilRawResponse rawres = getFrilAPI("http://api.fril.jp/api/v3/items/show", param,cc);//FIXIT:Frilのものにかえる
+                FrilRawResponse rawres = getFrilAPI("http://api.fril.jp/api/v3/items/show", param, cc);
 
                 if (rawres.error) return res;
                 try {
@@ -995,6 +997,99 @@ namespace FriRaLand {
             }
             return stringBuilder.ToString();
         }
+        //現在のUNIXタイムスタンプを取得
+        private static string getUNIXTimeStamp() {
+            long unixTimestamp = (long)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalMilliseconds;
+            return unixTimestamp.ToString();
+        }
+        //取引メッセージを取得する
+        public List<Comment> GetTransactionMessages(string itemid) {
+            List<Comment> res = new List<Comment>();
+            try {
+                Dictionary<string, string> param = new Dictionary<string, string>();
+                string url = "https://api.mercari.jp/transaction_messages/get_messages";
+                param.Add("item_id", itemid);
+                param.Add("t", FrilAPI.getUNIXTimeStamp());
+                param.Add("_access_token", this.account.auth_token);
+                CookieContainer cc = new CookieContainer();
+                FrilRawResponse rawres = getFrilAPI(url, param,cc);
+                if (rawres.error) throw new Exception();
+                dynamic resjson = DynamicJson.Parse(rawres.response);
+                int commentnum = ((object[])resjson.data).Length;
+                for (int i = 0; i < commentnum; i++) {
+                    Comment c = new Comment();
+                    c.nickname = resjson.data[i].user.name;
+                    c.userid = ((long)resjson.data[i].user.id).ToString();
+                    c.message = resjson.data[i].body;
+                    c.created = Common.getDateFromUnixTimeStamp((long)resjson.data[i].created);
+                    res.Add(c);
+                }
+                Log.Logger.Info("取引メッセージの取得に成功");
+                return res;
+            } catch (Exception ex) {
+                Log.Logger.Error(ex.Message);
+                Log.Logger.Error("取引メッセージの取得に失敗");
+                return res;
+            }
+        }
+        //購入者情報の構造体
+        public struct TransactionInfo {
+            public string transaction_id;
+            public string buyername;
+            public string buyerid;
+            public string address;
+            public string status;
+            public string zipcode;
+            public string address1;
+            public string address2;
+            public string sellerid;
+            //public DateTime created;
+            public string created;
+        }
+        //購入者氏名及び商品発送先住所を取得する
+        public TransactionInfo GetTransactionInfo(string itemid) {
+            TransactionInfo res = new TransactionInfo();
+            try {
+                Dictionary<string, string> param = new Dictionary<string, string>();
+                string url = "https://api.mercari.jp/transaction_evidences/get";//FIXIT:Frilのものに変える
+                param.Add("item_id", itemid);
+                param.Add("t", FrilAPI.getUNIXTimeStamp());
+                param.Add("_access_token", this.account.auth_token);
+                CookieContainer cc = new CookieContainer();
+                FrilRawResponse rawres = getFrilAPI(url, param,cc);
+                if (rawres.error) throw new Exception();
+                dynamic resjson = DynamicJson.Parse(rawres.response);
+                //JSONから情報取り出し
+                string buyername = resjson.data.family_name + " " + resjson.data.first_name;
+                string zipcode = resjson.data.zip_code1 + "-" + resjson.data.zip_code2;
+                string prefecture = resjson.data.prefecture;
+                string city = resjson.data.city;
+                string address1 = resjson.data.address1;
+                string address2 = resjson.data.address2;
+                string result_address = zipcode + Environment.NewLine + prefecture + city + address1 + Environment.NewLine + address2;
+                res.buyerid = ((long)resjson.data.buyer_id).ToString();
+                res.sellerid = ((long)resjson.data.seller_id).ToString();
+                res.buyername = buyername;
+                res.address = result_address;
+                res.status = resjson.data.status;
+                res.transaction_id = ((long)resjson.data.id).ToString();
+                res.zipcode = zipcode;
+                res.address1 = prefecture + city + address1;
+                res.address2 = address2;
+                //createdプロパティはバージョンによってUNIXスタンプ返すものと文字列返すものがある！
+                /*long created = (long)resjson.data.created;
+                DateTime UNIX_EPOCH = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc); //UnixTimeの開始時刻
+                res.created = UNIX_EPOCH.AddSeconds(created).ToLocalTime();*/
+                res.created = resjson.data.created;
+                Log.Logger.Info("取引情報の取得に成功");
+                return res;
+            } catch (Exception ex) {
+                Log.Logger.Error(ex.Message);
+                Log.Logger.Error("取引情報の取得に失敗");
+                return res;
+            }
+        }
+
         //コメント用の構造体
         public struct Comment {
             public DateTime created;

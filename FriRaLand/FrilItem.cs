@@ -57,6 +57,7 @@ namespace FriRaLand {
         public bool is_sellitem = false;
         public bool is_buyitem = false;
 
+        public string item_status_in_fril;//商品がsellingかtradingかsoldか
 
 
 
