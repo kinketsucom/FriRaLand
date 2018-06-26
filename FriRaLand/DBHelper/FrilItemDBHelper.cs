@@ -21,7 +21,7 @@ namespace FriRaLand.DBHelper {
                                 + "s_price INTEGER,status INTEGER, t_status INTEGER,"
                                 + "carriage INTEGER,d_method INTEGER, d_date INTEGER,d_area INTEGER,"
                                 + "user_id TEXT, created_at TEXT,"//created_atはDateTime型
-                                + "screen_name TEXT, category_id INTEGER, category_p_id INTEGER,"
+                                + "screen_name TEXT, category_id INTEGER, category_p_id INTEGER,category_level1_id INTEGER,category_level2_id INTEGER,category_level3_id INTEGER,category_level4_id INTEGER"
                                 + "size_id INTEGER, size_name TEXT,brand_id INTEGER,"
                                 + "i_brand_id INTEGER, comments_count INTEGER,"
                                 + "likes_count INTEGER,"
@@ -114,7 +114,7 @@ namespace FriRaLand.DBHelper {
                                     + "item_id, item_name, detail, s_price, status, t_status,"
                                     + "carriage, d_method, d_date, d_area, "
                                     + "user_id, created_at,screen_name,category_id, "
-                                    + "category_p_id,size_id,size_name,brand_id,i_brand_id,"
+                                    + "category_p_id,category_level1_id,category_level2_id,category_level3_id,category_level4_id,size_id,size_name,brand_id,i_brand_id,"
                                     + "comments_count,likes_count,Pic1,Pic2,Pic3,Pic4,number) "
                                     + "VALUES ('" + item.item_id.Replace("'", "''") + "','" + item.item_name.Replace("'", "''")
                                     + "','" + item.detail + "'," + item.s_price.ToString() + "," + item.status.ToString()
@@ -122,7 +122,7 @@ namespace FriRaLand.DBHelper {
                                     + item.carriage.ToString() + "," + item.d_method.ToString() + ","
                                     + item.d_date.ToString() + "," + item.d_area.ToString() + ",'"
                                     + item.user_id + "','" + item.created_at.ToString() + "','" + item.screen_name.ToString() + "',"
-                                    + item.category_id.ToString() + "," + item.category_p_id.ToString() + ","
+                                    + item.category_id.ToString() + "," + item.category_p_id.ToString() + "," + item.category_level1_id.ToString() + "," + item.category_level2_id.ToString() + "," + item.category_level3_id.ToString() + "," + item.category_level4_id.ToString() + ","
                                     + item.size_id.ToString() + ",'" + item.size_name + "',"
                                     + item.brand_id.ToString() + "," + item.i_brand_id + ","
                                     + item.comments_count.ToString() + "," + item.likes_count + ",'"
@@ -345,6 +345,10 @@ namespace FriRaLand.DBHelper {
                                     + "screen_name = '" + item.screen_name.Replace("'", "''") + "',"
                                     + "category_id = " + item.category_id.ToString() + ","
                                     + "category_p_id = " + item.category_p_id.ToString() + ","
+                                    + "category_level1_id = " + item.category_level1_id.ToString() + ","
+                                    + "category_level2_id = " + item.category_level2_id.ToString() + ","
+                                    + "category_level3_id = " + item.category_level3_id.ToString() + ","
+                                    + "category_level4_id = " + item.category_level4_id.ToString() + ","
                                     + "size_id = " + item.size_id.ToString() + ","
                                     + "size_name = '" + item.size_name.Replace("'", "''") + "',"
                                     + "brand_id = " + item.brand_id.ToString() + ","
