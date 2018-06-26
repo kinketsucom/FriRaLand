@@ -21,7 +21,7 @@ namespace FriRaLand.DBHelper {
                                 + "s_price INTEGER,status INTEGER, t_status INTEGER,"
                                 + "carriage INTEGER,d_method INTEGER, d_date INTEGER,d_area INTEGER,"
                                 + "user_id TEXT, created_at TEXT,"//created_atはDateTime型
-                                + "screen_name TEXT, category_id INTEGER, category_p_id INTEGER,category_level1_id INTEGER,category_level2_id INTEGER,category_level3_id INTEGER,category_level4_id INTEGER"
+                                + "screen_name TEXT, category_id INTEGER, category_p_id INTEGER,category_level1_id INTEGER,category_level2_id INTEGER,category_level3_id INTEGER,category_level4_id INTEGER,"
                                 + "size_id INTEGER, size_name TEXT,brand_id INTEGER,"
                                 + "i_brand_id INTEGER, comments_count INTEGER,"
                                 + "likes_count INTEGER,"
@@ -253,10 +253,10 @@ namespace FriRaLand.DBHelper {
                     item.imagepaths[1] = sQLiteDataReader["Pic2"].ToString();
                     item.imagepaths[2] = sQLiteDataReader["Pic3"].ToString();
                     item.imagepaths[3] = sQLiteDataReader["Pic4"].ToString();
-                    //item.category_level1_id = int.Parse(sQLiteDataReader["CategoryLevel1"].ToString());//FIXME:やってない
-                    //item.category_level2_id = int.Parse(sQLiteDataReader["CategoryLevel2"].ToString());
-                    //item.category_level3_id = int.Parse(sQLiteDataReader["CategoryLevel3"].ToString());
-                    //item.category_level4_id = int.Parse(sQLiteDataReader["CategoryLevel4"].ToString());
+                    item.category_level1_id = int.Parse(sQLiteDataReader["category_level1_id"].ToString());
+                    item.category_level2_id = int.Parse(sQLiteDataReader["category_level2_id"].ToString());
+                    item.category_level3_id = int.Parse(sQLiteDataReader["category_level3_id"].ToString());
+                    item.category_level4_id = int.Parse(sQLiteDataReader["category_level4_id"].ToString());
                     item.size_id = int.Parse(sQLiteDataReader["size_id"].ToString());
                     item.brand_id = int.Parse(sQLiteDataReader["brand_id"].ToString());
                     item.status = int.Parse(sQLiteDataReader["status"].ToString());

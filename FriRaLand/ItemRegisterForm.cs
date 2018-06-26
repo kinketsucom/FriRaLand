@@ -9,10 +9,12 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static FriRaLand.FrilCommon;
 
 namespace FriRaLand {
     public partial class ItemRegisterForm : Form {
         public bool is_editmode = false; //編集から開いた場合はis_editmode = true. 商品登録（新規）から開いた場合はfalse;
+        public bool setting_now = true;//GUIはめこんでますよフラグ
         public MainForm mainform;
         private int openItemDBId;
         public ItemRegisterForm() {
@@ -225,7 +227,15 @@ namespace FriRaLand {
                 }
             }
             SetFrilSizeComboBox();
+
+            if (is_editmode && setting_now) {
+                if (this.openItem.category_level2_id >= 0) {
+                    this.Fril_CategoryComboBoxLevel2.SelectedIndex = TabIndexFromList(FrilCommon.fril_categoryDictionary[openItem.category_level1_id] , openItem.category_level2_id);
+                }
+            }
         }
+  
+
 
         private void Fril_CategoryComboBoxLevel2_SelectedIndexChanged(object sender, EventArgs e) {
             if (this.Fril_CategoryComboBoxLevel2.SelectedIndex < 0) return;
@@ -243,6 +253,12 @@ namespace FriRaLand {
                 }
             }
             SetFrilSizeComboBox();
+
+            if (is_editmode && setting_now) {
+                if (this.openItem.category_level3_id >= 0) {
+                    this.Fril_CategoryComboBoxLevel3.SelectedIndex = TabIndexFromList(FrilCommon.fril_categoryDictionary[openItem.category_level2_id], openItem.category_level3_id);
+                }
+            }
         }
 
         private void Fril_CategoryComboBoxLevel3_SelectedIndexChanged(object sender, EventArgs e) {
@@ -258,6 +274,12 @@ namespace FriRaLand {
                 }
             }
             SetFrilSizeComboBox();
+            if (is_editmode && setting_now) {
+                if (this.openItem.category_level4_id >= 0) {
+                    this.Fril_CategoryComboBoxLevel4.SelectedIndex = TabIndexFromList(FrilCommon.fril_categoryDictionary[openItem.category_level3_id], openItem.category_level4_id);
+                }
+            }
+            
         }
 
         private void Fril_CategoryComboBoxLevel4_SelectedIndexChanged(object sender, EventArgs e) {
@@ -280,6 +302,19 @@ namespace FriRaLand {
                     this.Fril_SizeComboBox.Items.Add(sizeinfo);
                 }
                 this.Fril_SizeComboBox.Enabled = true;
+
+
+                if (is_editmode && setting_now) {
+                    //カテゴリがきまればサイズとブランドの候補はきまるので候補からIDが一致するSelectedIndexを見つければいい
+                    if (openItem.size_id >= 0 && Fril_SizeComboBox.Enabled) {
+                        Console.WriteLine(openItem.size_id);
+                        Fril_SizeComboBox.SelectedIndex = TabIndexFromDictionary(FrilCommon.fril_default_sizeInfoDictionary, 10004);
+                        this.setting_now = false;
+                    }
+                }
+
+
+
             } else {
                 this.Fril_SizeComboBox.Items.Clear();
                 this.Fril_SizeComboBox.Enabled = false;
@@ -474,6 +509,20 @@ namespace FriRaLand {
             }
             return index;
         }
+        private int TabIndexFromDictionary(Dictionary<int, List<FrilSizeInfo>> dic, int target) {
+            int index = 0;
+            foreach (var val in dic) {
+                index = 0;
+                foreach (var size in val.Value) {
+                    if (size.id == target) {
+                        return index;
+                    }
+                    index = index + 1;
+                }
+              
+            }
+            return index;
+        }
 
 
 
@@ -519,28 +568,8 @@ namespace FriRaLand {
                 if (loaditem.s_price <= 0) this.PriceTextBox.Text = "";
                 else this.PriceTextBox.Text = loaditem.s_price.ToString();
                 if (loaditem.brand_id >= 0) this.Fril_BrandComboBox.SelectedIndex = TabIndexFromList(FrilCommon.fril_brands, loaditem.brand_id);
-                if (loaditem.category_level1_id >= 0) {
-                    this.Fril_CategoryComboBoxLevel1.SelectedIndex = TabIndexFromList(FrilCommon.fril_categoryDictionary[0], loaditem.category_level1_id);
-                    this.Fril_CategoryComboBoxLevel2.Enabled = true;   
-                }
-                if (loaditem.category_level2_id >= 0) {
-                    this.Fril_CategoryComboBoxLevel2.SelectedIndex = TabIndexFromList(FrilCommon.fril_categoryDictionary[1], loaditem.category_level2_id);
-                    this.Fril_CategoryComboBoxLevel3.Enabled = true;       
-                 }
-                if (loaditem.category_level3_id >= 0) {
-                    this.Fril_CategoryComboBoxLevel3.SelectedIndex = TabIndexFromList(FrilCommon.fril_categoryDictionary[2], loaditem.category_level3_id);
-                    this.Fril_CategoryComboBoxLevel4.Enabled = true;
-                }
-                if (loaditem.category_level4_id >= 0) this.Fril_CategoryComboBoxLevel4.SelectedIndex = TabIndexFromList(FrilCommon.fril_categoryDictionary[3], loaditem.category_level4_id);
-                //カテゴリがきまればサイズとブランドの候補はきまるので候補からIDが一致するSelectedIndexを見つければいい
-                if (loaditem.size_id >= 0 && Fril_SizeComboBox.Enabled) {
-                    for (int i = 0; i < Fril_SizeComboBox.Items.Count; i++) {
-                        FrilCommon.SizeInfo si = (FrilCommon.SizeInfo)Fril_SizeComboBox.Items[i];
-                        if (si.id == loaditem.size_id) {
-                            Fril_SizeComboBox.SelectedIndex = i;
-                        }
-                    }
-                }
+                if (loaditem.category_level1_id >= 0) this.Fril_CategoryComboBoxLevel1.SelectedIndex = TabIndexFromList(FrilCommon.fril_categoryDictionary[0], loaditem.category_level1_id);
+
 
 
                 //if (loaditem.brand_id >= 0 && Fril_BrandComboBox.Enabled) {
