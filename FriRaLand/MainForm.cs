@@ -1229,7 +1229,7 @@ namespace FriRaLand {
                 } else if (item.item_status_in_fril == "trading") {
                     var api = sellerIDtoAPIDictionary[item.seller.id.ToString()];
                     var api2 = Common.checkFrilAPI(api);
-                    TransactionMessageForm f = new TransactionMessageForm(api2, item.itemid);
+                    TransactionMessageForm f = new TransactionMessageForm(api2, item.item_id);
                     f.Show();
                 }
             }

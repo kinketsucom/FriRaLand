@@ -56,6 +56,18 @@ namespace FriRaLand {
 
         public bool is_sellitem = false;
         public bool is_buyitem = false;
+        public struct StatusMessage {
+            public const string on_sale = "出品中";
+            public const string trading = "取引中";
+            public const string wait_payment = "支払い待ち";
+            public const string wait_shipping = "発送待ち";
+            public const string wait_review = "受取待ち";
+            public const string wait_done = "未評価";
+            public const string done = "取引完了";
+            public const string sold_out = "売却済";
+            public const string stop = "公開停止中";
+        }
+
 
         public string item_status_in_fril;//商品がsellingかtradingかsoldか
 

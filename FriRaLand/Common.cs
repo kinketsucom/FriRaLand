@@ -277,7 +277,10 @@ namespace FriRaLand {
             }
             return api;
         }
-
+        public static int getRieki(int price) {
+            //手数料1割は1円未満切り捨て
+            return price - (int)(price * 0.1);
+        }
 
 
 

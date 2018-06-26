@@ -44,7 +44,13 @@ namespace FriRaLand {
         //    this.account.password = account.password;
         //    this.account.fril_fril_auth_token = accountaccount.auth_token;
         //}
-
+        public struct TradingStatus {
+            public const string Wait_Paymet = "wait_payment";
+            public const string Wait_Shipping = "wait_shipping";
+            public const string Wait_Review = "wait_review";
+            public const string Wait_Done = "wait_done";
+            public const string Done = "done";
+        }
 
 
         //get_items でのOption
@@ -61,6 +67,7 @@ namespace FriRaLand {
         }
 
         //FIXIT:こっちのSellは不要かな？
+        #region 不要じゃねこれ
         //商品の出品.要ログイン
         //返り値: 成功:新しい商品オブジェクト 失敗:null
         //public FrilItem Sell(FrilItem item, string[] imagelocation) {
@@ -113,6 +120,8 @@ namespace FriRaLand {
         //        return null;
         //    }
         //}
+        #endregion
+
 
         //成功: itemID 失敗: null
         public string Sell(FrilItem item,CookieContainer cc) {
@@ -1124,8 +1133,126 @@ namespace FriRaLand {
                 return res;
             }
         }
-
-
+        //コメントを追加
+        public bool AddComment(string itemid, string message) {
+            try {
+                Dictionary<string, string> param = new Dictionary<string, string>();
+                string url = "https://api.fril.jp/api/v3/comments/";
+                param.Add("item_id", itemid);
+                param.Add("user_id", this.account.userId);
+                param.Add("message", message);
+                param.Add("status", "1"); //?
+                CookieContainer cc = new CookieContainer();
+                FrilRawResponse rawres = postFrilAPI(url, param,cc);
+                if (rawres.error) throw new Exception();
+                Log.Logger.Info("コメント追加成功");
+                return true;
+            } catch (Exception ex) {
+                Log.Logger.Error("コメント追加失敗: " + itemid);
+                Log.Logger.Error(ex.Message);
+                return false;
+            }
+        }
+        //コメントを削除
+        public bool DeleteComment(string itemid, string commentid) {
+            try {
+                Dictionary<string, string> param = new Dictionary<string, string>();
+                string url = "https://api.fril.jp/api/v3/comments/";
+                //param.Add("item_id", itemid);
+                param.Add("id", commentid);
+                CookieContainer cc = new CookieContainer();//FIXIT:不要なクッキーコンテナの可能性がある。
+                FrilRawResponse rawres = postFrilAPI(url, param,cc);
+                if (rawres.error) throw new Exception();
+                Log.Logger.Info("コメント削除成功");
+                return true;
+            } catch (Exception ex) {
+                Log.Logger.Error("コメント削除失敗: " + itemid);
+                Log.Logger.Error(ex.Message);
+                return false;
+            }
+        }
+        //取引メッセージを送信する
+        public void SendTransactionMessage(string itemid, string message) {
+            try {
+                Dictionary<string, string> param = new Dictionary<string, string>();
+                string url = "https://api.fril.jp/transaction_messages/post";
+                param.Add("item_id", itemid);
+                param.Add("body", message);
+                param.Add("t", FrilAPI.getUNIXTimeStamp());
+                param.Add("_access_token", this.account.auth_token);
+                CookieContainer cc = new CookieContainer();//FIXIT:不要なクッキーコンテナの可能性がある。
+                FrilRawResponse rawres = postFrilAPI(url, param,cc);
+                if (rawres.error) throw new Exception();
+                Log.Logger.Info("取引メッセージ送信成功");
+            } catch (Exception ex) {
+                Log.Logger.Error(ex.Message);
+                Log.Logger.Error("取引メッセージ送信失敗");
+            }
+        }
+        //商品の発送通知を行う
+        public bool SendItemShippedNotification(string itemid) {
+            try {
+                Dictionary<string, string> param = new Dictionary<string, string>();
+                string url = "https://api.mercari.jp/transaction_evidences/shipped";
+                param.Add("transaction_evidence_id", this.GetTransactionInfo(itemid).transaction_id);
+                param.Add("t",FrilAPI.getUNIXTimeStamp());
+                param.Add("_access_token", this.account.auth_token);
+                CookieContainer cc = new CookieContainer();//FIXIT:不要なクッキーコンテナの可能性がある。
+                FrilRawResponse rawres = postFrilAPI(url, param,cc);
+                if (rawres.error) throw new Exception();
+                Log.Logger.Info("商品の発送通知に成功");
+                return true;
+            } catch (Exception ex) {
+                Log.Logger.Error(ex.Message);
+                Log.Logger.Error("商品の発送通知に失敗");
+            }
+            return true;
+        }
+        //相手を評価する
+        public bool SendReview(string itemid, string message = "") {
+            try {
+                Dictionary<string, string> param = new Dictionary<string, string>();
+                string url = "https://api.mercari.jp/reviews/post";
+                param.Add("item_id", itemid);
+                param.Add("subject", "buyer");
+                param.Add("to_user_id", this.GetTransactionInfo(itemid).buyerid);
+                param.Add("fame", "good");
+                param.Add("message", message);
+                param.Add("_platform", "android");
+                param.Add("_app_version", XAPPVERSION);
+                param.Add("t",FrilAPI.getUNIXTimeStamp());
+                param.Add("_access_token", this.account.auth_token);
+                CookieContainer cc = new CookieContainer();//FIXIT:不要なクッキーコンテナの可能性がある。
+               FrilRawResponse rawres = postFrilAPI(url, param,cc);
+                if (rawres.error) throw new Exception();
+                Log.Logger.Info("購入者の評価に成功");
+                return true;
+            } catch (Exception ex) {
+                Log.Logger.Info("購入者の評価に失敗");
+                return false;
+            }
+        }
+        //購入された取引をキャンセルする
+        public bool cancelTransaction(string itemid) {
+            TransactionInfo info = GetTransactionInfo(itemid);
+            try {
+                Dictionary<string, string> param = new Dictionary<string, string>();
+                string url = "https://api.mercari.jp/transactions/cancel";
+                param.Add("transaction_evidence_id", info.transaction_id);
+                param.Add("_platform", "android");
+                param.Add("_app_version", XAPPVERSION);
+                param.Add("t", FrilAPI.getUNIXTimeStamp());
+                param.Add("_access_token", this.account.auth_token);
+                CookieContainer cc = new CookieContainer();
+                FrilRawResponse rawres = postFrilAPI(url, param,cc);
+                if (rawres.error) throw new Exception();
+                Log.Logger.Info("取引のキャンセルに成功");
+                return true;
+            } catch (Exception ex) {
+                Log.Logger.Info("取引のキャンセルに失敗: " + ex.Message);
+                return false;
+            }
+        }
 
 
 
