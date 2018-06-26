@@ -24,6 +24,10 @@ namespace FriRaLand {
         private class FrilRawResponse {
             public bool error = true;
             public string response = "";
+            public FrilRawResponse() { }
+            public FrilRawResponse(string response, bool error) {
+                this.response = response; this.error = error;
+            }
         }
 
         public Common.Account account;
@@ -323,7 +327,6 @@ namespace FriRaLand {
                 //HttpWebRequestの作成
                 HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
                 req.CookieContainer = cc;
-
                 req.UserAgent = FrilAPI.USER_AGENT;
                 req.Method = "GET";
                 //プロキシの設定
@@ -336,38 +339,37 @@ namespace FriRaLand {
                 var task = Task.Factory.StartNew(() => executeGetRequest(req));
                 task.Wait(10000);
                 if (task.IsCompleted) {
-                    content = task.Result;
+                    res = task.Result;
                 } else
                     throw new Exception("Timed out");
-                if (string.IsNullOrEmpty(content)) throw new Exception("webrequest error");
-                res.error = false;
-                res.response = content;
+                if (res.error) throw new Exception("webrequest error");
                 Log.Logger.Info("FrilGETリクエスト成功");
                 return res;
             }
             catch (Exception e) {
-                Log.Logger.Error("FrilGETリクエスト失敗");
+                Log.Logger.Error("FrilGETリクエスト失敗:" + res.response);
                 return res;
             }
         }
-        private string executeGetRequest(HttpWebRequest req) {
+        private FrilRawResponse executeGetRequest(HttpWebRequest req) {
             try {
                 HttpWebResponse webres = (HttpWebResponse)req.GetResponse();
                 Stream s = webres.GetResponseStream();
                 StreamReader sr = new StreamReader(s);
                 string content = sr.ReadToEnd();
-                return content;
+                return new FrilRawResponse(content, false);
             } catch (WebException ex) {
                 using (Stream responseStream = ex.Response.GetResponseStream()) {
                     using (StreamReader streamReader = new StreamReader(responseStream, Encoding.GetEncoding("UTF-8"))) {
-                        return streamReader.ReadToEnd();
+                        string content = streamReader.ReadToEnd();
+                        return new FrilRawResponse(content, true);
                     }
                 }
             } catch (Exception ex) {
-                return "";
+                return new FrilRawResponse("", true);
             }
         }
-        private string executePostRequest(ref HttpWebRequest req, byte[] bytes) {
+        private FrilRawResponse executePostRequest(ref HttpWebRequest req, byte[] bytes) {
             try {
                 using (Stream requestStream = req.GetRequestStream()) {
                     requestStream.Write(bytes, 0, bytes.Length);
@@ -376,17 +378,17 @@ namespace FriRaLand {
                 string result = "";
                 using (Stream responseStream = req.GetResponse().GetResponseStream()) {
                     using (StreamReader streamReader = new StreamReader(responseStream, Encoding.GetEncoding("UTF-8"))) {
-                        return streamReader.ReadToEnd();
+                        return new FrilRawResponse(streamReader.ReadToEnd(), false);
                     }
                 }
             } catch (WebException ex) {
                 using (Stream responseStream = ex.Response.GetResponseStream()) {
                     using (StreamReader streamReader = new StreamReader(responseStream, Encoding.GetEncoding("UTF-8"))) {
-                        return streamReader.ReadToEnd();
+                        return new FrilRawResponse(streamReader.ReadToEnd(), true);
                     }
                 }
             } catch (Exception ex) {
-                return "";
+                return new FrilRawResponse("", true);
             }
         }
         //FrilAPIをPOSTでたたく
@@ -427,13 +429,13 @@ namespace FriRaLand {
                 var task = Task.Factory.StartNew(() => executePostRequest(ref req, bytes));
                 task.Wait(10000);
                 if (task.IsCompleted) {
-                    content = task.Result;
+                    res = task.Result;
                     Console.WriteLine(content);
                 } else {
                     throw new Exception("Timed out");
                 }
-                if (string.IsNullOrEmpty(content)) throw new Exception("webrequest error");
-                if (content.Contains("false")) throw new Exception("item result false");
+                if (res.error) throw new Exception("webrequest error");
+                //if (res.Contains("false")) throw new Exception("item result false");
                 res.error = false;
                 res.response = content;
                 Log.Logger.Info("FrilPOSTリクエスト成功");
@@ -441,9 +443,8 @@ namespace FriRaLand {
                 return res;
             }
             catch (Exception e) {
-                
                 Console.WriteLine(e);
-                Log.Logger.Error("FrilPOSTリクエスト失敗");
+                Log.Logger.Error("FrilPOSTリクエスト失敗"+ res.response);
                 return res;
             }
         }
@@ -1015,7 +1016,8 @@ namespace FriRaLand {
             List<Comment> res = new List<Comment>();
             try {
                 Dictionary<string, string> param = new Dictionary<string, string>();
-                string url = "https://web.fril.jp/v2/sale/shipping/item";
+                string url = "https://web.fril.jp/transaction";
+                //string url = "https://web.fril.jp/v2/sale/shipping/item";
                 param.Add("item_id", itemid);
                 FrilRawResponse rawres = getFrilAPI(url, param,this.account.cc);
                 if (rawres.error) throw new Exception();
