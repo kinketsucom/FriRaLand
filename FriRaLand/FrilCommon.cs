@@ -21,6 +21,16 @@ namespace FriRaLand {
         public static Dictionary<string, string> shippingFromAreas = new Dictionary<string, string>();
         public static Dictionary<string, string> shippingDurations = new Dictionary<string, string>();
         public static Dictionary<string, string> cancelOption = new Dictionary<string, string>();
+        public static Dictionary<int, int> ItemConditionIdToSelectedIndex = new Dictionary<int, int>();
+        public static List<ItemCondition> ItemConditionList = new List<ItemCondition>();
+        public static Dictionary<int, int> ShippingPayerIdToSelectedIndexDictionary = new Dictionary<int, int>();
+        public static List<ShippingPayer> ShippingPayerList = new List<ShippingPayer>();
+        public static Dictionary<int, int> ShippingMethodIdToSelectedIndex = new Dictionary<int, int>();
+        public static Dictionary<int, int> PrefectureIdToSelectedIndex = new Dictionary<int, int>();
+        public static List<Prefecture> PrefectureList = new List<Prefecture>();
+        public static Dictionary<int, int> ShippingDurationIdToSelectedIndexDictionary = new Dictionary<int, int>();
+        public static List<ShippingDuration> ShippingDurationList = new List<ShippingDuration>();
+
 
         public static void init() {
             //Masterデータの読み込み
@@ -219,6 +229,36 @@ namespace FriRaLand {
             public int grand_parent_id;//0なら根カテゴリ
             public int size_group_id;//jsonではnull, プログラム上では-1でグループ無し
             public List<int> child_ids;
+        }
+        public struct Brand {
+            public int id;
+            public string name_ja;
+            public string is_deleted; // "no"
+        }
+        public struct SizeInfo {
+            public int id;
+            public string name;
+            public string display_order;
+            public string item_size_group_id;
+            public string is_deleted;
+        }
+        public struct ItemCondition {
+            public int id;
+            public string name;
+        }
+        public struct ShippingPayer {
+            public int id;
+            public string name;
+            public string code;
+        }
+        public struct Prefecture {
+            public int id;
+            public int area_group_id;
+            public string name;
+        }
+        public struct ShippingDuration {
+            public int id;
+            public string name;
         }
         //public static List<FrilCategory> fril_categories = new List<FrilCategory>();
         public static Dictionary<int, List<FrilCategory>> fril_categoryDictionary = new Dictionary<int, List<FrilCategory>>();

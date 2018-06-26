@@ -264,7 +264,7 @@ namespace FriRaLand.DBHelper {
                     item.d_date = int.Parse(sQLiteDataReader["d_date"].ToString());
                     item.d_method = int.Parse(sQLiteDataReader["d_method"].ToString());
                     item.d_area = int.Parse(sQLiteDataReader["d_area"].ToString());
-                    item.s_price = int.Parse(sQLiteDataReader["s_rice"].ToString());
+                    item.s_price = int.Parse(sQLiteDataReader["s_price"].ToString());
                     rst.Add(item);
                 } catch (Exception ex) {
                     Log.Logger.Error("商品読み込み中エラー : " + ex.Message);

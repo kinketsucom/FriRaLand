@@ -82,7 +82,7 @@ namespace FriRaLand {
             //フリル側
 
             //ブランド
-            foreach (FrilCommon.FrilBrand p in FrilCommon.fril_brands){
+            foreach (FrilCommon.FrilBrand p in FrilCommon.fril_brands) {
                 this.Fril_BrandComboBox.Items.Add(p);
             }
             //カテゴリレベル1
@@ -97,7 +97,7 @@ namespace FriRaLand {
             foreach (KeyValuePair<string, string> p in FrilCommon.shippingPayersFril) {
                 this.Fril_ShippingPayerComboBox.Items.Add(p);
             }
-           
+
             //共通
             //発送までの日数
             foreach (KeyValuePair<string, string> p in FrilCommon.shippingDurations) {
@@ -107,7 +107,23 @@ namespace FriRaLand {
             foreach (KeyValuePair<string, string> p in FrilCommon.shippingFromAreas) {
                 this.ShippingAreaComboBox.Items.Add(p);
             }
+
+
+            if (is_editmode) {
+                SetGUIFromItem(this.openItem);
+            }
+
+
+
+
+
         }
+
+
+
+
+
+
         FrilCommon.FrilCategory nowfril_selectedCategory; //フリルの最下層選択中カテゴリ
         //FrilCommon.RakumaCategory nowrakuma_selectedCategory; //ラクマの最下層選択中カテゴリ
         #region GUIFormat
@@ -258,7 +274,7 @@ namespace FriRaLand {
             SetFrilSizeComboBox();
         }
 
-        
+
         private void SetFrilSizeComboBox() {
             //現在選択されたカテゴリに応じてサイズのComboBoxを修正する
             if (FrilCommon.fril_default_sizeInfoDictionary.ContainsKey(nowfril_selectedCategory.size_group_id)) {
@@ -267,13 +283,12 @@ namespace FriRaLand {
                     this.Fril_SizeComboBox.Items.Add(sizeinfo);
                 }
                 this.Fril_SizeComboBox.Enabled = true;
-            }
-            else {
+            } else {
                 this.Fril_SizeComboBox.Items.Clear();
                 this.Fril_SizeComboBox.Enabled = false;
             }
         }
-        
+
 
         private void Fril_ShippingPayerComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             this.Fril_ShippingMethodComboBox.Items.Clear();
@@ -283,8 +298,7 @@ namespace FriRaLand {
                 foreach (KeyValuePair<string, string> p in FrilCommon.shippingMethodsSellerFril) {
                     this.Fril_ShippingMethodComboBox.Items.Add(p);
                 }
-            }
-            else if (this.Fril_ShippingPayerComboBox.SelectedIndex == 1) {
+            } else if (this.Fril_ShippingPayerComboBox.SelectedIndex == 1) {
                 //着払い
                 foreach (KeyValuePair<string, string> p in FrilCommon.shippingMethodsBuyerFril) {
                     this.Fril_ShippingMethodComboBox.Items.Add(p);
@@ -370,8 +384,7 @@ namespace FriRaLand {
         #endregion
 
         //出品ボタン
-        private void ExhibitNowButton_Click(object sender, EventArgs e)
-        {
+        private void ExhibitNowButton_Click(object sender, EventArgs e) {
             FrilAPI api = new FrilAPI(TestForm.mail, TestForm.pass);
             try {
                 if (!api.tryFrilLogin(api.account.cc)) throw new Exception("ログイン失敗(mailかpassが間違っています)");
@@ -387,7 +400,7 @@ namespace FriRaLand {
             //GUIからItem情報を保存する
             FrilItem item = CollectSellSettingsFromGUI();
 
-            
+
             //商品名が設定で制限した長さ以内か調べる
             //if (this.ItemNameTextBox.Text.Length > Settings.getItemNameMaxLength()) {
             //    MessageBox.Show("商品名の長さがオプションで設定した長さより長いです", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -453,6 +466,54 @@ namespace FriRaLand {
             this.is_editmode = true;
             this.openItemDBId = DBId;
         }
+        //編集モードのときにGUIへ情報をセットする
+        private void SetGUIFromItem(FrilItem loaditem) {
+            try { 
+            //GUIにセット（ComboBoxのSelectedIndexをプログラムから書き換えた場合もイベントは呼ばれるのでindexを変えるだけでいい）
+            this.ItemNameTextBox.Text = loaditem.item_name;
+            this.DescriptionTextBox.Text = loaditem.detail;
+            this.pictureBox1.ImageLocation = loaditem.imagepaths[0];
+            this.pictureBox2.ImageLocation = loaditem.imagepaths[1];
+            this.pictureBox3.ImageLocation = loaditem.imagepaths[2];
+            this.pictureBox4.ImageLocation = loaditem.imagepaths[3];
+            //カテゴリレベルまで保存してないので
+            //if (loaditem.category_level1_id >= 0) this.CategoryComboBoxLevel1.SelectedIndex = MercariCommon.CategoryIdToSelectedIndexDictionary[loaditem.category_level1_id];
+            //if (loaditem.category_level2_id >= 0) this.CategoryComboBoxLevel2.SelectedIndex = MercariCommon.CategoryIdToSelectedIndexDictionary[loaditem.category_level2_id];
+            //if (loaditem.category_level3_id >= 0) this.CategoryComboBoxLevel3.SelectedIndex = MercariCommon.CategoryIdToSelectedIndexDictionary[loaditem.category_level3_id];
+            //if (loaditem.category_level4_id >= 0) this.CategoryComboBoxLevel4.SelectedIndex = MercariCommon.CategoryIdToSelectedIndexDictionary[loaditem.category_level4_id];
+            //カテゴリがきまればサイズとブランドの候補はきまるので候補からIDが一致するSelectedIndexを見つければいい
+            if (loaditem.brand_id >= 0 && Fril_BrandComboBox.Enabled) {
+                for (int i = 0; i < Fril_BrandComboBox.Items.Count; i++) {
+                    FrilCommon.Brand bd = (FrilCommon.Brand)Fril_BrandComboBox.Items[i];
+                    if (bd.id == loaditem.brand_id) {
+                        Fril_BrandComboBox.SelectedIndex = i;
+                    }
+                }
+            }
+            if (loaditem.size_id >= 0 && Fril_SizeComboBox.Enabled) {
+                for (int i = 0; i < Fril_SizeComboBox.Items.Count; i++) {
+                    FrilCommon.SizeInfo si = (FrilCommon.SizeInfo)Fril_SizeComboBox.Items[i];
+                    if (si.id == loaditem.size_id) {
+                        Fril_SizeComboBox.SelectedIndex = i;
+                    }
+                }
+            }
+            if (loaditem.status >= 0) this.Fril_ItemConditionComboBox.SelectedIndex = FrilCommon.ItemConditionIdToSelectedIndex[loaditem.status];
+            if (loaditem.carriage >= 0) this.Fril_ShippingPayerComboBox.SelectedIndex = FrilCommon.ShippingPayerIdToSelectedIndexDictionary[loaditem.carriage];
+            if (loaditem.d_method >= 0) this.Fril_ShippingMethodComboBox.SelectedIndex = FrilCommon.ShippingMethodIdToSelectedIndex[loaditem.d_method];
+            if (loaditem.d_area >= 0) this.ShippingAreaComboBox.SelectedIndex = FrilCommon.PrefectureIdToSelectedIndex[loaditem.d_area];
+            if (loaditem.d_date >= 0) this.ShippingDurationComboBox.SelectedIndex = FrilCommon.ShippingDurationIdToSelectedIndexDictionary[loaditem.d_date];
+            if (loaditem.s_price <= 0) this.PriceTextBox.Text = "";
+            else this.PriceTextBox.Text = loaditem.s_price.ToString();
+
+        }catch (Exception ex) {
+                Log.Logger.Error(ex.Message);
+                Log.Logger.Error("メルカリ商品からGUIセットに失敗");
+                MessageBox.Show("商品の読み込みに失敗しました.", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
+
 
 
         //GUIからitem情報を得る
