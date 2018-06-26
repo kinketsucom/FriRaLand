@@ -25,7 +25,7 @@ namespace FriRaLand.DBHelper {
                                 + "size_id INTEGER, size_name TEXT,brand_id INTEGER,"
                                 + "i_brand_id INTEGER, comments_count INTEGER,"
                                 + "likes_count INTEGER,"
-                                + "Pic1 TEXT,Pic2 TEXT,Pic3 TEXT,Pic4 TEXT);";//imagepathsのほう
+                                + "Pic1 TEXT,Pic2 TEXT,Pic3 TEXT,Pic4 TEXT,number INTEGER);";//imagepathsのほう
                    
             SQLiteCommand command = conn.CreateCommand();
             command.CommandText = commandText;
@@ -82,13 +82,13 @@ namespace FriRaLand.DBHelper {
                 command.Dispose();
                 conn.Close();
 
-                conn.Open();
-                commandText = "alter table items add number INTEGER;";
-                command = conn.CreateCommand();
-                command.CommandText = commandText;
-                command.ExecuteNonQuery();
-                command.Dispose();
-                conn.Close();
+                //conn.Open();
+                //commandText = "alter table items add number INTEGER;";
+                //command = conn.CreateCommand();
+                //command.CommandText = commandText;
+                //command.ExecuteNonQuery();
+                //command.Dispose();
+                //conn.Close();
 
                 conn.Open();
                 commandText = "update items set number = rowid;";

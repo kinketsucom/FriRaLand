@@ -223,7 +223,7 @@ namespace FriRaLand.DBHelper {
                 conn.Close();
 
                 conn.Open();
-                commandText = "alter table accounts add kengai_num INTEGER;update accounts set kengai_num = -1;alter table accounts add exhibit_cnt INTEGER;update accounts set exhibit_cnt = 0;alter table accounts add lastExhibitDate TEXT;update accounts set lastExhibitDate = '';";
+                commandText = "update accounts set kengai_num = -1;update accounts set exhibit_cnt = 0;update accounts set lastExhibitDate = '';";
                 command = conn.CreateCommand();
                 command.CommandText = commandText;
                 command.ExecuteNonQuery();
@@ -244,7 +244,7 @@ namespace FriRaLand.DBHelper {
                 conn.Close();
 
                 conn.Open();
-                commandText = "alter table accounts add hanbai_num INTEGER;update accounts set hanbai_num = 0;";
+                commandText = "update accounts set hanbai_num = 0;";
                 command = conn.CreateCommand();
                 command.CommandText = commandText;
                 command.ExecuteNonQuery();
@@ -265,7 +265,7 @@ namespace FriRaLand.DBHelper {
                 conn.Close();
 
                 conn.Open();
-                commandText = "alter table accounts add addSpecialTextToItemName TEXT; alter table accounts add insertEmptyStrToItemName TEXT; update accounts set addSpecialTextToItemName = 'False'; update accounts set insertEmptyStrToItemName = 'False';";
+                commandText = "update accounts set addSpecialTextToItemName = 'False'; update accounts set insertEmptyStrToItemName = 'False';";
                 command = conn.CreateCommand();
                 command.CommandText = commandText;
                 command.ExecuteNonQuery();
@@ -287,7 +287,7 @@ namespace FriRaLand.DBHelper {
                 conn.Close();
 
                 conn.Open();
-                commandText = "alter table accounts add defaultbankaddressId INTEGER; update accounts set defaultbankaddressId = -1";
+                commandText = "update accounts set defaultbankaddressId = -1";
                 command = conn.CreateCommand();
                 command.CommandText = commandText;
                 command.ExecuteNonQuery();
