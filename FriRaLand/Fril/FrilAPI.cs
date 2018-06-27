@@ -884,7 +884,7 @@ namespace FriLand {
                 Dictionary<string, string> param = new Dictionary<string, string>(); //GetTokenParamListForFrilAPI();
                 param.Add("auth_token", this.account.auth_token);
                 param.Add("item_id", item_id);
-                FrilRawResponse rawres = getFrilAPI("http://api.fril.jp/api/v3/items/show", param,this.account.cc);//FIXIT;Frilのものにかえる
+                FrilRawResponse rawres = getFrilAPI("http://api.fril.jp/api/v3/items/show", param,this.account.cc);//FIXITOPTION;Frilのものにかえる
                 //Logger.info(rawres.response);
                 dynamic resjson = DynamicJson.Parse(rawres.response);
                 dynamic iteminfo = resjson.item;
@@ -900,26 +900,27 @@ namespace FriLand {
         //public bool Cancel(FrilItem item,account) {
         //    return Cancel(item.item_id,account);
         //}
-        public bool Cancel(string item_id,Common.Account account) {
-            try {
-                string url = "https://api.fril.jp/api/items/delete";//FIXIT:Frilのものにかえる
-                Dictionary<string, string> param = new Dictionary<string, string>();
-                param.Add("item_id", item_id);
-                param.Add("auth_token", account.auth_token);
-                FrilRawResponse rawres = postFrilAPI(url, param,this.account.cc);
-                if (rawres.error) return false;
-                /*グローバルアクセストークンを更新*/
-                dynamic resjson = DynamicJson.Parse(rawres.response);
-                bool result = resjson.result;
-                if (!result) throw new Exception();
-                Log.Logger.Info("商品の削除に成功");
-                return true;
-            } catch (Exception ex) {
-                Log.Logger.Error("商品の削除に失敗");
-                Console.WriteLine(ex);
-                return false;
-            }
-        }
+        //FIXITOPTION:おそらく不要です
+        //public bool Cancel(string item_id,Common.Account account) {
+        //    try {
+        //        string url = "https://api.fril.jp/api/items/delete";
+        //        Dictionary<string, string> param = new Dictionary<string, string>();
+        //        param.Add("item_id", item_id);
+        //        param.Add("auth_token", account.auth_token);
+        //        FrilRawResponse rawres = postFrilAPI(url, param,this.account.cc);
+        //        if (rawres.error) return false;
+        //        /*グローバルアクセストークンを更新*/
+        //        dynamic resjson = DynamicJson.Parse(rawres.response);
+        //        bool result = resjson.result;
+        //        if (!result) throw new Exception();
+        //        Log.Logger.Info("商品の削除に成功");
+        //        return true;
+        //    } catch (Exception ex) {
+        //        Log.Logger.Error("商品の削除に失敗");
+        //        Console.WriteLine(ex);
+        //        return false;
+        //    }
+        //}
         public bool Stop(string item_id) {
             try {
                 string url = string.Format("https://api.mercari.jp/items/update_status?_access_token={0}&_global_access_token={1}", this.account.auth_token);
@@ -1076,11 +1077,6 @@ namespace FriLand {
                 string html = GetTransactionPage(item_id);
                 res = GetAddressFromHTML(html);
                 Dictionary<string, string> param = new Dictionary<string, string>();
-                //string url = "https://api.mercari.jp/transaction_evidences/get";//FIXIT:Frilのものに変える
-                //param.Add("item_id", itemid);
-                //param.Add("t", FrilAPI.getUNIXTimeStamp());
-                //param.Add("_access_token", this.account.auth_token);
-                //FrilRawResponse rawres = getFrilAPI(url, param,this.account.cc);
                 if (res.error) throw new Exception();
                 //構造体から情報取り出し
                 
