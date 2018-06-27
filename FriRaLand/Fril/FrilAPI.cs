@@ -91,7 +91,9 @@ namespace FriLand {
                 param.Add("size_name", item.size_name);
                 param.Add("status", item.status.ToString());
                 param.Add("title", item.item_name);
-                if (item.brand_id.ToString()!="0") { //FIXIT:ブランドが必要なカテゴリではブランドidがないとクラッシュ
+                //ブランドidは指定のものを追加か、パラメータまったく含めないの二択
+                //それ以外はクラッシュ
+                if (item.brand_id.ToString()!="0") { 
                     param.Add("brand", item.brand_id.ToString());
                 }                
                 //パラメータ表示
@@ -602,30 +604,30 @@ namespace FriLand {
                 return "";
             }
         }
-        public bool updateProfilePhoto(string new_imagepath,CookieContainer cc) {
-            string url = string.Format("https://api.mercari.jp/users/update_profile?_fril_auth_token={0}&_global_fril_auth_token={1}", this.account.auth_token);//FIXIT:frilにかえる
-            Dictionary<string, string> param = new Dictionary<string, string>();
-            param.Add("name", this.account.nickname);
-            param.Add("introduction", this.getProfileIntroduction(cc));
-            FrilRawResponse res = updateProfilePhotoPost(url, param, new_imagepath);
-            return !res.error;
-        }
-        public string getProfileIntroduction(CookieContainer cc) {
-            Dictionary<string, string> param = new Dictionary<string, string>();
-            param.Add("_user_format", "profile");
-            param.Add("_fril_auth_token", this.account.auth_token);
-            string url = "https://api.mercari.jp/users/get_profile";//FIXIT:フリルのものに変える
-            FrilRawResponse res = getFrilAPI(url, param ,cc);
-            if (res.error) {
-                return "";
-            }
-            dynamic resjson = DynamicJson.Parse(res.response);
-            try {
-                return (string)resjson.data.introduction;
-            } catch (Exception e) {
-                return "";
-            }
-        }
+        //public bool updateProfilePhoto(string new_imagepath,CookieContainer cc) {
+        //    string url = string.Format("https://api.mercari.jp/users/update_profile?_fril_auth_token={0}&_global_fril_auth_token={1}", this.account.auth_token);//FIXIT:frilにかえる
+        //    Dictionary<string, string> param = new Dictionary<string, string>();
+        //    param.Add("name", this.account.nickname);
+        //    param.Add("introduction", this.getProfileIntroduction(cc));
+        //    FrilRawResponse res = updateProfilePhotoPost(url, param, new_imagepath);
+        //    return !res.error;
+        //}
+        //public string getProfileIntroduction(CookieContainer cc) {
+        //    Dictionary<string, string> param = new Dictionary<string, string>();
+        //    param.Add("_user_format", "profile");
+        //    param.Add("_fril_auth_token", this.account.auth_token);
+        //    string url = "https://api.mercari.jp/users/get_profile";//FIXIT:フリルのものに変える
+        //    FrilRawResponse res = getFrilAPI(url, param ,cc);
+        //    if (res.error) {
+        //        return "";
+        //    }
+        //    dynamic resjson = DynamicJson.Parse(res.response);
+        //    try {
+        //        return (string)resjson.data.introduction;
+        //    } catch (Exception e) {
+        //        return "";
+        //    }
+        //}
         //プロフィール更新用に
         private FrilRawResponse updateProfilePhotoPost(string url, Dictionary<string, string> param, string imagepath) {
             FrilRawResponse res = new FrilRawResponse();

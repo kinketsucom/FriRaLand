@@ -37,14 +37,14 @@ namespace FriLand.Forms {
                 accountListBox2.Items.Add(a);
             }
 
-            #region FIXIT:1アカウント用
+            #region TODO:1アカウント用
             if (accountList.Count >= 1) {
                 accountAddButton.Enabled = false;
             } else {
                 accountAddButton.Enabled = true;
             }
             #endregion
-            //FIXIT:複数アカウント用
+            //TODO:複数アカウント用
             this.accountDataGridView1.DataSource = accountList;
             //DataSource設定したあとにしないと順序狂う
             this.accountDataGridView1.Columns["nickname"].DisplayIndex = 0;
@@ -73,8 +73,7 @@ namespace FriLand.Forms {
                 Common.Account account = new Common.Account();
                 account.email = api.account.email;
                 account.password = api.account.password;
-                account.auth_token = api.account.auth_token;//FIXIT:auth_tokenは存在しない？
-                //account.global_auth_token = m.global_auth_token;//FIXIT:global_auth_tokenは存在しない
+                account.auth_token = api.account.auth_token;
                 account.userId = api.account.userId;
                 account.nickname = api.account.nickname;
                 account.expiration_date = api.account.expirationDate;
@@ -83,7 +82,7 @@ namespace FriLand.Forms {
                     MessageBox.Show("既にアカウントが存在します。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                account.token_update_date = account.expiration_date;//FIXME:このへん例外投げてる、たぶんtoken_update_dateとexpiration_dateがごっちゃになってるから
+                account.token_update_date = account.expiration_date;//FIXMEOPTION:token_update_dateは現時点でいらない
                 accountDBHelper.addAccount(account);
                 //ComboBoxリフレッシュ
                 accountColumnBoxReflesh();
@@ -225,30 +224,30 @@ namespace FriLand.Forms {
         }
         //アカウント画像変更ボタン
         private void button1_Click(object sender, EventArgs e,CookieContainer cc) {
-            if (checkTokenRefreshNow()) return;
-            if (accountDataGridView1.SelectedRows.Count != 1) {
-                MessageBox.Show("アカウントを1つだけ選択してください", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Filter = "JPGファイル(*.jpg;*.jpeg)|*.jpg;*.jpeg|すべてのファイル(*.*)|*.*";
-            ofd.Title = "プロフィール画像を選んでください";
-            //ダイアログボックスを閉じる前に現在のディレクトリを復元するようにする
-            ofd.RestoreDirectory = true;
-            //ダイアログを表示する
-            if (ofd.ShowDialog() == DialogResult.OK) {
-                //OKボタンがクリックされたとき、選択されたファイル名を表示する
-                Common.Account selectedAccount = accountList[this.accountDataGridView1.SelectedRows[0].Index];
-                FrilAPI api = new FrilAPI(selectedAccount.email,selectedAccount.password);
-                string filename = ofd.FileName;
-                string path = FrilAPI.getExhibitionImageFromPath(filename);
-                bool rst = api.updateProfilePhoto(path,cc);
-                if (rst) {
-                    MessageBox.Show("プロフィール画像を更新しました。", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                } else {
-                    MessageBox.Show("プロフィール画像の更新に失敗しました。", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
+            //if (checkTokenRefreshNow()) return;
+            //if (accountDataGridView1.SelectedRows.Count != 1) {
+            //    MessageBox.Show("アカウントを1つだけ選択してください", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    return;
+            //}
+            //OpenFileDialog ofd = new OpenFileDialog();
+            //ofd.Filter = "JPGファイル(*.jpg;*.jpeg)|*.jpg;*.jpeg|すべてのファイル(*.*)|*.*";
+            //ofd.Title = "プロフィール画像を選んでください";
+            ////ダイアログボックスを閉じる前に現在のディレクトリを復元するようにする
+            //ofd.RestoreDirectory = true;
+            ////ダイアログを表示する
+            //if (ofd.ShowDialog() == DialogResult.OK) {
+            //    //OKボタンがクリックされたとき、選択されたファイル名を表示する
+            //    Common.Account selectedAccount = accountList[this.accountDataGridView1.SelectedRows[0].Index];
+            //    FrilAPI api = new FrilAPI(selectedAccount.email,selectedAccount.password);
+            //    string filename = ofd.FileName;
+            //    string path = FrilAPI.getExhibitionImageFromPath(filename);
+            //    bool rst = api.updateProfilePhoto(path,cc);
+            //    if (rst) {
+            //        MessageBox.Show("プロフィール画像を更新しました。", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //    } else {
+            //        MessageBox.Show("プロフィール画像の更新に失敗しました。", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //    }
+            //}
         }
 
         //private void withdrawbutton_Click(object sender, EventArgs e) {
