@@ -197,9 +197,7 @@ namespace FriRaLand.Forms {
                 //if (info.status != "wait_shipping" && info.status != "wait_done") return;//FIXME:なんか取引状態の確認ができてないのであやしい
                 //if (info.status == "wait_shipping") {
                 SetGUIParams();
-            } else{
-
-
+            } else{//通知送った後は0になる
                 //} else if (info.status == "wait_done") {
                 //取引メッセージを入力させる
                 var messageForm = new InputMessageForm("購入者評価メッセージを入力してください");
@@ -211,6 +209,7 @@ namespace FriRaLand.Forms {
                 var shuppinrirekiDBHelper = new ShuppinRirekiDBHelper();
                 //出品履歴,商品備考データが存在する場合は該当レコードを削除
                 itemNoteDBHelper.deleteItemNote(itemid);
+
                 SetGUIParams();
 
             }

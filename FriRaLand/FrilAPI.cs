@@ -1117,6 +1117,28 @@ namespace FriRaLand {
             }
         }
 
+        private TransactionInfo GetAddressFromHTML(string html) {
+            TransactionInfo transactionInfo = new TransactionInfo();
+            int num = 0;
+            num = html.IndexOf("<p class=\"caption-text\">配送先住所</p>", num);
+            num = html.IndexOf("<p>", num) + "<p>".Length;
+            int num2 = html.IndexOf("<br />", num);
+            transactionInfo.zip = html.Substring(num, num2 - num);
+            num = num2;
+            num = html.IndexOf("<br />", num) + "<br />".Length;
+            num2 = html.IndexOf("<br />", num);
+            transactionInfo.address1 = html.Substring(num, num2 - num);
+            transactionInfo.address1 = transactionInfo.address1.Replace(" ", "").Replace("\n", "");
+            num = num2;
+            num = html.IndexOf("<br />", num) + "<br />".Length;
+            num2 = html.IndexOf("</p>", num);
+            transactionInfo.name = html.Substring(num, num2 - num);
+            transactionInfo.name = transactionInfo.name.Replace(" ", "").Replace("\n", "");
+            return transactionInfo;
+        }
+
+
+
         //コメント用の構造体
         public struct Comment {
             public string id;
@@ -1204,11 +1226,6 @@ namespace FriRaLand {
                 string url = "https://api.fril.jp/api/order/comment/add";//これメッセ送るよう
                 param = param_dic;//TODO:これやってるいみある？？
                 param.Add("comment", comment);
-
-                //param.Add("item_id", item_id);
-                //param.Add("body", message);
-                //param.Add("t", FrilAPI.getUNIXTimeStamp());
-                //param.Add("auth_token", this.account.auth_token);
                 FrilRawResponse rawres = postFrilAPI(url, param,this.account.cc);
                 if (rawres.error) throw new Exception();
                 Log.Logger.Info("取引メッセージ送信成功");
@@ -1222,9 +1239,6 @@ namespace FriRaLand {
         public bool SendItemShippedNotification(string itemid,Dictionary<string,string> param) {
             try {
                 string url = "https://web.fril.jp/v2/order/shipping";
-                //param.Add("transaction_evidence_id", this.GetTransactionInfo(itemid).transaction_id);
-                //param.Add("t",FrilAPI.getUNIXTimeStamp());
-                //param.Add("_access_token", this.account.auth_token);
                 FrilRawResponse rawres = postFrilAPI(url, param,this.account.cc);
                 if (rawres.error) throw new Exception();
                 Log.Logger.Info("商品の発送通知に成功");
@@ -1236,28 +1250,27 @@ namespace FriRaLand {
             return true;
         }
 
-
-
-
         //相手を評価する
         public bool SendReview(string itemid, string message = "") {
             try {
                 string html = this.GetTransactionPage(itemid);
                 Dictionary<string, string> param = GetEvaluationFromHTML(html);
                 string url = "https://web.fril.jp/v2/order/review";
+                param.Add("review", "1");
                FrilRawResponse rawres = postFrilAPI(url, param,this.account.cc);
                 if (rawres.error) throw new Exception();
                 Log.Logger.Info("購入者の評価に成功");
                 return true;
             } catch (Exception ex) {
                 Log.Logger.Info("購入者の評価に失敗");
+                Console.WriteLine(ex);
                 return false;
             }
         }
         private Dictionary<string, string> GetEvaluationFromHTML(string html) {
             Dictionary<string, string> dictionary = new Dictionary<string, string>();
             int num = 0;
-            num = html.IndexOf("<form id=\"review-form\"", num);
+            num = html.IndexOf("<form id=\"comment-form\"", num);
             int num2 = html.IndexOf("</form>", num);
             string text = html.Substring(num, num2 - num);
             num = 0;
