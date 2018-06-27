@@ -1251,5 +1251,74 @@ namespace FriRaLand {
             f.apilist = this.FrilAPIList;
             f.Show();
         }
+
+        private async void SelectItemAllExhibitButton_Click(object sender, EventArgs e) {
+            //if (!LicenseForm.checkCanUseWithErrorWindow()) return;
+            var selectedAPIs = getNowSelectedAPIs();
+            if (selectedAPIs.Count != 1) {
+                MessageBox.Show("商品を出品するアカウントを選択してください。\nグループは使用できません。", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (checkNowAutoMode()) return;
+            //選択商品の一括出品を行う
+            //確認画面を表示
+            DialogResult dr = MessageBox.Show("選択商品の一括出品を行いますか？", MainForm.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (dr == DialogResult.No) {
+                return;
+            }
+            this.toolStripStatusLabel1.Text = "一括出品開始";
+            DisableAllButton();
+            string result = await Task.Run(() => DoAllExhibitFromLocalItemTab(selectedAPIs));
+            //結果を表示
+            MessageBox.Show(result, "一括出品", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //一括出品終了後、出品一覧を更新→なし
+            //UpdateSelling();
+            this.toolStripStatusLabel1.Text = "一括出品完了(" + result + ")";
+            EnableAllButton();
+
+        }
+
+        private string DoAllExhibitFromLocalItemTab(List<FrilAPI> apis) {
+            int trynum = 0;
+            int successnum = 0;
+            var shuppinRirekiDBHelper = new ShuppinRirekiDBHelper();
+            var zaikoDBHelper = new ZaikoDBHelper();
+            ItemFamilyDBHelper itemfamilyDBHelper = new ItemFamilyDBHelper();
+            ExhibitLogDBHelper exhibitLogDBHelper = new ExhibitLogDBHelper();
+            foreach (DataGridViewRow row in LocalItemDataGridView.SelectedRows) {
+                FrilItem item = LocalItemDataBindList[row.Index];
+                trynum++;
+                int zaikonum = zaikoDBHelper.getZaikoNum(item.parent_id);
+                bool parent_exist = zaikoDBHelper.isexistParentid(item.parent_id);
+                //親IDが存在し、在庫が0なら出品しない
+                if (parent_exist && zaikonum <= 0) continue;
+                this.toolStripStatusLabel1.Text = ("出品中: " + item.item_name);
+                apis[0] = Common.checkFrilAPI(apis[0]);
+                FrilItem res = SellWithOption(apis[0].account, item);
+                AccountDBHelper accountDBHelper = new AccountDBHelper();
+                if (res != null) {
+                    Account a = accountDBHelper.getAccountFromSellerid(apis[0].account.userId);
+                    a.exhibit_cnt++;
+                    a.last_exhibitTime_str = DateTime.Now.ToString();
+                    accountDBHelper.updateAccount(a.DBId, a);
+                    successnum++;
+                    //出品履歴を追加
+                    var sr = new ShuppinRirekiDBHelper.ShuppinRireki();
+                    sr.itemDBId = item.DBId;
+                    sr.item_id = res.item_id;
+                    sr.accountDBId = a.DBId;
+                    shuppinRirekiDBHelper.addShuppinRireki(sr);
+                    //出品ログを追加
+                    var itemfamily = itemfamilyDBHelper.getItemFamilyFromItemDBId(item.DBId);
+                    exhibitLogDBHelper.addExhibitLog(apis[0].account.nickname, res.created_date, itemfamily, res.item_id);
+                }
+                System.Threading.Thread.Sleep(Settings.getIkkatuShuppinInterval() * 1000);
+            }
+            return string.Format("成功: {0} 失敗:{1}", successnum, trynum - successnum);
+        }
+
+
+
+
     }
 }
