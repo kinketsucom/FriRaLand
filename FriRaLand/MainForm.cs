@@ -55,12 +55,9 @@ namespace FriRaLand {
             DBhelper.onCreate();
             AccountDBHelper accountDBHelper = new AccountDBHelper();
             accountDBHelper.onCreate();
- 
             ReservationDBHelper reservationDBhelper = new ReservationDBHelper();
             reservationDBhelper.onCreate();
-            //reservationDBhelper.addReexhibitFlagColumn();//2->3
             accountDBHelper.addKengai_ExhibitCnt_LastExhibitTime_Column();//3->4
-            //reservationDBhelper.addDelete2Column();//4->5//追加したので不要
             //GroupBelongDBHelper groupbelongDBHelper = new GroupBelongDBHelper();
             //groupbelongDBHelper.onCreate();
             //GroupKindDBHelper groupkindDBHelper = new GroupKindDBHelper();
