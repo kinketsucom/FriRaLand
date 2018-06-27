@@ -1219,13 +1219,12 @@ namespace FriRaLand {
             }
         }
         //商品の発送通知を行う
-        public bool SendItemShippedNotification(string itemid) {
+        public bool SendItemShippedNotification(string itemid,Dictionary<string,string> param) {
             try {
-                Dictionary<string, string> param = new Dictionary<string, string>();
-                string url = "https://api.mercari.jp/transaction_evidences/shipped";
-                param.Add("transaction_evidence_id", this.GetTransactionInfo(itemid).transaction_id);
-                param.Add("t",FrilAPI.getUNIXTimeStamp());
-                param.Add("_access_token", this.account.auth_token);
+                string url = "https://web.fril.jp/v2/order/shipping";
+                //param.Add("transaction_evidence_id", this.GetTransactionInfo(itemid).transaction_id);
+                //param.Add("t",FrilAPI.getUNIXTimeStamp());
+                //param.Add("_access_token", this.account.auth_token);
                 FrilRawResponse rawres = postFrilAPI(url, param,this.account.cc);
                 if (rawres.error) throw new Exception();
                 Log.Logger.Info("商品の発送通知に成功");
@@ -1236,20 +1235,16 @@ namespace FriRaLand {
             }
             return true;
         }
+
+
+
+
         //相手を評価する
         public bool SendReview(string itemid, string message = "") {
             try {
-                Dictionary<string, string> param = new Dictionary<string, string>();
-                string url = "https://api.mercari.jp/reviews/post";
-                param.Add("item_id", itemid);
-                param.Add("subject", "buyer");
-                param.Add("to_user_id", this.GetTransactionInfo(itemid).buyerid);
-                param.Add("fame", "good");
-                param.Add("message", message);
-                param.Add("_platform", "android");
-                param.Add("_app_version", XAPPVERSION);
-                param.Add("t",FrilAPI.getUNIXTimeStamp());
-                param.Add("_access_token", this.account.auth_token);
+                string html = this.GetTransactionPage(itemid);
+                Dictionary<string, string> param = GetEvaluationFromHTML(html);
+                string url = "https://web.fril.jp/v2/order/review";
                FrilRawResponse rawres = postFrilAPI(url, param,this.account.cc);
                 if (rawres.error) throw new Exception();
                 Log.Logger.Info("購入者の評価に成功");
@@ -1259,25 +1254,58 @@ namespace FriRaLand {
                 return false;
             }
         }
+        private Dictionary<string, string> GetEvaluationFromHTML(string html) {
+            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+            int num = 0;
+            num = html.IndexOf("<form id=\"review-form\"", num);
+            int num2 = html.IndexOf("</form>", num);
+            string text = html.Substring(num, num2 - num);
+            num = 0;
+            while (text.IndexOf("<input type=\"hidden\"", num) >= 0) {
+                num = text.IndexOf("<input type=\"hidden\"", num);
+                num2 = text.IndexOf("/>", num) + "/>".Length;
+                string text2 = text.Substring(num, num2 - num);
+                num = num2;
+                int num3 = text2.IndexOf("name=\"") + "name=\"".Length;
+                int num4 = text2.IndexOf("\"", num3);
+                string key = text2.Substring(num3, num4 - num3);
+                num3 = text2.IndexOf("value=\"") + "value=\"".Length;
+                num4 = text2.IndexOf("\"", num3);
+                string value = text2.Substring(num3, num4 - num3);
+                dictionary.Add(key, value);
+            }
+            num = 0;
+            num = text.IndexOf("<input name=\"utf8\"", num);
+            num2 = text.IndexOf("/>", num) + "/>".Length;
+            string text3 = text.Substring(num, num2 - num);
+            num = text3.IndexOf("value=\"") + "value=\"".Length;
+            num2 = text3.IndexOf("\"", num);
+            string value2 = text3.Substring(num, num2 - num);
+            dictionary.Add("utf8", value2);
+            return dictionary;
+        }
+    
+
+
         //購入された取引をキャンセルする
         public bool cancelTransaction(string itemid) {
-            TransactionInfo info = GetTransactionInfo(itemid);
-            try {
-                Dictionary<string, string> param = new Dictionary<string, string>();
-                string url = "https://api.mercari.jp/transactions/cancel";
-                param.Add("transaction_evidence_id", info.transaction_id);
-                param.Add("_platform", "android");
-                param.Add("_app_version", XAPPVERSION);
-                param.Add("t", FrilAPI.getUNIXTimeStamp());
-                param.Add("_access_token", this.account.auth_token);
-                FrilRawResponse rawres = postFrilAPI(url, param,this.account.cc);
-                if (rawres.error) throw new Exception();
-                Log.Logger.Info("取引のキャンセルに成功");
-                return true;
-            } catch (Exception ex) {
-                Log.Logger.Info("取引のキャンセルに失敗: " + ex.Message);
+            //TransactionInfo info = GetTransactionInfo(itemid);
+            //try {
+            //    Dictionary<string, string> param = new Dictionary<string, string>();
+            //    string url = "https://api.mercari.jp/transactions/cancel";
+            //    param.Add("transaction_evidence_id", info.transaction_id);
+            //    param.Add("_platform", "android");
+            //    param.Add("_app_version", XAPPVERSION);
+            //    param.Add("t", FrilAPI.getUNIXTimeStamp());
+            //    param.Add("_access_token", this.account.auth_token);
+            //    FrilRawResponse rawres = postFrilAPI(url, param,this.account.cc);
+            //    if (rawres.error) throw new Exception();
+            //    Log.Logger.Info("取引のキャンセルに成功");
+            //    return true;
+            //} catch (Exception ex) {
+            //    Log.Logger.Info("取引のキャンセルに失敗: " + ex.Message);
                 return false;
-            }
+            //}
         }
         private List<Comment> GetTransactionCommentFromHTML(string html) {
             List<Comment> list = new List<Comment>();

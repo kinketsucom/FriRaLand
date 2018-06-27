@@ -36,5 +36,11 @@ namespace FriRaLand.Forms {
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e) {
             this.richTextBox1.Text = this.body_list[this.comboBox1.SelectedIndex];
         }
+
+        private void button1_Click_1(object sender, EventArgs e) {
+            this.message = this.richTextBox1.Text;
+            this.DialogResult = DialogResult.OK;
+            this.Close();
+        }
     }
 }

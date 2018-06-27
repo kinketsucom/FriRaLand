@@ -23,8 +23,8 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.cancelTransactionButton = new System.Windows.Forms.Button();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.copyButton2 = new System.Windows.Forms.Button();
@@ -79,6 +79,7 @@
             this.cancelTransactionButton.TabIndex = 87;
             this.cancelTransactionButton.Text = "取引をキャンセルする";
             this.cancelTransactionButton.UseVisualStyleBackColor = true;
+            this.cancelTransactionButton.Visible = false;
             // 
             // linkLabel1
             // 
@@ -184,6 +185,7 @@
             this.createdDateLabel.ReadOnly = true;
             this.createdDateLabel.Size = new System.Drawing.Size(256, 22);
             this.createdDateLabel.TabIndex = 79;
+            this.createdDateLabel.Visible = false;
             // 
             // sellerLabel
             // 
@@ -355,6 +357,7 @@
             this.control_button.TabIndex = 67;
             this.control_button.Text = "発送通知を行う";
             this.control_button.UseVisualStyleBackColor = true;
+            this.control_button.Click += new System.EventHandler(this.control_button_Click);
             // 
             // buyerAddressRichTextBox
             // 
@@ -365,6 +368,7 @@
             this.buyerAddressRichTextBox.Size = new System.Drawing.Size(253, 64);
             this.buyerAddressRichTextBox.TabIndex = 66;
             this.buyerAddressRichTextBox.Text = "";
+            this.buyerAddressRichTextBox.Visible = false;
             // 
             // buyerNameTextBox
             // 
@@ -374,6 +378,7 @@
             this.buyerNameTextBox.ReadOnly = true;
             this.buyerNameTextBox.Size = new System.Drawing.Size(253, 22);
             this.buyerNameTextBox.TabIndex = 65;
+            this.buyerNameTextBox.Visible = false;
             // 
             // label5
             // 
@@ -437,8 +442,8 @@
             // 
             // Column1
             // 
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.Column1.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.Column1.DefaultCellStyle = dataGridViewCellStyle7;
             this.Column1.HeaderText = "名前";
             this.Column1.Name = "Column1";
             this.Column1.ReadOnly = true;
@@ -453,8 +458,8 @@
             // 
             // Column2
             // 
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.Column2.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.Column2.DefaultCellStyle = dataGridViewCellStyle8;
             this.Column2.HeaderText = "取引メッセージ";
             this.Column2.Name = "Column2";
             this.Column2.ReadOnly = true;

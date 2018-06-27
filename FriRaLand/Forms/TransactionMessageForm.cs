@@ -188,12 +188,19 @@ namespace FriRaLand.Forms {
         }
 
         private void control_button_Click(object sender, EventArgs e) {
-            //出品通知か購入者評価以外ボタンはおしても反応しない(disableにしているが）
-            if (info.status != "wait_shipping" && info.status != "wait_done") return;
-            if (info.status == "wait_shipping") {
-                Frilapi.SendItemShippedNotification(itemid);
+            string html = this.Frilapi.GetTransactionPage(this.itemid);
+            Dictionary<string, string> param_dic = GetShipmentFromHTML(html);
+            if (param_dic.Count != 0) { //通知送る前
+                param_dic.Add("tracking_number", "");
+                this.Frilapi.SendItemShippedNotification(this.itemid, param_dic);
+                //出品通知か購入者評価以外ボタンはおしても反応しない(disableにしているが）
+                //if (info.status != "wait_shipping" && info.status != "wait_done") return;//FIXME:なんか取引状態の確認ができてないのであやしい
+                //if (info.status == "wait_shipping") {
                 SetGUIParams();
-            } else if (info.status == "wait_done") {
+            } else{
+
+
+                //} else if (info.status == "wait_done") {
                 //取引メッセージを入力させる
                 var messageForm = new InputMessageForm("購入者評価メッセージを入力してください");
                 messageForm.SetComboBoxItems(Settings.getBuyerReviewMessageTemplateTitle(), Settings.getBuyerReviewMessageTemplate());
@@ -205,8 +212,61 @@ namespace FriRaLand.Forms {
                 //出品履歴,商品備考データが存在する場合は該当レコードを削除
                 itemNoteDBHelper.deleteItemNote(itemid);
                 SetGUIParams();
+
+            }
+            //}
+        }
+        private Dictionary<string, string> GetShipmentFromHTML(string html) {
+            try {//FIXME:あやしいtryぶっちゃけ取引中と発送後のちがいわからんかった
+                Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                int num = 0;
+                num = html.IndexOf("<form id=\"ship-form\"", num);
+                int num2 = html.IndexOf("</form>", num);
+                string text = html.Substring(num, num2 - num);
+                num = 0;
+                while (text.IndexOf("<input type=\"hidden\"", num) >= 0) {
+                    num = text.IndexOf("<input type=\"hidden\"", num);
+                    num2 = text.IndexOf("/>", num) + "/>".Length;
+                    string text2 = text.Substring(num, num2 - num);
+                    num = num2;
+                    int num3 = text2.IndexOf("name=\"") + "name=\"".Length;
+                    int num4 = text2.IndexOf("\"", num3);
+                    string key = text2.Substring(num3, num4 - num3);
+                    num3 = text2.IndexOf("value=\"") + "value=\"".Length;
+                    num4 = text2.IndexOf("\"", num3);
+                    string value = text2.Substring(num3, num4 - num3);
+                    dictionary.Add(key, value);
+                }
+                num = 0;
+                while (text.IndexOf("<option ", num) >= 0) {
+                    num = text.IndexOf("<option ", num);
+                    num2 = text.IndexOf("</option>", num) + "</option>".Length;
+                    string text3 = text.Substring(num, num2 - num);
+                    if (text3.IndexOf("selected=\"selected\"") >= 0) {
+                        int num5 = text3.IndexOf("value=\"") + "value=\"".Length;
+                        int num6 = text3.IndexOf("\"", num5);
+                        string value2 = text3.Substring(num5, num6 - num5);
+                        dictionary.Add("item%5Bdelivery_method%5D", value2);
+                        break;
+                    }
+                    num = num2;
+                }
+                num = 0;
+                num = text.IndexOf("<input name=\"utf8\"", num);
+                num2 = text.IndexOf("/>", num) + "/>".Length;
+                string text4 = text.Substring(num, num2 - num);
+                num = text4.IndexOf("value=\"") + "value=\"".Length;
+                num2 = text4.IndexOf("\"", num);
+                string value3 = text4.Substring(num, num2 - num);
+                dictionary.Add("utf8", value3);
+                return dictionary;
+            }catch(Exception ex) {
+                Log.Logger.Error(ex);
+                Console.WriteLine(ex);
+                return new Dictionary<string, string>();//FIXME:なんだこの通知処理は。。。基地外じみている
             }
         }
+
 
         private void TransactionMessageForm_SizeChanged(object sender, EventArgs e) {
             AdjustGUISize();

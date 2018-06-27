@@ -39,6 +39,7 @@
             this.button1.TabIndex = 7;
             this.button1.Text = "送信";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // richTextBox1
             // 
@@ -57,6 +58,7 @@
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(432, 23);
             this.comboBox1.TabIndex = 5;
+            this.comboBox1.Visible = false;
             // 
             // label1
             // 
