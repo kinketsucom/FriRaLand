@@ -553,7 +553,7 @@ namespace FriLand {
                 if (loaditem.d_date >= 0) this.ShippingDurationComboBox.SelectedIndex = TabIndexFromDictionary(FrilCommon.shippingFromAreas, loaditem.d_date);
                 if (loaditem.s_price <= 0) this.PriceTextBox.Text = "";
                 else this.PriceTextBox.Text = loaditem.s_price.ToString();
-                if (loaditem.brand_id > 0) this.Fril_BrandComboBox.SelectedIndex = TabIndexFromList(FrilCommon.fril_brands, loaditem.brand_id);//FIXME:ブランドが選択されてないときは0なので>0にしたけど。。。
+                if (loaditem.brand_id > 0) this.Fril_BrandComboBox.SelectedIndex = TabIndexFromList(FrilCommon.fril_brands, loaditem.brand_id);//TODO:ブランドが選択されてないときは0なので>0にした
                 if (loaditem.category_level1_id >= 0) {
                     int index = TabIndexFromList(fril_categoryDictionary[0], loaditem.category_level1_id);
                     this.Fril_CategoryComboBoxLevel1.SelectedIndex = index;

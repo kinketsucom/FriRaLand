@@ -215,14 +215,9 @@ namespace FriLand {
             string max_id = "0"; //二回目以降で「この商品IDより後」の商品を取得する
             do {
                 Dictionary<string, string> param = new Dictionary<string, string>();
-                //param.Add("include_sold_out", "0");
-                //param.Add("limit", "60");
-                //param.Add("max_id", max_id);
-                //param.Add("user_id", userId);
                 param.Add("auth_token", this.account.auth_token);
                 param.Add("status", get_item_type);
                 string url = "https://api.fril.jp/api/v3/items/sell";
-                //string url = "https://api.fril.jp/api/v3/items/list";
                 FrilRawResponse rawres = getFrilAPI(url, param,cc);
                 if (rawres.error) {
                     Log.Logger.Error("フリル出品中商品の取得に失敗: UserID: " + this.account.userId);
@@ -245,8 +240,12 @@ namespace FriLand {
                     item.created_at = DateTime.Parse(data.created_at);
                     item.likes_count = (int)data.like_count;
                     item.comments_count = (int)data.comment_count;
+                    item.status_message = get_item_type;
+                    item.screen_name = this.account.nickname;
+                    
                     rst.Add(item);
                     max_id = item.item_id;
+
                 }
                 has_next = false;//FIXIT:ここわかんなかったんでfalseいれてるだけで絶対ダメ
                 //has_next = (bool)resjson.paging.has_next;//FIXIT:ここもわかりませんでした
@@ -714,7 +713,7 @@ namespace FriLand {
             return res;
         }
 
-        #region FIXMEOPTION
+        #region FIXMEOPTION:もしかしたら不要
         //public bool Edit(FrilItem item, string[] imagelocation) {
         //    FrilRawResponse res = new FrilRawResponse();
         //    Dictionary<string, string> dictionary = new Dictionary<string, string>();

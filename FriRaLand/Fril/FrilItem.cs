@@ -25,7 +25,7 @@ namespace FriLand {
         public string detail;
         public int s_price;
         public int status;
-        public int t_status;
+        public int t_status;//FIXMEOPTION:取引状態を表しているはず0:出品中4:受け取り確認待ち
         public int carriage;
         public int d_method;//delivery_method
         public int d_date;//delivery_date
@@ -34,7 +34,7 @@ namespace FriLand {
         public DateTime created_at;//ex)2017-09-27T09:12:57+09:00
         public string screen_name = ""; //出品者アカウント名
         public int category_id;
-        public int category_p_id;//category2らしいが。。。
+        public int category_p_id;//category2をあてている
         public int size_id; //19999=>なし
         public string size_name;
         public int brand_id; //null
@@ -49,13 +49,13 @@ namespace FriLand {
         public int category_level3_id;
         public int category_level4_id;
 
-        public int num_likes { get; set; } //いいね数
+        //public int num_likes { get; set; } //いいね数
         public int num_comments { get; set; }//コメント数
-        public long pager_id; //FIXIT:不必要なパラメータの可能性がある//商品ページのインデックス?,get_itemsで60件以上あるときは最後のitemのpager_idを使って2回目以降叩く
+        public long pager_id; //FIXITOPTION:不必要なパラメータの可能性がある//商品ページのインデックス?,get_itemsで60件以上あるときは最後のitemのpager_idを使って2回目以降叩く
         public string status_message { get; set; } //表示用の状態「出品中・停止中・支払い待ち・発送待ち・評価待ち」
-        public string created_str { get; set; }//FIXIT:なにこれ
+        public string created_str { get; set; }//FIXME:なにこれ
 
-        public  FrilSeller seller;
+        //public  FrilSeller seller;
 
         public bool is_sellitem = false;
         public bool is_buyitem = false;
@@ -102,7 +102,7 @@ namespace FriLand {
                 this.detail = info.detail;
                 this.s_price = (int)info.s_price;
                 this.status = (int)info.status;
-                this.t_status = (int)info.t_status;
+                this.t_status = (int)info.t_status;//FIXMEOPTION:取引状態をあらわしているはず
                 this.carriage = (int)info.carriage;
                 this.d_method = (int)info.d_method;
                 this.d_date = (int)info.d_date;

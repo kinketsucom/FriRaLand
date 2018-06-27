@@ -670,7 +670,7 @@ namespace FriLand {
                                 if (reservation.consider_comment && item.num_comments > 0) {
                                     Log.Logger.Info("コメントが付いているので削除(停止)しない");
                                     //continue; なんども実行されることになるのでコメントがついてるので削除(停止)しないならそれでもうおわり
-                                } else if (reservation.consider_favorite && item.num_likes > 0) {
+                                } else if (reservation.consider_favorite && item.likes_count > 0) {
                                     Log.Logger.Info("いいねが付いているので削除(停止)しない");
                                     //continue; なんども実行されることになるのでいいねがついてるので削除(停止)しないならそれでもうおわり
                                 } else {
@@ -735,7 +735,7 @@ namespace FriLand {
                                 if (reservation.consider_comment2 && item.num_comments > 0) {
                                     Log.Logger.Info("コメントが付いているので削除2(停止)しない");
                                     //continue; なんども実行されることになるのでコメントがついてるので削除(停止)しないならそれでもうおわり
-                                } else if (reservation.consider_favorite2 && item.num_likes > 0) {
+                                } else if (reservation.consider_favorite2 && item.likes_count > 0) {
                                     Log.Logger.Info("いいねが付いているので削除2(停止)しない");
                                     //continue; なんども実行されることになるのでいいねがついてるので削除(停止)しないならそれでもうおわり
                                 } else {
@@ -924,6 +924,7 @@ namespace FriLand {
                         user_items[i].address_copyed = false;
                     }
                 }
+                
                 items.AddRange(user_items);
             }
             return items;
@@ -943,7 +944,7 @@ namespace FriLand {
                         e.Value = item.status_message;
                         break;
                     case 2:
-                        e.Value = item.seller.name;//詳細チェックなしのnullがすごく気に入らない
+                        e.Value = item.screen_name;//詳細チェックなしのnullがすごく気に入らない
                         break;
                     case 3:
                         e.Value = item.item_name;
@@ -955,7 +956,7 @@ namespace FriLand {
                         e.Value = item.s_price;
                         break;
                     case 6:
-                        e.Value = item.num_likes;
+                        e.Value = item.likes_count;
                         break;
                     case 7:
                         e.Value = item.num_comments;

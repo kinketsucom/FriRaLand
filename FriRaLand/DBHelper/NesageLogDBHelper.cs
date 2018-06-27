@@ -71,7 +71,7 @@ namespace FriLand.DBHelper {
             log.newprice = newprice;
             log.itemname = item.item_name;
             log.itemid = item.item_id;
-            log.likecnt = item.num_likes;
+            log.likecnt = item.likes_count;
             log.nesage_cnt = nesage_cnt;
             addNesageLogDB(log);
         }
