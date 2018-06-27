@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FriRaLand.DBHelper {
+namespace FriLand.DBHelper {
     class ExhibitLogDBHelper {
         //完全に他のDBとは独立させて保存
         public class ExhibitLog {

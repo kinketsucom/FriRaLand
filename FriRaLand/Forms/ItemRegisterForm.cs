@@ -1,4 +1,4 @@
-﻿using FriRaLand.DBHelper;
+﻿using FriLand.DBHelper;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,9 +9,9 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static FriRaLand.FrilCommon;
+using static FriLand.FrilCommon;
 
-namespace FriRaLand {
+namespace FriLand {
     public partial class ItemRegisterForm : Form {
         public bool is_editmode = false; //編集から開いた場合はis_editmode = true. 商品登録（新規）から開いた場合はfalse;
         public bool setting_now = true;//GUIはめこんでますよフラグ

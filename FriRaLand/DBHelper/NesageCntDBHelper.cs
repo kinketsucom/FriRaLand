@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SQLite;
 
-namespace FriRaLand.DBHelper {
+namespace FriLand.DBHelper {
     class NesageCntDBHelper {
         public const string DBname = "database.db";
         private SQLiteConnection conn;

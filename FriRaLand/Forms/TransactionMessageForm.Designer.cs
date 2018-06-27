@@ -1,4 +1,4 @@
-﻿namespace FriRaLand.Forms {
+﻿namespace FriLand.Forms {
     partial class TransactionMessageForm {
         /// <summary>
         /// Required designer variable.

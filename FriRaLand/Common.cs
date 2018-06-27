@@ -8,9 +8,9 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using FriRaLand.DBHelper;
+using FriLand.DBHelper;
 
-namespace FriRaLand {
+namespace FriLand {
     public class Common {
         public class Account {
             public const int Fril_Account = 0;

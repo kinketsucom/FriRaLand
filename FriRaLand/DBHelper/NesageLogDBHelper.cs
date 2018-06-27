@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FriRaLand.DBHelper {
+namespace FriLand.DBHelper {
     class NesageLogDBHelper {
         public class NesageLog {
             public int DBId;

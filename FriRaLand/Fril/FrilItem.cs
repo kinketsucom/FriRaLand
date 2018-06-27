@@ -8,7 +8,7 @@ using System.Net;
 using System.IO;
 using System.Drawing;        //json
 
-namespace FriRaLand {
+namespace FriLand {
     public class FrilItem {
         public string buyer_simei;
         public System.Drawing.Image Image { get; set; } //アプリケーション内使用用パラメータ//表示用の画像

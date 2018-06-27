@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SQLite;
 
-namespace FriRaLand.DBHelper {
+namespace FriLand.DBHelper {
     class AccountDBHelper {
 
         public const string DBname = "database.db";

@@ -8,9 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using FriRaLand.DBHelper;
+using FriLand.DBHelper;
 
-    namespace FriRaLand.Forms {
+    namespace FriLand.Forms {
     public partial class ReservationSettingForm : Form {
         private FrilItem item;
         private MainForm mainform;

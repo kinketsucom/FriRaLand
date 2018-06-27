@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace FriRaLand.Forms {
+namespace FriLand.Forms {
     public partial class License : Form {
 
         //public License() {

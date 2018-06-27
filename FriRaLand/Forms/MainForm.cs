@@ -1,5 +1,5 @@
-﻿using FriRaLand.DBHelper;
-using FriRaLand.Forms;
+﻿using FriLand.DBHelper;
+using FriLand.Forms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,10 +10,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net;
-using static FriRaLand.Common;
+using static FriLand.Common;
 using System.Diagnostics;
 
-namespace FriRaLand {
+namespace FriLand {
     public partial class MainForm : Form {
         public MainForm() {
             InitializeComponent();

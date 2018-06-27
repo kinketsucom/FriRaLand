@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FriRaLand {
+namespace FriLand {
     public static class Dev {
         //エラー発生行とかを書いてくれる
         static public void printE(Exception ex) {

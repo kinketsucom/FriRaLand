@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FriRaLand.DBHelper {
+namespace FriLand.DBHelper {
     class ItemNoteDBHelper {
         public const string DBname = "database.db";
         private SQLiteConnection conn;

@@ -1,4 +1,4 @@
-﻿namespace FriRaLand {
+﻿namespace FriLand {
     partial class ItemRegisterForm {
         /// <summary>
         /// Required designer variable.

@@ -1,4 +1,4 @@
-﻿using FriRaLand.DBHelper;
+﻿using FriLand.DBHelper;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace FriRaLand.Forms {
+namespace FriLand.Forms {
     public partial class CommentForm : Form {
         private FrilAPI Frilapi;
         private FrilItem item;

@@ -1,4 +1,4 @@
-﻿namespace FriRaLand.Forms {
+﻿namespace FriLand.Forms {
     partial class CommentForm {
         /// <summary>
         /// Required designer variable.

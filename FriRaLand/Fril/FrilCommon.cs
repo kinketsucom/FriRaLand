@@ -8,7 +8,7 @@ using Codeplex.Data;
 using System.Drawing;
 
 
-namespace FriRaLand {
+namespace FriLand {
     class FrilCommon {
         public static Dictionary<string, string> conditionTypeFril = new Dictionary<string, string>();
         public static Dictionary<string, string> shippingPayersFril = new Dictionary<string, string>();

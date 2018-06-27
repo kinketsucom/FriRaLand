@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Codeplex.Data;        //json
 
-namespace FriRaLand {
+namespace FriLand {
     public class FrilSeller {
 
         public long id;

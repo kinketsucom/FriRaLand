@@ -1,4 +1,4 @@
-﻿namespace FriRaLand {
+﻿namespace FriLand {
     partial class MainForm {
         /// <summary>
         /// 必要なデザイナー変数です。
@@ -1510,7 +1510,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainForm";
-            this.Text = "FriRaLand";
+            this.Text = "FriLand";
             this.Load += new System.EventHandler(this.MainForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.DailyExhibitDataGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.LocalItemDataGridView)).EndInit();
