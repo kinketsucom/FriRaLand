@@ -70,63 +70,6 @@ namespace FriLand {
             }
         }
 
-        //FIXIT:こっちのSellは不要かな？
-        #region 不要じゃねこれ
-        //商品の出品.要ログイン
-        //返り値: 成功:新しい商品オブジェクト 失敗:null
-        //public FrilItem Sell(FrilItem item, string[] imagelocation) {
-        //    FrilRawResponse res = new FrilRawResponse();
-        //    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-        //    try {
-        //        string url = string.Format("https://api.mercari.jp/sellers/sell?_access_token={0}&_global_access_token={1}", this.account.auth_token);//FIXIT:Frilのものに変える
-
-        //        /*手数料を計算する*/
-        //        int sales_fee = GetSalesFee(item.s_price, item.category_id);
-
-        //        dictionary.Add("_ignore_warning", "false");
-        //        dictionary.Add("category_id", item.category_id.ToString());
-        //        dictionary.Add("description", item.detail);
-        //        dictionary.Add("exhibit_token", FrilAPI.getCsrfToken());
-        //        dictionary.Add("item_condition", item.status.ToString());
-        //        dictionary.Add("name", item.item_name);
-        //        dictionary.Add("price", item.s_price.ToString());
-        //        dictionary.Add("sales_fee", sales_fee.ToString());
-        //        dictionary.Add("shipping_duration", item.d_date.ToString());
-        //        dictionary.Add("shipping_from_area", item.d_area.ToString());
-        //        dictionary.Add("shipping_payer", item.carriage.ToString());
-        //        dictionary.Add("shipping_method", item.d_method.ToString());
-        //        if (item.size_id > 0) dictionary.Add("size", item.size_id.ToString());
-        //        if (item.brand_id > 0) dictionary.Add("brand_name", item.brand_id.ToString());
-        //        Dictionary<int, string> dic = new Dictionary<int, string>();
-        //        if (!string.IsNullOrEmpty(imagelocation[0])) dic.Add(1, imagelocation[0]);
-        //        if (!string.IsNullOrEmpty(imagelocation[1])) dic.Add(2, imagelocation[1]);
-        //        if (!string.IsNullOrEmpty(imagelocation[2])) dic.Add(3, imagelocation[2]);
-        //        if (!string.IsNullOrEmpty(imagelocation[3])) dic.Add(4, imagelocation[3]);
-
-        //        res = postFrilAPIwithMultiPart(url, dictionary, dic);
-        //        if (res.error) throw new Exception();
-        //        dynamic resjson = DynamicJson.Parse(res.response);
-        //        FrilItem rstitem = new FrilItem(resjson.data);
-        //        return rstitem;
-        //    } catch (Exception e) {
-        //        Log.Logger.Error("商品の出品に失敗 以下エラー内容詳細" + item.item_id);
-        //        if (res.error) {
-        //            Log.Logger.Error("res.errorがtrue");
-
-        //        } else {
-        //            Log.Logger.Error("res.errorはfalse");
-        //        }
-        //        if (!string.IsNullOrEmpty(res.response)) Log.Logger.Error("response: " + res.response);
-        //        else Log.Logger.Error("res.responseはnull");
-
-        //        Log.Logger.Error("出品内容:");
-        //        Log.Logger.Error(dictionary);
-        //        return null;
-        //    }
-        //}
-        #endregion
-
-
         //成功: itemID 失敗: null
         public string Sell(FrilItem item,CookieContainer cc) {
             try {
@@ -956,6 +899,28 @@ namespace FriLand {
             option.status_list = status_list;
             return GetItems(option, notall, detailflag);
         }
+        public bool Cancel(string item_id, Common.Account account) {
+            try {
+                string url = "https://api.fril.jp/api/items/delete";
+                Dictionary<string, string> param = new Dictionary<string, string>();
+                param.Add("item_id", item_id);
+                param.Add("auth_token", account.auth_token);
+                FrilRawResponse rawres = postFrilAPI(url, param, this.account.cc);
+                if (rawres.error) return false;
+                /*グローバルアクセストークンを更新*/
+                dynamic resjson = DynamicJson.Parse(rawres.response);
+                bool result = resjson.result;
+                if (!result) throw new Exception();
+                Log.Logger.Info("商品の削除に成功");
+                return true;
+            } catch (Exception ex) {
+                Log.Logger.Error("商品の削除に失敗");
+                Console.WriteLine(ex);
+                return false;
+            }
+        }
+
+
         //コンディションに応じて商品を取得する
         //一度のリクエストで取れるのは最大で60個 60個を超える場合は複数回APIを叩いて結果を取得する.
         //FIXIT:この60とかいう数字コメントアウトしてるいま
@@ -1079,7 +1044,6 @@ namespace FriLand {
                 Dictionary<string, string> param = new Dictionary<string, string>();
                 if (res.error) throw new Exception();
                 //構造体から情報取り出し
-                
                 //string buyername = resjson.data.family_name + " " + resjson.data.first_name;
                 //string zipcode = resjson.data.zip_code1 + "-" + resjson.data.zip_code2;
                 //string prefecture = resjson.data.prefecture;
