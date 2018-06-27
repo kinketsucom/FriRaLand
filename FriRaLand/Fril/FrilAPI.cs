@@ -852,7 +852,7 @@ namespace FriLand {
         public int GetSalesFee(int price, int category_id) {
             try {
                 Dictionary<string, string> param = new Dictionary<string, string>(); //GetTokenParamListForFrilAPI();
-                FrilRawResponse rawres = getFrilAPI("https://api.mercari.jp/sales_fee/get", param, this.account.cc);//FIXIT:Frilのものに変更しないと
+                FrilRawResponse rawres = getFrilAPI("https://api.mercari.jp/sales_fee/get", param, this.account.cc);//FIXITOPTION:Frilのものに変更しないと
                 dynamic resjson = DynamicJson.Parse(rawres.response);
                 object[] sales_cond = resjson.data.parameters;
                 /*カテゴリを再優先, 次に金額の条件を満たすか*/
@@ -877,13 +877,6 @@ namespace FriLand {
                 return (int)((double)price * 0.1); ;
             }
         }
-        //FIXIT:おそらく不必要です。
-        //access_tokenとglobal_access_tokenのはいったListを返す関数
-        //private Dictionary<string, string> GetTokenParamListForFrilAPI() {
-        //    Dictionary<string, string> param = new Dictionary<string, string>();
-        //    param.Add("_fril_auth_token", this.account.auth_token);
-        //    return param;
-        //}
         //特定のitemIDの商品情報を取得
         //このAPIではコメントなどの情報も取得できるが現時点では取り出していない
         public FrilItem GetItemInfobyItemIDWithDetail(string item_id) {
