@@ -157,16 +157,16 @@ namespace FriLand {
 
         public void ToggleExhibittedDataGridView(bool SellingOrStopping) {
             if (SellingOrStopping) {
-                //商品説明も表示
-                ExhibittedDataGridView.Columns["ExhibittedDataGridView_description"].Visible = true;
+                //FIXMEOPTION:商品説明も表示
+                //ExhibittedDataGridView.Columns["ExhibittedDataGridView_description"].Visible = true;
                 //購入者氏名は非表示
                 ExhibittedDataGridView.Columns["ExhibittedDataGridView_buyer_simei"].Visible = false;
                 //いいねとコメント表示
                 ExhibittedDataGridView.Columns["ExhibittedDataGridView_favorite"].Visible = true;
                 ExhibittedDataGridView.Columns["ExhibittedDataGridView_comment"].Visible = true;
-                //購入者コメント時間,出品者コメント時間を表示
-                ExhibittedDataGridView.Columns["ExhibittedDataGridView_comment_time_seller"].Visible = true;
-                ExhibittedDataGridView.Columns["ExhibittedDataGridView_comment_time_buyer"].Visible = true;
+                //FIXMEOPTION:購入者コメント時間,出品者コメント時間を表示
+                //ExhibittedDataGridView.Columns["ExhibittedDataGridView_comment_time_seller"].Visible = true;
+                //ExhibittedDataGridView.Columns["ExhibittedDataGridView_comment_time_buyer"].Visible = true;
                 //購入者取引メッセージ時間, 出品者取引メッセージ時間を非表示
                 ExhibittedDataGridView.Columns["ExhibittedDataGridView_transaction_message_seller"].Visible = false;
                 ExhibittedDataGridView.Columns["ExhibittedDataGridView_transaction_message_buyer"].Visible = false;
@@ -667,7 +667,7 @@ namespace FriLand {
                                 reservation_fail_logs.Add(string.Format("{0}:{1}:親ID:{2}子ID:{3}:削除失敗:削除対象の商品情報取得失敗", DateTime.Now.ToString(), api.account.nickname, parent_id, child_id));
                                 delete_failed_num++;
                             } else {
-                                if (reservation.consider_comment && item.num_comments > 0) {
+                                if (reservation.consider_comment && item.comments_count > 0) {
                                     Log.Logger.Info("コメントが付いているので削除(停止)しない");
                                     //continue; なんども実行されることになるのでコメントがついてるので削除(停止)しないならそれでもうおわり
                                 } else if (reservation.consider_favorite && item.likes_count > 0) {
@@ -732,7 +732,7 @@ namespace FriLand {
                                 Log.Logger.Error("商品情報取得失敗により削除2(停止)失敗");
                                 delete_failed_num++;
                             } else {
-                                if (reservation.consider_comment2 && item.num_comments > 0) {
+                                if (reservation.consider_comment2 && item.comments_count > 0) {
                                     Log.Logger.Info("コメントが付いているので削除2(停止)しない");
                                     //continue; なんども実行されることになるのでコメントがついてるので削除(停止)しないならそれでもうおわり
                                 } else if (reservation.consider_favorite2 && item.likes_count > 0) {
@@ -959,7 +959,7 @@ namespace FriLand {
                         e.Value = item.likes_count;
                         break;
                     case 7:
-                        e.Value = item.num_comments;
+                        e.Value = item.comments_count;
                         break;
                     case 8:
                         e.Value = (item.item_pv >= 0) ? item.item_pv.ToString() : "";

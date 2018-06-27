@@ -50,7 +50,7 @@ namespace FriLand {
         public int category_level4_id;
 
         //public int num_likes { get; set; } //いいね数
-        public int num_comments { get; set; }//コメント数
+        //public int num_comments { get; set; }//コメント数
         public long pager_id; //FIXITOPTION:不必要なパラメータの可能性がある//商品ページのインデックス?,get_itemsで60件以上あるときは最後のitemのpager_idを使って2回目以降叩く
         public string status_message { get; set; } //表示用の状態「出品中・停止中・支払い待ち・発送待ち・評価待ち」
         public string created_str { get; set; }//FIXME:なにこれ
