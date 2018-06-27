@@ -942,9 +942,20 @@ namespace FriLand {
                         break;
                     case 1:
                         e.Value = item.status_message;
+                        switch (item.t_status) {
+                            case 3:
+                                e.Value += "(決済済)";
+                                break;
+                            case 4:
+                                e.Value += "(発送通知済)";
+                                break;
+                            case 5:
+                                e.Value += "(評価受理済)";
+                                break;
+                        }
                         break;
                     case 2:
-                        e.Value = item.screen_name;//詳細チェックなしのnullがすごく気に入らない
+                        e.Value = item.screen_name;
                         break;
                     case 3:
                         e.Value = item.item_name;

@@ -25,7 +25,7 @@ namespace FriLand {
         public string detail;
         public int s_price;
         public int status;
-        public int t_status;//FIXMEOPTION:取引状態を表しているはず0:出品中4:受け取り確認待ち
+        public int t_status;//FIXMEOPTION:取引状態を表しているはず0:selling,3:trading(相手の決済終了),4:受け取り確認待ち,5:相手が評価をしたあと
         public int carriage;
         public int d_method;//delivery_method
         public int d_date;//delivery_date
@@ -48,6 +48,17 @@ namespace FriLand {
         public int category_level2_id;
         public int category_level3_id;
         public int category_level4_id;
+
+
+        private static readonly DateTime UNIX_EPOCH = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc); //UnixTimeの開始時刻
+        public string buyer_name = ""; //購入者アカウント名
+        public string buyer_address = "";
+        public DateTime buyer_comment_time = UNIX_EPOCH;
+        public DateTime seller_comment_time = UNIX_EPOCH;
+        public int transaction_message_num = -1;
+        public DateTime buyer_transaction_message_time = UNIX_EPOCH;
+        public DateTime seller_transaction_message_time = UNIX_EPOCH;
+
 
         //public int num_likes { get; set; } //いいね数
         //public int num_comments { get; set; }//コメント数
@@ -76,13 +87,7 @@ namespace FriLand {
 
 
 
-        private static readonly DateTime UNIX_EPOCH = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc); //UnixTimeの開始時刻
-        public string buyer_name = ""; //購入者アカウント名
-        public DateTime buyer_comment_time = UNIX_EPOCH;
-        public DateTime seller_comment_time = UNIX_EPOCH;
-        public int transaction_message_num = -1;
-        public DateTime buyer_transaction_message_time = UNIX_EPOCH;
-        public DateTime seller_transaction_message_time = UNIX_EPOCH;
+
 
 
 
@@ -102,7 +107,7 @@ namespace FriLand {
                 this.detail = info.detail;
                 this.s_price = (int)info.s_price;
                 this.status = (int)info.status;
-                this.t_status = (int)info.t_status;//FIXMEOPTION:取引状態をあらわしているはず
+                this.t_status = (int)info.t_status;
                 this.carriage = (int)info.carriage;
                 this.d_method = (int)info.d_method;
                 this.d_date = (int)info.d_date;

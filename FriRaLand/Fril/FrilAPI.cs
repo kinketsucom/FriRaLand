@@ -10,6 +10,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Security.Cryptography;
+using System.Windows.Forms;
 
 namespace FriLand {
     public class FrilAPI {
@@ -493,7 +494,13 @@ namespace FriLand {
                     }
                 }
             }
-            catch {
+            catch(Exception ex) {
+                Console.WriteLine(ex);
+                if (ex.Message.Contains("500")) {
+                    Console.WriteLine("500エラーメッセボックスだします");
+                    MessageBox.Show("500エラーです。");
+                  
+                }
                 return "";
             }
         }
@@ -1078,6 +1085,7 @@ namespace FriLand {
 
         private TransactionInfo GetAddressFromHTML(string html) {
             try {
+                
                 TransactionInfo transactionInfo = new TransactionInfo();
                 int num = 0;
                 num = html.IndexOf("<p class=\"caption-text\">配送先住所</p>", num);
@@ -1231,9 +1239,10 @@ namespace FriLand {
                 Dictionary<string, string> param = GetEvaluationFromHTML(html);
                 string url = "https://web.fril.jp/v2/order/review";
                 param.Add("review", "1");
-               FrilRawResponse rawres = postFrilAPI(url, param,this.account.cc);
+               FrilRawResponse rawres = postFrilAPI(url, param,this.account.cc,true);
                 if (rawres.error) throw new Exception();
                 Log.Logger.Info("購入者の評価に成功");
+                Console.WriteLine("購入者の評価に成功");
                 return true;
             } catch (Exception ex) {
                 Log.Logger.Info("購入者の評価に失敗");

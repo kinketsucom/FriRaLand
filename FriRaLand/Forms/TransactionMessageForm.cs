@@ -83,6 +83,7 @@ namespace FriLand.Forms {
         private void TransactionMessage_Load(object sender, EventArgs e) {
             //商品情報を取得
             this.item = Frilapi.GetItemInfobyItemIDWithDetail(itemid);
+            Console.WriteLine(this.item.t_status);
             SetGUIParams();
             ////ウインドウサイズを記憶するか
             //this.saveWindowSizeCheckbox.Checked = Settings.getSaveMessageWindowSize();
@@ -115,11 +116,14 @@ namespace FriLand.Forms {
             var comments = Frilapi.GetTransactionMessages(itemid);
             //コメントをGUIに反映
             RefreshCommentDataGridview(comments);
-
             //購入者情報を取得
-            this.info = Frilapi.GetTransactionInfo(itemid);
-            if (!string.IsNullOrEmpty(info.buyername)) {
-                buyerNameTextBox.Text = info.buyername;
+            if (this.item.t_status > 2 && this.item.t_status < 5) {
+                this.info = Frilapi.GetTransactionInfo(itemid);
+                this.item.buyer_address = this.info.address;
+                this.item.buyer_name = this.info.buyer_screen_name;
+            }
+            if (!string.IsNullOrEmpty(this.item.buyer_name)) {
+                buyerNameTextBox.Text = this.item.buyer_name; //info.buyername;
             } else {
                 buyerNameTextBox.Enabled = false;
             }
@@ -131,9 +135,9 @@ namespace FriLand.Forms {
             this.buyerAccountNickNameTextBox.Text = this.info.buyer_screen_name;
 
             //取引状態に応じて取引状態のラベルと、コントロールボタンの状態を変更する
-            if (!string.IsNullOrEmpty(info.status)) {
-                switch (info.status) {
-                    case FrilAPI.TradingStatus.Wait_Paymet:
+            if (this.item.t_status >= 2 ) {//trading状態
+                switch (this.item.t_status) {
+                    case 2:
                         statusLabel.Text = FrilItem.StatusMessage.wait_payment;
                         control_button.Enabled = false;
                         control_button.Text = "購入者の支払いをお待ちください";
@@ -143,22 +147,22 @@ namespace FriLand.Forms {
                         this.buyerAddressRichTextBox.Enabled = false;
                         statusLabel.ForeColor = Color.Red;
                         break;
-                    case FrilAPI.TradingStatus.Wait_Shipping:
+                    case 3:
                         statusLabel.Text = FrilItem.StatusMessage.wait_shipping;
                         control_button.Enabled = true;
                         control_button.Text = "商品を発送したので発送通知をする";
                         break;
-                    case FrilAPI.TradingStatus.Wait_Review:
+                    case 4:
                         statusLabel.Text = FrilItem.StatusMessage.wait_review;
                         control_button.Enabled = false;
                         control_button.Text = "受け取り評価後,購入者を評価できます";
                         break;
-                    case FrilAPI.TradingStatus.Wait_Done:
+                    case 5:
                         statusLabel.Text = FrilItem.StatusMessage.wait_done;
                         control_button.Enabled = true;
                         control_button.Text = "購入者を評価する";
                         break;
-                    case FrilAPI.TradingStatus.Done:
+                    case 6:
                         statusLabel.Text = FrilItem.StatusMessage.done;
                         control_button.Enabled = false;
                         control_button.Text = "取引完了";
@@ -173,37 +177,37 @@ namespace FriLand.Forms {
             if (!string.IsNullOrEmpty(info.created)) {
                 createdDateLabel.Text = info.created;
             }
-            //定型文よみこみ
-            this.comboBox1.Items.Clear();
-            this.message_template_list = Settings.getTransactionMessageTemplate();
-            var title_list = Settings.getTransactionMessageTemplateTitle();
-            foreach (var str in title_list) this.comboBox1.Items.Add(str);
-            if (title_list.Count > 0) this.comboBox1.SelectedIndex = 0;
+            ////定型文よみこみ
+            //this.comboBox1.Items.Clear();
+            //this.message_template_list = Settings.getTransactionMessageTemplate();
+            //var title_list = Settings.getTransactionMessageTemplateTitle();
+            //foreach (var str in title_list) this.comboBox1.Items.Add(str);
+            //if (title_list.Count > 0) this.comboBox1.SelectedIndex = 0;
             this.richTextBox1.Text = "";
-            //商品備考読み込み
-            var itemNoteDBHelper = new ItemNoteDBHelper();
-            var itemNote = itemNoteDBHelper.getItemNote(this.itemid);
-            if (itemNote != null) {
-                this.BikouTextBox.Text = itemNote.bikou;
-                this.address_copyed_checkbox.Checked = itemNote.address_copyed;
-            }
+            ////商品備考読み込み
+            //var itemNoteDBHelper = new ItemNoteDBHelper();
+            //var itemNote = itemNoteDBHelper.getItemNote(this.itemid);
+            //if (itemNote != null) {
+            //    this.BikouTextBox.Text = itemNote.bikou;
+            //    this.address_copyed_checkbox.Checked = itemNote.address_copyed;
+            //}
         }
 
         private void control_button_Click(object sender, EventArgs e) {
             string html = this.Frilapi.GetTransactionPage(this.itemid);
             Dictionary<string, string> param_dic = GetShipmentFromHTML(html);
-            if (param_dic.Count != 0) { //通知送る前
+            if (this.item.t_status == 2) {//支払い方法決定前
+                //ただまつのみ
+            } else if (this.item.t_status == 3) { //通知送る前
                 param_dic.Add("tracking_number", "");
                 this.Frilapi.SendItemShippedNotification(this.itemid, param_dic);
-                //出品通知か購入者評価以外ボタンはおしても反応しない(disableにしているが）
-                //if (info.status != "wait_shipping" && info.status != "wait_done") return;//FIXME:なんか取引状態の確認ができてないのであやしい
-                //if (info.status == "wait_shipping") {
                 SetGUIParams();
-            } else{//通知送った後は0になる
-                //} else if (info.status == "wait_done") {
+            } else if (this.item.t_status == 4) {//発送通知後
+                //ただまつのみ
+            } else if (this.item.t_status == 5) { //相手の評価おえた
                 //取引メッセージを入力させる
                 var messageForm = new InputMessageForm("購入者評価メッセージを入力してください");
-                messageForm.SetComboBoxItems(Settings.getBuyerReviewMessageTemplateTitle(), Settings.getBuyerReviewMessageTemplate());
+                //messageForm.SetComboBoxItems(Settings.getBuyerReviewMessageTemplateTitle(), Settings.getBuyerReviewMessageTemplate());
                 if (messageForm.ShowDialog() != DialogResult.OK) return;
                 string reviewMessage = messageForm.message;
                 Frilapi.SendReview(itemid, reviewMessage);
