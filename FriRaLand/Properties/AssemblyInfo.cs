@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // アセンブリに関する一般情報は以下の属性セットをとおして制御されます。
 // アセンブリに関連付けられている情報を変更するには、
 // これらの属性値を変更してください。
-[assembly: AssemblyTitle("FriRaLand")]
+[assembly: AssemblyTitle("FriLand")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("FriRaLand")]
-[assembly: AssemblyCopyright("Copyright ©  2017")]
+[assembly: AssemblyProduct("FriLand")]
+[assembly: AssemblyCopyright("Copyright ©  2018 FriLand")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
