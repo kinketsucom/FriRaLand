@@ -1071,43 +1071,47 @@ namespace FriRaLand {
             public string address1;
             public string address2;
             public string sellerid;
+            public string buyer_screen_name;
             //public DateTime created;
             public string created;
+            public bool error;
         }
         //購入者氏名及び商品発送先住所を取得する
-        public TransactionInfo GetTransactionInfo(string itemid) {
+        public TransactionInfo GetTransactionInfo(string item_id) {
             TransactionInfo res = new TransactionInfo();
             try {
+                string html = GetTransactionPage(item_id);
+                res = GetAddressFromHTML(html);
                 Dictionary<string, string> param = new Dictionary<string, string>();
-                string url = "https://api.mercari.jp/transaction_evidences/get";//FIXIT:Frilのものに変える
-                param.Add("item_id", itemid);
-                param.Add("t", FrilAPI.getUNIXTimeStamp());
-                param.Add("_access_token", this.account.auth_token);
-                FrilRawResponse rawres = getFrilAPI(url, param,this.account.cc);
-                if (rawres.error) throw new Exception();
-                dynamic resjson = DynamicJson.Parse(rawres.response);
-                //JSONから情報取り出し
-                string buyername = resjson.data.family_name + " " + resjson.data.first_name;
-                string zipcode = resjson.data.zip_code1 + "-" + resjson.data.zip_code2;
-                string prefecture = resjson.data.prefecture;
-                string city = resjson.data.city;
-                string address1 = resjson.data.address1;
-                string address2 = resjson.data.address2;
-                string result_address = zipcode + Environment.NewLine + prefecture + city + address1 + Environment.NewLine + address2;
-                res.buyerid = ((long)resjson.data.buyer_id).ToString();
-                res.sellerid = ((long)resjson.data.seller_id).ToString();
-                res.buyername = buyername;
-                res.address = result_address;
-                res.status = resjson.data.status;
-                res.transaction_id = ((long)resjson.data.id).ToString();
-                res.zipcode = zipcode;
-                res.address1 = prefecture + city + address1;
-                res.address2 = address2;
+                //string url = "https://api.mercari.jp/transaction_evidences/get";//FIXIT:Frilのものに変える
+                //param.Add("item_id", itemid);
+                //param.Add("t", FrilAPI.getUNIXTimeStamp());
+                //param.Add("_access_token", this.account.auth_token);
+                //FrilRawResponse rawres = getFrilAPI(url, param,this.account.cc);
+                if (res.error) throw new Exception();
+                //構造体から情報取り出し
+                
+                //string buyername = resjson.data.family_name + " " + resjson.data.first_name;
+                //string zipcode = resjson.data.zip_code1 + "-" + resjson.data.zip_code2;
+                //string prefecture = resjson.data.prefecture;
+                //string city = resjson.data.city;
+                //string address1 = resjson.data.address1;
+                //string address2 = resjson.data.address2;
+                //string result_address = zipcode + Environment.NewLine + prefecture + city + address1 + Environment.NewLine + address2;
+                //res.buyerid = ((long)resjson.data.buyer_id).ToString();
+                //res.sellerid = ((long)resjson.data.seller_id).ToString();
+                //res.buyername = buyername;
+                //res.address = result_address;
+                //res.status = resjson.data.status;
+                //res.transaction_id = ((long)resjson.data.id).ToString();
+                //res.zipcode = zipcode;
+                //res.address1 = prefecture + city + address1;
+                //res.address2 = address2;
                 //createdプロパティはバージョンによってUNIXスタンプ返すものと文字列返すものがある！
                 /*long created = (long)resjson.data.created;
                 DateTime UNIX_EPOCH = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc); //UnixTimeの開始時刻
                 res.created = UNIX_EPOCH.AddSeconds(created).ToLocalTime();*/
-                res.created = resjson.data.created;
+                //res.created = resjson.data.created;
                 Log.Logger.Info("取引情報の取得に成功");
                 return res;
             } catch (Exception ex) {
@@ -1118,26 +1122,41 @@ namespace FriRaLand {
         }
 
         private TransactionInfo GetAddressFromHTML(string html) {
-            TransactionInfo transactionInfo = new TransactionInfo();
-            int num = 0;
-            num = html.IndexOf("<p class=\"caption-text\">配送先住所</p>", num);
-            num = html.IndexOf("<p>", num) + "<p>".Length;
-            int num2 = html.IndexOf("<br />", num);
-            transactionInfo.zip = html.Substring(num, num2 - num);
-            num = num2;
-            num = html.IndexOf("<br />", num) + "<br />".Length;
-            num2 = html.IndexOf("<br />", num);
-            transactionInfo.address1 = html.Substring(num, num2 - num);
-            transactionInfo.address1 = transactionInfo.address1.Replace(" ", "").Replace("\n", "");
-            num = num2;
-            num = html.IndexOf("<br />", num) + "<br />".Length;
-            num2 = html.IndexOf("</p>", num);
-            transactionInfo.name = html.Substring(num, num2 - num);
-            transactionInfo.name = transactionInfo.name.Replace(" ", "").Replace("\n", "");
-            return transactionInfo;
+            try {
+                TransactionInfo transactionInfo = new TransactionInfo();
+                int num = 0;
+                num = html.IndexOf("<p class=\"caption-text\">配送先住所</p>", num);
+                num = html.IndexOf("<p>", num) + "<p>".Length;
+                int num2 = html.IndexOf("<br />", num);
+                transactionInfo.zipcode = html.Substring(num, num2 - num);
+                num = num2;
+                num = html.IndexOf("<br />", num) + "<br />".Length;
+                num2 = html.IndexOf("<br />", num);
+                transactionInfo.address = html.Substring(num, num2 - num);
+                transactionInfo.address = transactionInfo.address.Replace(" ", "").Replace("\n", "");
+                num = num2 + "<br />".Length;
+                num2 = html.IndexOf("</p>", num);
+                transactionInfo.buyername = html.Substring(num, num2 - num);
+                transactionInfo.buyername = transactionInfo.buyername.Replace(" ", "").Replace("\n", "");
+                num = num2;
+                num = html.IndexOf("<div class=\"black-text\">", num)+ "<div class=\"black-text\">".Length;
+                num = html.IndexOf(">", num) + ">".Length;
+                num2 = html.IndexOf("</a>", num);
+                transactionInfo.buyer_screen_name = html.Substring(num, num2 - num);
+                transactionInfo.buyer_screen_name = transactionInfo.buyer_screen_name.Replace(" ", "").Replace("\n", "");
+
+                //TODO:ほかにもなんか必要ならここからぶちこめる
+                transactionInfo.error = false;
+                return transactionInfo;
+
+            } catch (Exception ex) {
+                TransactionInfo transactionInfo = new TransactionInfo();
+                Console.WriteLine(ex);
+                Log.Logger.Error(ex);
+                transactionInfo.error = true;
+                return transactionInfo;
+            }
         }
-
-
 
         //コメント用の構造体
         public struct Comment {

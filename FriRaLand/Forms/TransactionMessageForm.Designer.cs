@@ -23,8 +23,8 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             this.cancelTransactionButton = new System.Windows.Forms.Button();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.copyButton2 = new System.Windows.Forms.Button();
@@ -337,6 +337,7 @@
             this.label8.Size = new System.Drawing.Size(67, 15);
             this.label8.TabIndex = 69;
             this.label8.Text = "購入日時";
+            this.label8.Visible = false;
             // 
             // label6
             // 
@@ -368,7 +369,6 @@
             this.buyerAddressRichTextBox.Size = new System.Drawing.Size(253, 64);
             this.buyerAddressRichTextBox.TabIndex = 66;
             this.buyerAddressRichTextBox.Text = "";
-            this.buyerAddressRichTextBox.Visible = false;
             // 
             // buyerNameTextBox
             // 
@@ -378,7 +378,6 @@
             this.buyerNameTextBox.ReadOnly = true;
             this.buyerNameTextBox.Size = new System.Drawing.Size(253, 22);
             this.buyerNameTextBox.TabIndex = 65;
-            this.buyerNameTextBox.Visible = false;
             // 
             // label5
             // 
@@ -442,8 +441,8 @@
             // 
             // Column1
             // 
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.Column1.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.Column1.DefaultCellStyle = dataGridViewCellStyle11;
             this.Column1.HeaderText = "名前";
             this.Column1.Name = "Column1";
             this.Column1.ReadOnly = true;
@@ -458,8 +457,8 @@
             // 
             // Column2
             // 
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.Column2.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.Column2.DefaultCellStyle = dataGridViewCellStyle12;
             this.Column2.HeaderText = "取引メッセージ";
             this.Column2.Name = "Column2";
             this.Column2.ReadOnly = true;

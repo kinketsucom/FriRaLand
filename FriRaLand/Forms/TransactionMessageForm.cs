@@ -108,7 +108,7 @@ namespace FriRaLand.Forms {
             this.pictureBox1.Image = item.Image;
             this.itemNameLabel.Text = item.item_name;
             this.sellerLabel.Text = item.screen_name;
-            this.buyerAccountNickNameTextBox.Text = item.buyer_name;
+
             this.kakakuTextBox.Text = item.s_price.ToString();// +"円";
             this.riekiTextBox.Text = Common.getRieki(item.s_price).ToString();
             //コメントを取得
@@ -128,6 +128,8 @@ namespace FriRaLand.Forms {
             } else {
                 buyerAddressRichTextBox.Enabled = false;
             }
+            this.buyerAccountNickNameTextBox.Text = this.info.buyer_screen_name;
+
             //取引状態に応じて取引状態のラベルと、コントロールボタンの状態を変更する
             if (!string.IsNullOrEmpty(info.status)) {
                 switch (info.status) {
