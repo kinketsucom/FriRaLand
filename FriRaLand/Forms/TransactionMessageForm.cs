@@ -38,7 +38,10 @@ namespace FriRaLand.Forms {
                 return;
             }
             //コメントを送信
-            Frilapi.SendTransactionMessage(itemid, this.richTextBox1.Text);
+            string html = Frilapi.GetTransactionPage(this.itemid);
+            Dictionary<string, string> param_dic = GetTransactionTokenFromHTML(html);
+
+            Frilapi.SendTransactionMessage(itemid, this.richTextBox1.Text,param_dic);
             //コメント一覧を再取得してGUIに反映
             this.dataGridView1.Rows.Clear();
             //コメントを取得
@@ -48,6 +51,34 @@ namespace FriRaLand.Forms {
             //コメントフォームをクリア
             this.richTextBox1.Clear();
         }
+
+
+        private Dictionary<string, string> GetTransactionTokenFromHTML(string html) {
+            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+            int num = 0;
+            num = html.IndexOf("<form id=\"comment-form\"", num);
+            int num2 = html.IndexOf("</form>", num);
+            string text = html.Substring(num, num2 - num);
+            num = 0;
+            while (text.IndexOf("<input type=\"hidden\"", num) >= 0) {
+                num = text.IndexOf("<input type=\"hidden\"", num);
+                num2 = text.IndexOf("/>", num) + "/>".Length;
+                string text2 = text.Substring(num, num2 - num);
+                num = num2;
+                int num3 = text2.IndexOf("name=\"") + "name=\"".Length;
+                int num4 = text2.IndexOf("\"", num3);
+                string key = text2.Substring(num3, num4 - num3);
+                num3 = text2.IndexOf("value=\"") + "value=\"".Length;
+                num4 = text2.IndexOf("\"", num3);
+                string value = text2.Substring(num3, num4 - num3);
+                dictionary.Add(key, value);
+            }
+            return dictionary;
+        }
+
+
+
+
 
         private void TransactionMessage_Load(object sender, EventArgs e) {
             //商品情報を取得

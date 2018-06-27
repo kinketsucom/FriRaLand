@@ -1032,11 +1032,7 @@ namespace FriRaLand {
                 param.Add("item_id", itemid);
                 FrilRawResponse rawres = getFrilAPI(url, param,this.account.cc, true);
                 Log.Logger.Info("取引メッセージの取得に成功");
-                res = GetTransactionCommentFromHTML(rawres.response);
-
-
-
-
+                res = GetTransactionCommentFromHTML(rawres.response);//パース
                 return res;
             } catch (Exception ex) {
                 Log.Logger.Error(ex.Message);
@@ -1044,6 +1040,26 @@ namespace FriRaLand {
                 return res;
             }
         }
+
+        //取引htmlを取得する
+        public string GetTransactionPage(string itemid) {
+            string res="";
+            try {
+                Dictionary<string, string> param = new Dictionary<string, string>();
+                string url = "https://web.fril.jp/transaction";
+                param.Add("item_id", itemid);
+                FrilRawResponse rawres = getFrilAPI(url, param, this.account.cc, true);
+                Log.Logger.Info("transactionの取得に成功");
+                res = rawres.response;
+                return res;
+            } catch (Exception ex) {
+                Log.Logger.Error(ex.Message);
+                Log.Logger.Error("取引メッセージの取得に失敗");
+                return res;
+            }
+        }
+
+
         //購入者情報の構造体
         public struct TransactionInfo {
             public string transaction_id;
@@ -1182,20 +1198,24 @@ namespace FriRaLand {
             }
         }
         //取引メッセージを送信する
-        public void SendTransactionMessage(string itemid, string message) {
+        public void SendTransactionMessage(string itemid, string comment , Dictionary<string,string>param_dic) {
             try {
                 Dictionary<string, string> param = new Dictionary<string, string>();
-                string url = "https://api.fril.jp/transaction_messages/post";
-                param.Add("item_id", itemid);
-                param.Add("body", message);
-                param.Add("t", FrilAPI.getUNIXTimeStamp());
-                param.Add("_access_token", this.account.auth_token);
+                string url = "https://api.fril.jp/api/order/comment/add";//これメッセ送るよう
+                param = param_dic;//TODO:これやってるいみある？？
+                param.Add("comment", comment);
+
+                //param.Add("item_id", item_id);
+                //param.Add("body", message);
+                //param.Add("t", FrilAPI.getUNIXTimeStamp());
+                //param.Add("auth_token", this.account.auth_token);
                 FrilRawResponse rawres = postFrilAPI(url, param,this.account.cc);
                 if (rawres.error) throw new Exception();
                 Log.Logger.Info("取引メッセージ送信成功");
             } catch (Exception ex) {
                 Log.Logger.Error(ex.Message);
                 Log.Logger.Error("取引メッセージ送信失敗");
+                Console.WriteLine(ex);
             }
         }
         //商品の発送通知を行う
