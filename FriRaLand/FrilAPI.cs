@@ -22,10 +22,10 @@ namespace FriRaLand {
 
         //GET,POSTのRequestのResponse
         private class FrilRawResponse {
-            public bool error = true;
+            public bool error = false;
             public string response = "";
             public FrilRawResponse() { }
-            public FrilRawResponse(string response, bool error) {
+            public FrilRawResponse(string response, bool error=false) {
             this.response = response; this.error = error;
             }
 
@@ -430,7 +430,7 @@ namespace FriRaLand {
                 }
                 if (res.error) throw new Exception("webrequest error");
                 //if (res.Contains("false")) throw new Exception("item result false");
-                                res.error = false;
+                res.error = false;
                 res.response = content;
                 Log.Logger.Error("FrilPOSTリクエスト失敗" + res.response);
                 req.Abort();

@@ -364,7 +364,7 @@ namespace FriRaLand.DBHelper {
                     account.email = sQLiteDataReader["email"].ToString();
                     account.password = sQLiteDataReader["password"].ToString();
                     account.auth_token = sQLiteDataReader["auth_token"].ToString();
-                    account.sellerid = sQLiteDataReader["sellerid"].ToString();
+                    account.sellerid = sQLiteDataReader["user_id"].ToString();
                     account.nickname = sQLiteDataReader["nickname"].ToString();
                     account.expiration_date = Common.getDateFromUnixTimeStamp(sQLiteDataReader["expiration_date"].ToString());
                     account.kengai_num = int.Parse(sQLiteDataReader["kengai_num"].ToString());
@@ -505,19 +505,19 @@ namespace FriRaLand.DBHelper {
         }
 
         //なければnew Common.Accountを返す
-        public Common.Account getAccountFromSellerid(string sellerid) {
+        public Common.Account getAccountFromSellerid(string user_id) {
             Common.Account account = new Common.Account();
             this.conn.Open();
             try {
                 SQLiteCommand sQLiteCommand = new SQLiteCommand("select * from accounts i where"
-                                    + " i.sellerid = '" + sellerid + "';", this.conn);
+                                    + " i.user_id = '" + user_id + "';", this.conn);
                 SQLiteDataReader sQLiteDataReader = sQLiteCommand.ExecuteReader();
                 while (sQLiteDataReader.Read()) {
                     account.DBId = int.Parse(sQLiteDataReader["Id"].ToString());
                     account.email = sQLiteDataReader["email"].ToString();
                     account.password = sQLiteDataReader["password"].ToString();
                     account.auth_token = sQLiteDataReader["auth_token"].ToString();
-                    account.sellerid = sQLiteDataReader["sellerid"].ToString();
+                    account.sellerid = sQLiteDataReader["user_id"].ToString();
                     account.nickname = sQLiteDataReader["nickname"].ToString();
                     account.expiration_date = Common.getDateFromUnixTimeStamp(sQLiteDataReader["expiration_date"].ToString());
                     account.kengai_num = int.Parse(sQLiteDataReader["kengai_num"].ToString());
