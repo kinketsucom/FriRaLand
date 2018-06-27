@@ -106,66 +106,71 @@ namespace FriLand {
             //値下げカウントを削除
             new NesageCntDBHelper().deleteNesageCnt(item.item_id);
         }
+        #region FIXMEOPTION:値下げ機能は現時点で不要
         //指定した値下げ条件に基づいて値下げを実行する
         //返り値:true; 値下げ実行 false:値下げしpi
-        public static bool ExecuteNesage(FrilItem item, FrilAPI api, string[] nesage_ng_list) {
-            //値下げ除外リストに含まれる場合は値下げしない
-            if (Array.IndexOf(nesage_ng_list, item.item_id) >= 0) {
-                Log.Logger.Info("値下げNG対象のため値下げしない: " + item.item_id);
-                return false;
-            }
-            //値下げ回数DBに情報があるか調べる（なければ0）
-            int old_nesage_cnt = new NesageCntDBHelper().getNesageCnt(item.item_id);
-            //値下げ回数が設定した回数以上なら値下げスキップ
-            if (old_nesage_cnt >= Settings.getNesageKaisu()) {
-                Log.Logger.Info("値下げ最大回数に達したため値下げしない: " + item.item_id);
-                return false;
-            }
-            //いいね数が指定した数に達していなかったら値下げスキップ
-            if (item.num_likes < Settings.getDoNesageLowerLikeLimit()) {
-                Log.Logger.Info("いいね数が指定数よりも少ないので値下げしない: " + item.item_id);
-                return false;
-            }
-            int rate = Settings.getNesageRate();
-            int discount = item.s_price * rate / 100;
-            discount = (discount % 10 == 0) ? discount : ((discount / 10) + 1) * 10; //10の位で切り上げ
-            int oldprice = item.s_price;
-            item.s_price -= discount;
-            bool res = api.Edit(item, item.imageurls);
-            if (res) {
-                //値下げ回数DB更新
-                new NesageCntDBHelper().nesageCntIncrement(item.item_id);
-                //値下げログ追加
-                new NesageLogDBHelper().addNesageLog(item, api.account.nickname, oldprice, item.s_price, old_nesage_cnt + 1);
-                Log.Logger.Info("値下げ成功 :" + item.item_id);
-                return true;
-            } else {
-                Log.Logger.Error("値下げ失敗: " + item.item_id);
-                return false;
-            }
-        }
+        //public static bool ExecuteNesage(FrilItem item, FrilAPI api, string[] nesage_ng_list) {
+        //    //値下げ除外リストに含まれる場合は値下げしない
+        //    if (Array.IndexOf(nesage_ng_list, item.item_id) >= 0) {
+        //        Log.Logger.Info("値下げNG対象のため値下げしない: " + item.item_id);
+        //        return false;
+        //    }
+        //    //値下げ回数DBに情報があるか調べる（なければ0）
+        //    int old_nesage_cnt = new NesageCntDBHelper().getNesageCnt(item.item_id);
+        //    //値下げ回数が設定した回数以上なら値下げスキップ
+        //    if (old_nesage_cnt >= Settings.getNesageKaisu()) {
+        //        Log.Logger.Info("値下げ最大回数に達したため値下げしない: " + item.item_id);
+        //        return false;
+        //    }
+        //    //いいね数が指定した数に達していなかったら値下げスキップ
+        //    if (item.num_likes < Settings.getDoNesageLowerLikeLimit()) {
+        //        Log.Logger.Info("いいね数が指定数よりも少ないので値下げしない: " + item.item_id);
+        //        return false;
+        //    }
+        //    int rate = Settings.getNesageRate();
+        //    int discount = item.s_price * rate / 100;
+        //    discount = (discount % 10 == 0) ? discount : ((discount / 10) + 1) * 10; //10の位で切り上げ
+        //    int oldprice = item.s_price;
+        //    item.s_price -= discount;
+        //    bool res = api.Edit(item, item.imageurls);
+        //    if (res) {
+        //        //値下げ回数DB更新
+        //        new NesageCntDBHelper().nesageCntIncrement(item.item_id);
+        //        //値下げログ追加
+        //        new NesageLogDBHelper().addNesageLog(item, api.account.nickname, oldprice, item.s_price, old_nesage_cnt + 1);
+        //        Log.Logger.Info("値下げ成功 :" + item.item_id);
+        //        return true;
+        //    } else {
+        //        Log.Logger.Error("値下げ失敗: " + item.item_id);
+        //        return false;
+        //    }
+        //}
         //値下げメインロジック
-        public static void doNesage() {
-            int nesage_groupkind_id = Settings.getNesageGroupKindid();
-            var nesage_group_belongs = new GroupBelongDBHelper().selectItemByGroupID(nesage_groupkind_id);
-            var nesage_accountid_list = new List<int>();
-            string[] nesage_ng_list = Settings.getNesageNGList().ToArray();
-            var nesageCntDBHelper = new NesageCntDBHelper();
-            var nesageLogDBHelper = new NesageLogDBHelper();
-            //値下げ実行対象のアカウントリスト取得
-            foreach (var gb in nesage_group_belongs) nesage_accountid_list.Add(gb.AccountID);
-            var nesage_accoutns = new AccountDBHelper().selectItem(nesage_accountid_list);
-            foreach (Common.Account account in nesage_accoutns) {
-                //アカウントが出品している商品を詳細含めて取得
-                FrilAPI api = Common.checkFrilAPI(new FrilAPI(account.email,account.password));
-                var on_sale_items = api.GetAllItemsWithSellers(api.account.userId, new List<int> { 1 }, false, true);
-                foreach (var item in on_sale_items) {
-                    bool res = ExecuteNesage(item, api, nesage_ng_list);
-                    //値下げ間隔スリープ
-                    if (res) System.Threading.Thread.Sleep(Settings.getNesageInterval() * 60 * 1000);
-                }
-            }
-        }
+        //public static void doNesage() {
+        //    int nesage_groupkind_id = Settings.getNesageGroupKindid();
+        //    var nesage_group_belongs = new GroupBelongDBHelper().selectItemByGroupID(nesage_groupkind_id);
+        //    var nesage_accountid_list = new List<int>();
+        //    string[] nesage_ng_list = Settings.getNesageNGList().ToArray();
+        //    var nesageCntDBHelper = new NesageCntDBHelper();
+        //    var nesageLogDBHelper = new NesageLogDBHelper();
+        //    //値下げ実行対象のアカウントリスト取得
+        //    foreach (var gb in nesage_group_belongs) nesage_accountid_list.Add(gb.AccountID);
+        //    var nesage_accoutns = new AccountDBHelper().selectItem(nesage_accountid_list);
+        //    foreach (Common.Account account in nesage_accoutns) {
+        //        //アカウントが出品している商品を詳細含めて取得
+        //        FrilAPI api = Common.checkFrilAPI(new FrilAPI(account.email,account.password));
+        //        var on_sale_items = api.GetAllItemsWithSellers(api.account.userId, new List<int> { 1 }, false, true);
+        //        foreach (var item in on_sale_items) {
+        //            bool res = ExecuteNesage(item, api, nesage_ng_list);
+        //            //値下げ間隔スリープ
+        //            if (res) System.Threading.Thread.Sleep(Settings.getNesageInterval() * 60 * 1000);
+        //        }
+        //    }
+        //}
+        #endregion
+
+
+
     }
 
 }
