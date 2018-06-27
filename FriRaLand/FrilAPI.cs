@@ -328,9 +328,6 @@ namespace FriRaLand {
                 //HttpWebRequestの作成
                 HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
                 req.CookieContainer = cc;
-
-                
-                Console.WriteLine(req.Headers);
                 req.UserAgent = FrilAPI.USER_AGENT;
                 req.Method = "GET";
                 //webモードのときはauth_tokenをヘッダにいれる
@@ -1035,6 +1032,11 @@ namespace FriRaLand {
                 param.Add("item_id", itemid);
                 FrilRawResponse rawres = getFrilAPI(url, param,this.account.cc, true);
                 Log.Logger.Info("取引メッセージの取得に成功");
+                res = GetTransactionCommentFromHTML(rawres.response);
+
+
+
+
                 return res;
             } catch (Exception ex) {
                 Log.Logger.Error(ex.Message);
@@ -1256,6 +1258,45 @@ namespace FriRaLand {
                 Log.Logger.Info("取引のキャンセルに失敗: " + ex.Message);
                 return false;
             }
+        }
+        private List<Comment> GetTransactionCommentFromHTML(string html) {
+            List<Comment> list = new List<Comment>();
+            int num = 0;
+            num = html.IndexOf(">取引メッセージ<", num) + "> 取引メッセージ <".Length;
+            int num2 = html.IndexOf("<form", num);
+            string text = html.Substring(num, num2 - num);
+            num = 0;
+            List<string> list2 = new List<string>();
+            while (text.IndexOf("<div class=\"row\">", num) >= 0) {
+                num = text.IndexOf("<div class=\"row\">", num) + "<div class=\"row\">".Length;
+                num2 = text.IndexOf("<div class=\"row\">", num);
+                if (num2 < 0) {
+                    break;
+                }
+                list2.Add(text.Substring(num, num2 - num));
+                num = num2;
+            }
+            foreach (string text2 in list2) {
+                Comment comment = new Comment();
+                if (text2.IndexOf("<div class=\"col s2\">") < text2.IndexOf("<div class=\"col s10\">")) {
+                    comment.screen_name = "出品者";
+                } else {
+                    comment.screen_name = "購入者";
+                }
+                num = 0;
+                num = text2.IndexOf(" <p class=\"small-text\">", num) + " <p class=\"small-text\">".Length;
+                num2 = text2.IndexOf("</p>", num);
+                string text3 = text2.Substring(num, num2 - num);
+                text3 = text3.Replace("\n", "");
+                comment.comment = text3.Replace("<br />", "\n");
+                num = 0;
+                num = text2.IndexOf("<p class=\"small-text right-align\">", num) + "<p class=\"small-text right-align\">".Length;
+                num2 = text2.IndexOf("</p>", num);
+                string created_at = text2.Substring(num, num2 - num);
+                comment.created_at = DateTime.Parse(created_at);
+                list.Add(comment);
+            }
+            return list;
         }
 
 
