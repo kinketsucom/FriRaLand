@@ -1239,6 +1239,7 @@ namespace FriLand {
                 Dictionary<string, string> param = GetEvaluationFromHTML(html);
                 string url = "https://web.fril.jp/v2/order/review";
                 param.Add("review", "1");
+                param.Add("comment", message);
                FrilRawResponse rawres = postFrilAPI(url, param,this.account.cc,true);
                 if (rawres.error) throw new Exception();
                 Log.Logger.Info("購入者の評価に成功");
@@ -1253,7 +1254,7 @@ namespace FriLand {
         private Dictionary<string, string> GetEvaluationFromHTML(string html) {
             Dictionary<string, string> dictionary = new Dictionary<string, string>();
             int num = 0;
-            num = html.IndexOf("<form id=\"comment-form\"", num);
+            num = html.IndexOf("<form id=\"review-form\"", num);
             int num2 = html.IndexOf("</form>", num);
             string text = html.Substring(num, num2 - num);
             num = 0;
