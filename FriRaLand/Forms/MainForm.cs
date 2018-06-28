@@ -43,7 +43,7 @@ namespace RakuLand {
         //    public DateTime expiration_date { get; set; }
         //}
 
-
+        public const string ProductKind = "FriLand-sima";
         System.Random random = new System.Random();
         private List<FrilAPI> FrilAPIList = new List<FrilAPI>();
         private Dictionary<string, FrilAPI> sellerIDtoAPIDictionary = new Dictionary<string, FrilAPI>(); //sellerid -> API
@@ -1326,8 +1326,8 @@ namespace RakuLand {
             return string.Format("成功: {0} 失敗:{1}", successnum, trynum - successnum);
         }
 
-
-
-
+        private void バージョン情報ToolStripMenuItem_Click(object sender, EventArgs e) {
+            new StartUpForm().Show();
+        }
     }
 }
