@@ -25,24 +25,6 @@ namespace RakuLand {
         private List<FrilItem> ExhibittedItemDataBindList = new List<FrilItem>(); //表にバインドする商品リスト 絞り込み結果はこっち
         private List<FrilItem> ExhibittedItemDataBackBindList = new List<FrilItem>(); //こっちは絞り込んでも減らない
 
-        //public class Account {//FIXIT:移行したのでおそらく不必要
-        //    public int DBId;
-        //    public string email;
-        //    public string password;
-        //    public string auth_token;
-        //    public string sellerid;
-        //    public int kengai_num;
-        //    public int hanbai_num { get; set; }
-        //    public int exhibit_cnt { get; set; }
-        //    public string last_exhibitTime_str; 
-        //    public string nickname { get; set; }
-        //    public bool addSpecialTextToItemName;
-        //    public bool insertEmptyStrToItemName;
-        //    public int defaultbankaddressId = -1;
-        //    public DateTime token_update_date { get; set; }
-        //    public DateTime expiration_date { get; set; }
-        //}
-
         public const string ProductKind = "FriLand-sima";
         System.Random random = new System.Random();
         private List<FrilAPI> FrilAPIList = new List<FrilAPI>();
