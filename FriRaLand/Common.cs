@@ -286,13 +286,13 @@ namespace RakuLand {
         }
         public static string[] makeAddressExcelCSVLine(FrilItem item, FrilAPI.TransactionInfo info, FrilAPI api) {
             //商品説明から商品番号をとりだす
-            int left = item.detail.IndexOf('(');
-            int right = item.detail.IndexOf(')');
-            string item_label = "";
-            if (left >= 0 && right >= 0 && left < right) item_label = item.detail.Substring(left + 1, right - left + 1 - 2);
-            string bikou = "";
+            //int left = item.detail.IndexOf('(');//FIXME:detailが取り出せないのでいったんコメントアウト
+            //int right = item.detail.IndexOf(')');
+            //string item_label = "";
+            //if (left >= 0 && right >= 0 && left < right) item_label = item.detail.Substring(left + 1, right - left + 1 - 2);
+            //string bikou = "";
             int rieki = getRieki(item.s_price);
-            string[] array = new string[] { item_label, info.zipcode, info.address1, "_" + info.address2, item.item_id, info.buyername, "", "", api.account.nickname, "", bikou, item.s_price.ToString(), rieki.ToString(), item.buyer_name, item.item_name };
+            string[] array = new string[] {info.zipcode, info.address, item.item_id, info.buyername, "", "", api.account.nickname, "", item.s_price.ToString(), rieki.ToString(),item.item_name };
             return array;
         }
         public static string[] makeAddressExcelCSVLineCombineAddress(FrilItem item, FrilAPI.TransactionInfo info, FrilAPI api) {

@@ -1328,10 +1328,11 @@ namespace RakuLand {
                 includeUketoriMachi = false;
             }
             bool addressCombine = false;
-            DialogResult dr3 = MessageBox.Show("住所1と住所2を別にしますか？「はい」を押すと別々の列にします。", MainForm.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (dr3 == DialogResult.No) {
-                addressCombine = true;
-            }
+            //FIXME:別の列はまたあとで考える
+            //DialogResult dr3 = MessageBox.Show("住所1と住所2を別にしますか？「はい」を押すと別々の列にします。", MainForm.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            //if (dr3 == DialogResult.No) {
+            //    addressCombine = true;
+            //}
             //SaveFileDialogクラスのインスタンスを作成
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.FileName = "発送先住所.csv";
@@ -1354,8 +1355,11 @@ namespace RakuLand {
         private bool DoGetAllDeliveryAddress(string filename, bool includeUketoriMachi, bool addressCombine) {
             try {
                 using (var sw = new System.IO.StreamWriter(filename, false, System.Text.Encoding.GetEncoding("shift_jis"))) {
-                    if (addressCombine == false) sw.WriteLine("商品番号, 郵便番号, 住所1, 住所2,商品ID, 氏名, , , 出品者ニックネーム, ,備考, 値段,利益 , 購入者ニックネーム, 商品名,商品ID");
-                    else sw.WriteLine("商品番号, 郵便番号, 住所, 商品ID, 氏名, , , 出品者ニックネーム, ,備考, 値段,利益 , 購入者ニックネーム, 商品名,商品ID");
+                    //if (addressCombine == false) sw.WriteLine("商品番号, 郵便番号, 住所1, 住所2,商品ID, 氏名, , , 出品者ニックネーム, ,備考, 値段,利益 , 購入者ニックネーム, 商品名,商品ID");
+                    //else sw.WriteLine("商品番号, 郵便番号, 住所, 商品ID, 氏名, , , 出品者ニックネーム, ,備考, 値段,利益 , 購入者ニックネーム, 商品名,商品ID");
+                    //FIXME:取り出せていない情報はのっけないが後々修正
+                    //FIXME:アドレスコンバイン機能はいまはない
+                    sw.WriteLine("郵便番号, 住所, 商品ID, 氏名, , , 出品者ニックネーム, , 値段,利益 , 商品名");
                     foreach (DataGridViewRow row in ExhibittedDataGridView.SelectedRows) {
                         FrilItem item = ExhibittedItemDataBindList[row.Index];
                         if (sellerIDtoAPIDictionary.ContainsKey(item.user_id.ToString())) {
@@ -1363,9 +1367,9 @@ namespace RakuLand {
                             api = Common.checkFrilAPI(api);
                             var info = api.GetTransactionInfo(item.item_id);
                             //支払い待ちの商品の住所は取得しない
-                            if (info.status == FrilAPI.TradingStatus.Wait_Paymet) continue;
+                            if (item.t_status == 2) continue;
                             //受け取りまち除外オプションがあれば除外
-                            if (includeUketoriMachi == false && info.status != FrilAPI.TradingStatus.Wait_Shipping) continue;
+                            if (includeUketoriMachi == false && item.t_status != 3) continue;
                             //string parent_id = new ExhibitLogDBHelper().getParentIDFromExhibitLog(item.itemid);
                             if (addressCombine == false) sw.WriteLine(string.Join(",", Common.makeAddressExcelCSVLine(item, info, api)));
                             else sw.WriteLine(string.Join(",", Common.makeAddressExcelCSVLineCombineAddress(item, info, api)));
