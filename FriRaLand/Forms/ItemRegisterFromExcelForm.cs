@@ -452,7 +452,6 @@ namespace RakuLand.Forms {
                                 now_shipping_payer_id = FrilCommon.getShippingPayerIdFromName(text14);
                                 now_shipping_method_id = FrilCommon.getShippingMethodIdFromName(now_shipping_payer_id, text15);
                                 now_shipping_area_id = FrilCommon.getShippingAreaIdFromName(text17);
-                                text18 = text18.Replace("〜", "~");
                                 now_shipping_duration_id = FrilCommon.getShippingDurationIdFromName(text18);
                                 bool buy_request = (text19 == "あり");
                                 if (text16 == "") {
