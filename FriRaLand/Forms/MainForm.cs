@@ -1381,9 +1381,12 @@ namespace RakuLand {
                 return false;
             }
         }
+
         #endregion
 
-
+        private void item_register_from_excel_button_Click(object sender, EventArgs e) {
+            new ItemRegisterFromExcelForm(this).Show();
+        }
     }
 
 }

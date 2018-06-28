@@ -202,13 +202,13 @@ namespace RakuLand {
             public string name_ja;
             public string is_deleted; // "no"
         }
-        public struct SizeInfo {
+        /*public struct SizeInfo {
             public int id;
             public string name;
             public string display_order;
             public string item_size_group_id;
             public string is_deleted;
-        }
+        }*/
         public struct ItemCondition {
             public int id;
             public string name;
@@ -334,7 +334,71 @@ namespace RakuLand {
             }
             Log.Logger.Info("フリルブランドデータ読み込み完了");
         }
+        static public FrilCategory? getCategoryFromName(int parentid, string name) {
+            FrilCategory? rst = null;
+            if (!fril_categoryDictionary.ContainsKey(parentid)) return rst;
+            List<FrilCategory> catlist = fril_categoryDictionary[parentid];
+            foreach (FrilCategory c in catlist) {
+                if (c.name == name) return c;
+            }
+            return rst;
+        }
+        public static bool hasSizeOption(FrilCategory category) {
+            return FrilCommon.fril_default_sizeInfoDictionary.ContainsKey(category.size_group_id);
+        }
+        static public int getSizeIdFromName(FrilCategory cat, string name) {
+            int rst = -1;
+            if (!fril_default_sizeInfoDictionary.ContainsKey(cat.size_group_id)) return rst;
+            List<FrilSizeInfo> SIList = fril_default_sizeInfoDictionary[cat.size_group_id];
+            foreach (FrilSizeInfo si in SIList) {
+                if (si.name == name) return si.id;
+            }
+            return rst;
+        }
 
+        static public int getBrandIdFromName(string name) {
+            foreach (FrilCommon.FrilBrand p in FrilCommon.fril_brands) {
+                if (p.kana_name == name) return p.id;
+            }
+            return -1;
+        }
+        static public int getItemConditionIdFromName(string name) {
+            try {
+                return int.Parse(FrilCommon.conditionTypeFril[name]);
+            }catch {
+                return -1;
+            }
+        }
+        static public int getShippingPayerIdFromName(string name) {
+            try {
+                return int.Parse(FrilCommon.shippingPayersFril[name]);
+            }catch {
+                return -1;
+            }
+        }
+        static public int getShippingMethodIdFromName(int shipping_payer_id, string name) {
+            try {
+                if (shipping_payer_id == 1) return int.Parse(FrilCommon.shippingMethodsSellerFril[name]);
+                if (shipping_payer_id == 2) return int.Parse(FrilCommon.shippingMethodsBuyerFril[name]);
+                return -1;
+            }catch {
+                return -1;
+            }
+        }
+        static public int getShippingAreaIdFromName(string name) {
+            try {
+                return int.Parse(FrilCommon.shippingFromAreas[name]);
+            }catch {
+                return -1;
+            }
+        }
+        static public int getShippingDurationIdFromName(string name) {
+            try {
+                return int.Parse(FrilCommon.shippingDurations[name]);
+            }catch {
+                return -1;
+            }
+        }
         public static Bitmap ResizeImage(Bitmap image, double dw, double dh) {
             double hi;
             double imagew = image.Width;
