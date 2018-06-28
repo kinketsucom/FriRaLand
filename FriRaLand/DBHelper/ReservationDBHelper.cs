@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SQLite;
 using System.Drawing;
-using FriLand.Forms;
+using RakuLand.Forms;
 
-namespace FriLand.DBHelper{
+namespace RakuLand.DBHelper{
     class ReservationDBHelper {
 
         public const string DBname = "database.db";

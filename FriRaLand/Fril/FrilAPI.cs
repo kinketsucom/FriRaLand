@@ -12,7 +12,7 @@ using System.Drawing.Imaging;
 using System.Security.Cryptography;
 using System.Windows.Forms;
 
-namespace FriLand {
+namespace RakuLand {
     public class FrilAPI {
         private const string USER_AGENT = "Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_3 like Mac OS X) AppleWebKit/603.3.8 (KHTML, like Gecko) Mobile/14G60 Fril/7.2.0";
         private string proxy;

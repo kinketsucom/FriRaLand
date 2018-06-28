@@ -1,11 +1,11 @@
-﻿using FriLand.DBHelper;
+﻿using RakuLand.DBHelper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FriLand {
+namespace RakuLand {
     class ExhibitService {
         //商品が売れた際のDB操作
         public static void updateDBOnSold(FrilAPI api, FrilItem soldFrilItem) {

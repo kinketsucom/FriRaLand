@@ -1,4 +1,4 @@
-﻿namespace FriLand {
+﻿namespace RakuLand {
     partial class MainForm {
         /// <summary>
         /// 必要なデザイナー変数です。

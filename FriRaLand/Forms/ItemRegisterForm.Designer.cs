@@ -1,4 +1,4 @@
-﻿namespace FriLand {
+﻿namespace RakuLand {
     partial class ItemRegisterForm {
         /// <summary>
         /// Required designer variable.

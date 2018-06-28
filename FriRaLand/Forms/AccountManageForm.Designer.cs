@@ -1,4 +1,4 @@
-﻿namespace FriLand.Forms {
+﻿namespace RakuLand.Forms {
     partial class AccountManageForm {
         /// <summary>
         /// Required designer variable.

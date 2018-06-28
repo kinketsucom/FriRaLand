@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net;
 
-namespace FriLand {
+namespace RakuLand {
     public partial class TestForm : Form {
         public TestForm() {
             InitializeComponent();

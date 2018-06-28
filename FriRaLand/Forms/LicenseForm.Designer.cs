@@ -1,4 +1,4 @@
-﻿namespace FriLand.Forms {
+﻿namespace RakuLand.Forms {
     partial class LicenseForm {
         /// <summary>
         /// Required designer variable.

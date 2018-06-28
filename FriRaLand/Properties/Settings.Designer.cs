@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace FriLand.Properties {
+namespace RakuLand.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

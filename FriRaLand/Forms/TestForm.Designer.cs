@@ -1,4 +1,4 @@
-﻿namespace FriLand {
+﻿namespace RakuLand {
     partial class TestForm {
         /// <summary>
         /// Required designer variable.

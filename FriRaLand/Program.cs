@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace FriLand {
+namespace RakuLand {
     static class Program {
         /// <summary>
         /// アプリケーションのメイン エントリ ポイントです。

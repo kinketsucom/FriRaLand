@@ -1,4 +1,4 @@
-﻿using FriLand.DBHelper;
+﻿using RakuLand.DBHelper;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FriLand {
+namespace RakuLand {
     class Settings {
         //デフォルト値などもここにある
         public static int getIkkatuShuppinInterval() {
