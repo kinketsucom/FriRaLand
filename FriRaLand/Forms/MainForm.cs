@@ -1311,5 +1311,76 @@ namespace RakuLand {
         private void バージョン情報ToolStripMenuItem_Click(object sender, EventArgs e) {
             new StartUpForm().Show();
         }
+
+
+
+        #region 住所をエクセルに出力
+        private async void saveAllDeliveryAddress_Click(object sender, EventArgs e) {
+            //if (!LicenseForm.checkCanUseWithErrorWindow()) return;
+            //選択商品の一括住所取得
+            DialogResult dr = MessageBox.Show("選択商品の一括住所取得をおこないますか？\n※「支払い待ち」状態の商品の住所は取得されません。", MainForm.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (dr == DialogResult.No) {
+                return;
+            }
+            bool includeUketoriMachi = true;
+            DialogResult dr2 = MessageBox.Show("受け取り待ちの商品も含めて住所取得を行いますか？「はい」を押すと含めます。", MainForm.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (dr2 == DialogResult.No) {
+                includeUketoriMachi = false;
+            }
+            bool addressCombine = false;
+            DialogResult dr3 = MessageBox.Show("住所1と住所2を別にしますか？「はい」を押すと別々の列にします。", MainForm.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (dr3 == DialogResult.No) {
+                addressCombine = true;
+            }
+            //SaveFileDialogクラスのインスタンスを作成
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.FileName = "発送先住所.csv";
+            sfd.Filter = "CSVファイル(*.csv)|*.csv";
+            sfd.Title = "保存先のファイルを選択してください";
+            //ダイアログを表示する
+            if (sfd.ShowDialog() == DialogResult.OK) {
+                string filename = sfd.FileName;
+                this.toolStripStatusLabel1.Text = "一括住所取得開始";
+                DisableAllButton();
+                bool res = await Task.Run(() => DoGetAllDeliveryAddress(filename, includeUketoriMachi, addressCombine));
+                //結果を表示
+                if (res) MessageBox.Show("保存しました" + filename, "一括住所取得", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                else MessageBox.Show("保存に失敗しました", "一括住所取得", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.toolStripStatusLabel1.Text = "一括住所取得完了";
+                EnableAllButton();
+            }
+        }
+
+        private bool DoGetAllDeliveryAddress(string filename, bool includeUketoriMachi, bool addressCombine) {
+            try {
+                using (var sw = new System.IO.StreamWriter(filename, false, System.Text.Encoding.GetEncoding("shift_jis"))) {
+                    if (addressCombine == false) sw.WriteLine("商品番号, 郵便番号, 住所1, 住所2,商品ID, 氏名, , , 出品者ニックネーム, ,備考, 値段,利益 , 購入者ニックネーム, 商品名,商品ID");
+                    else sw.WriteLine("商品番号, 郵便番号, 住所, 商品ID, 氏名, , , 出品者ニックネーム, ,備考, 値段,利益 , 購入者ニックネーム, 商品名,商品ID");
+                    foreach (DataGridViewRow row in ExhibittedDataGridView.SelectedRows) {
+                        FrilItem item = ExhibittedItemDataBindList[row.Index];
+                        if (sellerIDtoAPIDictionary.ContainsKey(item.user_id.ToString())) {
+                            FrilAPI api = sellerIDtoAPIDictionary[item.user_id.ToString()];
+                            api = Common.checkFrilAPI(api);
+                            var info = api.GetTransactionInfo(item.item_id);
+                            //支払い待ちの商品の住所は取得しない
+                            if (info.status == FrilAPI.TradingStatus.Wait_Paymet) continue;
+                            //受け取りまち除外オプションがあれば除外
+                            if (includeUketoriMachi == false && info.status != FrilAPI.TradingStatus.Wait_Shipping) continue;
+                            //string parent_id = new ExhibitLogDBHelper().getParentIDFromExhibitLog(item.itemid);
+                            if (addressCombine == false) sw.WriteLine(string.Join(",", Common.makeAddressExcelCSVLine(item, info, api)));
+                            else sw.WriteLine(string.Join(",", Common.makeAddressExcelCSVLineCombineAddress(item, info, api)));
+                        }
+                    }
+                }
+                return true;
+            } catch (Exception ex) {
+                return false;
+            }
+        }
+        #endregion
+
+
     }
+
 }
+

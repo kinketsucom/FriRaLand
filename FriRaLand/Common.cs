@@ -284,7 +284,39 @@ namespace RakuLand {
             //手数料1割は1円未満切り捨て
             return price - (int)(price * 0.035);
         }
-
+        public static string[] makeAddressExcelCSVLine(FrilItem item, FrilAPI.TransactionInfo info, FrilAPI api) {
+            //商品説明から商品番号をとりだす
+            int left = item.detail.IndexOf('(');
+            int right = item.detail.IndexOf(')');
+            string item_label = "";
+            if (left >= 0 && right >= 0 && left < right) item_label = item.detail.Substring(left + 1, right - left + 1 - 2);
+            string bikou = "";
+            int rieki = getRieki(item.s_price);
+            string[] array = new string[] { item_label, info.zipcode, info.address1, "_" + info.address2, item.item_id, info.buyername, "", "", api.account.nickname, "", bikou, item.s_price.ToString(), rieki.ToString(), item.buyer_name, item.item_name };
+            return array;
+        }
+        public static string[] makeAddressExcelCSVLineCombineAddress(FrilItem item, FrilAPI.TransactionInfo info, FrilAPI api) {
+            //商品説明から商品番号をとりだす
+            int left = item.detail.IndexOf('(');
+            int right = item.detail.IndexOf(')');
+            string item_label = "";
+            if (left >= 0 && right >= 0 && left < right) item_label = item.detail.Substring(left + 1, right - left + 1 - 2);
+            string bikou = "";
+            int rieki = getRieki(item.s_price);
+            string[] array = new string[] { item_label, info.zipcode, info.address1 + " " + info.address2, item.item_id, info.buyername, "", "", api.account.nickname, "", bikou, item.s_price.ToString(), rieki.ToString(), item.buyer_name, item.item_name };
+            return array;
+        }
+        public static string[] makeAddressExcelCSVLine2(string parent_id, FrilItem item, FrilAPI.TransactionInfo info, FrilAPI api) {
+            //商品説明から商品番号をとりだす
+            /*int left = item.detail.LastIndexOf('(');
+            int right = item.detail.LastIndexOf(')');
+            string item_label = "";
+            if (left >= 0 && right >= 0 && left < right) item_label = item.description.Substring(left + 1, right - left + 1 - 2);*/
+            string bikou = "";
+            int rieki = getRieki(item.s_price);
+            string[] array = new string[] { parent_id, info.zipcode, info.address1, "_" + info.address2, item.item_id, info.buyername, "", "", api.account.nickname, "", bikou, item.s_price.ToString(), rieki.ToString(), item.buyer_name, item.item_name };
+            return array;
+        }
 
 
 
