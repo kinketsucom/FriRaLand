@@ -43,8 +43,51 @@
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LocalItemDataGridView = new System.Windows.Forms.DataGridView();
+            this.LocalItemDataGridView_Image = new System.Windows.Forms.DataGridViewImageColumn();
+            this.LocalItemDataGridView_parent_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LocalItemDataGridView_child_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LocalItemDataGridView_zaikonum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LocalItemDataGridView_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LocalItemDataGridView_description = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LocalItemDataGridView_price = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LocalItemDataGridView_favorite = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LocalItemDataGridView_comment = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LocalItemDataGridView_created_str = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LocalItemDataGridView_status_message = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ReservationDataGridView = new System.Windows.Forms.DataGridView();
+            this.ReservationDataGridView_exhibit_status_str = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ReservationDataGridView_itemImage = new System.Windows.Forms.DataGridViewImageColumn();
+            this.ReservationDataGridView_itemName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ReservationDataGridView_nickname = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ReservationDataGridView_exhibitDateString = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ReservationDataGridView_deleteDateString = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ReservationDataGridView_favorite = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ReservationDataGridView_comment = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ReservationDataGridView_deleteDateString2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ReservationDataGridView_favorite2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ReservationDataGridView_comment2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ReservationDataGridView_reexhibit_flag = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ExhibittedDataGridView = new System.Windows.Forms.DataGridView();
+            this.ExhibittedDataGridView_Image = new System.Windows.Forms.DataGridViewImageColumn();
+            this.ExhibittedDataGridView_status_message = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ExhibittedDataGridView_AccountNickName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ExhibittedDataGridView_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ExhibittedDataGridView_description = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ExhibittedDataGridView_price = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ExhibittedDataGridView_favorite = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ExhibittedDataGridView_comment = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ExhibittedDataGridView_item_pv = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ExhibittedDataGridView_created_str = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ExhibittedDataGridView_comment_time_buyer = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ExhibittedDataGridView_comment_time_seller = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ExhibittedDataGridView_transaction_message_num = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ExhibittedDataGridView_transaction_message_buyer = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ExhibittedDataGridView_transaction_message_seller = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ExhibittedDataGridView_bikou = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ExhibittedDataGridView_address_copyed = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.ExhibittedDataGridView_buyer_simei = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ExhibittedDataGridView_buyer_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ExhibittedDataGridView_itemid = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.register_button = new System.Windows.Forms.Button();
             this.deleteItemButton = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -96,11 +139,6 @@
             this.CheckItemAllSendShippingNotificationButton = new System.Windows.Forms.Button();
             this.get_trading_button = new System.Windows.Forms.Button();
             this.get_selling_button = new System.Windows.Forms.Button();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.daily_exhibit_setting_button = new System.Windows.Forms.Button();
-            this.make_reservation_button = new System.Windows.Forms.Button();
-            this.daily_exhibit_register_from_excel_button = new System.Windows.Forms.Button();
-            this.delete_daily_exhibit_button = new System.Windows.Forms.Button();
             this.ReservationTimer = new System.Windows.Forms.Timer(this.components);
             this.ReExhibitTimer = new System.Windows.Forms.Timer(this.components);
             this.ReservationBackgroundWorker = new System.ComponentModel.BackgroundWorker();
@@ -114,49 +152,6 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
-            this.LocalItemDataGridView_Image = new System.Windows.Forms.DataGridViewImageColumn();
-            this.LocalItemDataGridView_parent_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.LocalItemDataGridView_child_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.LocalItemDataGridView_zaikonum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.LocalItemDataGridView_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.LocalItemDataGridView_description = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.LocalItemDataGridView_price = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.LocalItemDataGridView_favorite = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.LocalItemDataGridView_comment = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.LocalItemDataGridView_created_str = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.LocalItemDataGridView_status_message = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ReservationDataGridView_exhibit_status_str = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ReservationDataGridView_itemImage = new System.Windows.Forms.DataGridViewImageColumn();
-            this.ReservationDataGridView_itemName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ReservationDataGridView_nickname = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ReservationDataGridView_exhibitDateString = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ReservationDataGridView_deleteDateString = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ReservationDataGridView_favorite = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ReservationDataGridView_comment = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ReservationDataGridView_deleteDateString2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ReservationDataGridView_favorite2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ReservationDataGridView_comment2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ReservationDataGridView_reexhibit_flag = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ExhibittedDataGridView_Image = new System.Windows.Forms.DataGridViewImageColumn();
-            this.ExhibittedDataGridView_status_message = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ExhibittedDataGridView_AccountNickName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ExhibittedDataGridView_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ExhibittedDataGridView_description = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ExhibittedDataGridView_price = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ExhibittedDataGridView_favorite = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ExhibittedDataGridView_comment = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ExhibittedDataGridView_item_pv = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ExhibittedDataGridView_created_str = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ExhibittedDataGridView_comment_time_buyer = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ExhibittedDataGridView_comment_time_seller = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ExhibittedDataGridView_transaction_message_num = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ExhibittedDataGridView_transaction_message_buyer = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ExhibittedDataGridView_transaction_message_seller = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ExhibittedDataGridView_bikou = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ExhibittedDataGridView_address_copyed = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.ExhibittedDataGridView_buyer_simei = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ExhibittedDataGridView_buyer_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ExhibittedDataGridView_itemid = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.DailyExhibitDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.LocalItemDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ReservationDataGridView)).BeginInit();
@@ -169,7 +164,6 @@
             this.panel2.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.panel3.SuspendLayout();
-            this.tabPage4.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.panel4.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -265,6 +259,104 @@
             this.LocalItemDataGridView.VirtualMode = true;
             this.LocalItemDataGridView.CellValueNeeded += new System.Windows.Forms.DataGridViewCellValueEventHandler(this.LocalItemDataGridView_CellValueNeeded);
             // 
+            // LocalItemDataGridView_Image
+            // 
+            this.LocalItemDataGridView_Image.DataPropertyName = "Image";
+            this.LocalItemDataGridView_Image.FillWeight = 81.67579F;
+            this.LocalItemDataGridView_Image.HeaderText = "画像";
+            this.LocalItemDataGridView_Image.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.LocalItemDataGridView_Image.Name = "LocalItemDataGridView_Image";
+            this.LocalItemDataGridView_Image.ReadOnly = true;
+            this.LocalItemDataGridView_Image.Width = 80;
+            // 
+            // LocalItemDataGridView_parent_id
+            // 
+            this.LocalItemDataGridView_parent_id.HeaderText = "親ID";
+            this.LocalItemDataGridView_parent_id.Name = "LocalItemDataGridView_parent_id";
+            this.LocalItemDataGridView_parent_id.ReadOnly = true;
+            this.LocalItemDataGridView_parent_id.Visible = false;
+            // 
+            // LocalItemDataGridView_child_id
+            // 
+            this.LocalItemDataGridView_child_id.HeaderText = "子ID";
+            this.LocalItemDataGridView_child_id.Name = "LocalItemDataGridView_child_id";
+            this.LocalItemDataGridView_child_id.ReadOnly = true;
+            this.LocalItemDataGridView_child_id.Visible = false;
+            // 
+            // LocalItemDataGridView_zaikonum
+            // 
+            this.LocalItemDataGridView_zaikonum.HeaderText = "在庫数";
+            this.LocalItemDataGridView_zaikonum.Name = "LocalItemDataGridView_zaikonum";
+            this.LocalItemDataGridView_zaikonum.ReadOnly = true;
+            this.LocalItemDataGridView_zaikonum.Visible = false;
+            // 
+            // LocalItemDataGridView_name
+            // 
+            this.LocalItemDataGridView_name.DataPropertyName = "name";
+            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.LocalItemDataGridView_name.DefaultCellStyle = dataGridViewCellStyle14;
+            this.LocalItemDataGridView_name.FillWeight = 298.928F;
+            this.LocalItemDataGridView_name.HeaderText = "商品名";
+            this.LocalItemDataGridView_name.Name = "LocalItemDataGridView_name";
+            this.LocalItemDataGridView_name.ReadOnly = true;
+            this.LocalItemDataGridView_name.Width = 300;
+            // 
+            // LocalItemDataGridView_description
+            // 
+            this.LocalItemDataGridView_description.DataPropertyName = "description";
+            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.LocalItemDataGridView_description.DefaultCellStyle = dataGridViewCellStyle15;
+            this.LocalItemDataGridView_description.FillWeight = 218.0931F;
+            this.LocalItemDataGridView_description.HeaderText = "商品説明";
+            this.LocalItemDataGridView_description.Name = "LocalItemDataGridView_description";
+            this.LocalItemDataGridView_description.ReadOnly = true;
+            this.LocalItemDataGridView_description.Width = 300;
+            // 
+            // LocalItemDataGridView_price
+            // 
+            this.LocalItemDataGridView_price.DataPropertyName = "price";
+            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle16.Format = "C0";
+            dataGridViewCellStyle16.NullValue = null;
+            this.LocalItemDataGridView_price.DefaultCellStyle = dataGridViewCellStyle16;
+            this.LocalItemDataGridView_price.FillWeight = 54.86601F;
+            this.LocalItemDataGridView_price.HeaderText = "価格";
+            this.LocalItemDataGridView_price.Name = "LocalItemDataGridView_price";
+            this.LocalItemDataGridView_price.ReadOnly = true;
+            // 
+            // LocalItemDataGridView_favorite
+            // 
+            this.LocalItemDataGridView_favorite.DataPropertyName = "num_likes";
+            this.LocalItemDataGridView_favorite.FillWeight = 33.26188F;
+            this.LocalItemDataGridView_favorite.HeaderText = "いいね";
+            this.LocalItemDataGridView_favorite.Name = "LocalItemDataGridView_favorite";
+            this.LocalItemDataGridView_favorite.ReadOnly = true;
+            this.LocalItemDataGridView_favorite.Width = 60;
+            // 
+            // LocalItemDataGridView_comment
+            // 
+            this.LocalItemDataGridView_comment.DataPropertyName = "num_comments";
+            this.LocalItemDataGridView_comment.FillWeight = 37.98767F;
+            this.LocalItemDataGridView_comment.HeaderText = "コメント";
+            this.LocalItemDataGridView_comment.Name = "LocalItemDataGridView_comment";
+            this.LocalItemDataGridView_comment.ReadOnly = true;
+            this.LocalItemDataGridView_comment.Width = 65;
+            // 
+            // LocalItemDataGridView_created_str
+            // 
+            this.LocalItemDataGridView_created_str.DataPropertyName = "created_str";
+            this.LocalItemDataGridView_created_str.FillWeight = 60.91589F;
+            this.LocalItemDataGridView_created_str.HeaderText = "-";
+            this.LocalItemDataGridView_created_str.Name = "LocalItemDataGridView_created_str";
+            this.LocalItemDataGridView_created_str.Visible = false;
+            // 
+            // LocalItemDataGridView_status_message
+            // 
+            this.LocalItemDataGridView_status_message.DataPropertyName = "status_message";
+            this.LocalItemDataGridView_status_message.HeaderText = "-";
+            this.LocalItemDataGridView_status_message.Name = "LocalItemDataGridView_status_message";
+            this.LocalItemDataGridView_status_message.Visible = false;
+            // 
             // ReservationDataGridView
             // 
             this.ReservationDataGridView.AllowUserToAddRows = false;
@@ -295,6 +387,117 @@
             this.ReservationDataGridView.VirtualMode = true;
             this.ReservationDataGridView.Visible = false;
             this.ReservationDataGridView.CellValueNeeded += new System.Windows.Forms.DataGridViewCellValueEventHandler(this.ReservationDataGridView_CellValueNeeded);
+            // 
+            // ReservationDataGridView_exhibit_status_str
+            // 
+            this.ReservationDataGridView_exhibit_status_str.DataPropertyName = "exhibit_status_str";
+            this.ReservationDataGridView_exhibit_status_str.HeaderText = "状態";
+            this.ReservationDataGridView_exhibit_status_str.Name = "ReservationDataGridView_exhibit_status_str";
+            this.ReservationDataGridView_exhibit_status_str.ReadOnly = true;
+            this.ReservationDataGridView_exhibit_status_str.Width = 60;
+            // 
+            // ReservationDataGridView_itemImage
+            // 
+            this.ReservationDataGridView_itemImage.DataPropertyName = "itemImage";
+            this.ReservationDataGridView_itemImage.FillWeight = 81.67579F;
+            this.ReservationDataGridView_itemImage.HeaderText = "画像";
+            this.ReservationDataGridView_itemImage.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.ReservationDataGridView_itemImage.Name = "ReservationDataGridView_itemImage";
+            this.ReservationDataGridView_itemImage.ReadOnly = true;
+            this.ReservationDataGridView_itemImage.Width = 80;
+            // 
+            // ReservationDataGridView_itemName
+            // 
+            this.ReservationDataGridView_itemName.DataPropertyName = "itemName";
+            dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.ReservationDataGridView_itemName.DefaultCellStyle = dataGridViewCellStyle17;
+            this.ReservationDataGridView_itemName.FillWeight = 298.928F;
+            this.ReservationDataGridView_itemName.HeaderText = "商品名";
+            this.ReservationDataGridView_itemName.Name = "ReservationDataGridView_itemName";
+            this.ReservationDataGridView_itemName.ReadOnly = true;
+            this.ReservationDataGridView_itemName.Width = 300;
+            // 
+            // ReservationDataGridView_nickname
+            // 
+            this.ReservationDataGridView_nickname.DataPropertyName = "accountNickName";
+            dataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.ReservationDataGridView_nickname.DefaultCellStyle = dataGridViewCellStyle18;
+            this.ReservationDataGridView_nickname.FillWeight = 218.0931F;
+            this.ReservationDataGridView_nickname.HeaderText = "出品アカウント";
+            this.ReservationDataGridView_nickname.Name = "ReservationDataGridView_nickname";
+            this.ReservationDataGridView_nickname.ReadOnly = true;
+            this.ReservationDataGridView_nickname.Width = 130;
+            // 
+            // ReservationDataGridView_exhibitDateString
+            // 
+            this.ReservationDataGridView_exhibitDateString.DataPropertyName = "exhibitDateString";
+            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle19.Format = "C0";
+            dataGridViewCellStyle19.NullValue = null;
+            this.ReservationDataGridView_exhibitDateString.DefaultCellStyle = dataGridViewCellStyle19;
+            this.ReservationDataGridView_exhibitDateString.FillWeight = 54.86601F;
+            this.ReservationDataGridView_exhibitDateString.HeaderText = "出品日時";
+            this.ReservationDataGridView_exhibitDateString.Name = "ReservationDataGridView_exhibitDateString";
+            this.ReservationDataGridView_exhibitDateString.ReadOnly = true;
+            this.ReservationDataGridView_exhibitDateString.Width = 112;
+            // 
+            // ReservationDataGridView_deleteDateString
+            // 
+            this.ReservationDataGridView_deleteDateString.DataPropertyName = "deleteDateString";
+            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.ReservationDataGridView_deleteDateString.DefaultCellStyle = dataGridViewCellStyle20;
+            this.ReservationDataGridView_deleteDateString.FillWeight = 33.26188F;
+            this.ReservationDataGridView_deleteDateString.HeaderText = "取消日時";
+            this.ReservationDataGridView_deleteDateString.Name = "ReservationDataGridView_deleteDateString";
+            this.ReservationDataGridView_deleteDateString.ReadOnly = true;
+            this.ReservationDataGridView_deleteDateString.Visible = false;
+            this.ReservationDataGridView_deleteDateString.Width = 112;
+            // 
+            // ReservationDataGridView_favorite
+            // 
+            this.ReservationDataGridView_favorite.DataPropertyName = "consider_favorite_str";
+            this.ReservationDataGridView_favorite.FillWeight = 60.91589F;
+            this.ReservationDataGridView_favorite.HeaderText = "いいね数";
+            this.ReservationDataGridView_favorite.Name = "ReservationDataGridView_favorite";
+            this.ReservationDataGridView_favorite.ReadOnly = true;
+            // 
+            // ReservationDataGridView_comment
+            // 
+            this.ReservationDataGridView_comment.DataPropertyName = "consider_comment_str";
+            this.ReservationDataGridView_comment.HeaderText = "コメント数";
+            this.ReservationDataGridView_comment.Name = "ReservationDataGridView_comment";
+            this.ReservationDataGridView_comment.ReadOnly = true;
+            // 
+            // ReservationDataGridView_deleteDateString2
+            // 
+            this.ReservationDataGridView_deleteDateString2.DataPropertyName = "deleteDateString2";
+            this.ReservationDataGridView_deleteDateString2.HeaderText = "取消日時2";
+            this.ReservationDataGridView_deleteDateString2.Name = "ReservationDataGridView_deleteDateString2";
+            this.ReservationDataGridView_deleteDateString2.ReadOnly = true;
+            this.ReservationDataGridView_deleteDateString2.Width = 112;
+            // 
+            // ReservationDataGridView_favorite2
+            // 
+            this.ReservationDataGridView_favorite2.DataPropertyName = "consider_favorite_str2";
+            this.ReservationDataGridView_favorite2.HeaderText = "いいね数2";
+            this.ReservationDataGridView_favorite2.Name = "ReservationDataGridView_favorite2";
+            this.ReservationDataGridView_favorite2.ReadOnly = true;
+            this.ReservationDataGridView_favorite2.Visible = false;
+            // 
+            // ReservationDataGridView_comment2
+            // 
+            this.ReservationDataGridView_comment2.DataPropertyName = "consider_comment_str2";
+            this.ReservationDataGridView_comment2.HeaderText = "コメント数2";
+            this.ReservationDataGridView_comment2.Name = "ReservationDataGridView_comment2";
+            this.ReservationDataGridView_comment2.ReadOnly = true;
+            this.ReservationDataGridView_comment2.Visible = false;
+            // 
+            // ReservationDataGridView_reexhibit_flag
+            // 
+            this.ReservationDataGridView_reexhibit_flag.HeaderText = "再出品";
+            this.ReservationDataGridView_reexhibit_flag.Name = "ReservationDataGridView_reexhibit_flag";
+            this.ReservationDataGridView_reexhibit_flag.ReadOnly = true;
+            this.ReservationDataGridView_reexhibit_flag.Visible = false;
             // 
             // ExhibittedDataGridView
             // 
@@ -336,6 +539,166 @@
             this.ExhibittedDataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ExhibittedDataGridView_CellDoubleClick);
             this.ExhibittedDataGridView.CellValueNeeded += new System.Windows.Forms.DataGridViewCellValueEventHandler(this.ExhibittedDataGridView_CellValueNeeded);
             // 
+            // ExhibittedDataGridView_Image
+            // 
+            this.ExhibittedDataGridView_Image.DataPropertyName = "Image";
+            this.ExhibittedDataGridView_Image.HeaderText = "画像";
+            this.ExhibittedDataGridView_Image.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.ExhibittedDataGridView_Image.Name = "ExhibittedDataGridView_Image";
+            this.ExhibittedDataGridView_Image.ReadOnly = true;
+            this.ExhibittedDataGridView_Image.Width = 80;
+            // 
+            // ExhibittedDataGridView_status_message
+            // 
+            this.ExhibittedDataGridView_status_message.DataPropertyName = "status_message";
+            this.ExhibittedDataGridView_status_message.HeaderText = "状態";
+            this.ExhibittedDataGridView_status_message.Name = "ExhibittedDataGridView_status_message";
+            this.ExhibittedDataGridView_status_message.ReadOnly = true;
+            this.ExhibittedDataGridView_status_message.Width = 80;
+            // 
+            // ExhibittedDataGridView_AccountNickName
+            // 
+            this.ExhibittedDataGridView_AccountNickName.HeaderText = "出品アカウント";
+            this.ExhibittedDataGridView_AccountNickName.Name = "ExhibittedDataGridView_AccountNickName";
+            this.ExhibittedDataGridView_AccountNickName.Width = 130;
+            // 
+            // ExhibittedDataGridView_name
+            // 
+            this.ExhibittedDataGridView_name.DataPropertyName = "name";
+            dataGridViewCellStyle21.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.ExhibittedDataGridView_name.DefaultCellStyle = dataGridViewCellStyle21;
+            this.ExhibittedDataGridView_name.HeaderText = "商品名";
+            this.ExhibittedDataGridView_name.Name = "ExhibittedDataGridView_name";
+            this.ExhibittedDataGridView_name.ReadOnly = true;
+            this.ExhibittedDataGridView_name.Width = 200;
+            // 
+            // ExhibittedDataGridView_description
+            // 
+            this.ExhibittedDataGridView_description.DataPropertyName = "description";
+            dataGridViewCellStyle22.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.ExhibittedDataGridView_description.DefaultCellStyle = dataGridViewCellStyle22;
+            this.ExhibittedDataGridView_description.HeaderText = "商品説明";
+            this.ExhibittedDataGridView_description.Name = "ExhibittedDataGridView_description";
+            this.ExhibittedDataGridView_description.ReadOnly = true;
+            this.ExhibittedDataGridView_description.Visible = false;
+            this.ExhibittedDataGridView_description.Width = 200;
+            // 
+            // ExhibittedDataGridView_price
+            // 
+            this.ExhibittedDataGridView_price.DataPropertyName = "price";
+            dataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle23.Format = "C0";
+            dataGridViewCellStyle23.NullValue = null;
+            this.ExhibittedDataGridView_price.DefaultCellStyle = dataGridViewCellStyle23;
+            this.ExhibittedDataGridView_price.HeaderText = "価格";
+            this.ExhibittedDataGridView_price.Name = "ExhibittedDataGridView_price";
+            this.ExhibittedDataGridView_price.ReadOnly = true;
+            // 
+            // ExhibittedDataGridView_favorite
+            // 
+            this.ExhibittedDataGridView_favorite.DataPropertyName = "num_likes";
+            this.ExhibittedDataGridView_favorite.HeaderText = "いいね";
+            this.ExhibittedDataGridView_favorite.Name = "ExhibittedDataGridView_favorite";
+            this.ExhibittedDataGridView_favorite.ReadOnly = true;
+            this.ExhibittedDataGridView_favorite.Width = 60;
+            // 
+            // ExhibittedDataGridView_comment
+            // 
+            this.ExhibittedDataGridView_comment.DataPropertyName = "num_comments";
+            this.ExhibittedDataGridView_comment.HeaderText = "コメント";
+            this.ExhibittedDataGridView_comment.Name = "ExhibittedDataGridView_comment";
+            this.ExhibittedDataGridView_comment.ReadOnly = true;
+            this.ExhibittedDataGridView_comment.Width = 65;
+            // 
+            // ExhibittedDataGridView_item_pv
+            // 
+            this.ExhibittedDataGridView_item_pv.HeaderText = "ウォッチ数";
+            this.ExhibittedDataGridView_item_pv.Name = "ExhibittedDataGridView_item_pv";
+            this.ExhibittedDataGridView_item_pv.ReadOnly = true;
+            this.ExhibittedDataGridView_item_pv.Visible = false;
+            // 
+            // ExhibittedDataGridView_created_str
+            // 
+            this.ExhibittedDataGridView_created_str.DataPropertyName = "created_str";
+            dataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.ExhibittedDataGridView_created_str.DefaultCellStyle = dataGridViewCellStyle24;
+            this.ExhibittedDataGridView_created_str.HeaderText = "出品日時";
+            this.ExhibittedDataGridView_created_str.Name = "ExhibittedDataGridView_created_str";
+            this.ExhibittedDataGridView_created_str.Visible = false;
+            this.ExhibittedDataGridView_created_str.Width = 112;
+            // 
+            // ExhibittedDataGridView_comment_time_buyer
+            // 
+            this.ExhibittedDataGridView_comment_time_buyer.HeaderText = "購入者コメント時間";
+            this.ExhibittedDataGridView_comment_time_buyer.Name = "ExhibittedDataGridView_comment_time_buyer";
+            this.ExhibittedDataGridView_comment_time_buyer.ReadOnly = true;
+            this.ExhibittedDataGridView_comment_time_buyer.Visible = false;
+            this.ExhibittedDataGridView_comment_time_buyer.Width = 130;
+            // 
+            // ExhibittedDataGridView_comment_time_seller
+            // 
+            this.ExhibittedDataGridView_comment_time_seller.HeaderText = "出品者コメント時間";
+            this.ExhibittedDataGridView_comment_time_seller.Name = "ExhibittedDataGridView_comment_time_seller";
+            this.ExhibittedDataGridView_comment_time_seller.ReadOnly = true;
+            this.ExhibittedDataGridView_comment_time_seller.Visible = false;
+            this.ExhibittedDataGridView_comment_time_seller.Width = 130;
+            // 
+            // ExhibittedDataGridView_transaction_message_num
+            // 
+            this.ExhibittedDataGridView_transaction_message_num.HeaderText = "取引メッセージ数";
+            this.ExhibittedDataGridView_transaction_message_num.Name = "ExhibittedDataGridView_transaction_message_num";
+            this.ExhibittedDataGridView_transaction_message_num.ReadOnly = true;
+            this.ExhibittedDataGridView_transaction_message_num.Visible = false;
+            this.ExhibittedDataGridView_transaction_message_num.Width = 60;
+            // 
+            // ExhibittedDataGridView_transaction_message_buyer
+            // 
+            this.ExhibittedDataGridView_transaction_message_buyer.HeaderText = "購入者取引メッセージ時間";
+            this.ExhibittedDataGridView_transaction_message_buyer.Name = "ExhibittedDataGridView_transaction_message_buyer";
+            this.ExhibittedDataGridView_transaction_message_buyer.ReadOnly = true;
+            this.ExhibittedDataGridView_transaction_message_buyer.Visible = false;
+            this.ExhibittedDataGridView_transaction_message_buyer.Width = 130;
+            // 
+            // ExhibittedDataGridView_transaction_message_seller
+            // 
+            this.ExhibittedDataGridView_transaction_message_seller.HeaderText = "出品者取引メッセージ時間";
+            this.ExhibittedDataGridView_transaction_message_seller.Name = "ExhibittedDataGridView_transaction_message_seller";
+            this.ExhibittedDataGridView_transaction_message_seller.ReadOnly = true;
+            this.ExhibittedDataGridView_transaction_message_seller.Visible = false;
+            this.ExhibittedDataGridView_transaction_message_seller.Width = 130;
+            // 
+            // ExhibittedDataGridView_bikou
+            // 
+            this.ExhibittedDataGridView_bikou.HeaderText = "備考";
+            this.ExhibittedDataGridView_bikou.Name = "ExhibittedDataGridView_bikou";
+            this.ExhibittedDataGridView_bikou.ReadOnly = true;
+            this.ExhibittedDataGridView_bikou.Visible = false;
+            // 
+            // ExhibittedDataGridView_address_copyed
+            // 
+            this.ExhibittedDataGridView_address_copyed.HeaderText = "住所転記済み";
+            this.ExhibittedDataGridView_address_copyed.Name = "ExhibittedDataGridView_address_copyed";
+            this.ExhibittedDataGridView_address_copyed.ReadOnly = true;
+            this.ExhibittedDataGridView_address_copyed.Visible = false;
+            // 
+            // ExhibittedDataGridView_buyer_simei
+            // 
+            this.ExhibittedDataGridView_buyer_simei.HeaderText = "購入者氏名";
+            this.ExhibittedDataGridView_buyer_simei.Name = "ExhibittedDataGridView_buyer_simei";
+            // 
+            // ExhibittedDataGridView_buyer_name
+            // 
+            this.ExhibittedDataGridView_buyer_name.HeaderText = "購入アカウント名";
+            this.ExhibittedDataGridView_buyer_name.Name = "ExhibittedDataGridView_buyer_name";
+            this.ExhibittedDataGridView_buyer_name.ReadOnly = true;
+            // 
+            // ExhibittedDataGridView_itemid
+            // 
+            this.ExhibittedDataGridView_itemid.HeaderText = "商品ID";
+            this.ExhibittedDataGridView_itemid.Name = "ExhibittedDataGridView_itemid";
+            this.ExhibittedDataGridView_itemid.ReadOnly = true;
+            this.ExhibittedDataGridView_itemid.Visible = false;
+            // 
             // register_button
             // 
             this.register_button.BackColor = System.Drawing.Color.Transparent;
@@ -366,7 +729,6 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.ItemSize = new System.Drawing.Size(61, 18);
             this.tabControl1.Location = new System.Drawing.Point(13, 148);
             this.tabControl1.Margin = new System.Windows.Forms.Padding(4);
@@ -965,69 +1327,6 @@
             this.get_selling_button.UseVisualStyleBackColor = true;
             this.get_selling_button.Click += new System.EventHandler(this.get_selling_button_Click);
             // 
-            // tabPage4
-            // 
-            this.tabPage4.Controls.Add(this.daily_exhibit_setting_button);
-            this.tabPage4.Controls.Add(this.make_reservation_button);
-            this.tabPage4.Controls.Add(this.daily_exhibit_register_from_excel_button);
-            this.tabPage4.Controls.Add(this.delete_daily_exhibit_button);
-            this.tabPage4.Location = new System.Drawing.Point(4, 22);
-            this.tabPage4.Margin = new System.Windows.Forms.Padding(4);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPage4.Size = new System.Drawing.Size(248, 664);
-            this.tabPage4.TabIndex = 3;
-            this.tabPage4.Text = "毎日出品";
-            this.tabPage4.UseVisualStyleBackColor = true;
-            // 
-            // daily_exhibit_setting_button
-            // 
-            this.daily_exhibit_setting_button.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.daily_exhibit_setting_button.Location = new System.Drawing.Point(27, 18);
-            this.daily_exhibit_setting_button.Margin = new System.Windows.Forms.Padding(4);
-            this.daily_exhibit_setting_button.Name = "daily_exhibit_setting_button";
-            this.daily_exhibit_setting_button.Size = new System.Drawing.Size(193, 54);
-            this.daily_exhibit_setting_button.TabIndex = 19;
-            this.daily_exhibit_setting_button.Text = "詳細設定";
-            this.daily_exhibit_setting_button.UseVisualStyleBackColor = true;
-            this.daily_exhibit_setting_button.Visible = false;
-            // 
-            // make_reservation_button
-            // 
-            this.make_reservation_button.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.make_reservation_button.Location = new System.Drawing.Point(27, 79);
-            this.make_reservation_button.Margin = new System.Windows.Forms.Padding(4);
-            this.make_reservation_button.Name = "make_reservation_button";
-            this.make_reservation_button.Size = new System.Drawing.Size(193, 54);
-            this.make_reservation_button.TabIndex = 18;
-            this.make_reservation_button.Text = "予約作成";
-            this.make_reservation_button.UseVisualStyleBackColor = true;
-            this.make_reservation_button.Visible = false;
-            // 
-            // daily_exhibit_register_from_excel_button
-            // 
-            this.daily_exhibit_register_from_excel_button.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.daily_exhibit_register_from_excel_button.Location = new System.Drawing.Point(27, 200);
-            this.daily_exhibit_register_from_excel_button.Margin = new System.Windows.Forms.Padding(4);
-            this.daily_exhibit_register_from_excel_button.Name = "daily_exhibit_register_from_excel_button";
-            this.daily_exhibit_register_from_excel_button.Size = new System.Drawing.Size(193, 54);
-            this.daily_exhibit_register_from_excel_button.TabIndex = 8;
-            this.daily_exhibit_register_from_excel_button.Text = "エクセルで登録";
-            this.daily_exhibit_register_from_excel_button.UseVisualStyleBackColor = true;
-            this.daily_exhibit_register_from_excel_button.Visible = false;
-            // 
-            // delete_daily_exhibit_button
-            // 
-            this.delete_daily_exhibit_button.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.delete_daily_exhibit_button.Location = new System.Drawing.Point(27, 139);
-            this.delete_daily_exhibit_button.Margin = new System.Windows.Forms.Padding(4);
-            this.delete_daily_exhibit_button.Name = "delete_daily_exhibit_button";
-            this.delete_daily_exhibit_button.Size = new System.Drawing.Size(193, 54);
-            this.delete_daily_exhibit_button.TabIndex = 7;
-            this.delete_daily_exhibit_button.Text = "削除";
-            this.delete_daily_exhibit_button.UseVisualStyleBackColor = true;
-            this.delete_daily_exhibit_button.Visible = false;
-            // 
             // ReservationTimer
             // 
             this.ReservationTimer.Tick += new System.EventHandler(this.ReservationTimer_Tick);
@@ -1137,375 +1436,6 @@
             this.backgroundWorker2.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker2_ProgressChanged);
             this.backgroundWorker2.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker2_RunWorkerCompleted);
             // 
-            // LocalItemDataGridView_Image
-            // 
-            this.LocalItemDataGridView_Image.DataPropertyName = "Image";
-            this.LocalItemDataGridView_Image.FillWeight = 81.67579F;
-            this.LocalItemDataGridView_Image.HeaderText = "画像";
-            this.LocalItemDataGridView_Image.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
-            this.LocalItemDataGridView_Image.Name = "LocalItemDataGridView_Image";
-            this.LocalItemDataGridView_Image.ReadOnly = true;
-            this.LocalItemDataGridView_Image.Width = 80;
-            // 
-            // LocalItemDataGridView_parent_id
-            // 
-            this.LocalItemDataGridView_parent_id.HeaderText = "親ID";
-            this.LocalItemDataGridView_parent_id.Name = "LocalItemDataGridView_parent_id";
-            this.LocalItemDataGridView_parent_id.ReadOnly = true;
-            this.LocalItemDataGridView_parent_id.Visible = false;
-            // 
-            // LocalItemDataGridView_child_id
-            // 
-            this.LocalItemDataGridView_child_id.HeaderText = "子ID";
-            this.LocalItemDataGridView_child_id.Name = "LocalItemDataGridView_child_id";
-            this.LocalItemDataGridView_child_id.ReadOnly = true;
-            this.LocalItemDataGridView_child_id.Visible = false;
-            // 
-            // LocalItemDataGridView_zaikonum
-            // 
-            this.LocalItemDataGridView_zaikonum.HeaderText = "在庫数";
-            this.LocalItemDataGridView_zaikonum.Name = "LocalItemDataGridView_zaikonum";
-            this.LocalItemDataGridView_zaikonum.ReadOnly = true;
-            this.LocalItemDataGridView_zaikonum.Visible = false;
-            // 
-            // LocalItemDataGridView_name
-            // 
-            this.LocalItemDataGridView_name.DataPropertyName = "name";
-            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.LocalItemDataGridView_name.DefaultCellStyle = dataGridViewCellStyle14;
-            this.LocalItemDataGridView_name.FillWeight = 298.928F;
-            this.LocalItemDataGridView_name.HeaderText = "商品名";
-            this.LocalItemDataGridView_name.Name = "LocalItemDataGridView_name";
-            this.LocalItemDataGridView_name.ReadOnly = true;
-            this.LocalItemDataGridView_name.Width = 300;
-            // 
-            // LocalItemDataGridView_description
-            // 
-            this.LocalItemDataGridView_description.DataPropertyName = "description";
-            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.LocalItemDataGridView_description.DefaultCellStyle = dataGridViewCellStyle15;
-            this.LocalItemDataGridView_description.FillWeight = 218.0931F;
-            this.LocalItemDataGridView_description.HeaderText = "商品説明";
-            this.LocalItemDataGridView_description.Name = "LocalItemDataGridView_description";
-            this.LocalItemDataGridView_description.ReadOnly = true;
-            this.LocalItemDataGridView_description.Width = 300;
-            // 
-            // LocalItemDataGridView_price
-            // 
-            this.LocalItemDataGridView_price.DataPropertyName = "price";
-            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle16.Format = "C0";
-            dataGridViewCellStyle16.NullValue = null;
-            this.LocalItemDataGridView_price.DefaultCellStyle = dataGridViewCellStyle16;
-            this.LocalItemDataGridView_price.FillWeight = 54.86601F;
-            this.LocalItemDataGridView_price.HeaderText = "価格";
-            this.LocalItemDataGridView_price.Name = "LocalItemDataGridView_price";
-            this.LocalItemDataGridView_price.ReadOnly = true;
-            // 
-            // LocalItemDataGridView_favorite
-            // 
-            this.LocalItemDataGridView_favorite.DataPropertyName = "num_likes";
-            this.LocalItemDataGridView_favorite.FillWeight = 33.26188F;
-            this.LocalItemDataGridView_favorite.HeaderText = "いいね";
-            this.LocalItemDataGridView_favorite.Name = "LocalItemDataGridView_favorite";
-            this.LocalItemDataGridView_favorite.ReadOnly = true;
-            this.LocalItemDataGridView_favorite.Width = 60;
-            // 
-            // LocalItemDataGridView_comment
-            // 
-            this.LocalItemDataGridView_comment.DataPropertyName = "num_comments";
-            this.LocalItemDataGridView_comment.FillWeight = 37.98767F;
-            this.LocalItemDataGridView_comment.HeaderText = "コメント";
-            this.LocalItemDataGridView_comment.Name = "LocalItemDataGridView_comment";
-            this.LocalItemDataGridView_comment.ReadOnly = true;
-            this.LocalItemDataGridView_comment.Width = 65;
-            // 
-            // LocalItemDataGridView_created_str
-            // 
-            this.LocalItemDataGridView_created_str.DataPropertyName = "created_str";
-            this.LocalItemDataGridView_created_str.FillWeight = 60.91589F;
-            this.LocalItemDataGridView_created_str.HeaderText = "-";
-            this.LocalItemDataGridView_created_str.Name = "LocalItemDataGridView_created_str";
-            this.LocalItemDataGridView_created_str.Visible = false;
-            // 
-            // LocalItemDataGridView_status_message
-            // 
-            this.LocalItemDataGridView_status_message.DataPropertyName = "status_message";
-            this.LocalItemDataGridView_status_message.HeaderText = "-";
-            this.LocalItemDataGridView_status_message.Name = "LocalItemDataGridView_status_message";
-            this.LocalItemDataGridView_status_message.Visible = false;
-            // 
-            // ReservationDataGridView_exhibit_status_str
-            // 
-            this.ReservationDataGridView_exhibit_status_str.DataPropertyName = "exhibit_status_str";
-            this.ReservationDataGridView_exhibit_status_str.HeaderText = "状態";
-            this.ReservationDataGridView_exhibit_status_str.Name = "ReservationDataGridView_exhibit_status_str";
-            this.ReservationDataGridView_exhibit_status_str.ReadOnly = true;
-            this.ReservationDataGridView_exhibit_status_str.Width = 60;
-            // 
-            // ReservationDataGridView_itemImage
-            // 
-            this.ReservationDataGridView_itemImage.DataPropertyName = "itemImage";
-            this.ReservationDataGridView_itemImage.FillWeight = 81.67579F;
-            this.ReservationDataGridView_itemImage.HeaderText = "画像";
-            this.ReservationDataGridView_itemImage.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
-            this.ReservationDataGridView_itemImage.Name = "ReservationDataGridView_itemImage";
-            this.ReservationDataGridView_itemImage.ReadOnly = true;
-            this.ReservationDataGridView_itemImage.Width = 80;
-            // 
-            // ReservationDataGridView_itemName
-            // 
-            this.ReservationDataGridView_itemName.DataPropertyName = "itemName";
-            dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.ReservationDataGridView_itemName.DefaultCellStyle = dataGridViewCellStyle17;
-            this.ReservationDataGridView_itemName.FillWeight = 298.928F;
-            this.ReservationDataGridView_itemName.HeaderText = "商品名";
-            this.ReservationDataGridView_itemName.Name = "ReservationDataGridView_itemName";
-            this.ReservationDataGridView_itemName.ReadOnly = true;
-            this.ReservationDataGridView_itemName.Width = 300;
-            // 
-            // ReservationDataGridView_nickname
-            // 
-            this.ReservationDataGridView_nickname.DataPropertyName = "accountNickName";
-            dataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.ReservationDataGridView_nickname.DefaultCellStyle = dataGridViewCellStyle18;
-            this.ReservationDataGridView_nickname.FillWeight = 218.0931F;
-            this.ReservationDataGridView_nickname.HeaderText = "出品アカウント";
-            this.ReservationDataGridView_nickname.Name = "ReservationDataGridView_nickname";
-            this.ReservationDataGridView_nickname.ReadOnly = true;
-            this.ReservationDataGridView_nickname.Width = 130;
-            // 
-            // ReservationDataGridView_exhibitDateString
-            // 
-            this.ReservationDataGridView_exhibitDateString.DataPropertyName = "exhibitDateString";
-            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle19.Format = "C0";
-            dataGridViewCellStyle19.NullValue = null;
-            this.ReservationDataGridView_exhibitDateString.DefaultCellStyle = dataGridViewCellStyle19;
-            this.ReservationDataGridView_exhibitDateString.FillWeight = 54.86601F;
-            this.ReservationDataGridView_exhibitDateString.HeaderText = "出品日時";
-            this.ReservationDataGridView_exhibitDateString.Name = "ReservationDataGridView_exhibitDateString";
-            this.ReservationDataGridView_exhibitDateString.ReadOnly = true;
-            this.ReservationDataGridView_exhibitDateString.Width = 112;
-            // 
-            // ReservationDataGridView_deleteDateString
-            // 
-            this.ReservationDataGridView_deleteDateString.DataPropertyName = "deleteDateString";
-            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.ReservationDataGridView_deleteDateString.DefaultCellStyle = dataGridViewCellStyle20;
-            this.ReservationDataGridView_deleteDateString.FillWeight = 33.26188F;
-            this.ReservationDataGridView_deleteDateString.HeaderText = "取消日時";
-            this.ReservationDataGridView_deleteDateString.Name = "ReservationDataGridView_deleteDateString";
-            this.ReservationDataGridView_deleteDateString.ReadOnly = true;
-            this.ReservationDataGridView_deleteDateString.Visible = false;
-            this.ReservationDataGridView_deleteDateString.Width = 112;
-            // 
-            // ReservationDataGridView_favorite
-            // 
-            this.ReservationDataGridView_favorite.DataPropertyName = "consider_favorite_str";
-            this.ReservationDataGridView_favorite.FillWeight = 60.91589F;
-            this.ReservationDataGridView_favorite.HeaderText = "いいね数";
-            this.ReservationDataGridView_favorite.Name = "ReservationDataGridView_favorite";
-            this.ReservationDataGridView_favorite.ReadOnly = true;
-            // 
-            // ReservationDataGridView_comment
-            // 
-            this.ReservationDataGridView_comment.DataPropertyName = "consider_comment_str";
-            this.ReservationDataGridView_comment.HeaderText = "コメント数";
-            this.ReservationDataGridView_comment.Name = "ReservationDataGridView_comment";
-            this.ReservationDataGridView_comment.ReadOnly = true;
-            // 
-            // ReservationDataGridView_deleteDateString2
-            // 
-            this.ReservationDataGridView_deleteDateString2.DataPropertyName = "deleteDateString2";
-            this.ReservationDataGridView_deleteDateString2.HeaderText = "取消日時2";
-            this.ReservationDataGridView_deleteDateString2.Name = "ReservationDataGridView_deleteDateString2";
-            this.ReservationDataGridView_deleteDateString2.ReadOnly = true;
-            this.ReservationDataGridView_deleteDateString2.Width = 112;
-            // 
-            // ReservationDataGridView_favorite2
-            // 
-            this.ReservationDataGridView_favorite2.DataPropertyName = "consider_favorite_str2";
-            this.ReservationDataGridView_favorite2.HeaderText = "いいね数2";
-            this.ReservationDataGridView_favorite2.Name = "ReservationDataGridView_favorite2";
-            this.ReservationDataGridView_favorite2.ReadOnly = true;
-            this.ReservationDataGridView_favorite2.Visible = false;
-            // 
-            // ReservationDataGridView_comment2
-            // 
-            this.ReservationDataGridView_comment2.DataPropertyName = "consider_comment_str2";
-            this.ReservationDataGridView_comment2.HeaderText = "コメント数2";
-            this.ReservationDataGridView_comment2.Name = "ReservationDataGridView_comment2";
-            this.ReservationDataGridView_comment2.ReadOnly = true;
-            this.ReservationDataGridView_comment2.Visible = false;
-            // 
-            // ReservationDataGridView_reexhibit_flag
-            // 
-            this.ReservationDataGridView_reexhibit_flag.HeaderText = "再出品";
-            this.ReservationDataGridView_reexhibit_flag.Name = "ReservationDataGridView_reexhibit_flag";
-            this.ReservationDataGridView_reexhibit_flag.ReadOnly = true;
-            this.ReservationDataGridView_reexhibit_flag.Visible = false;
-            // 
-            // ExhibittedDataGridView_Image
-            // 
-            this.ExhibittedDataGridView_Image.DataPropertyName = "Image";
-            this.ExhibittedDataGridView_Image.HeaderText = "画像";
-            this.ExhibittedDataGridView_Image.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
-            this.ExhibittedDataGridView_Image.Name = "ExhibittedDataGridView_Image";
-            this.ExhibittedDataGridView_Image.ReadOnly = true;
-            this.ExhibittedDataGridView_Image.Width = 80;
-            // 
-            // ExhibittedDataGridView_status_message
-            // 
-            this.ExhibittedDataGridView_status_message.DataPropertyName = "status_message";
-            this.ExhibittedDataGridView_status_message.HeaderText = "状態";
-            this.ExhibittedDataGridView_status_message.Name = "ExhibittedDataGridView_status_message";
-            this.ExhibittedDataGridView_status_message.ReadOnly = true;
-            this.ExhibittedDataGridView_status_message.Width = 80;
-            // 
-            // ExhibittedDataGridView_AccountNickName
-            // 
-            this.ExhibittedDataGridView_AccountNickName.HeaderText = "出品アカウント";
-            this.ExhibittedDataGridView_AccountNickName.Name = "ExhibittedDataGridView_AccountNickName";
-            this.ExhibittedDataGridView_AccountNickName.Width = 130;
-            // 
-            // ExhibittedDataGridView_name
-            // 
-            this.ExhibittedDataGridView_name.DataPropertyName = "name";
-            dataGridViewCellStyle21.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.ExhibittedDataGridView_name.DefaultCellStyle = dataGridViewCellStyle21;
-            this.ExhibittedDataGridView_name.HeaderText = "商品名";
-            this.ExhibittedDataGridView_name.Name = "ExhibittedDataGridView_name";
-            this.ExhibittedDataGridView_name.ReadOnly = true;
-            this.ExhibittedDataGridView_name.Width = 200;
-            // 
-            // ExhibittedDataGridView_description
-            // 
-            this.ExhibittedDataGridView_description.DataPropertyName = "description";
-            dataGridViewCellStyle22.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.ExhibittedDataGridView_description.DefaultCellStyle = dataGridViewCellStyle22;
-            this.ExhibittedDataGridView_description.HeaderText = "商品説明";
-            this.ExhibittedDataGridView_description.Name = "ExhibittedDataGridView_description";
-            this.ExhibittedDataGridView_description.ReadOnly = true;
-            this.ExhibittedDataGridView_description.Visible = false;
-            this.ExhibittedDataGridView_description.Width = 200;
-            // 
-            // ExhibittedDataGridView_price
-            // 
-            this.ExhibittedDataGridView_price.DataPropertyName = "price";
-            dataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle23.Format = "C0";
-            dataGridViewCellStyle23.NullValue = null;
-            this.ExhibittedDataGridView_price.DefaultCellStyle = dataGridViewCellStyle23;
-            this.ExhibittedDataGridView_price.HeaderText = "価格";
-            this.ExhibittedDataGridView_price.Name = "ExhibittedDataGridView_price";
-            this.ExhibittedDataGridView_price.ReadOnly = true;
-            // 
-            // ExhibittedDataGridView_favorite
-            // 
-            this.ExhibittedDataGridView_favorite.DataPropertyName = "num_likes";
-            this.ExhibittedDataGridView_favorite.HeaderText = "いいね";
-            this.ExhibittedDataGridView_favorite.Name = "ExhibittedDataGridView_favorite";
-            this.ExhibittedDataGridView_favorite.ReadOnly = true;
-            this.ExhibittedDataGridView_favorite.Width = 60;
-            // 
-            // ExhibittedDataGridView_comment
-            // 
-            this.ExhibittedDataGridView_comment.DataPropertyName = "num_comments";
-            this.ExhibittedDataGridView_comment.HeaderText = "コメント";
-            this.ExhibittedDataGridView_comment.Name = "ExhibittedDataGridView_comment";
-            this.ExhibittedDataGridView_comment.ReadOnly = true;
-            this.ExhibittedDataGridView_comment.Width = 65;
-            // 
-            // ExhibittedDataGridView_item_pv
-            // 
-            this.ExhibittedDataGridView_item_pv.HeaderText = "ウォッチ数";
-            this.ExhibittedDataGridView_item_pv.Name = "ExhibittedDataGridView_item_pv";
-            this.ExhibittedDataGridView_item_pv.ReadOnly = true;
-            this.ExhibittedDataGridView_item_pv.Visible = false;
-            // 
-            // ExhibittedDataGridView_created_str
-            // 
-            this.ExhibittedDataGridView_created_str.DataPropertyName = "created_str";
-            dataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.ExhibittedDataGridView_created_str.DefaultCellStyle = dataGridViewCellStyle24;
-            this.ExhibittedDataGridView_created_str.HeaderText = "出品日時";
-            this.ExhibittedDataGridView_created_str.Name = "ExhibittedDataGridView_created_str";
-            this.ExhibittedDataGridView_created_str.Visible = false;
-            this.ExhibittedDataGridView_created_str.Width = 112;
-            // 
-            // ExhibittedDataGridView_comment_time_buyer
-            // 
-            this.ExhibittedDataGridView_comment_time_buyer.HeaderText = "購入者コメント時間";
-            this.ExhibittedDataGridView_comment_time_buyer.Name = "ExhibittedDataGridView_comment_time_buyer";
-            this.ExhibittedDataGridView_comment_time_buyer.ReadOnly = true;
-            this.ExhibittedDataGridView_comment_time_buyer.Visible = false;
-            this.ExhibittedDataGridView_comment_time_buyer.Width = 130;
-            // 
-            // ExhibittedDataGridView_comment_time_seller
-            // 
-            this.ExhibittedDataGridView_comment_time_seller.HeaderText = "出品者コメント時間";
-            this.ExhibittedDataGridView_comment_time_seller.Name = "ExhibittedDataGridView_comment_time_seller";
-            this.ExhibittedDataGridView_comment_time_seller.ReadOnly = true;
-            this.ExhibittedDataGridView_comment_time_seller.Visible = false;
-            this.ExhibittedDataGridView_comment_time_seller.Width = 130;
-            // 
-            // ExhibittedDataGridView_transaction_message_num
-            // 
-            this.ExhibittedDataGridView_transaction_message_num.HeaderText = "取引メッセージ数";
-            this.ExhibittedDataGridView_transaction_message_num.Name = "ExhibittedDataGridView_transaction_message_num";
-            this.ExhibittedDataGridView_transaction_message_num.ReadOnly = true;
-            this.ExhibittedDataGridView_transaction_message_num.Visible = false;
-            this.ExhibittedDataGridView_transaction_message_num.Width = 60;
-            // 
-            // ExhibittedDataGridView_transaction_message_buyer
-            // 
-            this.ExhibittedDataGridView_transaction_message_buyer.HeaderText = "購入者取引メッセージ時間";
-            this.ExhibittedDataGridView_transaction_message_buyer.Name = "ExhibittedDataGridView_transaction_message_buyer";
-            this.ExhibittedDataGridView_transaction_message_buyer.ReadOnly = true;
-            this.ExhibittedDataGridView_transaction_message_buyer.Visible = false;
-            this.ExhibittedDataGridView_transaction_message_buyer.Width = 130;
-            // 
-            // ExhibittedDataGridView_transaction_message_seller
-            // 
-            this.ExhibittedDataGridView_transaction_message_seller.HeaderText = "出品者取引メッセージ時間";
-            this.ExhibittedDataGridView_transaction_message_seller.Name = "ExhibittedDataGridView_transaction_message_seller";
-            this.ExhibittedDataGridView_transaction_message_seller.ReadOnly = true;
-            this.ExhibittedDataGridView_transaction_message_seller.Visible = false;
-            this.ExhibittedDataGridView_transaction_message_seller.Width = 130;
-            // 
-            // ExhibittedDataGridView_bikou
-            // 
-            this.ExhibittedDataGridView_bikou.HeaderText = "備考";
-            this.ExhibittedDataGridView_bikou.Name = "ExhibittedDataGridView_bikou";
-            this.ExhibittedDataGridView_bikou.ReadOnly = true;
-            this.ExhibittedDataGridView_bikou.Visible = false;
-            // 
-            // ExhibittedDataGridView_address_copyed
-            // 
-            this.ExhibittedDataGridView_address_copyed.HeaderText = "住所転記済み";
-            this.ExhibittedDataGridView_address_copyed.Name = "ExhibittedDataGridView_address_copyed";
-            this.ExhibittedDataGridView_address_copyed.ReadOnly = true;
-            this.ExhibittedDataGridView_address_copyed.Visible = false;
-            // 
-            // ExhibittedDataGridView_buyer_simei
-            // 
-            this.ExhibittedDataGridView_buyer_simei.HeaderText = "購入者氏名";
-            this.ExhibittedDataGridView_buyer_simei.Name = "ExhibittedDataGridView_buyer_simei";
-            // 
-            // ExhibittedDataGridView_buyer_name
-            // 
-            this.ExhibittedDataGridView_buyer_name.HeaderText = "購入アカウント名";
-            this.ExhibittedDataGridView_buyer_name.Name = "ExhibittedDataGridView_buyer_name";
-            this.ExhibittedDataGridView_buyer_name.ReadOnly = true;
-            // 
-            // ExhibittedDataGridView_itemid
-            // 
-            this.ExhibittedDataGridView_itemid.HeaderText = "商品ID";
-            this.ExhibittedDataGridView_itemid.Name = "ExhibittedDataGridView_itemid";
-            this.ExhibittedDataGridView_itemid.ReadOnly = true;
-            this.ExhibittedDataGridView_itemid.Visible = false;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -1522,7 +1452,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainForm";
-            this.Text = "FriRaLand";
+            this.Text = "RakuLand";
             this.Load += new System.EventHandler(this.MainForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.DailyExhibitDataGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.LocalItemDataGridView)).EndInit();
@@ -1539,7 +1469,6 @@
             this.tabPage3.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
-            this.tabPage4.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.panel4.ResumeLayout(false);
@@ -1612,11 +1541,6 @@
         private System.Windows.Forms.Button CheckItemAllSendShippingNotificationButton;
         private System.Windows.Forms.Button get_trading_button;
         private System.Windows.Forms.Button get_selling_button;
-        private System.Windows.Forms.TabPage tabPage4;
-        private System.Windows.Forms.Button daily_exhibit_setting_button;
-        private System.Windows.Forms.Button make_reservation_button;
-        private System.Windows.Forms.Button daily_exhibit_register_from_excel_button;
-        private System.Windows.Forms.Button delete_daily_exhibit_button;
         private System.Windows.Forms.Timer ReservationTimer;
         private System.Windows.Forms.Timer ReExhibitTimer;
         private System.ComponentModel.BackgroundWorker ReservationBackgroundWorker;
