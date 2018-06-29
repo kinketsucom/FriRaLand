@@ -295,16 +295,6 @@ namespace RakuLand.Forms {
                 }
                 num++;
                 cell2 = row2.GetCell(num);
-                string text19 = "";
-                try {
-                    text19 = cell2.RichStringCellValue.ToString();
-                } catch (Exception) {
-                    message += i.ToString() + "行目の購入申請が正しくありません。" + Environment.NewLine;
-                    flag = true;
-                    continue;
-                }
-                num++;
-                cell2 = row2.GetCell(num);
                 string text20 = "0";
                 try {
                     text20 = cell2.NumericCellValue.ToString();
@@ -351,7 +341,7 @@ namespace RakuLand.Forms {
                 now_category_level1_id = now_category_level2_id = now_category_level3_id = now_category_level4_id = -1;
                 now_sizeid = -1; //サイズ選択しない場合は-1
                 now_brandid = -1; //サイズ選択しない場合は-1
-                if (!(text3 == "") || !(text4 == "") || !(text5 == "") || !(text6 == "") || !(text7 == "") || !(text8 == "") || !(text9 == "") || !(text10 == "") || !(text11 == "") || !(text12 == "") || !(text14 == "") || !(text15 == "") || !(text16 == "") || !(text17 == "") || !(text18 == "") || !(text19 == "") || !(text20 == "")) {
+                if (!(text3 == "") || !(text4 == "") || !(text5 == "") || !(text6 == "") || !(text7 == "") || !(text8 == "") || !(text9 == "") || !(text10 == "") || !(text11 == "") || !(text12 == "") || !(text14 == "") || !(text15 == "") || !(text16 == "") || !(text17 == "") || !(text18 == "") || !(text20 == "")) {
                     /*string parent_id = text.Trim();
                     string child_id = text2.Trim();
                     if (parent_id == "" && child_id != "") {
@@ -453,7 +443,6 @@ namespace RakuLand.Forms {
                                 now_shipping_method_id = FrilCommon.getShippingMethodIdFromName(now_shipping_payer_id, text15);
                                 now_shipping_area_id = FrilCommon.getShippingAreaIdFromName(text17);
                                 now_shipping_duration_id = FrilCommon.getShippingDurationIdFromName(text18);
-                                bool buy_request = (text19 == "あり");
                                 if (text16 == "") {
                                     message += i.ToString() + "行目の商品の状態が入力されていません。" + Environment.NewLine;
                                     flag = true;

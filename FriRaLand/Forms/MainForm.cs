@@ -1387,6 +1387,10 @@ namespace RakuLand {
         private void item_register_from_excel_button_Click(object sender, EventArgs e) {
             new ItemRegisterFromExcelForm(this).Show();
         }
+
+        private void register_from_xml_button_Click(object sender, EventArgs e) {
+            new ReservationRegisterFromExcelForm(this).Show();
+        }
     }
 
 }
