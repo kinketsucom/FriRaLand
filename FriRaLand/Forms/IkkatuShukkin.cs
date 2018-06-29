@@ -225,9 +225,6 @@ namespace RakuLand.Forms {
                         // リクエスト開始
                         api.BankUpdate();
                         ok = api.Withdraw(amount);
-                        
-
-
                         //bool saveflag = api.SaveBankAccounts(ic.bank, ic.address);
                         //if (saveflag) {
                         //    Log.Logger.Info("一括出金 : " + ic.account.nickname + "の銀行口座及び住所の保存に成功");
