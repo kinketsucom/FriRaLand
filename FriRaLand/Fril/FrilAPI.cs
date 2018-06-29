@@ -41,7 +41,10 @@ namespace RakuLand {
             public string birthday;
         }
 
-        public void getBankDictionary() {//銀行口座情報を取得する
+
+
+        #region  FIXME:ラクマ用につくりかえようとしているもの
+        public void GetBankInfo() {//銀行口座情報を取得する
             Dictionary<string, string> param = new Dictionary<string, string>();
             param.Add("auth_token", this.account.auth_token);
             string url = "https://api.fril.jp/api/bank";
@@ -64,6 +67,30 @@ namespace RakuLand {
                 Console.WriteLine(ex);
             }
         }
+
+        public void GetBalanceInfo() {//収益情報を取得する
+            Dictionary<string, string> param = new Dictionary<string, string>();
+            param.Add("auth_token", this.account.auth_token);
+            string url = "https://api.fril.jp/api/balance/show";
+            FrilRawResponse res = postFrilAPI(url, param, this.account.cc);
+            dynamic resjson = DynamicJson.Parse(res.response);
+            if (!resjson.result) return;//収益情報がない
+            try {
+                this.account.balance_info.balance = resjson.balance;
+                this.account.balance_info.bank = resjson.bank;
+                this.account.balance_info.idverify_pending =resjson.idverify_pending;
+                this.account.balance_info.point = resjson.point;
+                this.account.balance_info.result = resjson.result;
+                this.account.balance_info.withdrawal = resjson.withdrawal;
+            } catch (Exception ex) {
+                Log.Logger.Error(ex);
+                Console.WriteLine(ex);
+            }
+
+        }
+
+
+        #endregion
 
 
         public class Address {

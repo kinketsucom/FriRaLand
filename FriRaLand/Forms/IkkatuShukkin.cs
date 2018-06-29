@@ -54,15 +54,17 @@ namespace RakuLand.Forms {
                 try {
                     this.messagebox.changeProgressBarValue(num * 100 / accountList.Count);
                     var api = new FrilAPI(account);
-                    api.getBankDictionary();
-                    //有効期限が切れていないアカウントでbanklistとる
-                    if (allbanklist == null) allbanklist = api.getOtherBankDictionary();
+                    api.GetBankInfo();//apiオブジェクトに対応したbank情報を取得
+                    ////有効期限が切れていないアカウントでbanklistとる
+                    //if (allbanklist == null) allbanklist = api.getOtherBankDictionary();//FIME:null判定はいるのか・・？
                     //売り上げ情報・口座・住所情報取得
-                    int uriage = api.getCurrentSales().current_sales;
-                    FrilAPI.Bank bank = api.getBankAccounts();
-                    FrilAPI.Address address = api.getAddressWithBank();
+                    api.GetBalanceInfo();
+                    //int uriage = api.getCurrentSales().current_sales;
+                    int uriage = (int)api.account.balance_info.balance;
+                    //FrilAPI.Bank bank = api.getBankAccounts();
+                    //FrilAPI.Address address = api.getAddressWithBank();
                     string bankstr = ((bank == null) ? "" : GetBankStr(bank));
-                    string addressstr = ((address == null) ? "" : address.ToString());
+                    //string addressstr = ((address == null) ? "" : address.ToString());
                     bindlist.Add(new IkkatuClass(account, addressstr, bankstr, uriage, bank, address));
                     num++;
                 } catch {
