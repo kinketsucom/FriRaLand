@@ -1567,6 +1567,130 @@ namespace RakuLand {
             return list;
         }
 
+        #region 引き出し
+
+        //引き出しリクエストページを取得する
+        public bool BankUpdate() {
+            try {
+                Dictionary<string, string> param = new Dictionary<string, string>();
+                string url = "https://api.fril.jp/api/bank/update";
+                param.Add("account_number", this.account.bank_info.account_number);
+                param.Add("auth_token", this.account.auth_token);
+                param.Add("bank_id", this.account.bank_info.id.ToString());
+                param.Add("branch_code", this.account.bank_info.branch_code);
+                param.Add("deposit_type", this.account.bank_info.deposit_type.ToString());
+                param.Add("first_name", this.account.bank_info.first_name);
+                param.Add("last_name", this.account.bank_info.last_name);
+                FrilRawResponse rawres = postFrilAPI(url, param, this.account.cc, false);
+                if (rawres.error) throw new Exception();
+                Log.Logger.Info("口座情報updateに成功");
+                Console.WriteLine("口座情報updateに成功");
+                return true;
+            } catch (Exception ex) {
+                Log.Logger.Info("口座情報updateに失敗");
+                Console.WriteLine(ex);
+                return false;
+            }
+        }
+
+        //引き出す
+        public bool Withdraw(int amount) {
+            try {
+                string html = this.GetWithdrawPage();
+                Dictionary<string, string> param = GetWithdrawParamListFromHTML(html);
+                param.Add("balance", this.account.balance_info.balance.ToString());
+                param.Add("amount", amount.ToString());//FIXIT:残す金額を決めて入れる
+                param.Add("bank_id", this.account.bank_info.id.ToString());
+                param.Add("action", "");
+                string url = "https://web.fril.jp/balance/withdrawal";
+                FrilRawResponse rawres = postFrilAPI(url, param, this.account.cc, true);
+                if (rawres.error) throw new Exception();
+                Log.Logger.Info("出金に成功");
+                Console.WriteLine("出金に成功");
+                return true;
+            } catch (Exception ex) {
+                Log.Logger.Info("出金に失敗");
+                Console.WriteLine(ex);
+                return false;
+            }
+        }
+
+        //引き出しhtmlを取得する
+        public string GetWithdrawPage() {
+            string res = "";
+            try {
+                Dictionary<string, string> param = new Dictionary<string, string>();
+                string url = "https://web.fril.jp/balance/withdrawal/request";
+                FrilRawResponse rawres = getFrilAPI(url, param, this.account.cc, true);
+                Log.Logger.Info("transactionの取得に成功");
+                res = rawres.response;
+                return res;
+            } catch (Exception ex) {
+                Log.Logger.Error(ex.Message);
+                Log.Logger.Error("取引メッセージの取得に失敗");
+                return res;
+            }
+        }
+        //引き出しhtmlから必要情報をとってくる
+        private Dictionary<string,string> GetWithdrawParamListFromHTML(string html) {
+            Dictionary<string, string> param = new Dictionary<string, string>();
+            // HtmlDocumentオブジェクトを構築する
+            var doc = new HtmlAgilityPack.HtmlDocument();
+            doc.LoadHtml(html);
+            //utf-8
+            string xpath = @"//*[@id=""home""]/div/form/input[1]";
+            var collection = doc.DocumentNode.SelectNodes(xpath);
+            string text = collection[0].GetAttributeValue("value", "");
+            param.Add("utf_8", text);
+            //authenticity_token
+            xpath = @"//*[@id=""home""]/div/form/input[2]";
+            collection = doc.DocumentNode.SelectNodes(xpath);
+            text = collection[0].GetAttributeValue("value", "");
+            param.Add("authenticity_token",text);
+            
+            //xpath = @"//*[@id=""home""]/div/form/input[1]";
+            //int num = 0;
+            ////utf-8
+            //num = html.IndexOf("<input name=\"utf8\" type=\"hidden\" value=\"", num) + "<input name =\"utf8\" type=\"hidden\" value=\"".Length;
+            //int num2 = html.IndexOf("\" > ", num);
+            //text = html.Substring(num, num2 - num);
+            //param.Add("utf-8", text);
+            ////authenticity_token
+            //num = 4;
+            //List<string> list2 = new List<string>();
+            //while (text.IndexOf("<div class=\"row\">", num) >= 0) {
+            //    num = text.IndexOf("<div class=\"row\">", num) + "<div class=\"row\">".Length;
+            //    num2 = text.IndexOf("<div class=\"row\">", num);
+            //    if (num2 < 0) {
+            //        break;
+            //    }
+            //    list2.Add(text.Substring(num, num2 - num));
+            //    num = num2;
+            //}
+            //foreach (string text2 in list2) {
+            //    Comment comment = new Comment();
+            //    if (text2.IndexOf("<div class=\"col s2\">") < text2.IndexOf("<div class=\"col s10\">")) {
+            //        comment.screen_name = "出品者";
+            //    } else {
+            //        comment.screen_name = "購入者";
+            //    }
+            //    num = 0;
+            //    num = text2.IndexOf(" <p class=\"small-text\">", num) + " <p class=\"small-text\">".Length;
+            //    num2 = text2.IndexOf("</p>", num);
+            //    string text3 = text2.Substring(num, num2 - num);
+            //    text3 = text3.Replace("\n", "");
+            //    comment.comment = text3.Replace("<br />", "\n");
+            //    num = 0;
+            //    num = text2.IndexOf("<p class=\"small-text right-align\">", num) + "<p class=\"small-text right-align\">".Length;
+            //    num2 = text2.IndexOf("</p>", num);
+            //    string created_at = text2.Substring(num, num2 - num);
+            //    comment.created_at = DateTime.Parse(created_at);
+            //    list.Add(comment);
+            //}
+            return param;
+        }
+
+        #endregion
 
 
 

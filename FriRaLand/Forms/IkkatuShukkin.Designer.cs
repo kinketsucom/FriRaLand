@@ -145,6 +145,7 @@
             this.label9.Size = new System.Drawing.Size(22, 15);
             this.label9.TabIndex = 5;
             this.label9.Text = "円";
+            this.label9.Visible = false;
             // 
             // numericUpDown1
             // 
@@ -153,6 +154,7 @@
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(120, 22);
             this.numericUpDown1.TabIndex = 4;
+            this.numericUpDown1.Visible = false;
             // 
             // radioButton3
             // 
@@ -177,6 +179,7 @@
             this.radioButton4.TabStop = true;
             this.radioButton4.Text = "選択したアカウントのうち以下の金額以上のアカウントのみ出金する";
             this.radioButton4.UseVisualStyleBackColor = true;
+            this.radioButton4.Visible = false;
             // 
             // progressBar1
             // 

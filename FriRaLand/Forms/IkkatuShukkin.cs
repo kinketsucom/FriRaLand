@@ -44,7 +44,7 @@ namespace RakuLand.Forms {
             public FrilAPI.Address address;
         }
         SortableBindingList<IkkatuClass> bindlist = new SortableBindingList<IkkatuClass>();
-        private int minexhibit_money = 0; //この料金以上なら出金する
+        private int minexhibit_money = 1000; //この料金以上なら出金する
         private void IkkatuShukkin_Load(object sender, EventArgs e) {
             //しばらくお待ちください
             this.messagebox = new MessageBoxWithProgressBar("一括出金", "しばらくお待ちください");
@@ -127,7 +127,7 @@ namespace RakuLand.Forms {
                     return;
                 }
                 if (this.radioButton1.Checked == false && this.radioButton2.Checked == false) {
-                    MessageBox.Show("方法1または方法2を選択してください", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("方法1を選択してください", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 if (this.radioButton3.Checked == false && this.radioButton4.Checked == false) {
@@ -201,13 +201,131 @@ namespace RakuLand.Forms {
         }
         BackgroundWorker bgWorker;
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e) {
+            bgWorker = (BackgroundWorker)sender;
+            //負の値なら方法1, 非負なら方法2
+            bool isMode1 = ((int)e.Argument) < 0;
+            bool isMode2 = !isMode1;
+            int num = 0;
+            foreach (DataGridViewRow row in this.dataGridView1.SelectedRows) {
+                bgWorker.ReportProgress(num * 100 / this.dataGridView1.SelectedRows.Count);
+                if (bgWorker.CancellationPending) return;
+                IkkatuClass ic = bindlist[row.Index];
+                FrilAPI api = new FrilAPI(ic.account);
+                api = Common.checkFrilAPI(api);
+                bindlist[row.Index].status = "";
+                if (isMode1) {
+                    //方法1
+                    //var sales = api.getCurrentSales();
+                    if (api.account.balance_info.balance < minexhibit_money) continue;//FIXME:額を指定する
+                    int amount = (int)api.account.balance_info.balance - (int)this.numericUpDown2.Value;//引き落とす金額amount
+                    if (amount < 0) continue;//FIXME:指定額システム
+                    //単純に登録されている住所と銀行を使って振込リクエスト
+                    bool ok = false;
+                    try {
+                        // リクエスト開始
+                        api.BankUpdate();
+                        ok = api.Withdraw(amount);
+                        
 
+
+                        //bool saveflag = api.SaveBankAccounts(ic.bank, ic.address);
+                        //if (saveflag) {
+                        //    Log.Logger.Info("一括出金 : " + ic.account.nickname + "の銀行口座及び住所の保存に成功");
+                        //    sales = api.getCurrentSales();
+                        //    bool request_result = false;
+                        //    if (this.radioButton5.Checked) request_result = api.DoBillRequest(ic.bank, sales.current_sales, sales.payment_fee);
+                        //    else request_result = api.DoBillRequest(ic.bank, sales.current_sales - (int)this.numericUpDown2.Value, sales.payment_fee);
+                        //    if (request_result) {
+                        //        ok = true;
+                        //        Log.Logger.Info("一括出金 : " + ic.nickname + "の振込申請に成功");
+                        //    }
+                        //}
+                    } catch (Exception ex) {
+                        Log.Logger.Error(ex.Message);
+                    }
+                    if (ok == false) {
+                        Log.Logger.Error("一括出金 : " + ic.account.nickname + "の出金に失敗");
+                        bindlist[row.Index].status = "失敗";
+                    } else {
+                        bindlist[row.Index].status = "成功";
+                    }
+                } else {
+                    //方法2
+                    //MainForm.Account account = new AccountDBHelper().getAccountFromSellerid(api.sellerid);
+                    //if (account.defaultbankaddressId < 0) throw new Exception("default_bankが設定されていない");
+                    //var default_data = new DefaultBankAddressBankDBHelper().selectDefaultBankAddress(account.defaultbankaddressId);
+                    //bool use_address = default_data.use_address;
+                    //var sales = api.getCurrentSales();
+                    //if (sales.current_sales < minexhibit_money) continue;
+                    //if (sales.current_sales - (int)this.numericUpDown2.Value < 0) continue;
+                    //bool ok = false;
+                    //try {
+                    //    string address_id = "";
+                    //    if (default_data.bank == null) throw new Exception("dafault_bankが無効");
+                    //    if (use_address) {
+                    //        //住所使用する場合
+                    //        if (default_data.address == null) throw new Exception("dafault_addressが無効");
+                    //        //まず住所一覧を取得
+                    //        List<MercariAPI.Address> address_list = api.getDeliverAddressList();
+                    //        //住所一覧にデフォルトの住所があるかを調べる
+                    //        foreach (var ad in address_list) {
+                    //            if (MercariAPI.Address.compare(ad, default_data.address)) {
+                    //                address_id = ad.id.ToString();
+                    //            }
+                    //        }
+                    //        if (string.IsNullOrEmpty(address_id)) {
+                    //            //デフォルト住所がないので新たに住所を登録
+                    //            address_list = api.addDeliverAddress(default_data.address);
+                    //            //登録した中からIDを取り出す
+                    //            foreach (var ad in address_list) {
+                    //                if (MercariAPI.Address.compare(ad, default_data.address)) {
+                    //                    address_id = ad.id.ToString();
+                    //                }
+                    //            }
+                    //        }
+                    //    } else {
+                    //        //住所を使用しない場合, 登録されている住所を使用する
+                    //        address_id = ic.address.id.ToString();
+                    //    }
+                    //    if (address_id == "") throw new Exception("デフォルト住所を追加したあとIDの取得失敗");
+                    //    bool saveflag = api.SaveBankAccounts(default_data.bank, address_id);
+                    //    bool request_result = false;
+                    //    if (saveflag) {
+                    //        Log.Logger.Info("一括出金 : " + ic.account.nickname + "の銀行口座及び住所の保存に成功");
+                    //        sales = api.getCurrentSales();
+                    //        if (this.radioButton5.Checked) request_result = api.DoBillRequest(default_data.bank, sales.current_sales, sales.payment_fee);
+                    //        else request_result = api.DoBillRequest(default_data.bank, sales.current_sales - (int)this.numericUpDown2.Value, sales.payment_fee);
+                    //        if (request_result) {
+                    //            Log.Logger.Info("一括出金 : " + ic.nickname + "の振込申請に成功");
+                    //        }
+                    //    }
+                    //    //最後にダミーを戻す
+                    //    bool saveflag2 = api.SaveBankAccounts(ic.bank, ic.address.id.ToString());
+                    //    if (request_result && saveflag2) {
+                    //        ok = true;
+                    //    }
+                    //} catch (Exception ex) {
+                    //    Log.Logger.Error(ex.Message);
+                    //}
+                    //if (ok == false) {
+                    //    Log.Logger.Error("一括出金 : " + ic.account.nickname + "の出金に失敗");
+                    //    bindlist[row.Index].status = "失敗";
+                    //    var uriage = api.getCurrentSales();
+                    //    if (uriage != null) bindlist[row.Index].uriage = uriage.current_sales;
+                    //} else {
+                    //    Log.Logger.Info("一括出金 : " + ic.account.nickname + "の出金に成功");
+                    //    bindlist[row.Index].status = "成功";
+                    //    var uriage = api.getCurrentSales();
+                    //    if (uriage != null) bindlist[row.Index].uriage = uriage.current_sales;
+                    //}
+                }
+                System.Threading.Thread.Sleep(Settings.getIkkatuShukkinInterval() * 1000);
+            }
         }
 
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e) {
             this.progressBar1.Value = e.ProgressPercentage;
         }
-
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
             this.button1.BackColor = Color.Transparent;
             this.dataGridView1.Enabled = true;

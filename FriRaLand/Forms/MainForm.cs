@@ -20,12 +20,12 @@ namespace RakuLand {
         }
 
         private List<FrilItem> LocalItemDataBindList = new List<FrilItem>();
-        public const string ProductName = "Friland";
+        public const string ProductName = "RakuLand";
         private List<ReservationSettingForm.ReservationSetting> ReservationDataBindList = new List<ReservationSettingForm.ReservationSetting>();
         private List<FrilItem> ExhibittedItemDataBindList = new List<FrilItem>(); //表にバインドする商品リスト 絞り込み結果はこっち
         private List<FrilItem> ExhibittedItemDataBackBindList = new List<FrilItem>(); //こっちは絞り込んでも減らない
 
-        public const string ProductKind = "FriLand-sima";
+        public const string ProductKind = "RakuLand-sima";
         System.Random random = new System.Random();
         private List<FrilAPI> FrilAPIList = new List<FrilAPI>();
         private Dictionary<string, FrilAPI> sellerIDtoAPIDictionary = new Dictionary<string, FrilAPI>(); //sellerid -> API
