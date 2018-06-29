@@ -1381,9 +1381,22 @@ namespace RakuLand {
                 return false;
             }
         }
+
         #endregion
 
-
+        private void 出金管理ToolStripMenuItem_Click(object sender, EventArgs e) {
+            //if (!LicenseForm.checkCanUseWithErrorWindow()) return;
+            string nowpass = Settings.getIkkatuShukkinPassword();
+            if (string.IsNullOrEmpty(nowpass) == false) {
+                string pass = Microsoft.VisualBasic.Interaction.InputBox("パスワードを入力してください", MainForm.ProductName, "");
+                if (nowpass != pass) {
+                    MessageBox.Show("パスワードが異なります", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+            var form = new IkkatuShukkin();
+            form.Show();
+        }
     }
 
 }

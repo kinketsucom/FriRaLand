@@ -33,9 +33,23 @@ namespace RakuLand {
             public DateTime token_update_date { get; set; }
             public DateTime expiration_date { get; set; }
             public CookieContainer cc = new CookieContainer();
-        }
+            public RakumaBank bank_info = new RakumaBank(); 
 
-        public static System.Random random = new System.Random(1000);
+        }
+        public class RakumaBank {//FIXME:bankクラスはこっちに書き換えたい
+            public string account_number;
+            public double bank_code_id;
+            public string branch_code;
+            public string branch_name;
+            public string code;
+            public double deposit_type;
+            public string first_name;
+            public double id;
+            public string last_name;
+            public string name;//銀行名
+            public string result;
+        }
+    public static System.Random random = new System.Random(1000);
         public static string ikkatu_shukkin_interval = "ikkatu_shukkin_interval";
         public static string ikkatu_hassou_interval = "ikkatu_hassou_interval";
         public static string ikkatu_hyouka_interval = "ikkatu_hyouka_interval";

@@ -31,8 +31,204 @@ namespace RakuLand {
             }
 
         }
+        public class Bank {
+            public string bankid;
+            public string kind;
+            public string branch_id;
+            public string account_number;
+            public string family_name;
+            public string first_name;
+            public string birthday;
+        }
+
+        public void getBankDictionary() {//銀行口座情報を取得する
+            Dictionary<string, string> param = new Dictionary<string, string>();
+            param.Add("auth_token", this.account.auth_token);
+            string url = "https://api.fril.jp/api/bank";
+            FrilRawResponse res = postFrilAPI(url, param, this.account.cc);
+            dynamic resjson = DynamicJson.Parse(res.response);
+            if (!resjson.result) return;//口座情報がない
+            try {
+                this.account.bank_info.account_number = resjson.bank.account_number;
+                this.account.bank_info.bank_code_id = resjson.bank.bank_code_id;
+                this.account.bank_info.branch_code = resjson.bank.branch_code;
+                this.account.bank_info.branch_name = resjson.bank.branch_name;
+                this.account.bank_info.code = resjson.bank.code;
+                this.account.bank_info.deposit_type = resjson.bank.deposit_type;
+                this.account.bank_info.first_name = resjson.bank.first_name;
+                this.account.bank_info.id = resjson.bank.id;
+                this.account.bank_info.last_name = resjson.bank.last_name;
+                this.account.bank_info.name = resjson.bank.name;
+            } catch(Exception ex) {
+                Log.Logger.Error(ex);
+                Console.WriteLine(ex);
+            }
+        }
+
+
+        public class Address {
+            public bool is_default;
+            public string zip_code1;
+            public string zip_code2;
+            public string family_name;
+            public string first_name;
+            public string family_name_kana;
+            public string first_name_kana;
+            public string prefecture;
+            public string city;
+            public string city_normalize;
+            public string address1;
+            public string address1_crc;
+            public string address2;
+            public string telephone;
+            public string telephone_normalize;
+            public long id;
+            public override string ToString() {
+                return zip_code1 + "-" + zip_code2 + " " + prefecture + city + address1 + address2 + " " + family_name + first_name;
+            }
+            static public bool compare(Address a, Address b) {
+                //id, is_default以外がすべて同じならtrue;
+                return (a.zip_code1 == b.zip_code1 && a.family_name == b.family_name && a.first_name == b.first_name && a.family_name_kana == b.family_name_kana
+                    && a.first_name_kana == b.first_name_kana && a.prefecture == b.prefecture && a.city == b.city && a.address1 == b.address1 && a.address2 == b.address2 && a.telephone == b.telephone);
+            }
+        }
+        public class Uriage {
+            public int current_sales;
+            public int payment_fee;
+        }
+
+        public Dictionary<string, string> getMainBankDictionary() {
+            Dictionary<string, string> param = new Dictionary<string, string>();
+            param.Add("auth_token", this.account.auth_token);
+            string url = "https://api.mercari.jp/master/get_banks";//FIXME:Frilのものにかえる
+            FrilRawResponse res = getFrilAPI(url, param,this.account.cc);
+            if (res.error) return null;
+            Dictionary<string, string> rst = new Dictionary<string, string>();
+            try {
+                dynamic resjson = DynamicJson.Parse(res.response);
+                var main_bank = resjson.data.main_bank;
+                foreach (var bank in main_bank) {
+                    rst[bank.name] = bank.code;
+                }
+                return rst;
+            } catch {
+                return null;
+            }
+        }
+        public Dictionary<string, Dictionary<string, string>> getOtherBankDictionary() {
+            Dictionary<string, string> param = new Dictionary<string, string>();
+            param.Add("auth_token", this.account.auth_token);
+            string url = "https://api.mercari.jp/master/get_banks";//FIXME:Frilのものにかえる
+            FrilRawResponse res = getFrilAPI(url, param,this.account.cc);
+            if (res.error) return null;
+            Dictionary<string, Dictionary<string, string>> rst = new Dictionary<string, Dictionary<string, string>>();
+            try {
+                dynamic resjson = DynamicJson.Parse(res.response);
+                var initials = resjson.data.initials;
+                foreach (var initial in initials) { //あ行,か行・・
+                    var datas = initial.datas;
+                    foreach (var data in datas) { //あ, い...
+                        Dictionary<string, string> tmp = new Dictionary<string, string>();
+                        string initial_str = data.initial; //あ. い
+                        var datadatas = data.datas;
+                        foreach (var datadata in datadatas) {
+                            string name = datadata.name;
+                            string code = datadata.code;
+                            tmp[name] = code;
+                        }
+                        rst[initial_str] = tmp;
+                    }
+                }
+                return rst;
+            } catch {
+                return null;
+            }
+        }
+        public Uriage getCurrentSales() {
+            Dictionary<string, string> param = new Dictionary<string, string>();
+            param.Add("auth_token", this.account.auth_token);
+            string url = "https://api.mercari.jp/sales/get_current_sales";//FIXME:Frilのものにかえる
+            FrilRawResponse res = getFrilAPI(url, param, this.account.cc);
+            if (res.error) {
+                Log.Logger.Error("現在の売り上げ取得失敗");
+                return null;
+            }
+            try {
+                dynamic resjson = DynamicJson.Parse(res.response);
+                Uriage rst = new Uriage();
+                rst.current_sales = (int)resjson.data.current_sales;
+                rst.payment_fee = (int)resjson.data.payment_fee;
+                Log.Logger.Info("現在の売り上げ取得成功");
+                return rst;
+            } catch {
+                Log.Logger.Error("現在の売り上げ取得失敗");
+                return null;
+            }
+        }
+        public Bank getBankAccounts() {
+            try {
+                Dictionary<string, string> param = new Dictionary<string, string>();
+                param.Add("_access_token", this.account.auth_token);
+                string url = "https://api.mercari.jp/bank_accounts/get";//FIXME:Frilのものにかえる
+                FrilRawResponse res = getFrilAPI(url, param,this.account.cc);
+                if (res.error) throw new Exception("アカウントの口座情報取得失敗");
+                Bank rst = new Bank();
+                dynamic json = DynamicJson.Parse(res.response);
+                var bank_account = json.data.bank_account;
+                rst.bankid = bank_account.bank_id;
+                rst.kind = bank_account.kind;
+                rst.branch_id = bank_account.branch_id;
+                rst.account_number = bank_account.account_number;
+                rst.family_name = bank_account.family_name;
+                rst.first_name = bank_account.first_name;
+                rst.birthday = json.data.anti_social.birthday;
+                Log.Logger.Info("アカウントの口座情報取得成功");
+                return rst;
+            } catch {
+                Log.Logger.Error("アカウントの口座情報取得失敗");
+                return null;
+            }
+        }
+
+        public Address getAddressWithBank() {
+            try {
+                Dictionary<string, string> param = new Dictionary<string, string>();
+                param.Add("auth_token", this.account.auth_token);
+                string url = "https://api.mercari.jp/bank_accounts/get";//FIXME:Frilのものにかえる
+                FrilRawResponse res = getFrilAPI(url, param,this.account.cc);
+                if (res.error) throw new Exception("アカウントの口座情報取得失敗");
+                Address rst = new Address();
+                dynamic json = DynamicJson.Parse(res.response);
+                var address = json.data.anti_social.address;
+                rst = new Address();
+                rst.address1 = address.address1;
+                rst.address1_crc = address.address1_crc;
+                rst.address2 = address.address2;
+                rst.city = address.city;
+                rst.city_normalize = address.city_normalize;
+                rst.family_name = address.family_name;
+                rst.family_name_kana = address.family_name_kana;
+                rst.first_name = address.first_name;
+                rst.first_name_kana = address.first_name_kana;
+                rst.id = (long)address.id;
+                rst.is_default = (bool)address.is_default;
+                rst.prefecture = address.prefecture;
+                rst.telephone = address.telephone;
+                rst.telephone_normalize = address.telephone_normalize;
+                rst.zip_code1 = address.zip_code1;
+                rst.zip_code2 = address.zip_code2;
+                Log.Logger.Info("アカウントの口座紐付き住所取得成功");
+                return rst;
+            } catch {
+                Log.Logger.Error("アカウントの口座紐付き住所取得失敗");
+                return null;
+            }
+        }
 
         public Common.Account account;
+
+
+
         public FrilAPI(string email, string password) {
             this.account = new Common.Account();
             this.account.kind = Common.Account.Fril_Account;

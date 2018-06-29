@@ -44,6 +44,7 @@
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -98,6 +99,12 @@
     <Compile Include="Forms\CommentForm.Designer.cs">
       <DependentUpon>CommentForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\IkkatuShukkin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\IkkatuShukkin.Designer.cs">
+      <DependentUpon>IkkatuShukkin.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\InputMessageForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -109,6 +116,12 @@
     </Compile>
     <Compile Include="Forms\LicenseForm.Designer.cs">
       <DependentUpon>LicenseForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MessageBoxWithProgressBar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MessageBoxWithProgressBar.Designer.cs">
+      <DependentUpon>MessageBoxWithProgressBar.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\ReservationSettingForm.cs">
       <SubType>Form</SubType>
@@ -147,6 +160,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PropertyComparer.cs" />
+    <Compile Include="PropertyComparerFactory.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Forms\TestForm.cs">
       <SubType>Form</SubType>
@@ -154,14 +169,21 @@
     <Compile Include="Forms\TestForm.Designer.cs">
       <DependentUpon>TestForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="SortableBindingList.cs" />
     <EmbeddedResource Include="Forms\AccountManageForm.resx">
       <DependentUpon>AccountManageForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\CommentForm.resx">
       <DependentUpon>CommentForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\IkkatuShukkin.resx">
+      <DependentUpon>IkkatuShukkin.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\InputMessageForm.resx">
       <DependentUpon>InputMessageForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MessageBoxWithProgressBar.resx">
+      <DependentUpon>MessageBoxWithProgressBar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ReservationSettingForm.resx">
       <DependentUpon>ReservationSettingForm.cs</DependentUpon>
