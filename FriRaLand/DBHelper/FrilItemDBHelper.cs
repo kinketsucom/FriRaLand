@@ -384,7 +384,7 @@ namespace RakuLand.DBHelper {
             this.conn.Open();
             try {
                 SQLiteCommand sQLiteCommand = new SQLiteCommand("select i.Id from items i where"
-                                    + "i.item_id = '" + item.item_id.Replace("'", "''") + "'"
+                                    + " i.item_id = '" + item.item_id.Replace("'", "''") + "'"
                                     + " AND i.item_name = '" + item.item_name.Replace("'", "''") + "'"
                                     + " AND i.detail = '" + item.detail.Replace("'", "''") + "'"
                                     + " AND i.s_price = " + item.s_price.ToString() + ""
