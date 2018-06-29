@@ -17,15 +17,23 @@ namespace RakuLand.Forms {
         MessageBoxWithProgressBar messagebox;
         public static Dictionary<string, Dictionary<string, string>> allbanklist;
         private class IkkatuClass {
-            public IkkatuClass(Common.Account account, string addressstr, string bankstr, int uriage, FrilAPI.Bank bank, FrilAPI.Address address) {
+            //public IkkatuClass(Common.Account account, string addressstr, string bankstr, int uriage, FrilAPI.Bank bank, FrilAPI.Address address) {
+            //    this.nickname = account.nickname;
+            //    this.account = account;
+            //    this.addressstr = addressstr;
+            //    this.bankstr = bankstr;
+            //    this.uriage = uriage;
+            //    this.bank = bank;
+            //    this.address = address;
+            //}
+            public IkkatuClass(Common.Account account, string bankstr, int uriage) {
                 this.nickname = account.nickname;
                 this.account = account;
-                this.addressstr = addressstr;
                 this.bankstr = bankstr;
                 this.uriage = uriage;
-                this.bank = bank;
-                this.address = address;
             }
+
+
             public Common.Account account;
             public string nickname { get; set; }
             public string addressstr { get; set; }
@@ -61,11 +69,14 @@ namespace RakuLand.Forms {
                     api.GetBalanceInfo();
                     //int uriage = api.getCurrentSales().current_sales;
                     int uriage = (int)api.account.balance_info.balance;
-                    //FrilAPI.Bank bank = api.getBankAccounts();
-                    //FrilAPI.Address address = api.getAddressWithBank();
-                    string bankstr = ((bank == null) ? "" : GetBankStr(bank));
+                    //FrilAPI.Bank bank = api.getBankAccounts();//FIXME:これたぶんいらない
+                    //FrilAPI.Address address = api.getAddressWithBank();//FIXME:これたぶんいらないというかフリルに住所は不要
+                    //string bankstr = ((bank == null) ? "" : GetBankStr(bank));
+                    string bankstr = api.account.bank_info.account_number+api.account.bank_info.name+api.account.bank_info.branch_name
+                        +api.account.bank_info.last_name+api.account.bank_info.first_name;
+                    // 口座番号,Ａ銀行Ｂ支店
                     //string addressstr = ((address == null) ? "" : address.ToString());
-                    bindlist.Add(new IkkatuClass(account, addressstr, bankstr, uriage, bank, address));
+                    bindlist.Add(new IkkatuClass(account, bankstr, uriage));
                     num++;
                 } catch {
                     num++;
@@ -73,10 +84,10 @@ namespace RakuLand.Forms {
             }
             this.dataGridView1.AutoGenerateColumns = false;
             this.dataGridView1.DataSource = bindlist;
-            if (allbanklist == null) {
-                MessageBox.Show("銀行情報の取得に失敗しました");
-                this.Close();
-            }
+            //if (allbanklist == null) {
+            //    MessageBox.Show("銀行情報の取得に失敗しました");
+            //    this.Close();
+            //}
             //しばらくお待ちくださいを閉じる
             this.messagebox.Dispose();
         }
