@@ -359,7 +359,7 @@ namespace RakuLand.DBHelper {
                                     + "Pic1 = '" + item.imagepaths[0] + "',"
                                     + "Pic2 = '" + item.imagepaths[1] + "',"
                                     + "Pic3 = '" + item.imagepaths[2] + "',"
-                                    + "Pic4 = '" + item.imagepaths[3] + "',"
+                                    + "Pic4 = '" + item.imagepaths[3] + "'"
                                     + " WHERE Id = " + DBId.ToString() + ";";
 
                 SQLiteCommand command = conn.CreateCommand();
