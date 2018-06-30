@@ -263,7 +263,9 @@ namespace RakuLand {
             if (is_editmode && setting_now) {
                 try {
                     if (this.openItem.category_level4_id >= 0) {
-                        this.Fril_CategoryComboBoxLevel4.SelectedIndex = TabIndexFromList(FrilCommon.fril_categoryDictionary[openItem.category_level3_id], openItem.category_level4_id);
+                        if (FrilCommon.fril_categoryDictionary.ContainsKey(openItem.category_level3_id)) {
+                            this.Fril_CategoryComboBoxLevel4.SelectedIndex = TabIndexFromList(FrilCommon.fril_categoryDictionary[openItem.category_level3_id], openItem.category_level4_id);
+                        }
                     }
                 } catch (Exception ex) {
                     Log.Logger.Error(ex);
