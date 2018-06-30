@@ -113,9 +113,9 @@ namespace RakuLand {
             shippingFromAreas.Add("鹿児島県", "46");
             shippingFromAreas.Add("沖縄県", "47");
             shippingDurations = new Dictionary<string, string>();
-            shippingDurations.Add("1～2日で発送", "1");
-            shippingDurations.Add("2～3日で発送", "2");
-            shippingDurations.Add("4～7日で発送", "3");
+            shippingDurations.Add("1〜2日で発送", "1");
+            shippingDurations.Add("2〜3日で発送", "2");
+            shippingDurations.Add("4〜7日で発送", "3");
             cancelOption = new Dictionary<string, string>();
             cancelOption.Add("見る", "1");
             cancelOption.Add("見ない", "2");
