@@ -146,6 +146,7 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.メニューToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.アカウント管理ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.出金管理ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.バージョン情報ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel4 = new System.Windows.Forms.Panel();
             this.accountListComboBox = new System.Windows.Forms.ComboBox();
@@ -153,7 +154,7 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
-            this.出金管理ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.DailyExhibitDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.LocalItemDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ReservationDataGridView)).BeginInit();
@@ -831,6 +832,7 @@
             this.item_register_from_excel_button.Text = "エクセルで登録";
             this.item_register_from_excel_button.UseVisualStyleBackColor = true;
             this.item_register_from_excel_button.Visible = false;
+            this.item_register_from_excel_button.Click += new System.EventHandler(this.item_register_from_excel_button_Click);
             // 
             // editItemButton
             // 
@@ -1374,9 +1376,16 @@
             // アカウント管理ToolStripMenuItem
             // 
             this.アカウント管理ToolStripMenuItem.Name = "アカウント管理ToolStripMenuItem";
-            this.アカウント管理ToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.アカウント管理ToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
             this.アカウント管理ToolStripMenuItem.Text = "アカウント管理";
             this.アカウント管理ToolStripMenuItem.Click += new System.EventHandler(this.アカウント管理ToolStripMenuItem_Click_1);
+            // 
+            // 出金管理ToolStripMenuItem
+            // 
+            this.出金管理ToolStripMenuItem.Name = "出金管理ToolStripMenuItem";
+            this.出金管理ToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
+            this.出金管理ToolStripMenuItem.Text = "出金管理";
+            this.出金管理ToolStripMenuItem.Click += new System.EventHandler(this.出金管理ToolStripMenuItem_Click);
             // 
             // バージョン情報ToolStripMenuItem
             // 
@@ -1446,13 +1455,6 @@
             this.backgroundWorker2.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker2_DoWork);
             this.backgroundWorker2.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker2_ProgressChanged);
             this.backgroundWorker2.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker2_RunWorkerCompleted);
-            // 
-            // 出金管理ToolStripMenuItem
-            // 
-            this.出金管理ToolStripMenuItem.Name = "出金管理ToolStripMenuItem";
-            this.出金管理ToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
-            this.出金管理ToolStripMenuItem.Text = "出金管理";
-            this.出金管理ToolStripMenuItem.Click += new System.EventHandler(this.出金管理ToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -1618,6 +1620,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ExhibittedDataGridView_itemid;
         private System.Windows.Forms.ToolStripMenuItem バージョン情報ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 出金管理ToolStripMenuItem;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }
 
