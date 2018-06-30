@@ -735,6 +735,10 @@ namespace RakuLand {
                 SetGUIFromItem(this.openItem);
             }
         }
+
+        private void PriceTextBox_Leave(object sender, EventArgs e) {
+            PriceTextBox.Text = Microsoft.VisualBasic.Strings.StrConv(PriceTextBox.Text, Microsoft.VisualBasic.VbStrConv.Narrow);
+        }
     }
 
 }
