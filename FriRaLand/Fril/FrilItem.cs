@@ -30,7 +30,7 @@ namespace RakuLand {
         public int d_method;//delivery_method
         public int d_date;//delivery_date
         public int d_area;//delivary_from_area;
-        public string user_id;//出品者ID
+        public string user_id = "";//出品者ID
         public DateTime created_at;//ex)2017-09-27T09:12:57+09:00
         public string screen_name = ""; //出品者アカウント名
         public int category_id;

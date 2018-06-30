@@ -826,7 +826,6 @@ namespace RakuLand.Forms {
                                                                                     exhibitItem.category_level3_id = now_category_level3_id;
                                                                                     exhibitItem.category_level4_id = now_category_level4_id;
                                                                                     exhibitItem.size_id = now_sizeid;
-                                                                                    // exhibitItem.size_name = 
                                                                                     exhibitItem.brand_id = now_brandid;
                                                                                     exhibitItem.status = now_item_condition_id;
                                                                                     exhibitItem.carriage = now_shipping_payer_id;
@@ -836,9 +835,10 @@ namespace RakuLand.Forms {
                                                                                     exhibitItem.s_price = now_price;
                                                                                     #endregion
                                                                                     #region UnkoSystem
+                                                                                    exhibitItem.item_id = "0";
                                                                                     exhibitItem.category_p_id = exhibitItem.category_level2_id;
                                                                                     exhibitItem.category_id = exhibitItem.category_level3_id;
-                                                                                    //exhibitItem.
+                                                                                    exhibitItem.size_name = text12;
                                                                                     #endregion
                                                                                     #region addReservationToDB
                                                                                     //既におなじ商品がDBにあるかチェックする
@@ -977,7 +977,7 @@ namespace RakuLand.Forms {
 
         private void ReservationRegisterFromExcelForm_FormClosing(object sender, FormClosingEventArgs e) {
             if (BackgroundWorker1.IsBusy) e.Cancel = true;
-            this.mainform.OnBackFromReservationSettingForm();
+            this.mainform.OnBackFromItemExhibitForm();
         }
 
         //キャッシュを利用して、商品がDBに既にあればそのDBIdを返す. DBになければ0を返す
