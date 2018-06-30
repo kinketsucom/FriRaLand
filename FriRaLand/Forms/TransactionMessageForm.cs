@@ -215,11 +215,9 @@ namespace RakuLand.Forms {
                 var shuppinrirekiDBHelper = new ShuppinRirekiDBHelper();
                 //出品履歴,商品備考データが存在する場合は該当レコードを削除
                 itemNoteDBHelper.deleteItemNote(itemid);
-
                 SetGUIParams();
-
             }
-            //}
+            this.Close();
         }
         private Dictionary<string, string> GetShipmentFromHTML(string html) {
             try {//FIXME:あやしいtryぶっちゃけ取引中と発送後のちがいわからんかった

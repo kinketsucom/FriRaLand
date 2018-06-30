@@ -1211,7 +1211,7 @@ namespace RakuLand {
             if (this.ExhibittedDataGridView.SelectedRows.Count == 1) {
                 int index = this.ExhibittedDataGridView.SelectedRows[0].Index;
                 FrilItem item = this.ExhibittedItemDataBindList[index];
-                if (item.item_status_in_fril == "selling") {
+                if (item.item_status_in_fril == "selling") {//TODO:t_statusに変えるほうが安心
                     if (sellerIDtoAPIDictionary.ContainsKey(item.user_id.ToString())) {//自分なのでseller.id = userid
                         var api = sellerIDtoAPIDictionary[item.user_id.ToString()];
                         var api2 = Common.checkFrilAPI(api);
