@@ -427,6 +427,12 @@ namespace RakuLand {
 
         //保存ボタン
         private void SaveExhibitItemButton_Click(object sender, EventArgs e) {
+            if (int.Parse(PriceTextBox.Text) < 300 || 500000 < int.Parse(PriceTextBox.Text)) {
+                MessageBox.Show("ラクマの設定可能価格を超えています。\n価格は\\300～\\500,000円にしてください");
+                return;
+            }
+
+
             //GUIからItem情報を保存する
             FrilItem item = CollectSellSettingsFromGUI();
             //商品名が設定で制限した長さ以内か調べる
@@ -434,6 +440,9 @@ namespace RakuLand {
             //    MessageBox.Show("商品名の長さがオプションで設定した長さより長いです", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
             //    return;
             //}
+
+
+
             //string new_parent_id = this.parentIDTextBox.Text.Trim();
             //string new_child_id = this.childIDTextBox.Text.Trim();
             #region ItemFamilyValidate

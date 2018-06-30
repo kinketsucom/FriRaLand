@@ -454,6 +454,7 @@
             // 
             this.PriceTextBox.Location = new System.Drawing.Point(601, 540);
             this.PriceTextBox.Margin = new System.Windows.Forms.Padding(4);
+            this.PriceTextBox.MaxLength = 6;
             this.PriceTextBox.Name = "PriceTextBox";
             this.PriceTextBox.Size = new System.Drawing.Size(212, 22);
             this.PriceTextBox.TabIndex = 100;
