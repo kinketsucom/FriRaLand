@@ -46,7 +46,8 @@ namespace RakuLand {
             shippingPayersFril.Add("着払い(購入者が負担)", "2");
             shippingMethodsSellerFril = new Dictionary<string, string>();
             shippingMethodsSellerFril.Add("未定", "9");
-            shippingMethodsSellerFril.Add("かんたんフリルパック", "15");
+            shippingMethodsSellerFril.Add("かんたんフリルパック（ヤマト運輸）", "15");
+            shippingMethodsSellerFril.Add("かんたんフリルパック（日本郵便）", "18");
             shippingMethodsSellerFril.Add("普通郵便", "1");
             shippingMethodsSellerFril.Add("レターパックライト", "4");
             shippingMethodsSellerFril.Add("レターパックプラス", "3");
