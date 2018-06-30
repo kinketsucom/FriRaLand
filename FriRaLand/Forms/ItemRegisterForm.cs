@@ -81,7 +81,6 @@ namespace RakuLand {
         #endregion
 
         private void ItemRegisterForm_Load(object sender, EventArgs e) {
-            //フリル側
 
             //ブランド
             foreach (FrilCommon.FrilBrand p in FrilCommon.fril_brands) {
@@ -427,8 +426,14 @@ namespace RakuLand {
 
         //保存ボタン
         private void SaveExhibitItemButton_Click(object sender, EventArgs e) {
+            //画像制限
+            if (string.IsNullOrEmpty(pictureBox1.ImageLocation)){
+                MessageBox.Show("Main写真は必須です。\n写真を設定してください。", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                pictureBox1.Focus();
+                return;
+            }
+            
             //商品タイトル制限
-<<<<<<< HEAD
             if (string.IsNullOrEmpty(ItemNameTextBox.Text)) {
                 MessageBox.Show("タイトルは必須です。\n１～４０文字で商品名を設定してください。", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 ItemNameTextBox.Focus();
@@ -444,24 +449,10 @@ namespace RakuLand {
             if (String.IsNullOrEmpty(PriceTextBox.Text)) {
                 MessageBox.Show("価格は必須です。\n価格は\\300～\\500,000円にしてください。", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 PriceTextBox.Focus();
-=======
-            if (ItemNameTextBox.Text.Length<=0||ItemNameTextBox.Text.Length>40) {
-                MessageBox.Show("タイトルは必須です。\n１～４０文字で商品名を設定してください。",MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            //価格制限
-            if (String.IsNullOrEmpty(PriceTextBox.Text)) {
-                MessageBox.Show("価格は必須です。\n価格は\\300～\\500,000円にしてください。", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
->>>>>>> 5fd6f97410c208a9b9816cefa3819c0f580d2d1d
-                return;
             }
             if (int.Parse(PriceTextBox.Text) < 300 || 500000 < int.Parse(PriceTextBox.Text)) {
                 MessageBox.Show("ラクマの設定可能価格を超えています。\n価格は\\300～\\500,000円にしてください。", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
-<<<<<<< HEAD
                 PriceTextBox.Focus();
-=======
->>>>>>> 5fd6f97410c208a9b9816cefa3819c0f580d2d1d
                 return;
             }
 
@@ -782,16 +773,12 @@ namespace RakuLand {
             PriceTextBox.Text = Microsoft.VisualBasic.Strings.StrConv(PriceTextBox.Text, Microsoft.VisualBasic.VbStrConv.Narrow);
         }
 
-<<<<<<< HEAD
 
         #region 細かいデザイン部分
-=======
->>>>>>> 5fd6f97410c208a9b9816cefa3819c0f580d2d1d
         private void ItemNameTextBox_TextChanged(object sender, EventArgs e) {
             if (!string.IsNullOrEmpty(ItemNameTextBox.Text)){
                 int text_num = ItemNameTextBox.Text.Length;
                 ItemNameCountLabel.Text = string.Format("{0}/40", text_num);
-<<<<<<< HEAD
             } else {
                 ItemNameCountLabel.Text = "0/40";
             }
@@ -805,12 +792,11 @@ namespace RakuLand {
             }
         }
         #endregion
+        
+        
 
 
-=======
-            }
-        }
->>>>>>> 5fd6f97410c208a9b9816cefa3819c0f580d2d1d
+        
     }
 
 }

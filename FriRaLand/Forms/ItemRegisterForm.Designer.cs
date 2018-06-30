@@ -68,10 +68,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.ItemNameCountLabel = new System.Windows.Forms.Label();
-<<<<<<< HEAD
             this.ItemDetailCountLabel = new System.Windows.Forms.Label();
-=======
->>>>>>> 5fd6f97410c208a9b9816cefa3819c0f580d2d1d
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -600,7 +597,6 @@
             this.ItemNameCountLabel.TabIndex = 1004;
             this.ItemNameCountLabel.Text = "0/40";
             // 
-<<<<<<< HEAD
             // ItemDetailCountLabel
             // 
             this.ItemDetailCountLabel.AutoSize = true;
@@ -610,17 +606,12 @@
             this.ItemDetailCountLabel.TabIndex = 1005;
             this.ItemDetailCountLabel.Text = "0/1000";
             // 
-=======
->>>>>>> 5fd6f97410c208a9b9816cefa3819c0f580d2d1d
             // ItemRegisterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1107, 690);
-<<<<<<< HEAD
             this.Controls.Add(this.ItemDetailCountLabel);
-=======
->>>>>>> 5fd6f97410c208a9b9816cefa3819c0f580d2d1d
             this.Controls.Add(this.ItemNameCountLabel);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox2);
@@ -712,9 +703,6 @@
         public System.Windows.Forms.ComboBox Fril_BrandComboBox;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label ItemNameCountLabel;
-<<<<<<< HEAD
         private System.Windows.Forms.Label ItemDetailCountLabel;
-=======
->>>>>>> 5fd6f97410c208a9b9816cefa3819c0f580d2d1d
     }
 }
