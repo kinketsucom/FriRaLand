@@ -427,8 +427,27 @@ namespace RakuLand {
 
         //保存ボタン
         private void SaveExhibitItemButton_Click(object sender, EventArgs e) {
+            //商品タイトル制限
+            if (string.IsNullOrEmpty(ItemNameTextBox.Text)) {
+                MessageBox.Show("タイトルは必須です。\n１～４０文字で商品名を設定してください。", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ItemNameTextBox.Focus();
+                return;
+            }
+            //商品説明制限
+            if (string.IsNullOrEmpty(DescriptionTextBox.Text)) {
+                MessageBox.Show("商品説明は必須です。\n１～１０００文字で商品名を設定してください。", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                DescriptionTextBox.Focus();
+                return;
+            }
+            //価格制限
+            if (String.IsNullOrEmpty(PriceTextBox.Text)) {
+                MessageBox.Show("価格は必須です。\n価格は\\300～\\500,000円にしてください。", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                PriceTextBox.Focus();
+                return;
+            }
             if (int.Parse(PriceTextBox.Text) < 300 || 500000 < int.Parse(PriceTextBox.Text)) {
-                MessageBox.Show("ラクマの設定可能価格を超えています。\n価格は\\300～\\500,000円にしてください");
+                MessageBox.Show("ラクマの設定可能価格を超えています。\n価格は\\300～\\500,000円にしてください。", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                PriceTextBox.Focus();
                 return;
             }
 
@@ -748,6 +767,28 @@ namespace RakuLand {
         private void PriceTextBox_Leave(object sender, EventArgs e) {
             PriceTextBox.Text = Microsoft.VisualBasic.Strings.StrConv(PriceTextBox.Text, Microsoft.VisualBasic.VbStrConv.Narrow);
         }
+
+
+        #region 細かいデザイン部分
+        private void ItemNameTextBox_TextChanged(object sender, EventArgs e) {
+            if (!string.IsNullOrEmpty(ItemNameTextBox.Text)){
+                int text_num = ItemNameTextBox.Text.Length;
+                ItemNameCountLabel.Text = string.Format("{0}/40", text_num);
+            } else {
+                ItemNameCountLabel.Text = "0/40";
+            }
+        }
+        private void DescriptionTextBox_TextChanged(object sender, EventArgs e) {
+            if (!string.IsNullOrEmpty(DescriptionTextBox.Text)) {
+                int text_num = DescriptionTextBox.Text.Length;
+                ItemDetailCountLabel.Text = string.Format("{0}/1000", text_num);
+            } else {
+                ItemDetailCountLabel.Text = "0/1000";
+            }
+        }
+        #endregion
+
+
     }
 
 }

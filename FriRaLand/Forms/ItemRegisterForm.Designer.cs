@@ -67,6 +67,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.ItemNameCountLabel = new System.Windows.Forms.Label();
+            this.ItemDetailCountLabel = new System.Windows.Forms.Label();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -465,18 +467,22 @@
             // 
             this.DescriptionTextBox.Location = new System.Drawing.Point(13, 270);
             this.DescriptionTextBox.Margin = new System.Windows.Forms.Padding(4);
+            this.DescriptionTextBox.MaxLength = 1000;
             this.DescriptionTextBox.Name = "DescriptionTextBox";
             this.DescriptionTextBox.Size = new System.Drawing.Size(556, 345);
             this.DescriptionTextBox.TabIndex = 6;
             this.DescriptionTextBox.Text = "";
+            this.DescriptionTextBox.TextChanged += new System.EventHandler(this.DescriptionTextBox_TextChanged);
             // 
             // ItemNameTextBox
             // 
             this.ItemNameTextBox.Location = new System.Drawing.Point(13, 212);
             this.ItemNameTextBox.Margin = new System.Windows.Forms.Padding(4);
+            this.ItemNameTextBox.MaxLength = 40;
             this.ItemNameTextBox.Name = "ItemNameTextBox";
             this.ItemNameTextBox.Size = new System.Drawing.Size(556, 22);
             this.ItemNameTextBox.TabIndex = 5;
+            this.ItemNameTextBox.TextChanged += new System.EventHandler(this.ItemNameTextBox_TextChanged);
             // 
             // pictureBox4
             // 
@@ -582,11 +588,31 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "任意";
             // 
+            // ItemNameCountLabel
+            // 
+            this.ItemNameCountLabel.AutoSize = true;
+            this.ItemNameCountLabel.Location = new System.Drawing.Point(73, 194);
+            this.ItemNameCountLabel.Name = "ItemNameCountLabel";
+            this.ItemNameCountLabel.Size = new System.Drawing.Size(39, 15);
+            this.ItemNameCountLabel.TabIndex = 1004;
+            this.ItemNameCountLabel.Text = "0/40";
+            // 
+            // ItemDetailCountLabel
+            // 
+            this.ItemDetailCountLabel.AutoSize = true;
+            this.ItemDetailCountLabel.Location = new System.Drawing.Point(110, 251);
+            this.ItemDetailCountLabel.Name = "ItemDetailCountLabel";
+            this.ItemDetailCountLabel.Size = new System.Drawing.Size(55, 15);
+            this.ItemDetailCountLabel.TabIndex = 1005;
+            this.ItemDetailCountLabel.Text = "0/1000";
+            // 
             // ItemRegisterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1107, 690);
+            this.Controls.Add(this.ItemDetailCountLabel);
+            this.Controls.Add(this.ItemNameCountLabel);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.childIDTextBox);
@@ -676,5 +702,7 @@
         private System.Windows.Forms.Label label1;
         public System.Windows.Forms.ComboBox Fril_BrandComboBox;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label ItemNameCountLabel;
+        private System.Windows.Forms.Label ItemDetailCountLabel;
     }
 }
