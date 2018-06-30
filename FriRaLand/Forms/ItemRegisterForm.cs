@@ -81,7 +81,6 @@ namespace RakuLand {
         #endregion
 
         private void ItemRegisterForm_Load(object sender, EventArgs e) {
-
             //ブランド
             foreach (FrilCommon.FrilBrand p in FrilCommon.fril_brands) {
                 this.Fril_BrandComboBox.Items.Add(p);
@@ -108,7 +107,19 @@ namespace RakuLand {
             foreach (KeyValuePair<string, string> p in FrilCommon.shippingFromAreas) {
                 this.ShippingAreaComboBox.Items.Add(p);
             }
+            //即時出品用アカウント選択ComboBox
+            foreach (var api in apilist) {
+                ApiListComboBox.Items.Add(api);
+            }
         }
+        private void ItemRegisterForm_Shown(object sender, EventArgs e) {
+            if (is_editmode) {
+                SetGUIFromItem(this.openItem);
+            }
+        }
+
+
+
         FrilCommon.FrilCategory nowfril_selectedCategory; //フリルの最下層選択中カテゴリ
         //FrilCommon.RakumaCategory nowrakuma_selectedCategory; //ラクマの最下層選択中カテゴリ
         #region GUIFormat
@@ -412,8 +423,13 @@ namespace RakuLand {
         }
         #endregion
 
-        //出品ボタン
+        //出品ボタンTODO:まだです
         private void ExhibitNowButton_Click(object sender, EventArgs e) {
+            //今すぐ出品
+            if (ApiListComboBox.Items.Count <= 0 || ApiListComboBox.SelectedIndex < 0) {
+
+                return;
+            }
             //FrilAPI api = new FrilAPI(TestForm.mail, TestForm.pass);
             //try {
             //    if (!api.tryFrilLogin(api.account.cc)) throw new Exception("ログイン失敗(mailかpassが間違っています)");
@@ -426,6 +442,7 @@ namespace RakuLand {
 
         //保存ボタン
         private void SaveExhibitItemButton_Click(object sender, EventArgs e) {
+
             //画像制限
             if (string.IsNullOrEmpty(pictureBox1.ImageLocation)){
                 MessageBox.Show("Main写真は必須です。\n写真を設定してください。", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -588,6 +605,8 @@ namespace RakuLand {
                     int index = TabIndexFromList(fril_categoryDictionary[0], loaditem.category_level1_id);
                     this.Fril_CategoryComboBoxLevel1.SelectedIndex = index;
                 }
+                //TODO:販売アカウントをセットしてない？
+
 
             } catch (Exception ex) {
                 Log.Logger.Error(ex.Message);
@@ -738,6 +757,7 @@ namespace RakuLand {
             if (!string.IsNullOrEmpty(pictureBox4.ImageLocation)) {
                 item_data.imagepaths[3] = pictureBox4.ImageLocation;
             }
+            item_data.user_id = ((FrilAPI)ApiListComboBox.SelectedItem).account.userId;
 
             return item_data;
         }
@@ -762,12 +782,7 @@ namespace RakuLand {
             this.mainform.OnBackFromItemExhibitForm();
         }
 
-        private void ItemRegisterForm_Shown(object sender, EventArgs e) {
 
-            if (is_editmode) {
-                SetGUIFromItem(this.openItem);
-            }
-        }
 
         private void PriceTextBox_Leave(object sender, EventArgs e) {
             PriceTextBox.Text = Microsoft.VisualBasic.Strings.StrConv(PriceTextBox.Text, Microsoft.VisualBasic.VbStrConv.Narrow);
@@ -791,12 +806,16 @@ namespace RakuLand {
                 ItemDetailCountLabel.Text = "0/1000";
             }
         }
+
+
+
+
         #endregion
-        
-        
 
-
-        
+        private void ApiListComboBox_Format(object sender, ListControlConvertEventArgs e) {
+            FrilAPI api = (FrilAPI)e.ListItem;
+            e.Value = api.account.nickname;
+        }
     }
 
 }

@@ -253,7 +253,7 @@ namespace RakuLand {
                 //if (!LicenseForm.checkCanUseWithErrorWindow()) return;
                 //if (checkNowAutoMode()) return;
                 ItemRegisterForm f = new ItemRegisterForm();
-                //f.apilist = FrilAPIList;
+                f.apilist = FrilAPIList;
                 f.mainform = this;
                 f.Show();
         }

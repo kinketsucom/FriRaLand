@@ -414,7 +414,7 @@
             this.ApiListComboBox.Size = new System.Drawing.Size(271, 31);
             this.ApiListComboBox.TabIndex = 21;
             this.ApiListComboBox.Text = "アカウントを選択";
-            this.ApiListComboBox.Visible = false;
+            this.ApiListComboBox.Format += new System.Windows.Forms.ListControlConvertEventHandler(this.ApiListComboBox_Format);
             // 
             // ExhibitNowButton
             // 
@@ -600,7 +600,7 @@
             // ItemDetailCountLabel
             // 
             this.ItemDetailCountLabel.AutoSize = true;
-            this.ItemDetailCountLabel.Location = new System.Drawing.Point(110, 251);
+            this.ItemDetailCountLabel.Location = new System.Drawing.Point(108, 251);
             this.ItemDetailCountLabel.Name = "ItemDetailCountLabel";
             this.ItemDetailCountLabel.Size = new System.Drawing.Size(55, 15);
             this.ItemDetailCountLabel.TabIndex = 1005;

@@ -26,11 +26,11 @@ namespace RakuLand {
         public int s_price;
         public int status;
         public int t_status;//FIXMEOPTION:取引状態を表しているはず0:selling,3:trading(相手の決済終了),4:受け取り確認待ち,5:相手が評価をしたあと
-        public int carriage;
+        public int carriage;//出品負担者
         public int d_method;//delivery_method
         public int d_date;//delivery_date
         public int d_area;//delivary_from_area;
-        public string user_id = "";//出品者ID
+        public string user_id = "";//出品者IDとして用いている
         public DateTime created_at;//ex)2017-09-27T09:12:57+09:00
         public string screen_name = ""; //出品者アカウント名
         public int category_id;
