@@ -400,6 +400,13 @@ namespace RakuLand {
                 return -1;
             }
         }
+        public static string[] getCancelOption() {
+            List<string> list = new List<string>();
+            foreach (KeyValuePair<string, string> current in FrilCommon.cancelOption) {
+                list.Add(current.Key);
+            }
+            return list.ToArray();
+        }
         public static Bitmap ResizeImage(Bitmap image, double dw, double dh) {
             double hi;
             double imagew = image.Width;
