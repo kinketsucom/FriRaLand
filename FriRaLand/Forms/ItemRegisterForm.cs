@@ -416,14 +416,14 @@ namespace RakuLand {
 
         //出品ボタン
         private void ExhibitNowButton_Click(object sender, EventArgs e) {
-            FrilAPI api = new FrilAPI(TestForm.mail, TestForm.pass);
-            try {
-                if (!api.tryFrilLogin(api.account.cc)) throw new Exception("ログイン失敗(mailかpassが間違っています)");
-                FrilItem item = CollectSellSettingsFromGUI();
-                api.Sell(item, api.account.cc);
-            } catch (Exception ex) {
-                Console.WriteLine(ex);
-            }
+            //FrilAPI api = new FrilAPI(TestForm.mail, TestForm.pass);
+            //try {
+            //    if (!api.tryFrilLogin(api.account.cc)) throw new Exception("ログイン失敗(mailかpassが間違っています)");
+            //    FrilItem item = CollectSellSettingsFromGUI();
+            //    api.Sell(item, api.account.cc);
+            //} catch (Exception ex) {
+            //    Console.WriteLine(ex);
+            //}
         }
 
         //保存ボタン

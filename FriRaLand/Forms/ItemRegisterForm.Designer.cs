@@ -424,6 +424,7 @@
             this.ExhibitNowButton.TabIndex = 1002;
             this.ExhibitNowButton.Text = "今すぐ出品";
             this.ExhibitNowButton.UseVisualStyleBackColor = true;
+            this.ExhibitNowButton.Visible = false;
             this.ExhibitNowButton.Click += new System.EventHandler(this.ExhibitNowButton_Click);
             // 
             // button3
