@@ -21,6 +21,22 @@ namespace RakuLand.Forms {
             this.Frilapi = api;
             this.itemid = itemid;
         }
+        private void TransactionMessage_Load(object sender, EventArgs e) {
+            //商品情報を取得
+            this.item = Frilapi.GetItemInfobyItemIDWithDetail(itemid);
+            Console.WriteLine(this.item.t_status);
+            SetGUIParams();
+            ////ウインドウサイズを記憶するか
+            //this.saveWindowSizeCheckbox.Checked = Settings.getSaveMessageWindowSize();
+            //if (Settings.getSaveMessageWindowSize()) {
+            //    this.Width = Settings.getMessageWIndowSizeWidth();
+            //    this.Height = Settings.getMessageWIndowSizeHeight();
+            //}
+            //販売されたときのDB操作を行う
+            ExhibitService.updateDBOnSold(Frilapi, item);
+            AdjustGUISize();
+        }
+
 
         private void submit_Click(object sender, EventArgs e) {
             if (string.IsNullOrEmpty(this.richTextBox1.Text)) {
@@ -80,21 +96,7 @@ namespace RakuLand.Forms {
 
 
 
-        private void TransactionMessage_Load(object sender, EventArgs e) {
-            //商品情報を取得
-            this.item = Frilapi.GetItemInfobyItemIDWithDetail(itemid);
-            Console.WriteLine(this.item.t_status);
-            SetGUIParams();
-            ////ウインドウサイズを記憶するか
-            //this.saveWindowSizeCheckbox.Checked = Settings.getSaveMessageWindowSize();
-            //if (Settings.getSaveMessageWindowSize()) {
-            //    this.Width = Settings.getMessageWIndowSizeWidth();
-            //    this.Height = Settings.getMessageWIndowSizeHeight();
-            //}
-            //販売されたときのDB操作を行う
-            ExhibitService.updateDBOnSold(Frilapi, item);
-            AdjustGUISize();
-        }
+
         private void RefreshCommentDataGridview(List<FrilAPI.Comment> comments) {
             this.dataGridView1.Rows.Clear();
             foreach (var c in comments) {
@@ -363,6 +365,10 @@ namespace RakuLand.Forms {
             } else {
                 MessageBox.Show("取引のキャンセルに失敗しました", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void TransactionMessageForm_SizeChanged_1(object sender, EventArgs e) {
+            AdjustGUISize();
         }
     }
 }

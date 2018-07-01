@@ -185,5 +185,9 @@ namespace RakuLand.Forms {
             //    MessageBox.Show("商品の再公開に失敗しました", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
             //}
         }
+
+        private void CommentForm_SizeChanged_1(object sender, EventArgs e) {
+            AdjustGUISize();
+        }
     }
 }
