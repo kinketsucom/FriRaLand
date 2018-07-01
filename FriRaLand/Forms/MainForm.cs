@@ -954,17 +954,17 @@ namespace RakuLand {
                         break;
                     case 1:
                         e.Value = item.status_message;
-                        switch (item.t_status) {
-                            case 3:
-                                e.Value += "(決済済)";
-                                break;
-                            case 4:
-                                e.Value += "(発送通知済)";
-                                break;
-                            case 5:
-                                e.Value += "(評価受理済)";
-                                break;
-                        }
+                        //switch (item.t_status) {
+                        //    case 3:
+                        //        e.Value += "(決済済)";
+                        //        break;
+                        //    case 4:
+                        //        e.Value += "(発送通知済)";
+                        //        break;
+                        //    case 5:
+                        //        e.Value += "(評価受理済)";
+                        //        break;
+                        //}
                         break;
                     case 2:
                         e.Value = item.screen_name;
