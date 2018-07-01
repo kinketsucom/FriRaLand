@@ -180,6 +180,7 @@
             this.button1.TabIndex = 29;
             this.button1.Text = "プロフ画像変更";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
             // 
             // accountTokenRefleshButton
             // 
