@@ -296,96 +296,96 @@ namespace RakuLand.Forms {
             }
         }
 
-        //private void groupCreateButton_Click(object sender, EventArgs e) {
-        //    if (checkTokenRefreshNow()) return;
-        //    if (this.groupEditMode == false) {
-        //        //グループ名が空ならアウト
-        //        if (string.IsNullOrEmpty(this.groupNameTextBox.Text)) {
-        //            MessageBox.Show("グループ名を入力してください", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //            return;
-        //        }
-        //        //アカウント一覧が空ならアウト
-        //        if (this.GroupBelongListBox.Items.Count <= 0) {
-        //            MessageBox.Show("1つ以上のアカウントをグループに追加してください", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //            return;
-        //        }
-        //        GroupBelongDBHelper groupbelongDBHelper = new GroupBelongDBHelper();
-        //        GroupKindDBHelper groupkindDBHelper = new GroupKindDBHelper();
-        //        //まずグループを追加
-        //        int groupid = groupkindDBHelper.addGroupKind(this.groupNameTextBox.Text.Trim());
-        //        if (groupid < 0) {
-        //            MessageBox.Show("グループの追加に失敗しました", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //            return;
-        //        }
-        //        //グループ配属情報を追加
-        //        foreach (var item in GroupBelongListBox.Items) {
-        //            GroupBelongDBHelper.GroupBelong gb = new GroupBelongDBHelper.GroupBelong();
-        //            gb.AccountID = ((Common.Account)item).DBId;
-        //            gb.GroupID = groupid;
-        //            groupbelongDBHelper.addGroupBelong(gb);
-        //        }
+        private void groupCreateButton_Click(object sender, EventArgs e) {
+            if (checkTokenRefreshNow()) return;
+            if (this.groupEditMode == false) {
+                //グループ名が空ならアウト
+                if (string.IsNullOrEmpty(this.groupNameTextBox.Text)) {
+                    MessageBox.Show("グループ名を入力してください", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                //アカウント一覧が空ならアウト
+                if (this.GroupBelongListBox.Items.Count <= 0) {
+                    MessageBox.Show("1つ以上のアカウントをグループに追加してください", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                GroupBelongDBHelper groupbelongDBHelper = new GroupBelongDBHelper();
+                GroupKindDBHelper groupkindDBHelper = new GroupKindDBHelper();
+                //まずグループを追加
+                int groupid = groupkindDBHelper.addGroupKind(this.groupNameTextBox.Text.Trim());
+                if (groupid < 0) {
+                    MessageBox.Show("グループの追加に失敗しました", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                //グループ配属情報を追加
+                foreach (var item in GroupBelongListBox.Items) {
+                    GroupBelongDBHelper.GroupBelong gb = new GroupBelongDBHelper.GroupBelong();
+                    gb.AccountID = ((Common.Account)item).DBId;
+                    gb.GroupID = groupid;
+                    groupbelongDBHelper.addGroupBelong(gb);
+                }
 
-        //        MessageBox.Show("グループを作成しました: " + this.groupNameTextBox.Text, MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
-        //        this.groupNameTextBox.Clear();
-        //        this.GroupBelongListBox.Items.Clear();
+                MessageBox.Show("グループを作成しました: " + this.groupNameTextBox.Text, MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.groupNameTextBox.Clear();
+                this.GroupBelongListBox.Items.Clear();
 
-        //        //リフレッシュ
-        //        groupListBoxRefresh();
-        //    } else {
-        //        //グループ名が空ならアウト
-        //        if (string.IsNullOrEmpty(this.groupNameTextBox.Text)) {
-        //            MessageBox.Show("グループ名を入力してください", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //            return;
-        //        }
-        //        //アカウント一覧が空ならアウト
-        //        if (this.GroupBelongListBox.Items.Count <= 0) {
-        //            MessageBox.Show("1つ以上のアカウントをグループに追加してください", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //            return;
-        //        }
-        //        GroupBelongDBHelper groupbelongDBHelper = new GroupBelongDBHelper();
-        //        GroupKindDBHelper groupkindDBHelper = new GroupKindDBHelper();
-        //        //グループ名を更新
-        //        new GroupKindDBHelper().updateGroupName(this.edittingGroupId, this.groupNameTextBox.Text);
-        //        //グループ配属情報を更新
-        //        new GroupBelongDBHelper().deleteGroupBelongByGroupID(this.edittingGroupId); //一旦配属メンバーすべて削除
-        //        foreach (var item in GroupBelongListBox.Items) {
-        //            GroupBelongDBHelper.GroupBelong gb = new GroupBelongDBHelper.GroupBelong();
-        //            gb.AccountID = ((Common.Account)item).DBId;
-        //            gb.GroupID = this.edittingGroupId;
-        //            groupbelongDBHelper.addGroupBelong(gb);
-        //        }
+                //リフレッシュ
+                groupListBoxRefresh();
+            } else {
+                //グループ名が空ならアウト
+                if (string.IsNullOrEmpty(this.groupNameTextBox.Text)) {
+                    MessageBox.Show("グループ名を入力してください", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                //アカウント一覧が空ならアウト
+                if (this.GroupBelongListBox.Items.Count <= 0) {
+                    MessageBox.Show("1つ以上のアカウントをグループに追加してください", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                GroupBelongDBHelper groupbelongDBHelper = new GroupBelongDBHelper();
+                GroupKindDBHelper groupkindDBHelper = new GroupKindDBHelper();
+                //グループ名を更新
+                new GroupKindDBHelper().updateGroupName(this.edittingGroupId, this.groupNameTextBox.Text);
+                //グループ配属情報を更新
+                new GroupBelongDBHelper().deleteGroupBelongByGroupID(this.edittingGroupId); //一旦配属メンバーすべて削除
+                foreach (var item in GroupBelongListBox.Items) {
+                    GroupBelongDBHelper.GroupBelong gb = new GroupBelongDBHelper.GroupBelong();
+                    gb.AccountID = ((Common.Account)item).DBId;
+                    gb.GroupID = this.edittingGroupId;
+                    groupbelongDBHelper.addGroupBelong(gb);
+                }
 
-        //        MessageBox.Show("グループを更新しました: " + this.groupNameTextBox.Text, MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
-        //        this.groupNameTextBox.Clear();
-        //        this.GroupBelongListBox.Items.Clear();
+                MessageBox.Show("グループを更新しました: " + this.groupNameTextBox.Text, MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.groupNameTextBox.Clear();
+                this.GroupBelongListBox.Items.Clear();
 
-        //        //リフレッシュ
-        //        groupListBoxRefresh();
-        //        //更新完了したのでeditモード終了
-        //        this.groupEditMode = false;
-        //        this.groupCreateButton.Text = "作成";
-        //        this.groupCreateButton.BackColor = Color.Transparent;
-        //    }
-        //}
+                //リフレッシュ
+                groupListBoxRefresh();
+                //更新完了したのでeditモード終了
+                this.groupEditMode = false;
+                this.groupCreateButton.Text = "作成";
+                this.groupCreateButton.BackColor = Color.Transparent;
+            }
+        }
 
-        //private void groupListBox_Format(object sender, ListControlConvertEventArgs e) {
-        //    e.Value = ((GroupKindDBHelper.GroupKind)e.ListItem).GroupName;
-        //}
+        private void groupListBox_Format(object sender, ListControlConvertEventArgs e) {
+            e.Value = ((GroupKindDBHelper.GroupKind)e.ListItem).GroupName;
+        }
 
-        //private void deleteGroupButton_Click(object sender, EventArgs e) {
-        //    if (!checkGroupEditMode()) return;
-        //    if (checkTokenRefreshNow()) return;
-        //    //グループを選択していなければエラー
-        //    if (this.groupListBox.SelectedItems.Count <= 0) {
-        //        MessageBox.Show("削除するグループを選択してください", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //        return;
-        //    }
-        //    //選択したグループのIDを取得して削除
-        //    int delete_groupid = ((GroupKindDBHelper.GroupKind)groupListBox.SelectedItem).GroupId;
-        //    new GroupKindDBHelper().deleteGroupKind(delete_groupid);
-        //    new GroupBelongDBHelper().deleteGroupBelongByGroupID(delete_groupid);
-        //    groupListBoxRefresh();
-        //}
+        private void deleteGroupButton_Click(object sender, EventArgs e) {
+            if (!checkGroupEditMode()) return;
+            if (checkTokenRefreshNow()) return;
+            //グループを選択していなければエラー
+            if (this.groupListBox.SelectedItems.Count <= 0) {
+                MessageBox.Show("削除するグループを選択してください", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            //選択したグループのIDを取得して削除
+            int delete_groupid = ((GroupKindDBHelper.GroupKind)groupListBox.SelectedItem).GroupId;
+            new GroupKindDBHelper().deleteGroupKind(delete_groupid);
+            new GroupBelongDBHelper().deleteGroupBelongByGroupID(delete_groupid);
+            groupListBoxRefresh();
+        }
 
 
         //アカウントの上へボタンがbutton5
@@ -529,41 +529,41 @@ namespace RakuLand.Forms {
         //    this.groupListBox.SetSelected(nowselected + 1, true);
         //    this.groupListBox.TopIndex = nowselected + 1;
         //}
-        //private bool groupEditMode = false;
-        //private int edittingGroupId = -1;
-        //private void editGroupButton_Click(object sender, EventArgs e) {
-        //    //既に編集中なら弾く
-        //    if (!checkGroupEditMode()) return;
-        //    if (this.groupListBox.SelectedIndices.Count != 1) {
-        //        MessageBox.Show("編集するグループを1つ以上選択してください", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //        return;
-        //    }
-        //    //グループ編集用意
-        //    this.groupEditMode = true;
-        //    this.groupCreateButton.Text = "変更保存";
-        //    this.groupCreateButton.BackColor = Color.Red;
-        //    this.GroupBelongListBox.Items.Clear();
-        //    //選択しているグループに属しているメンバをListBoxに追加
-        //    var selectedGroupKind = ((GroupKindDBHelper.GroupKind)groupListBox.SelectedItem);
-        //    this.edittingGroupId = selectedGroupKind.GroupId;
-        //    this.groupNameTextBox.Text = selectedGroupKind.GroupName;
-        //    List<int> groupBelongAccountDBIdList = new GroupBelongDBHelper().loadGroupBelongDictionary()[selectedGroupKind.GroupId];
-        //    List<Common.Account> belongAccountList = new AccountDBHelper().selectItem(groupBelongAccountDBIdList);
-        //    foreach (var account in belongAccountList) this.GroupBelongListBox.Items.Add(account);
-        //}
-        //private bool checkGroupEditMode() {
-        //    if (this.groupEditMode) {
-        //        MessageBox.Show("編集中のグループを保存してください", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //        return false;
-        //    }
-        //    return true;
-        //}
+        private bool groupEditMode = false;
+        private int edittingGroupId = -1;
+        private void editGroupButton_Click(object sender, EventArgs e) {
+            //既に編集中なら弾く
+            if (!checkGroupEditMode()) return;
+            if (this.groupListBox.SelectedIndices.Count != 1) {
+                MessageBox.Show("編集するグループを1つ以上選択してください", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            //グループ編集用意
+            this.groupEditMode = true;
+            this.groupCreateButton.Text = "変更保存";
+            this.groupCreateButton.BackColor = Color.Red;
+            this.GroupBelongListBox.Items.Clear();
+            //選択しているグループに属しているメンバをListBoxに追加
+            var selectedGroupKind = ((GroupKindDBHelper.GroupKind)groupListBox.SelectedItem);
+            this.edittingGroupId = selectedGroupKind.GroupId;
+            this.groupNameTextBox.Text = selectedGroupKind.GroupName;
+            List<int> groupBelongAccountDBIdList = new GroupBelongDBHelper().loadGroupBelongDictionary()[selectedGroupKind.GroupId];
+            List<Common.Account> belongAccountList = new AccountDBHelper().selectItem(groupBelongAccountDBIdList);
+            foreach (var account in belongAccountList) this.GroupBelongListBox.Items.Add(account);
+        }
+        private bool checkGroupEditMode() {
+            if (this.groupEditMode) {
+                MessageBox.Show("編集中のグループを保存してください", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            return true;
+        }
         //グループリストのリフレッシュ
-        //private void groupListBoxRefresh() {
-        //    this.groupListBox.Items.Clear();
-        //    List<GroupKindDBHelper.GroupKind> gklist = new GroupKindDBHelper().loadGroupKind();
-        //    foreach (var gk in gklist) this.groupListBox.Items.Add(gk);
-        //}
+        private void groupListBoxRefresh() {
+            this.groupListBox.Items.Clear();
+            List<GroupKindDBHelper.GroupKind> gklist = new GroupKindDBHelper().loadGroupKind();
+            foreach (var gk in gklist) this.groupListBox.Items.Add(gk);
+        }
 
         private void token_update_date_modifyButton_Click(object sender, EventArgs e) {
             //if (this.accountDataGridView1.SelectedRows.Count <= 0) {
@@ -587,5 +587,9 @@ namespace RakuLand.Forms {
             MessageBox.Show(selectedAccount.email);
         }
 
+        private void accountListBox_Format(object sender, ListControlConvertEventArgs e) {
+            Common.Account ac = (Common.Account)e.ListItem;
+            e.Value = ac.nickname;
+        }
     }
 }

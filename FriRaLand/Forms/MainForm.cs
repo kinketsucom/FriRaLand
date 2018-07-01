@@ -38,8 +38,6 @@ namespace RakuLand {
             string stringValue = (string)Microsoft.Win32.Registry.GetValue(MainForm.Registry_Path, "Expire", "");
             string datestr = DateTime.Now.AddDays(7).ToString();
             if (string.IsNullOrEmpty(stringValue)) Microsoft.Win32.Registry.SetValue(Registry_Path, "Expire", datestr);
-            
-            //new ItemRegisterForm().Show();
             FrilItemDBHelper DBhelper = new FrilItemDBHelper();
             DBhelper.onCreate();
             AccountDBHelper accountDBHelper = new AccountDBHelper();
@@ -47,10 +45,10 @@ namespace RakuLand {
             ReservationDBHelper reservationDBhelper = new ReservationDBHelper();
             reservationDBhelper.onCreate();
             accountDBHelper.addKengai_ExhibitCnt_LastExhibitTime_Column();//3->4
-            //GroupBelongDBHelper groupbelongDBHelper = new GroupBelongDBHelper();
-            //groupbelongDBHelper.onCreate();
-            //GroupKindDBHelper groupkindDBHelper = new GroupKindDBHelper();
-            //groupkindDBHelper.onCreate();
+            GroupBelongDBHelper groupbelongDBHelper = new GroupBelongDBHelper();
+            groupbelongDBHelper.onCreate();
+            GroupKindDBHelper groupkindDBHelper = new GroupKindDBHelper();
+            groupkindDBHelper.onCreate();
             new SettingsDBHelper().onCreate();
             Settings.updateTemplateSettingDBForAddTitle();
             new ShuppinRirekiDBHelper().onCreate();
@@ -59,7 +57,7 @@ namespace RakuLand {
             accountDBHelper.addHanbaiNumColumn();//7->8
             accountDBHelper.addItemNameSpeccialSettingsColumn();//8->9
             new ShuppinRirekiDBHelper().addReexhibitFlag();//9->10
-            //new GroupKindDBHelper().addNumberColumn();//10->11
+            new GroupKindDBHelper().addNumberColumn();//10->11
             accountDBHelper.addDefaultBankAddressColumn();//11->12
             DBhelper.addNumberColumn();//13->14
             new ItemNoteDBHelper().onCreate();
