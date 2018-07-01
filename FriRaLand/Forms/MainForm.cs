@@ -1071,6 +1071,7 @@ namespace RakuLand {
                     shuppinrirekiDBHelper.deleteRireki(item.item_id);
                 }
                 if (res) successnum++;
+                this.toolStripStatusLabel1.Text = "取り消し完了:" +item.item_name;
                 System.Threading.Thread.Sleep(Settings.getIkkatuTorikesiInterval() * 1000);
             }
             return new KeyValuePair<string, int>(string.Format("成功: {0} 失敗:{1}", successnum, trynum - successnum), successnum);
