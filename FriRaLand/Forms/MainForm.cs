@@ -1312,7 +1312,7 @@ namespace RakuLand {
                 int zaikonum = zaikoDBHelper.getZaikoNum(item.parent_id);
                 bool parent_exist = zaikoDBHelper.isexistParentid(item.parent_id);
                 //親IDが存在し、在庫が0なら出品しない
-                if (parent_exist && zaikonum <= 0) continue;
+                //if (parent_exist && zaikonum <= 0) continue;FIFXME:親子IDはまだつくらない
                 this.toolStripStatusLabel1.Text = ("出品中: " + item.item_name);
                 apis[0] = Common.checkFrilAPI(apis[0]);
                 FrilItem res = SellWithOption(apis[0].account, item);
