@@ -430,11 +430,11 @@ namespace RakuLand.Forms {
                                         }
                                     }
                                 }
-                                if (text13 != "") {
+                                if (text13 != "") {//FIXME:ブランドとれてない
                                     //ブランド情報があるけどブランド情報のIDが見つからなければ
                                     now_brandid = FrilCommon.getBrandIdFromName(text13);
                                     if (now_brandid < 0) {
-                                        message += i.ToString() + "行目のブランドが正しくありません。" + Environment.NewLine;
+                                        message += i.ToString() + "行目のブランドがカタカナ名ではありません。" + Environment.NewLine;
                                         flag = true;
                                     }
                                 }
@@ -478,11 +478,11 @@ namespace RakuLand.Forms {
                                         } else if (text20 == "0") {
                                             message += i.ToString() + "行目の販売価格が入力されていません。" + Environment.NewLine;
                                             flag = true;
-                                        } else if (!int.TryParse(text18, out now_price)) {
+                                        } else if (!int.TryParse(text20, out now_price)) {
                                             message += i.ToString() + "行目の販売価格が整数ではありません。" + Environment.NewLine;
                                             flag = true;
-                                        } else if (now_price < 300 || now_price > 990000) {
-                                            message += i.ToString() + "行目の販売価格が300～990,000の間で入力されていません。" + Environment.NewLine;
+                                        } else if (now_price < 300 || now_price > 500000) {
+                                            message += i.ToString() + "行目の販売価格が300～500,000の間で入力されていません。" + Environment.NewLine;
                                             flag = true;
                                         } else {
                                             var exhibitItem = new FrilItem();

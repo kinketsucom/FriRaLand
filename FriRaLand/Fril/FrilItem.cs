@@ -20,7 +20,7 @@ namespace RakuLand {
         public string bikou;
         public bool address_copyed;
 
-        public string item_id;
+        public string item_id="";
         public string item_name;
         public string detail;
         public int s_price;
