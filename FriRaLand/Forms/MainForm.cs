@@ -32,12 +32,12 @@ namespace RakuLand {
         private List<FrilAPI> FrilAPIList = new List<FrilAPI>();
         private Dictionary<string, FrilAPI> sellerIDtoAPIDictionary = new Dictionary<string, FrilAPI>(); //sellerid -> API
 
-        private void MainForm_Load(object sender, EventArgs e) {
+        private async void MainForm_Load(object sender, EventArgs e) {
             //初回起動(キーがなければ起動時刻+7日をレジストリに書き込み）
             string stringValue = (string)Microsoft.Win32.Registry.GetValue(MainForm.Registry_Path, "Expire", "");
             string datestr = DateTime.Now.AddDays(7).ToString();
             if (string.IsNullOrEmpty(stringValue)) Microsoft.Win32.Registry.SetValue(Registry_Path, "Expire", datestr);
-            FrilCommon.init();
+            
             //new ItemRegisterForm().Show();
             FrilItemDBHelper DBhelper = new FrilItemDBHelper();
             DBhelper.onCreate();
@@ -96,6 +96,11 @@ namespace RakuLand {
                 this.tabControl1.Enabled = false;
                 LicenseForm lf = new LicenseForm(this);
                 lf.Show();
+            }
+            //カテゴリなどの基本的なマスタデータ読み込み
+            if (await Task.Run(() => FrilCommon.init()) == false) {
+                MessageBox.Show("ラクマからデータの読み込みに失敗しました.プログラムを終了します.\nインターネット環境を確認してください", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Close();
             }
             //ライセンスが認証できていれば更新情報・お知らせ情報を取得する
             /*if (this.tabControl1.Enabled == true) {
