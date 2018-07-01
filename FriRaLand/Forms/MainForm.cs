@@ -18,7 +18,12 @@ namespace RakuLand {
         public MainForm() {
             InitializeComponent();
         }
-
+        public struct Group {
+            public string groupname;
+            public List<Account> accountList;
+            public List<FrilAPI> apiList;
+        }
+        private List<Group> groupList = new List<Group>();
         private List<FrilItem> LocalItemDataBindList = new List<FrilItem>();
         public const string Key_LicenseKey = "LicenseKey";
         public const string Registry_Path = @"HKEY_CURRENT_USER\Software\Rakuland";
@@ -111,6 +116,8 @@ namespace RakuLand {
         public void unlockLicense() {
             this.tabControl1.Enabled = true;
         }
+        Dictionary<int, FrilAPI> FrilAPIDictionary = new Dictionary<int, FrilAPI>(); //accountDBId, FrilAPI
+        Dictionary<int, Account> FrilAccountDictionary = new Dictionary<int, Account>(); //accountDBId, Account
         private void AdjustLayout() {
             //レイアウトの自動調整をする
             this.ExhibittedDataGridView.Width = this.Width - this.ExhibittedDataGridView.Left - 20;
@@ -408,8 +415,6 @@ namespace RakuLand {
             //アカウント情報コンテナの再設定
             InitializeAccountData();
         }
-        Dictionary<int, FrilAPI> FrilAPIDictionary = new Dictionary<int, FrilAPI>(); //accountDBId, FrilAPI
-        Dictionary<int, Common.Account> FrilAccountDictionary = new Dictionary<int, Common.Account>(); //accountDBId, Account
         private void InitializeAccountData() {
             //アカウントリストの読み込み,APIリストの作成
             this.sellerIDtoAPIDictionary.Clear();
@@ -428,31 +433,31 @@ namespace RakuLand {
             }
             if (accountList != null && accountList.Count > 0) accountListComboBox.SelectedIndex = 0;
 
-            ////グループリストの読み込み
-            //this.groupListComboBox.Items.Clear();
-            //groupList.Clear();
-            //var groupBelongDictionary = new GroupBelongDBHelper().loadGroupBelongDictionary();
-            //var groupKindDictionary = new GroupKindDBHelper().loadGroupKindDictionary();
-            //foreach (KeyValuePair<int, string> p in groupKindDictionary) {
-            //    try {
-            //        List<int> belongs = groupBelongDictionary[p.Key];
-            //        Group tmpGroup = new Group();
-            //        tmpGroup.groupname = p.Value;
-            //        tmpGroup.accountList = new List<Account>();
-            //        tmpGroup.apiList = new List<MercariAPI>();
-            //        foreach (int belong in belongs) {
-            //            tmpGroup.accountList.Add(mercariAccountDictionary[belong]);
-            //            tmpGroup.apiList.Add(mercariAPIDictionary[belong]);
-            //        }
-            //        groupList.Add(tmpGroup);
-            //        this.groupListComboBox.Items.Add(tmpGroup);
-            //    } catch (Exception ex) {
-            //        Log.Logger.Error(ex.Message);
-            //        Log.Logger.Error("グループリストの作成に失敗");
-            //        MessageBox.Show("グループリストの作成に失敗しました", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //    }
-            //}
-            //if (groupList != null && groupList.Count > 0) groupListComboBox.SelectedIndex = 0;
+            //グループリストの読み込み
+            this.groupListComboBox.Items.Clear();
+            groupList.Clear();
+            var groupBelongDictionary = new GroupBelongDBHelper().loadGroupBelongDictionary();
+            var groupKindDictionary = new GroupKindDBHelper().loadGroupKindDictionary();
+            foreach (KeyValuePair<int, string> p in groupKindDictionary) {
+                try {
+                    List<int> belongs = groupBelongDictionary[p.Key];
+                    Group tmpGroup = new Group();
+                    tmpGroup.groupname = p.Value;
+                    tmpGroup.accountList = new List<Account>();
+                    tmpGroup.apiList = new List<FrilAPI>();
+                    foreach (int belong in belongs) {
+                        tmpGroup.accountList.Add(FrilAccountDictionary[belong]);
+                        tmpGroup.apiList.Add(FrilAPIDictionary[belong]);
+                    }
+                    groupList.Add(tmpGroup);
+                    this.groupListComboBox.Items.Add(tmpGroup);
+                } catch (Exception ex) {
+                    Log.Logger.Error(ex.Message);
+                    Log.Logger.Error("グループリストの作成に失敗");
+                    MessageBox.Show("グループリストの作成に失敗しました", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            if (groupList != null && groupList.Count > 0) groupListComboBox.SelectedIndex = 0;
         }
 
         private void exhibitRegisterButton_Click(object sender, EventArgs e) {
@@ -868,14 +873,14 @@ namespace RakuLand {
             if (this.radioButton1.Checked) {
                 if (this.accountListComboBox.SelectedItem != null) rst.Add((FrilAPI)this.accountListComboBox.SelectedItem);
 
-            } 
-            //こちらグループアカウント処理なのでいまはコメントアウト
-            //else if (this.radioButton2.Checked) {
-            //    if (this.groupListComboBox.SelectedItem != null) {
-            //        Group g = (Group)this.groupListComboBox.SelectedItem;
-            //        foreach (FrilAPI api in g.apiList) rst.Add(api);
-            //    }
-            //}
+            }
+            //こちらグループアカウント処理
+            else if (this.radioButton2.Checked) {
+                if (this.groupListComboBox.SelectedItem != null) {
+                    Group g = (Group)this.groupListComboBox.SelectedItem;
+                    foreach (FrilAPI api in g.apiList) rst.Add(api);
+                }
+            }
             return rst;
         }
         private async void UpdateSelling(List<FrilAPI> apis,string get_item_type) {
@@ -1450,6 +1455,34 @@ namespace RakuLand {
 
         private void MainForm_SizeChanged(object sender, EventArgs e) {
             AdjustLayout();
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e) {
+            if (this.radioButton1.Checked) {
+                this.radioButton2.Checked = false;
+                this.groupListComboBox.Enabled = false;
+                this.accountListComboBox.Enabled = true;
+            }
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e) {
+            if (this.radioButton2.Checked) {
+                this.radioButton1.Checked = false;
+                this.accountListComboBox.Enabled = false;
+                this.groupListComboBox.Enabled = true;
+            }
+        }
+
+        private void accountListComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+            //表をクリア
+            ExhibittedItemDataBindList.Clear();
+            ExhibittedItemDataBackBindList.Clear();
+            ExhibittedDataGridView.Rows.Clear();
+            ExhibittedDataGridView.Refresh();
+        }
+
+        private void groupListComboBox_Format(object sender, ListControlConvertEventArgs e) {
+            e.Value = ((Group)e.ListItem).groupname;
         }
     }
 

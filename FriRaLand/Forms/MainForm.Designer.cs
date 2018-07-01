@@ -155,6 +155,9 @@
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.groupListComboBox = new System.Windows.Forms.ComboBox();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.DailyExhibitDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.LocalItemDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ReservationDataGridView)).BeginInit();
@@ -170,6 +173,7 @@
             this.menuStrip1.SuspendLayout();
             this.panel4.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            this.panel5.SuspendLayout();
             this.SuspendLayout();
             // 
             // DailyExhibitDataGridView
@@ -1398,7 +1402,7 @@
             // 
             this.panel4.Controls.Add(this.accountListComboBox);
             this.panel4.Controls.Add(this.radioButton1);
-            this.panel4.Location = new System.Drawing.Point(17, 49);
+            this.panel4.Location = new System.Drawing.Point(12, 32);
             this.panel4.Margin = new System.Windows.Forms.Padding(4);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(253, 55);
@@ -1414,6 +1418,7 @@
             this.accountListComboBox.Name = "accountListComboBox";
             this.accountListComboBox.Size = new System.Drawing.Size(217, 23);
             this.accountListComboBox.TabIndex = 14;
+            this.accountListComboBox.SelectedIndexChanged += new System.EventHandler(this.accountListComboBox_SelectedIndexChanged);
             this.accountListComboBox.Format += new System.Windows.Forms.ListControlConvertEventHandler(this.accountListComboBox_Format);
             // 
             // radioButton1
@@ -1429,6 +1434,7 @@
             this.radioButton1.TabStop = true;
             this.radioButton1.Text = "アカウント";
             this.radioButton1.UseVisualStyleBackColor = true;
+            this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
             // 
             // statusStrip1
             // 
@@ -1456,11 +1462,48 @@
             this.backgroundWorker2.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker2_ProgressChanged);
             this.backgroundWorker2.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker2_RunWorkerCompleted);
             // 
+            // panel5
+            // 
+            this.panel5.Controls.Add(this.groupListComboBox);
+            this.panel5.Controls.Add(this.radioButton2);
+            this.panel5.Location = new System.Drawing.Point(13, 86);
+            this.panel5.Margin = new System.Windows.Forms.Padding(4);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(253, 55);
+            this.panel5.TabIndex = 44;
+            // 
+            // groupListComboBox
+            // 
+            this.groupListComboBox.BackColor = System.Drawing.SystemColors.Control;
+            this.groupListComboBox.Enabled = false;
+            this.groupListComboBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.groupListComboBox.FormattingEnabled = true;
+            this.groupListComboBox.Location = new System.Drawing.Point(27, 26);
+            this.groupListComboBox.Margin = new System.Windows.Forms.Padding(4);
+            this.groupListComboBox.Name = "groupListComboBox";
+            this.groupListComboBox.Size = new System.Drawing.Size(217, 23);
+            this.groupListComboBox.TabIndex = 28;
+            this.groupListComboBox.Format += new System.Windows.Forms.ListControlConvertEventHandler(this.groupListComboBox_Format);
+            // 
+            // radioButton2
+            // 
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Font = new System.Drawing.Font("メイリオ", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButton2.Location = new System.Drawing.Point(4, 0);
+            this.radioButton2.Margin = new System.Windows.Forms.Padding(4);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(101, 29);
+            this.radioButton2.TabIndex = 29;
+            this.radioButton2.Text = "グループ";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1536, 869);
+            this.Controls.Add(this.panel5);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.tabControl1);
@@ -1496,6 +1539,8 @@
             this.panel4.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.panel5.ResumeLayout(false);
+            this.panel5.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1622,6 +1667,9 @@
         private System.Windows.Forms.ToolStripMenuItem バージョン情報ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 出金管理ToolStripMenuItem;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.Panel panel5;
+        private System.Windows.Forms.ComboBox groupListComboBox;
+        private System.Windows.Forms.RadioButton radioButton2;
     }
 }
 
