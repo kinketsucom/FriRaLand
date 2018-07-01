@@ -393,7 +393,7 @@ namespace RakuLand.DBHelper {
                                     + "email = '" + account.email.Replace("'", "''") + "',"
                                     + "password = '" + account.password.Replace("'", "''") + "',"
                                     + "auth_token = '" + account.auth_token + "',"
-                                    + "sellerid = '" + account.sellerid + "',"
+                                    + "user_id = '" + account.sellerid + "',"
                                     + "nickname = '" + account.nickname.Replace("'", "''") + "',"
                                     + "expiration_date = '" + Common.getUnixTimeStampFromDate(account.expiration_date) + "',"
                                     + "kengai_num = " + account.kengai_num.ToString() + ", "
@@ -402,8 +402,8 @@ namespace RakuLand.DBHelper {
                                     + "lastExhibitDate = '" + account.last_exhibitTime_str + "' ,"
                                     + "addSpecialTextToItemName = '" + account.addSpecialTextToItemName.ToString() + "', "
                                     + "insertEmptyStrToItemName = '" + account.insertEmptyStrToItemName.ToString() + "', "
-                                    + "defaultbankaddressId = " + account.defaultbankaddressId.ToString() + ","
-                                    + "tokenupdatedate = '" + Common.getUnixTimeStampFromDate(account.token_update_date) + "'"
+                                    + "defaultbankaddressId = " + account.defaultbankaddressId.ToString()//","
+                                    //+ "tokenupdatedate = '" + Common.getUnixTimeStampFromDate(account.token_update_date) + "'"
                                     + " WHERE Id = " + DBId.ToString() + ";";
                 SQLiteCommand command = conn.CreateCommand();
                 command.CommandText = commandText;

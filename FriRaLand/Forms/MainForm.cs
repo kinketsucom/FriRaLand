@@ -93,7 +93,7 @@ namespace RakuLand {
             }
             if (showflag) {
                 //ライセンス画面をだす コントロール使えないように
-                this.tabControl1.Enabled = false;
+                //this.tabControl1.Enabled = false;
                 LicenseForm lf = new LicenseForm(this);
                 lf.Show();
             }
