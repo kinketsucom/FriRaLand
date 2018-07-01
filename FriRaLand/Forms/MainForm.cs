@@ -33,6 +33,7 @@ namespace RakuLand {
         private Dictionary<string, FrilAPI> sellerIDtoAPIDictionary = new Dictionary<string, FrilAPI>(); //sellerid -> API
 
         private async void MainForm_Load(object sender, EventArgs e) {
+            AdjustLayout();
             //初回起動(キーがなければ起動時刻+7日をレジストリに書き込み）
             string stringValue = (string)Microsoft.Win32.Registry.GetValue(MainForm.Registry_Path, "Expire", "");
             string datestr = DateTime.Now.AddDays(7).ToString();
@@ -111,6 +112,18 @@ namespace RakuLand {
         }
         public void unlockLicense() {
             this.tabControl1.Enabled = true;
+        }
+        private void AdjustLayout() {
+            //レイアウトの自動調整をする
+            this.ExhibittedDataGridView.Width = this.Width - this.ExhibittedDataGridView.Left - 20;
+            this.ExhibittedDataGridView.Height = this.Height - this.ExhibittedDataGridView.Top - this.statusStrip1.Height - 40;
+            this.LocalItemDataGridView.Width = this.Width - this.LocalItemDataGridView.Left - 20;
+            this.LocalItemDataGridView.Height = this.Height - this.LocalItemDataGridView.Top - this.statusStrip1.Height - 40;
+            this.ReservationDataGridView.Width = this.Width - this.ReservationDataGridView.Left - 20;
+            this.ReservationDataGridView.Height = this.Height - this.ReservationDataGridView.Top - this.statusStrip1.Height - 40;
+            this.DailyExhibitDataGridView.Width = this.Width - this.DailyExhibitDataGridView.Left - 20;
+            this.DailyExhibitDataGridView.Height = this.Height - this.DailyExhibitDataGridView.Top - this.statusStrip1.Height - 40;
+            this.tabControl1.Height = this.Height - this.tabControl1.Top - this.statusStrip1.Height;
         }
 
         private void InitializeMainForm() {
@@ -1435,6 +1448,10 @@ namespace RakuLand {
 
         private void register_from_xml_button_Click(object sender, EventArgs e) {
             new ReservationRegisterFromExcelForm(this).Show();
+        }
+
+        private void MainForm_SizeChanged(object sender, EventArgs e) {
+            AdjustLayout();
         }
     }
 
