@@ -216,6 +216,9 @@
     <EmbeddedResource Include="Forms\ItemRegisterFromExcelForm.resx">
       <DependentUpon>ItemRegisterFromExcelForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\LicenseForm.resx">
+      <DependentUpon>LicenseForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\MessageBoxWithProgressBar.resx">
       <DependentUpon>MessageBoxWithProgressBar.cs</DependentUpon>
     </EmbeddedResource>

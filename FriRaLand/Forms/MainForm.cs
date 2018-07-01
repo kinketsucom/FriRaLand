@@ -20,6 +20,8 @@ namespace RakuLand {
         }
 
         private List<FrilItem> LocalItemDataBindList = new List<FrilItem>();
+        public const string Key_LicenseKey = "LicenseKey";
+        public const string Registry_Path = @"HKEY_CURRENT_USER\Software\Rakuland";
         public const string ProductName = "RakuLand";
         private List<ReservationSettingForm.ReservationSetting> ReservationDataBindList = new List<ReservationSettingForm.ReservationSetting>();
         private List<FrilItem> ExhibittedItemDataBindList = new List<FrilItem>(); //表にバインドする商品リスト 絞り込み結果はこっち
@@ -31,6 +33,10 @@ namespace RakuLand {
         private Dictionary<string, FrilAPI> sellerIDtoAPIDictionary = new Dictionary<string, FrilAPI>(); //sellerid -> API
 
         private void MainForm_Load(object sender, EventArgs e) {
+            //初回起動(キーがなければ起動時刻+7日をレジストリに書き込み）
+            string stringValue = (string)Microsoft.Win32.Registry.GetValue(MainForm.Registry_Path, "Expire", "");
+            string datestr = DateTime.Now.AddDays(7).ToString();
+            if (string.IsNullOrEmpty(stringValue)) Microsoft.Win32.Registry.SetValue(Registry_Path, "Expire", datestr);
             FrilCommon.init();
             //new ItemRegisterForm().Show();
             FrilItemDBHelper DBhelper = new FrilItemDBHelper();
@@ -76,12 +82,31 @@ namespace RakuLand {
             //SetAutoKengaiTimer();
             //SetNotificationTimer();
             //ライセンスチェックを行う
-
-            //new TestForm().Show();
-            
-
+            string LicenseKey = (string)Microsoft.Win32.Registry.GetValue(Registry_Path, Key_LicenseKey, "");
+            bool showflag = false;
+            if (string.IsNullOrEmpty(LicenseKey)) {
+                //初回起動は必ずライセンス画面表示
+                showflag = true;
+            } else {
+                //ライセンスチェックしてダメならライセンス画面表示
+                if (!LicenseForm.checkCanUseWithErrorWindow()) showflag = true;
+            }
+            if (showflag) {
+                //ライセンス画面をだす コントロール使えないように
+                this.tabControl1.Enabled = false;
+                LicenseForm lf = new LicenseForm(this);
+                lf.Show();
+            }
+            //ライセンスが認証できていれば更新情報・お知らせ情報を取得する
+            /*if (this.tabControl1.Enabled == true) {
+                //新しいバージョンまたは新しいお知らせがあれば表示する
+                var form = new startUpWindow();
+                if (startUpWindow.notifyFlag) form.Show();
+            }*/
         }
-
+        public void unlockLicense() {
+            this.tabControl1.Enabled = true;
+        }
 
         private void InitializeMainForm() {
             LocalItemDataGridView.VirtualMode = true;
