@@ -121,7 +121,6 @@ namespace RakuLand {
 
 
         FrilCommon.FrilCategory nowfril_selectedCategory; //フリルの最下層選択中カテゴリ
-        //FrilCommon.RakumaCategory nowrakuma_selectedCategory; //ラクマの最下層選択中カテゴリ
         #region GUIFormat
         private void Fril_CategoryComboBoxLevel1_Format(object sender, ListControlConvertEventArgs e) {
             e.Value = ((FrilCommon.FrilCategory)e.ListItem).name;

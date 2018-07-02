@@ -19,7 +19,7 @@ namespace RakuLand.Forms {
         public MainForm mainform;
         private void AccountManageForm_Load(object sender, EventArgs e) {
             accountColumnBoxReflesh();
-            //groupListBoxRefresh();
+            groupListBoxRefresh();
         }
 
         static public List<Common.Account> accountLoader() {
