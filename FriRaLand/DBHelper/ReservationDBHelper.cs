@@ -223,7 +223,7 @@ namespace RakuLand.DBHelper{
                     if (reservation.reexhibit_flag_str == "する") reservation.reexhibit_flag = true;
                     else reservation.reexhibit_flag = false;
                     reservation.accountNickName = sQLiteDataReader["nickname"].ToString();
-                    reservation.item_name = sQLiteDataReader["ItemName"].ToString();
+                    reservation.item_name = sQLiteDataReader["item_name"].ToString();
                     reservation.imagepath = sQLiteDataReader["Pic1"].ToString();
                     rst.Add(reservation);
                 } catch (Exception ex) {

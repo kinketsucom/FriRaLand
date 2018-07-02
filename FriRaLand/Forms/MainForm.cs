@@ -678,7 +678,7 @@ namespace RakuLand {
                         ReservationObjects[i].docancel_flag = false;
                         Account a = accountDBHelper.selectItem(new List<int> { reservation.accountDBId })[0];
                         Log.Logger.Info("自動削除用のアカウント取得成功");
-                        FrilAPI api = new FrilAPI(a.email,a.password);
+                        FrilAPI api = new FrilAPI(a);
                         api = Common.checkFrilAPI(api);
                         //削除を実行する
                         string deleteitemid = reservationDBHelper.selectReservation(new List<int> { reservation.DBId })[0].item_id;
@@ -744,7 +744,7 @@ namespace RakuLand {
                         ReservationObjects[i].docancel_flag2 = false;
                         Account a = accountDBHelper.selectItem(new List<int> { reservation.accountDBId })[0];
                         Log.Logger.Info("自動削除2用のアカウント取得成功");
-                        FrilAPI api = new FrilAPI(a.email,a.password);
+                        FrilAPI api = new FrilAPI(a);
                         api = Common.checkFrilAPI(api);
                         //削除を実行する
                         string deleteitemid = reservationDBHelper.selectReservation(new List<int> { reservation.DBId })[0].item_id;

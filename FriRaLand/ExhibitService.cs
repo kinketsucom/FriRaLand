@@ -104,7 +104,7 @@ namespace RakuLand {
             //商品備考を削除
             new ShuppinRirekiDBHelper().deleteRireki(item.item_id);
             //値下げカウントを削除
-            new NesageCntDBHelper().deleteNesageCnt(item.item_id);
+            //new NesageCntDBHelper().deleteNesageCnt(item.item_id);
         }
         #region FIXMEOPTION:値下げ機能は現時点で不要
         //指定した値下げ条件に基づいて値下げを実行する

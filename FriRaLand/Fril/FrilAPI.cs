@@ -256,12 +256,12 @@ namespace RakuLand {
 
 
 
-        public FrilAPI(string email, string password) {
-            this.account = new Common.Account();
-            this.account.kind = Common.Account.Fril_Account;
-            this.account.email = email;
-            this.account.password = password;
-        }
+        //public FrilAPI(string email, string password) {
+        //    this.account = new Common.Account();
+        //    this.account.kind = Common.Account.Fril_Account;
+        //    this.account.email = email;
+        //    this.account.password = password;
+        //}
         public FrilAPI(Common.Account account) {
             this.account = account;
         }
@@ -519,6 +519,7 @@ namespace RakuLand {
             }
             catch (Exception e) {
                 Log.Logger.Error("FrilGETリクエスト失敗:" + res.response);
+                Console.WriteLine(e);
                 return res;
             }
         }
@@ -1066,7 +1067,8 @@ namespace RakuLand {
                 FrilItem item = new FrilItem(iteminfo);
                 return item;
             } catch (Exception e) {
-                //e.printStackTrace();
+                Console.WriteLine(e);
+                Log.Logger.Error(e);
                 return null;
             }
         }
