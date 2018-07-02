@@ -190,7 +190,7 @@ namespace RakuLand.DBHelper{
             if (DBIdList.Count == 0) return rst;
             string text = string.Join(",", DBIdList.ToArray());
             this.conn.Open();
-            SQLiteCommand sQLiteCommand = new SQLiteCommand("SELECT r.Id, r.itemDBId, r.accountDBId, r.status, r.exhibitDate, r.deleteDate, r.deleteDate2, r.item_id, r.check_favorite, r.check_favorite2, r.check_comment, r.check_comment2, r.reexhibit_flag , i.ItemName, i.Pic1, a.nickname from ((reservations r JOIN items i ON r.itemDBId = i.Id )  INNER JOIN accounts a ON a.Id = r.accountDBId) where r.Id in (" + text + ");", this.conn);
+            SQLiteCommand sQLiteCommand = new SQLiteCommand("SELECT r.Id, r.itemDBId, r.accountDBId, r.status, r.exhibitDate, r.deleteDate, r.deleteDate2, r.item_id, r.check_favorite, r.check_favorite2, r.check_comment, r.check_comment2, r.reexhibit_flag , i.item_name, i.Pic1, a.nickname from ((reservations r JOIN items i ON r.itemDBId = i.Id )  INNER JOIN accounts a ON a.Id = r.accountDBId) where r.Id in (" + text + ");", this.conn);
             SQLiteDataReader sQLiteDataReader = sQLiteCommand.ExecuteReader();
             while (sQLiteDataReader.Read()) {
                 try {
@@ -239,7 +239,7 @@ namespace RakuLand.DBHelper{
         public List<ReservationSettingForm.ReservationSetting> selectReservationFromName(string text) {
             List<ReservationSettingForm.ReservationSetting> rst = new List<ReservationSettingForm.ReservationSetting>();
             this.conn.Open();
-            SQLiteCommand sQLiteCommand = new SQLiteCommand("SELECT r.Id, r.itemDBId, r.accountDBId, r.status, r.exhibitDate, r.deleteDate, r.deleteDate2, r.item_id, r.check_favorite, r.check_favorite2, r.check_comment, r.check_comment2, i.ItemName, i.Pic1, a.nickname from ((reservations r JOIN items i ON r.itemDBId = i.Id )  INNER JOIN accounts a ON a.Id = r.accountDBId) where i.ItemName like '%" + text + "%';", this.conn);
+            SQLiteCommand sQLiteCommand = new SQLiteCommand("SELECT r.Id, r.itemDBId, r.accountDBId, r.status, r.exhibitDate, r.deleteDate, r.deleteDate2, r.item_id, r.check_favorite, r.check_favorite2, r.check_comment, r.check_comment2, i.item_name, i.Pic1, a.nickname from ((reservations r JOIN items i ON r.itemDBId = i.Id )  INNER JOIN accounts a ON a.Id = r.accountDBId) where i.item_name like '%" + text + "%';", this.conn);
             SQLiteDataReader sQLiteDataReader = sQLiteCommand.ExecuteReader();
             while (sQLiteDataReader.Read()) {
                 try {

@@ -1484,6 +1484,10 @@ namespace RakuLand {
         private void groupListComboBox_Format(object sender, ListControlConvertEventArgs e) {
             e.Value = ((Group)e.ListItem).groupname;
         }
+
+        private void reservation_log_view_button_Click(object sender, EventArgs e) {
+           // new ReservationFailLogViewForm(reservation_fail_logs).Show();
+        }
     }
 
 }

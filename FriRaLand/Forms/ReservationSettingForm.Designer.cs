@@ -193,6 +193,7 @@
             this.autoDeleteCheckBox2.TabIndex = 47;
             this.autoDeleteCheckBox2.Text = "自動取消②を使用する";
             this.autoDeleteCheckBox2.UseVisualStyleBackColor = true;
+            this.autoDeleteCheckBox2.CheckedChanged += new System.EventHandler(this.autoDeleteCheckBox2_CheckedChanged);
             // 
             // considerCommentcheckBox2
             // 
@@ -341,6 +342,7 @@
             this.autoDeleteCheckBox.TabIndex = 47;
             this.autoDeleteCheckBox.Text = "自動取消①を使用する";
             this.autoDeleteCheckBox.UseVisualStyleBackColor = true;
+            this.autoDeleteCheckBox.CheckedChanged += new System.EventHandler(this.autoDeleteCheckBox_CheckedChanged);
             // 
             // considerCommentcheckBox
             // 
@@ -399,6 +401,7 @@
             this.reExhibitCheckBox1.TabIndex = 72;
             this.reExhibitCheckBox1.Text = "売れたら再出品する";
             this.reExhibitCheckBox1.UseVisualStyleBackColor = true;
+            this.reExhibitCheckBox1.Visible = false;
             // 
             // label9
             // 
@@ -410,6 +413,7 @@
             this.label9.Size = new System.Drawing.Size(63, 25);
             this.label9.TabIndex = 71;
             this.label9.Text = "再出品";
+            this.label9.Visible = false;
             // 
             // exhibitTimeNumeric
             // 
