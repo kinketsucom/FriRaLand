@@ -76,7 +76,7 @@ namespace RakuLand {
             }
         }
         //通知を取得する
-        public List<RakumaNotificationResponse> getNotifications() {
+        public List<RakumaNotificationResponse> getNotifications(bool get_all=false) {
             List<RakumaNotificationResponse> rst = new List<RakumaNotificationResponse>();
             try {
                 //meの部分
@@ -89,7 +89,9 @@ namespace RakuLand {
                 //ひとまずmeのじょうほうだけでいいんじゃないすかね
                 int count = 0;
                 foreach (var data in resjson.notifications) {
-                    if (count >= (int)dic["me"]) break; 
+                    if (!get_all) { //全部取らないとき
+                       if (count >= (int)dic["me"]) break;
+                    }
                     RakumaNotificationResponse notification = new RakumaNotificationResponse();
                     string time = data.created_at.Substring(0, data.created_at.IndexOf("+"));
                     time = time.Replace("-", "/");

@@ -116,7 +116,7 @@ namespace RakuLand.Forms {
             foreach (var account in accountList) {
                 FrilAPI api = new FrilAPI(account);
                 api = Common.checkFrilAPI(api);
-                var accountNotifications = api.getNotifications();
+                var accountNotifications = api.getNotifications(true);
                 //var accountTodoLists = api.getToDoLists();
                 //var accountNews = api.getNews();
                 notifyList.AddRange(accountNotifications);
@@ -125,7 +125,7 @@ namespace RakuLand.Forms {
             }
             //通知時間で降順ソート
             //notifyList.Sort((a, b) => DateTime.Compare(b.created, a.created));
-            //notifyListShibori = new List<FrilAPI.FrilNotification>(notifyList);
+            notifyListShibori = new List<FrilAPI.RakumaNotificationResponse>(notifyList);
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e) {

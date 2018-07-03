@@ -97,7 +97,7 @@ namespace RakuLand {
             }
             if (showflag) {
                 //ライセンス画面をだす コントロール使えないように
-                this.tabControl1.Enabled = false;
+                /this.tabControl1.Enabled = false;
                 LicenseForm lf = new LicenseForm(this);
                 lf.Show();
             }
@@ -1563,6 +1563,11 @@ namespace RakuLand {
             } else {
                 new NotificationForm(notifyList).Show();
             }
+        }
+
+        private void 通知一覧ToolStripMenuItem_Click(object sender, EventArgs e) {
+            if (!LicenseForm.checkCanUseWithErrorWindow()) return;
+            new NotificationForm(notifyList).Show();
         }
     }
 
