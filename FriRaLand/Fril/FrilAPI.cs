@@ -11,6 +11,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Security.Cryptography;
 using System.Windows.Forms;
+using RakuLand.DBHelper;
 
 namespace RakuLand {
     public class FrilAPI {
@@ -57,7 +58,7 @@ namespace RakuLand {
         public Dictionary<string,double> getNotificationCount() {
             Dictionary<string, double> rst = new Dictionary<string, double>();
             try {
-                string url = string.Format("https://api.fril.jp/api/v4/notifications/unread_count?auth_token={0}&me_katest_id={1}&official_latest_id={2}&order_latest_id={3}", this.account.auth_token, this.account.nortification_needed_info.me_latest_id, this.account.nortification_needed_info.official_latest_id, this.account.nortification_needed_info.order_latest_id);
+                string url = string.Format("https://api.fril.jp/api/v4/notifications/unread_count?auth_token={0}&me_latest_id={1}&official_latest_id={2}&order_latest_id={3}", this.account.auth_token, this.account.nortification_needed_info.me_latest_id, this.account.nortification_needed_info.official_latest_id, this.account.nortification_needed_info.order_latest_id);
                 var param = new Dictionary<string, string>();
                 FrilRawResponse rawres = getFrilAPI(url, param, this.account.cc, false);
                 if (rawres.error) throw new Exception("getNotificationCount Error");
@@ -107,6 +108,10 @@ namespace RakuLand {
                     notification.updated_at = DateTime.Parse(time);
                     notification.url = data.url.ToString();
                     notification.api = this;
+                    if(int.Parse(notification.id) > this.account.nortification_needed_info.me_latest_id) {
+                        account.nortification_needed_info.me_latest_id = int.Parse(notification.id);
+                        new AccountDBHelper().updateAccount(this.account.DBId, this.account);
+                    }
                     rst.Add(notification);
                 }
                 Log.Logger.Info("ラクマからの通知の取得に成功");

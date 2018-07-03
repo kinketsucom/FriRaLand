@@ -20,7 +20,7 @@ namespace RakuLand.DBHelper {
                                 + "email TEXT, password TEXT,auth_token TEXT,"
                                 + "user_id TEXT, nickname TEXT, number INTEGER,expiration_date,kengai_num INTEGER,exhibit_cnt INTEGER,"
                                 + "hanbai_num INTEGER,lastExhibitDate TEXT,addSpecialTextToItemName TEXT, insertEmptyStrToItemName TEXT, " +
-                                "defaultbankaddressId INTEGER,me_latest_id INTEGER,offiial_latest_id INTEGER,order_latest_id INTEGER);";
+                                "defaultbankaddressId INTEGER,me_latest_id INTEGER,official_latest_id INTEGER,order_latest_id INTEGER);";
             SQLiteCommand command = conn.CreateCommand();
             command.CommandText = commandText;
             command.ExecuteNonQuery();
@@ -339,9 +339,16 @@ namespace RakuLand.DBHelper {
                     account.insertEmptyStrToItemName = bool.Parse(sQLiteDataReader["insertEmptyStrToItemName"].ToString());
                     account.defaultbankaddressId = int.Parse(sQLiteDataReader["defaultbankaddressId"].ToString());
                     account.token_update_date = Common.getDateFromUnixTimeStamp(sQLiteDataReader["expiration_date"].ToString());
+                    if (string.IsNullOrEmpty(sQLiteDataReader["me_latest_id"].ToString())) account.nortification_needed_info.me_latest_id = 0;
+                    else account.nortification_needed_info.me_latest_id = int.Parse(sQLiteDataReader["me_latest_id"].ToString());
+                    if (string.IsNullOrEmpty(sQLiteDataReader["official_latest_id"].ToString())) account.nortification_needed_info.official_latest_id = 0;
+                    else account.nortification_needed_info.official_latest_id = int.Parse(sQLiteDataReader["official_latest_id"].ToString());
+                    if (string.IsNullOrEmpty(sQLiteDataReader["order_latest_id"].ToString())) account.nortification_needed_info.order_latest_id = 0;
+                    else account.nortification_needed_info.order_latest_id = int.Parse(sQLiteDataReader["order_latest_id"].ToString());
                     rst.Add(account);
                 } catch (Exception ex) {
                     Log.Logger.Error("アカウントリスト読み込み中エラー : " + ex.Message);
+                    Console.WriteLine(ex);
                 }
             }
             sQLiteDataReader.Close();
@@ -402,7 +409,10 @@ namespace RakuLand.DBHelper {
                                     + "lastExhibitDate = '" + account.last_exhibitTime_str + "' ,"
                                     + "addSpecialTextToItemName = '" + account.addSpecialTextToItemName.ToString() + "', "
                                     + "insertEmptyStrToItemName = '" + account.insertEmptyStrToItemName.ToString() + "', "
-                                    + "defaultbankaddressId = " + account.defaultbankaddressId.ToString()//","
+                                    + "defaultbankaddressId = " + account.defaultbankaddressId.ToString() + ","
+                                    + "me_latest_id = '" + account.nortification_needed_info.me_latest_id.ToString() + "',"
+                                    + "official_latest_id = '" + account.nortification_needed_info.official_latest_id + "',"
+                                    + "order_latest_id = '" + account.nortification_needed_info.order_latest_id + "'"
                                     //+ "tokenupdatedate = '" + Common.getUnixTimeStampFromDate(account.token_update_date) + "'"
                                     + " WHERE Id = " + DBId.ToString() + ";";
                 SQLiteCommand command = conn.CreateCommand();

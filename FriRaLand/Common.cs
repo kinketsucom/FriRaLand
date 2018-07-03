@@ -63,7 +63,6 @@ namespace RakuLand {
             public int me_latest_id;
             public int official_latest_id;
             public int order_latest_id;
-            public bool withdrawal;
         }
 
         public static System.Random random = new System.Random(1000);

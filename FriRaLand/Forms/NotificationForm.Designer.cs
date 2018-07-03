@@ -141,6 +141,7 @@
             this.Controls.Add(this.dataGridView1);
             this.Name = "NotificationForm";
             this.Text = "NotificationForm";
+            this.Load += new System.EventHandler(this.NotificationForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

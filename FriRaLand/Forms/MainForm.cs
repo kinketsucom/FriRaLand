@@ -1538,6 +1538,7 @@ namespace RakuLand {
                 notifyIcon1.BalloonTipTitle = "新着通知";
                 notifyIcon1.BalloonTipText = show_message;
                 notifyIcon1.ShowBalloonTip(3000);
+                //アカウントの通知確認時間を更新
                 //最新の通知日時をDBに保存
                 //new SettingsDBHelper().updateSettings(Common.last_notification_date, lastDate.ToString());
             }

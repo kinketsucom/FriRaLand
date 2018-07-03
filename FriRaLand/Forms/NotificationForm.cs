@@ -48,8 +48,17 @@ namespace RakuLand.Forms {
                             case "2":
                                 e.Value = "コメント";
                                 break;
+                            case "3":
+                                e.Value = "フォロー通知";
+                                break;
                             case "10":
                                 e.Value = "取引メッセージ";
+                                break;
+                            case "25":
+                                e.Value = "運営メッセ―ジ";
+                                break;
+                            case "26":
+                                e.Value = "ポイント期限等";
                                 break;
                             case "TransactionMessageAdd":
                                 e.Value = "評価後メッセージ";
@@ -74,7 +83,7 @@ namespace RakuLand.Forms {
             }
         }
 
-        private void ShowNotificationForm_Load(object sender, EventArgs e) {
+        private void NotificationForm_Load(object sender, EventArgs e) {
             ReLoadNotification();
         }
 
