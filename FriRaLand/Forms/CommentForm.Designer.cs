@@ -115,6 +115,7 @@
             this.itemStatusTextBox.ReadOnly = true;
             this.itemStatusTextBox.Size = new System.Drawing.Size(132, 22);
             this.itemStatusTextBox.TabIndex = 70;
+            this.itemStatusTextBox.Visible = false;
             // 
             // label8
             // 
@@ -125,6 +126,7 @@
             this.label8.Size = new System.Drawing.Size(67, 15);
             this.label8.TabIndex = 69;
             this.label8.Text = "販売状況";
+            this.label8.Visible = false;
             // 
             // panel2
             // 
