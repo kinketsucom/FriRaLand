@@ -20,7 +20,7 @@ namespace RakuLand.DBHelper {
                                 + "email TEXT, password TEXT,auth_token TEXT,"
                                 + "user_id TEXT, nickname TEXT, number INTEGER,expiration_date,kengai_num INTEGER,exhibit_cnt INTEGER,"
                                 + "hanbai_num INTEGER,lastExhibitDate TEXT,addSpecialTextToItemName TEXT, insertEmptyStrToItemName TEXT, " +
-                                "defaultbankaddressId INTEGER);";
+                                "defaultbankaddressId INTEGER,me_latest_id INTEGER,offiial_latest_id INTEGER,order_latest_id INTEGER);";
             SQLiteCommand command = conn.CreateCommand();
             command.CommandText = commandText;
             command.ExecuteNonQuery();

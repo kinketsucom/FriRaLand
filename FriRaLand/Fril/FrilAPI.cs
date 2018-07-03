@@ -41,6 +41,79 @@ namespace RakuLand {
             public string birthday;
         }
 
+        public class RakumaNotificationResponse {
+            public DateTime created_at;
+            public string id;//これがlatest_id
+            public string image_url;
+            public string item_id;
+            public string message;
+            public string type_id;//?
+            public DateTime updated_at;
+            public string url;
+        }
+        //通知のunreadcountをもらう
+        public Dictionary<string,double> getNotificationCount() {
+            Dictionary<string, double> rst = new Dictionary<string, double>();
+            try {
+                string url = string.Format("https://api.fril.jp/api/v4/notifications/unread_count?auth_token={0}&me_katest_id={1}&official_latest_id={2}&order_latest_id={3}", this.account.auth_token, this.account.nortification_needed_info.me_latest_id, this.account.nortification_needed_info.official_latest_id, this.account.nortification_needed_info.order_latest_id);
+                var param = new Dictionary<string, string>();
+                FrilRawResponse rawres = getFrilAPI(url, param, this.account.cc, false);
+                if (rawres.error) throw new Exception("getNotificationCount Error");
+                dynamic resjson = DynamicJson.Parse(rawres.response);
+                rst.Add("count", resjson.count);
+                rst.Add("me", resjson.me);
+                rst.Add("official", resjson.official);
+                rst.Add("order", resjson.order);
+                Log.Logger.Info("ラクマからの通知カウントの取得に成功");
+                return rst;
+            } catch (Exception ex) {
+                Log.Logger.Error("ラクマからの通知カウントの取得に失敗");
+                Console.WriteLine(ex);
+                return rst;
+            }
+        }
+        //通知を取得する
+        public List<RakumaNotificationResponse> getNotifications() {
+            List<RakumaNotificationResponse> rst = new List<RakumaNotificationResponse>();
+            try {
+                //meの部分
+                string url = string.Format("https://api.fril.jp/api/v4/notifications?auth_token={0}&type=me",this.account.auth_token);
+                var param = new Dictionary<string, string>();
+                FrilRawResponse rawres = getFrilAPI(url, param,this.account.cc,false);
+                if (rawres.error) throw new Exception("getNotifications Error");
+                dynamic resjson = DynamicJson.Parse(rawres.response);
+                Dictionary<string,double> dic = getNotificationCount();//表示件数を決定するdic
+                //ひとまずmeのじょうほうだけでいいんじゃないすかね
+                int count = 0;
+                foreach (var data in resjson.notifications) {
+                    if (count >= (int)dic["me"]) break; 
+                    RakumaNotificationResponse notification = new RakumaNotificationResponse();
+                    string time = data.created_at.Substring(0, data.created_at.IndexOf("+"));
+                    time = time.Replace("-", "/");
+                    time = time.Replace("T", " ");
+                    notification.created_at = DateTime.Parse(time);
+                    notification.id = data.id.ToString();
+                    if (data.image_url == null) notification.image_url = "";
+                    else notification.image_url = data.image_url.ToString();
+                    if (data.item_id == null) notification.item_id = "";
+                    else notification.item_id = data.item_id.ToString();
+                    notification.message = data.message.ToString();
+                    notification.type_id = data.type_id.ToString();
+                    time = data.updated_at.Substring(0, data.updated_at.IndexOf("+"));
+                    time = time.Replace("-", "/");
+                    time = time.Replace("T", " ");
+                    notification.updated_at = DateTime.Parse(time);
+                    notification.url = data.url.ToString();
+                    rst.Add(notification);
+                }
+                Log.Logger.Info("ラクマからの通知の取得に成功");
+                return rst;
+            } catch (Exception ex) {
+                Log.Logger.Error("ラクマからの通知の取得に失敗");
+                Console.WriteLine(ex);
+                return rst;
+            }
+        }
 
 
         #region  FIXME:ラクマ用につくりかえようとしているもの
@@ -485,14 +558,16 @@ namespace RakuLand {
             try {
                 //url = Uri.EscapeDataString(url);//日本語などを％エンコードする
                 //パラメータをURLに付加 ?param1=val1&param2=val2...
-                url += "?";
-                List<string> paramstr = new List<string>();
-                foreach (KeyValuePair<string, string> p in param) {
-                    string k = Uri.EscapeDataString(p.Key);
-                    string v = Uri.EscapeDataString(p.Value);
-                    paramstr.Add(k + "=" + v);
+                if (param.Count != 0) {
+                    url += "?";
+                    List<string> paramstr = new List<string>();
+                    foreach (KeyValuePair<string, string> p in param) {
+                        string k = Uri.EscapeDataString(p.Key);
+                        string v = Uri.EscapeDataString(p.Value);
+                        paramstr.Add(k + "=" + v);
+                    }
+                    url += string.Join("&", paramstr);
                 }
-                url += string.Join("&", paramstr);
                 //HttpWebRequestの作成
                 HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
                 req.CookieContainer = cc;

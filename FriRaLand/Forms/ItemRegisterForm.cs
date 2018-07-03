@@ -756,8 +756,9 @@ namespace RakuLand {
             if (!string.IsNullOrEmpty(pictureBox4.ImageLocation)) {
                 item_data.imagepaths[3] = pictureBox4.ImageLocation;
             }
-            item_data.user_id = ((FrilAPI)ApiListComboBox.SelectedItem).account.userId;
-
+            if (ApiListComboBox.SelectedIndex != -1) {
+                item_data.user_id = ((FrilAPI)ApiListComboBox.SelectedItem).account.userId;
+            }
             return item_data;
         }
 

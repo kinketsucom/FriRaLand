@@ -62,7 +62,7 @@ namespace RakuLand {
             accountDBHelper.addHanbaiNumColumn();//7->8
             accountDBHelper.addItemNameSpeccialSettingsColumn();//8->9
             new ShuppinRirekiDBHelper().addReexhibitFlag();//9->10
-            new GroupKindDBHelper().addNumberColumn();//10->11
+            //new GroupKindDBHelper().addNumberColumn();//10->11
             accountDBHelper.addDefaultBankAddressColumn();//11->12
             DBhelper.addNumberColumn();//13->14
             new ItemNoteDBHelper().onCreate();
@@ -1487,6 +1487,65 @@ namespace RakuLand {
 
         private void reservation_log_view_button_Click(object sender, EventArgs e) {
            // new ReservationFailLogViewForm(reservation_fail_logs).Show();
+        }
+
+        private void notificationTimer_Tick(object sender, EventArgs e) {
+            //通知をバックグラウンドで取得する,新着通知があればメッセージを表示
+            if (getNotificationBackgroundWorker.IsBusy) return;
+            else getNotificationBackgroundWorker.RunWorkerAsync();
+        }
+
+        List<FrilAPI.RakumaNotificationResponse> notifyList = new List<FrilAPI.RakumaNotificationResponse>();   //通知リスト
+        List<FrilAPI.RakumaNotificationResponse> newNotifyList = new List<FrilAPI.RakumaNotificationResponse>();//新着の通知リスト
+        private void getNotificationBackgroundWorker_DoWork(object sender, DoWorkEventArgs e) {
+            //通知を取得する
+            List<FrilAPI.RakumaNotificationResponse> tmpList = new List<FrilAPI.RakumaNotificationResponse>();
+            newNotifyList.Clear();
+            //すべてのアカウントについて通知を取得
+            var accountList = AccountManageForm.accountLoader();
+            foreach (var account in accountList) {
+                FrilAPI api = new FrilAPI(account);
+                api = Common.checkFrilAPI(api);
+                var accountNotifications = api.getNotifications();
+                //var accountTodoLists = api.getToDoLists();
+                //var accountNews = api.getNews();
+                tmpList.AddRange(accountNotifications);
+                //tmpList.AddRange(accountTodoLists);
+                //tmpList.AddRange(accountNews);
+            }
+            //通知時間で降順ソート(ShowNotificationFormにおける表示のために降順）
+            //tmpList.Sort((a, b) => DateTime.Compare(b.created, a.created));
+
+            //DBに保存されている最新通知時間よりも新しい（あとの）通知があるか調べる
+            int new_num = 0;
+            DateTime lastDate = DateTime.Now;
+            string show_message = "";
+            for (int i = tmpList.Count - 1; i >= 0; i--) { //古い順にしらべる
+                var notification = tmpList[i];
+                if (Settings.lastNotificationDate() < notification.created_at) {
+                    new_num++;
+                    lastDate = notification.created_at;
+                    show_message = notification.message;
+                    newNotifyList.Add(notification);
+                }
+            }
+            if (new_num > 1) {
+                show_message = new_num.ToString() + "件の新着通知があります";
+            }
+            if (new_num >= 1) {
+                //タスクバーに表示
+                //notifyIcon1.Icon = SystemIcons.Application;
+                //notifyIcon1.BalloonTipTitle = "新着通知";
+                //notifyIcon1.BalloonTipText = show_message;
+                //notifyIcon1.ShowBalloonTip(3000);
+                //最新の通知日時をDBに保存
+                //new SettingsDBHelper().updateSettings(Common.last_notification_date, lastDate.ToString());
+            }
+            notifyList = new List<FrilAPI.RakumaNotificationResponse>(tmpList);
+        }
+
+        private void getNotificationBackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
+
         }
     }
 

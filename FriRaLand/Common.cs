@@ -35,7 +35,7 @@ namespace RakuLand {
             public CookieContainer cc = new CookieContainer();
             public RakumaBank bank_info = new RakumaBank();
             public RakumaBalance balance_info = new RakumaBalance();
-
+            public RakumaNortificationNeededInfo nortification_needed_info = new RakumaNortificationNeededInfo();
         }
         public class RakumaBank {//FIXME:bankクラスはこっちに書き換えたい
             public string account_number;
@@ -58,6 +58,14 @@ namespace RakuLand {
             public bool result;
             public bool withdrawal;
         }
+        public class RakumaNortificationNeededInfo {//FIXME収益とかpointとかクラスはこっちに書き換えたい 
+            //typeはme,official,orderがある
+            public int me_latest_id;
+            public int official_latest_id;
+            public int order_latest_id;
+            public bool withdrawal;
+        }
+
         public static System.Random random = new System.Random(1000);
         public static string ikkatu_shukkin_interval = "ikkatu_shukkin_interval";
         public static string ikkatu_hassou_interval = "ikkatu_hassou_interval";
