@@ -41,15 +41,17 @@ namespace RakuLand {
             public string birthday;
         }
 
-        public class RakumaNotificationResponse {
+        public class RakumaNotificationResponse{
             public DateTime created_at;
             public string id;//これがlatest_id
             public string image_url;
             public string item_id;
             public string message;
-            public string type_id;//?
+            public string type_id;
+            //1:meのいいね,2:meのコメント,10,取引メッセ,25楽間からのメッセ？（振込手続き完了）,26:（ポイント有効期限が近づく）
             public DateTime updated_at;
             public string url;
+            public FrilAPI api;
         }
         //通知のunreadcountをもらう
         public Dictionary<string,double> getNotificationCount() {
@@ -104,6 +106,7 @@ namespace RakuLand {
                     time = time.Replace("T", " ");
                     notification.updated_at = DateTime.Parse(time);
                     notification.url = data.url.ToString();
+                    notification.api = this;
                     rst.Add(notification);
                 }
                 Log.Logger.Info("ラクマからの通知の取得に成功");

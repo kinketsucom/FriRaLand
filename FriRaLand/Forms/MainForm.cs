@@ -1534,10 +1534,10 @@ namespace RakuLand {
             }
             if (new_num >= 1) {
                 //タスクバーに表示
-                //notifyIcon1.Icon = SystemIcons.Application;
-                //notifyIcon1.BalloonTipTitle = "新着通知";
-                //notifyIcon1.BalloonTipText = show_message;
-                //notifyIcon1.ShowBalloonTip(3000);
+                notifyIcon1.Icon = SystemIcons.Application;
+                notifyIcon1.BalloonTipTitle = "新着通知";
+                notifyIcon1.BalloonTipText = show_message;
+                notifyIcon1.ShowBalloonTip(3000);
                 //最新の通知日時をDBに保存
                 //new SettingsDBHelper().updateSettings(Common.last_notification_date, lastDate.ToString());
             }
@@ -1546,6 +1546,22 @@ namespace RakuLand {
 
         private void getNotificationBackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
 
+        }
+
+        private void notifyIcon1_BalloonTipClicked(object sender, EventArgs e) {
+            //通知をクリックしたとき
+            //新着が1件の際はそれに応じた画面（コメント画面・取引画面を表示）
+            //複数件のときは通知一覧画面を表示
+            if (newNotifyList.Count == 0) return;
+            if (newNotifyList.Count == 1) {
+                var notification = newNotifyList[0];
+                    CommentForm f = new CommentForm(notification.api, notification.item_id, this);
+                    f.Show();
+                    //TransactionMessageForm f = new TransactionMessageForm(notification.api, notification.item_id);
+                    //f.Show();
+            } else {
+                new NotificationForm(notifyList).Show();
+            }
         }
     }
 
