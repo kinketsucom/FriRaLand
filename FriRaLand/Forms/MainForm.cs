@@ -84,7 +84,7 @@ namespace RakuLand {
             InitializeAccountData();
             InitializeMainForm();//データ表示グリッドの初期化
             //SetAutoKengaiTimer();
-            //SetNotificationTimer();
+            SetNotificationTimer();
             //ライセンスチェックを行う
             string LicenseKey = (string)Microsoft.Win32.Registry.GetValue(Registry_Path, Key_LicenseKey, "");
             bool showflag = false;
@@ -97,7 +97,8 @@ namespace RakuLand {
             }
             if (showflag) {
                 //ライセンス画面をだす コントロール使えないように
-                //this.tabControl1.Enabled = false;
+                this.メニューToolStripMenuItem.Enabled = false;
+                this.tabControl1.Enabled = false;
                 LicenseForm lf = new LicenseForm(this);
                 lf.Show();
             }
@@ -218,6 +219,16 @@ namespace RakuLand {
                 ExhibittedDataGridView.Columns["ExhibittedDataGridView_transaction_message_buyer"].Visible = true;
                 ExhibittedDataGridView.Columns["ExhibittedDataGridView_transaction_message_num"].Visible = true;
                 ExhibittedDataGridView.Columns["ExhibittedDataGridView_buyer_name"].Visible = true;
+            }
+        }
+        public void SetNotificationTimer() {
+            bool usenotification = Settings.useNotification();
+            if (usenotification) {
+                this.notificationTimer.Enabled = true;
+                this.notificationTimer.Interval = 60 * 1000 * Settings.getNotificationInterval();
+                Console.WriteLine("通知タイマー起動");
+            } else {
+                this.notificationTimer.Enabled = false;
             }
         }
 
@@ -1514,7 +1525,7 @@ namespace RakuLand {
                 //tmpList.AddRange(accountNews);
             }
             //通知時間で降順ソート(ShowNotificationFormにおける表示のために降順）
-            //tmpList.Sort((a, b) => DateTime.Compare(b.created, a.created));
+            tmpList.Sort((a, b) => DateTime.Compare(b.created_at, a.created_at));
 
             //DBに保存されている最新通知時間よりも新しい（あとの）通知があるか調べる
             int new_num = 0;
@@ -1540,7 +1551,7 @@ namespace RakuLand {
                 notifyIcon1.ShowBalloonTip(3000);
                 //アカウントの通知確認時間を更新
                 //最新の通知日時をDBに保存
-                //new SettingsDBHelper().updateSettings(Common.last_notification_date, lastDate.ToString());
+                new SettingsDBHelper().updateSettings(Common.last_notification_date, lastDate.ToString());
             }
             notifyList = new List<FrilAPI.RakumaNotificationResponse>(tmpList);
         }
@@ -1556,10 +1567,13 @@ namespace RakuLand {
             if (newNotifyList.Count == 0) return;
             if (newNotifyList.Count == 1) {
                 var notification = newNotifyList[0];
+                if (notification.type_id == "2") {
                     CommentForm f = new CommentForm(notification.api, notification.item_id, this);
                     f.Show();
-                    //TransactionMessageForm f = new TransactionMessageForm(notification.api, notification.item_id);
-                    //f.Show();
+                } else if (notification.type_id == "6" || notification.type_id == "8" || notification.type_id == "10") {
+                    TransactionMessageForm f = new TransactionMessageForm(notification.api, notification.item_id);
+                    f.Show();
+                }
             } else {
                 new NotificationForm(notifyList).Show();
             }
@@ -1568,6 +1582,11 @@ namespace RakuLand {
         private void 通知一覧ToolStripMenuItem_Click(object sender, EventArgs e) {
             if (!LicenseForm.checkCanUseWithErrorWindow()) return;
             new NotificationForm(notifyList).Show();
+        }
+
+        private void オプションToolStripMenuItem_Click(object sender, EventArgs e) {
+            var form = new OptionForm(this);
+            form.Show();
         }
     }
 

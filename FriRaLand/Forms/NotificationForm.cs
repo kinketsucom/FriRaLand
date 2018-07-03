@@ -51,6 +51,12 @@ namespace RakuLand.Forms {
                             case "3":
                                 e.Value = "フォロー通知";
                                 break;
+                            case "6":
+                                e.Value = "支払い通知";
+                                break;
+                            case "8":
+                                e.Value = "受け取り通知";
+                                break;
                             case "10":
                                 e.Value = "取引メッセージ";
                                 break;
@@ -95,7 +101,7 @@ namespace RakuLand.Forms {
                 CommentForm f = new CommentForm(notification.api, notification.item_id);
                 f.Show();
                 //FIXIT:transactionformのif判定まだです
-            } else if (notification.type_id == "IncomingMessage" || notification.type_id == "TransactionMessageAdd" || notification.type_id == "WaitShippingCVSATM") {
+            } else if (notification.type_id == "6" || notification.type_id == "8" || notification.type_id == "10") {
                 TransactionMessageForm f = new TransactionMessageForm(notification.api, notification.item_id);
                 f.Show();
             }
@@ -124,7 +130,7 @@ namespace RakuLand.Forms {
                 //notifyList.AddRange(accountNews);
             }
             //通知時間で降順ソート
-            //notifyList.Sort((a, b) => DateTime.Compare(b.created, a.created));
+            notifyList.Sort((a, b) => DateTime.Compare(b.created_at, a.created_at));
             notifyListShibori = new List<FrilAPI.RakumaNotificationResponse>(notifyList);
         }
 
@@ -157,7 +163,7 @@ namespace RakuLand.Forms {
                 if (notification.type_id == "2") {
                     CommentForm f = new CommentForm(notification.api, notification.item_id);
                     f.Show();
-                } else if (notification.type_id == "IncomingMessage" || notification.type_id == "TransactionMessageAdd" || notification.type_id == "WaitShippingCVSATM") {
+                } else if (notification.type_id == "6" || notification.type_id == "8" || notification.type_id == "10") {
                     TransactionMessageForm f = new TransactionMessageForm(notification.api, notification.item_id);
                     f.Show();
                 } else if (notification.type_id == "個別メッセージ") {

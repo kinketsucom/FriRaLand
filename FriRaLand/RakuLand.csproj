@@ -154,6 +154,12 @@
     <Compile Include="Forms\NotificationForm.Designer.cs">
       <DependentUpon>NotificationForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\OptionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\OptionForm.Designer.cs">
+      <DependentUpon>OptionForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ReservationRegisterFromExcelForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -231,6 +237,9 @@
     <EmbeddedResource Include="Forms\NotificationForm.resx">
       <DependentUpon>NotificationForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\OptionForm.resx">
+      <DependentUpon>OptionForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ReservationSettingForm.resx">
       <DependentUpon>ReservationSettingForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -283,8 +292,8 @@
     <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.108.0\build\net45\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.108.0\build\net45\System.Data.SQLite.Core.targets'))" />
   </Target>
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>set fname_new=$(TargetName)_merge$(TargetExt)
+"C:\Program Files (x86)\Microsoft\ILMerge\ILMerge"  /targetplatform:v4,"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5" /wildcards $(TargetFileName) *.dll /out:%25fname_new%25</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
