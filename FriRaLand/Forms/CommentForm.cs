@@ -189,5 +189,11 @@ namespace RakuLand.Forms {
         private void CommentForm_SizeChanged_1(object sender, EventArgs e) {
             AdjustGUISize();
         }
+
+        private void button1_Click_1(object sender, EventArgs e) {
+            var editform = new ItemEditForm(item, this.Frilapi);
+            //editform.mainform = mainform;
+            editform.Show();
+        }
     }
 }

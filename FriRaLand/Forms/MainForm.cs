@@ -935,7 +935,7 @@ namespace RakuLand {
          
             foreach (var api in apis) {
                 var api2 = Common.checkFrilAPI(api);
-                var user_items = api2.getSellingItem(api2.account.sellerid,get_item_type,api2.account.cc);
+                var user_items = api2.getSellingItem(api2.account.userId,get_item_type,api2.account.cc);
                 //var user_items = api2.GetAllItemsWithSellers(api2.account.sellerid, new List<int> { 1 });
                 if (detailflag) {
                     //購入者コメント時間と出品者コメント時間を取得
@@ -1219,7 +1219,7 @@ namespace RakuLand {
             List<FrilItem> items = new List<FrilItem>();
             foreach (var api in apis) {
                 var api2 = Common.checkFrilAPI(api);
-                var user_items = api2.GetAllItemsWithSellers(api2.account.sellerid, new List<int> { 2 });
+                var user_items = api2.GetAllItemsWithSellers(api2.account.userId, new List<int> { 2 });
                 if (detailflag) {
                     //購入者取引メッセージ時間と出品者取引メッセージ時間を取得
                     for (int i = 0; i < user_items.Count; i++) {
@@ -1266,6 +1266,7 @@ namespace RakuLand {
 
         private void ExhibittedDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e) {
             //出品中商品の場合はダブルクリックでコメントを開く
+            Console.WriteLine("ダブルクリック");
             if (this.ExhibittedDataGridView.SelectedRows.Count == 1) {
                 int index = this.ExhibittedDataGridView.SelectedRows[0].Index;
                 FrilItem item = this.ExhibittedItemDataBindList[index];

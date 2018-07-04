@@ -371,6 +371,7 @@ namespace RakuLand.DBHelper {
                     account.email = sQLiteDataReader["email"].ToString();
                     account.password = sQLiteDataReader["password"].ToString();
                     account.auth_token = sQLiteDataReader["auth_token"].ToString();
+                    account.userId = sQLiteDataReader["user_id"].ToString();
                     account.sellerid = sQLiteDataReader["user_id"].ToString();
                     account.nickname = sQLiteDataReader["nickname"].ToString();
                     account.expiration_date = Common.getDateFromUnixTimeStamp(sQLiteDataReader["expiration_date"].ToString());
@@ -400,7 +401,7 @@ namespace RakuLand.DBHelper {
                                     + "email = '" + account.email.Replace("'", "''") + "',"
                                     + "password = '" + account.password.Replace("'", "''") + "',"
                                     + "auth_token = '" + account.auth_token + "',"
-                                    + "user_id = '" + account.sellerid + "',"
+                                    + "user_id = '" + account.userId + "',"
                                     + "nickname = '" + account.nickname.Replace("'", "''") + "',"
                                     + "expiration_date = '" + Common.getUnixTimeStampFromDate(account.expiration_date) + "',"
                                     + "kengai_num = " + account.kengai_num.ToString() + ", "
@@ -527,6 +528,7 @@ namespace RakuLand.DBHelper {
                     account.email = sQLiteDataReader["email"].ToString();
                     account.password = sQLiteDataReader["password"].ToString();
                     account.auth_token = sQLiteDataReader["auth_token"].ToString();
+                    account.userId = sQLiteDataReader["user_id"].ToString(); 
                     account.sellerid = sQLiteDataReader["user_id"].ToString();
                     account.nickname = sQLiteDataReader["nickname"].ToString();
                     account.expiration_date = Common.getDateFromUnixTimeStamp(sQLiteDataReader["expiration_date"].ToString());

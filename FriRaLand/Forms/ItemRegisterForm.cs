@@ -554,11 +554,6 @@ namespace RakuLand {
             }
             return index;
         }
-
-
-
-
-
         private int TabIndexFromList(List<FrilCommon.FrilBrand> brand_list, int target) {//ブランドリスト
             int index = 0;
             foreach (var val in brand_list) {

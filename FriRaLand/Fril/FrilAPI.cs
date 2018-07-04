@@ -1201,7 +1201,7 @@ namespace RakuLand {
                 //Logger.info(rawres.response);
                 dynamic resjson = DynamicJson.Parse(rawres.response);
                 dynamic iteminfo = resjson.item;
-                FrilItem item = new FrilItem(iteminfo);
+                FrilItem item = new FrilItem(iteminfo);//caegory_klevelは取得できない
                 return item;
             } catch (Exception e) {
                 Console.WriteLine(e);
