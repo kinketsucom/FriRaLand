@@ -1732,6 +1732,23 @@ namespace RakuLand {
             }
         }
 
+        //出品中商品修正
+        public bool ReviseSellingItem(Dictionary<string,string>param) {
+            try {
+                string url = "https://api.fril.jp/api/items/request";
+                FrilRawResponse rawres = postFrilAPI(url, param, this.account.cc, false);
+                if (rawres.error) throw new Exception();
+                Log.Logger.Info("アイテム修正に成功");
+                Console.WriteLine("アイテム修正に成功");
+                return true;
+            } catch (Exception ex) {
+                Log.Logger.Info("アイテム修正に失敗");
+                Console.WriteLine(ex);
+                return false;
+            }
+        }
+
+
         //引き出す
         public bool Withdraw(int amount) {
             try {

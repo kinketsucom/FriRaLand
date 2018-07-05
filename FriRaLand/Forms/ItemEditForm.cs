@@ -385,5 +385,252 @@ namespace RakuLand.Forms {
                 }
             }
         }
+        #region pictureBox
+        private void pictureBox1_Click(object sender, EventArgs e) {
+            //画像選択画面を表示する
+            //OpenFileDialogクラスのインスタンスを作成
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "JPGファイル(*.jpg;*.jpeg)|*.jpg;*.jpeg|すべてのファイル(*.*)|*.*";
+            ofd.Title = "開くファイルを選択してください";
+            //ダイアログボックスを閉じる前に現在のディレクトリを復元するようにする
+            ofd.RestoreDirectory = true;
+            //ダイアログを表示する
+            if (ofd.ShowDialog() == DialogResult.OK) {
+                //OKボタンがクリックされたとき、選択されたファイル名を表示する
+                string filename = ofd.FileName;
+                this.pictureBox1.ImageLocation = Common.getExhibitionImageFromPath(filename);
+            }
+        }
+        private void pictureBox2_Click(object sender, EventArgs e) {
+            //画像選択画面を表示する
+            //OpenFileDialogクラスのインスタンスを作成
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "JPGファイル(*.jpg;*.jpeg)|*.jpg;*.jpeg|すべてのファイル(*.*)|*.*";
+            ofd.Title = "開くファイルを選択してください";
+            //ダイアログボックスを閉じる前に現在のディレクトリを復元するようにする
+            ofd.RestoreDirectory = true;
+            //ダイアログを表示する
+            if (ofd.ShowDialog() == DialogResult.OK) {
+                //OKボタンがクリックされたとき、選択されたファイル名を表示する
+                string filename = ofd.FileName;
+                this.pictureBox2.ImageLocation = Common.getExhibitionImageFromPath(filename);
+            }
+        }
+        private void pictureBox3_Click(object sender, EventArgs e) {
+            //画像選択画面を表示する
+            //OpenFileDialogクラスのインスタンスを作成
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "JPGファイル(*.jpg;*.jpeg)|*.jpg;*.jpeg|すべてのファイル(*.*)|*.*";
+            ofd.Title = "開くファイルを選択してください";
+            //ダイアログボックスを閉じる前に現在のディレクトリを復元するようにする
+            ofd.RestoreDirectory = true;
+            //ダイアログを表示する
+            if (ofd.ShowDialog() == DialogResult.OK) {
+                //OKボタンがクリックされたとき、選択されたファイル名を表示する
+                string filename = ofd.FileName;
+                this.pictureBox3.ImageLocation = Common.getExhibitionImageFromPath(filename);
+            }
+        }
+        private void pictureBox4_Click(object sender, EventArgs e) {
+            //画像選択画面を表示する
+            //OpenFileDialogクラスのインスタンスを作成
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "JPGファイル(*.jpg;*.jpeg)|*.jpg;*.jpeg|すべてのファイル(*.*)|*.*";
+            ofd.Title = "開くファイルを選択してください";
+            //ダイアログボックスを閉じる前に現在のディレクトリを復元するようにする
+            ofd.RestoreDirectory = true;
+            //ダイアログを表示する
+            if (ofd.ShowDialog() == DialogResult.OK) {
+                //OKボタンがクリックされたとき、選択されたファイル名を表示する
+                string filename = ofd.FileName;
+                this.pictureBox4.ImageLocation = Common.getExhibitionImageFromPath(filename);
+            }
+        }
+        private void pic1Reset_Click(object sender, EventArgs e) {
+            this.pictureBox1.ImageLocation = "";
+        }
+        private void pic2Reset_Click(object sender, EventArgs e) {
+            this.pictureBox2.ImageLocation = "";
+        }
+        private void pic3Reset_Click(object sender, EventArgs e) {
+            this.pictureBox3.ImageLocation = "";
+        }
+        private void pic4Reset_Click(object sender, EventArgs e) {
+            this.pictureBox4.ImageLocation = "";
+        }
+        #endregion
+
+        private void SaveExhibitItemButton_Click(object sender, EventArgs e) {
+            //画像制限
+            if (string.IsNullOrEmpty(pictureBox1.ImageLocation)) {
+                MessageBox.Show("Main写真は必須です。\n写真を設定してください。", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                pictureBox1.Focus();
+                return;
+            }
+
+            //商品タイトル制限
+            if (string.IsNullOrEmpty(ItemNameTextBox.Text)) {
+                MessageBox.Show("タイトルは必須です。\n１～４０文字で商品名を設定してください。", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ItemNameTextBox.Focus();
+                return;
+            }
+            //商品説明制限
+            if (string.IsNullOrEmpty(DescriptionTextBox.Text)) {
+                MessageBox.Show("商品説明は必須です。\n１～１０００文字で商品名を設定してください。", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                DescriptionTextBox.Focus();
+                return;
+            }
+            //価格制限
+            if (String.IsNullOrEmpty(PriceTextBox.Text)) {
+                MessageBox.Show("価格は必須です。\n価格は\\300～\\500,000円にしてください。", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                PriceTextBox.Focus();
+            }
+            if (int.Parse(PriceTextBox.Text) < 300 || 500000 < int.Parse(PriceTextBox.Text)) {
+                MessageBox.Show("ラクマの設定可能価格を超えています。\n価格は\\300～\\500,000円にしてください。", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                PriceTextBox.Focus();
+                return;
+            }
+
+
+            FrilItem item = CollectSellSettingsFromGUI();
+
+            Dictionary<string, string> param = new Dictionary<string, string>();
+            param.Add("auth_token", this.api.account.auth_token);
+            param.Add("brand", item.brand_id.ToString());
+            param.Add("carriage", item.carriage.ToString());
+            param.Add("category", item.category_id.ToString());
+            param.Add("delivery_area", item.d_area.ToString());
+            param.Add("delivery_date", item.d_date.ToString());
+            param.Add("delivert_method", item.d_method.ToString());
+            param.Add("detail", item.detail);
+            param.Add("item_id", this.load_item.item_id);
+            param.Add("p_category", item.category_p_id.ToString());
+            param.Add("request_required", "0");
+            param.Add("sell_price", item.s_price.ToString());
+            param.Add("size", item.size_id.ToString());
+            param.Add("size_name", item.size_name);
+            param.Add("status", item.status.ToString());
+            param.Add("title", item.item_name);
+            this.api.ReviseSellingItem(param) ;
+            this.Close();
+        }
+
+        //GUIからitem情報を得る
+        private FrilItem CollectSellSettingsFromGUI() {
+
+            FrilItem item_data = new FrilItem();
+            item_data.item_id = "0";
+            //商品名前
+            if (!string.IsNullOrEmpty(this.ItemNameTextBox.Text)) {
+                string name = this.ItemNameTextBox.Text;
+                item_data.item_name = name;
+            } else {
+                item_data.item_name = "title";
+            }
+            //商品詳細
+            if (!string.IsNullOrEmpty(this.DescriptionTextBox.Text)) {
+                string detail = this.DescriptionTextBox.Text;
+                item_data.detail = detail;
+            } else {
+                item_data.detail = "detail";
+            }
+            //商品料金
+            if (!string.IsNullOrEmpty(this.PriceTextBox.Text)) {
+                int s_price = int.Parse(this.PriceTextBox.Text);
+                item_data.s_price = s_price;
+            }
+            //商品状態
+            if (this.ItemConditionComboBox.SelectedItem != null) {
+                KeyValuePair<string, string> status = (KeyValuePair<string, string>)this.ItemConditionComboBox.SelectedItem;
+                //Console.WriteLine("status:" + status.Value);
+                item_data.status = int.Parse(status.Value);
+            }
+            //FIXIT:t_status
+            //送料負担者
+            if (this.ShippingPayerComboBox.SelectedItem != null) {
+                KeyValuePair<string, string> carriage = (KeyValuePair<string, string>)this.ShippingPayerComboBox.SelectedItem;
+                item_data.carriage = int.Parse(carriage.Value);
+            }
+            //配送方法
+            if (this.ShippingMethodComboBox.SelectedItem != null) {
+                KeyValuePair<string, string> method = (KeyValuePair<string, string>)this.ShippingMethodComboBox.SelectedItem;
+                item_data.d_method = int.Parse(method.Value);
+            }
+            //配送日数
+            if (this.ShippingDurationComboBox.SelectedItem != null) {
+                KeyValuePair<string, string> duration = (KeyValuePair<string, string>)this.ShippingDurationComboBox.SelectedItem;
+                item_data.d_date = int.Parse(duration.Value);
+            }
+            //配送元地域
+            if (this.ShippingAreaComboBox.SelectedItem != null) {
+                KeyValuePair<string, string> area = (KeyValuePair<string, string>)this.ShippingAreaComboBox.SelectedItem;
+                item_data.d_area = int.Parse(area.Value);
+            }
+            //FIXIT:user_id;//出品者ID
+            //FIXIT:created_at;//ex)2017-09-27T09:12:57+09:00
+            //FIXIT:screen_name; //出品者アカウント名
+            //カテゴリレベル１
+            if (this.CategoryComboBoxLevel1.SelectedItem != null) {
+                FrilCommon.FrilCategory category1 = (FrilCommon.FrilCategory)this.CategoryComboBoxLevel1.SelectedItem;
+                item_data.category_level1_id = category1.id;
+            }
+            //カテゴリレベル２ category_p_idになる
+            if (this.CategoryComboBoxLevel2.SelectedItem != null) {
+                FrilCommon.FrilCategory category2 = (FrilCommon.FrilCategory)this.CategoryComboBoxLevel2.SelectedItem;
+                item_data.category_p_id = category2.id;//p_categoryはおそらくこれ
+                item_data.category_level2_id = category2.id;
+            }
+            //カテゴリレベル３
+            if (this.CategoryComboBoxLevel3.SelectedItem != null) {
+                FrilCommon.FrilCategory category3 = (FrilCommon.FrilCategory)this.CategoryComboBoxLevel3.SelectedItem;
+                item_data.category_id = category3.id;
+                item_data.category_level3_id = category3.id;
+            }
+            //カテゴリレベル４
+            if (this.CategoryComboBoxLevel4.SelectedItem != null) {
+                FrilCommon.FrilCategory category4 = (FrilCommon.FrilCategory)this.CategoryComboBoxLevel4.SelectedItem;
+                item_data.category_id = category4.id;
+                item_data.category_level4_id = category4.id;
+            }
+            //サイズID,サイズ名
+            if (this.SizeComboBox.SelectedItem != null) {
+                FrilCommon.FrilSizeInfo size = (FrilCommon.FrilSizeInfo)this.SizeComboBox.SelectedItem;
+                item_data.size_id = size.id;
+                item_data.size_name = size.name;
+            } else {
+                item_data.size_id = 19999;
+                item_data.size_name = "なし";
+            }
+            //任意部分
+            //ブランドid
+            if (this.BrandComboBox.SelectedItem != null) {
+                FrilCommon.FrilBrand brand = (FrilCommon.FrilBrand)this.BrandComboBox.SelectedItem;
+                item_data.brand_id = brand.id;
+            }
+            //FIXIT:i_brand_id
+            //FIXIT:commens_count;
+            //FIXIT:likes_count;
+            //FIXIT:imageurls[4]//画像URL
+            //ローカル画像パス
+            if (!string.IsNullOrEmpty(pictureBox1.ImageLocation)) {
+                item_data.imagepaths[0] = pictureBox1.ImageLocation;
+            }
+            if (!string.IsNullOrEmpty(pictureBox2.ImageLocation)) {
+                item_data.imagepaths[1] = pictureBox2.ImageLocation;
+            }
+            if (!string.IsNullOrEmpty(pictureBox3.ImageLocation)) {
+                item_data.imagepaths[2] = pictureBox3.ImageLocation;
+            }
+            if (!string.IsNullOrEmpty(pictureBox4.ImageLocation)) {
+                item_data.imagepaths[3] = pictureBox4.ImageLocation;
+            }
+            return item_data;
+        }
+
+
+
+
+
+
     }
 }

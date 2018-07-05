@@ -260,7 +260,7 @@
             this.LocalItemDataGridView_comment,
             this.LocalItemDataGridView_created_str,
             this.LocalItemDataGridView_status_message});
-            this.LocalItemDataGridView.Location = new System.Drawing.Point(306, 126);
+            this.LocalItemDataGridView.Location = new System.Drawing.Point(306, 119);
             this.LocalItemDataGridView.Margin = new System.Windows.Forms.Padding(4);
             this.LocalItemDataGridView.Name = "LocalItemDataGridView";
             this.LocalItemDataGridView.RowHeadersVisible = false;
@@ -388,7 +388,7 @@
             this.ReservationDataGridView_favorite2,
             this.ReservationDataGridView_comment2,
             this.ReservationDataGridView_reexhibit_flag});
-            this.ReservationDataGridView.Location = new System.Drawing.Point(306, 154);
+            this.ReservationDataGridView.Location = new System.Drawing.Point(306, 119);
             this.ReservationDataGridView.Margin = new System.Windows.Forms.Padding(4);
             this.ReservationDataGridView.Name = "ReservationDataGridView";
             this.ReservationDataGridView.RowHeadersVisible = false;
@@ -538,7 +538,7 @@
             this.ExhibittedDataGridView_buyer_simei,
             this.ExhibittedDataGridView_buyer_name,
             this.ExhibittedDataGridView_itemid});
-            this.ExhibittedDataGridView.Location = new System.Drawing.Point(306, 170);
+            this.ExhibittedDataGridView.Location = new System.Drawing.Point(306, 119);
             this.ExhibittedDataGridView.Margin = new System.Windows.Forms.Padding(4);
             this.ExhibittedDataGridView.Name = "ExhibittedDataGridView";
             this.ExhibittedDataGridView.RowHeadersVisible = false;
