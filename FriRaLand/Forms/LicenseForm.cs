@@ -88,7 +88,7 @@ namespace RakuLand.Forms {
             try {
                 string text = "machine_name=" + Uri.EscapeUriString(machine_name);
                 byte[] bytes = Encoding.ASCII.GetBytes(text);
-                HttpWebRequest req = (HttpWebRequest)WebRequest.Create("http://160.16.69.60/api/register/" + guid);
+                HttpWebRequest req = (HttpWebRequest)WebRequest.Create("http://160.16.200.169/api/register/" + guid);
                 req.Method = "POST";
                 req.ContentType = "application/x-www-form-urlencoded";
                 req.ContentLength = (long)bytes.Length;
@@ -119,7 +119,7 @@ namespace RakuLand.Forms {
             try {
                 string text = "machine_name=" + Uri.EscapeDataString(machine_name);
                 byte[] bytes = Encoding.ASCII.GetBytes(text);
-                HttpWebRequest req = (HttpWebRequest)WebRequest.Create("http://160.16.69.60/api/check/" + guid);
+                HttpWebRequest req = (HttpWebRequest)WebRequest.Create("http://160.16.200.169/api/check/" + guid);
                 req.Method = "POST";
                 req.ContentType = "application/x-www-form-urlencoded";
                 req.ContentLength = (long)bytes.Length;

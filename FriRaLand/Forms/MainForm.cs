@@ -118,6 +118,8 @@ namespace RakuLand {
         }
         public void unlockLicense() {
             this.tabControl1.Enabled = true;
+            this.バージョン情報ToolStripMenuItem.Enabled = true;
+            this.メニューToolStripMenuItem.Enabled = true;
         }
         Dictionary<int, FrilAPI> FrilAPIDictionary = new Dictionary<int, FrilAPI>(); //accountDBId, FrilAPI
         Dictionary<int, Account> FrilAccountDictionary = new Dictionary<int, Account>(); //accountDBId, Account
