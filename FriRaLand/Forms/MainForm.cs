@@ -28,11 +28,12 @@ namespace RakuLand {
         public const string Key_LicenseKey = "LicenseKey";
         public const string Registry_Path = @"HKEY_CURRENT_USER\Software\Rakuland";
         public const string ProductName = "RakuLand";
+        public const string ProductKind = "rakuland";
         private List<ReservationSettingForm.ReservationSetting> ReservationDataBindList = new List<ReservationSettingForm.ReservationSetting>();
         private List<FrilItem> ExhibittedItemDataBindList = new List<FrilItem>(); //表にバインドする商品リスト 絞り込み結果はこっち
         private List<FrilItem> ExhibittedItemDataBackBindList = new List<FrilItem>(); //こっちは絞り込んでも減らない
 
-        public const string ProductKind = "RakuLand-sima";
+        
         System.Random random = new System.Random();
         private List<FrilAPI> FrilAPIList = new List<FrilAPI>();
         private Dictionary<string, FrilAPI> sellerIDtoAPIDictionary = new Dictionary<string, FrilAPI>(); //sellerid -> API
@@ -97,6 +98,7 @@ namespace RakuLand {
             }
             if (showflag) {
                 //ライセンス画面をだす コントロール使えないように
+                this.バージョン情報ToolStripMenuItem.Enabled = false;
                 this.メニューToolStripMenuItem.Enabled = false;
                 this.tabControl1.Enabled = false;
                 LicenseForm lf = new LicenseForm(this);

@@ -229,6 +229,7 @@
             this.Controls.Add(this.groupBox1);
             this.Name = "StartUpForm";
             this.Text = "アップデート・お知らせ";
+            this.Load += new System.EventHandler(this.startUpWindow_Load);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);

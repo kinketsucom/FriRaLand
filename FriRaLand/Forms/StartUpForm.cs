@@ -91,7 +91,7 @@ namespace RakuLand.Forms {
         public static VersionInfo getLatestVersion(string kind) {
             VersionInfo res = new VersionInfo("", "");
             try {
-                string response = doGet("http://160.16.69.60/api/versioninfo", new Dictionary<string, string>());
+                string response = doGet("http://160.16.200.169/api/versioninfo", new Dictionary<string, string>());
                 dynamic resjson = DynamicJson.Parse(response);
                 int num = 0;
                 foreach (var info in resjson) {
@@ -113,7 +113,7 @@ namespace RakuLand.Forms {
         private static List<VersionInfo> getAllVersion(string kind) {
             List<VersionInfo> res = new List<VersionInfo>();
             try {
-                string response = doGet("http://160.16.69.60/api/versioninfo", new Dictionary<string, string>());
+                string response = doGet("http://160.16.200.169/api/versioninfo", new Dictionary<string, string>());
                 dynamic resjson = DynamicJson.Parse(response);
                 foreach (var info in resjson) {
                     if (info.kind == kind) {
@@ -133,7 +133,7 @@ namespace RakuLand.Forms {
             Notification res = new Notification();
             try {
                 DateTime latest = new DateTime(1970, 1, 1);
-                string response = doGet("http://160.16.69.60/api/notifications", new Dictionary<string, string>());
+                string response = doGet("http://160.16.200.169/api/notifications", new Dictionary<string, string>());
                 dynamic resjson = DynamicJson.Parse(response);
                 foreach (var n in resjson) {
                     if (n.kind == kind) {
@@ -153,7 +153,7 @@ namespace RakuLand.Forms {
             List<Notification> res = new List<Notification>();
             try {
                 DateTime latest = new DateTime(1970, 1, 1);
-                string response = doGet("http://160.16.69.60/api/notifications", new Dictionary<string, string>());
+                string response = doGet("http://160.16.200.169/api/notifications", new Dictionary<string, string>());
                 dynamic resjson = DynamicJson.Parse(response);
                 foreach (var n in resjson) {
                     if (n.kind == kind) {
@@ -231,7 +231,7 @@ namespace RakuLand.Forms {
 
         private void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e) {
             string[] arguments = (string[])e.Argument;
-            string fileurl = "http://160.16.69.60/upload/" + arguments[0];
+            string fileurl = "http://160.16.200.169/upload/" + arguments[0];
             string savefilename = arguments[1];
             System.Net.WebClient wc = new System.Net.WebClient();
             wc.DownloadFile(fileurl, savefilename);
