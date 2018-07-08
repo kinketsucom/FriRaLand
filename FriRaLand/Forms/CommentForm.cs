@@ -15,6 +15,7 @@ namespace RakuLand.Forms {
         private FrilItem item;
         private MainForm mainform;
         private string itemid;
+        private List<FrilAPI.Comment> comments;
         private List<string> comment_template_list;
         public CommentForm(FrilAPI api, string itemid, MainForm mainform) {
             InitializeComponent();
@@ -38,7 +39,7 @@ namespace RakuLand.Forms {
             this.kakakuTextBox.Text = item.s_price.ToString();// +"円";
             this.riekiTextBox.Text = Common.getRieki(item.s_price).ToString();
             //コメントを取得
-            var comments = Frilapi.GetComments(itemid);
+            comments = Frilapi.GetComments(itemid);
             //コメントをGUIに反映
             RefreshCommentDataGridview(comments);
             //定型文よみこみ
@@ -120,8 +121,9 @@ namespace RakuLand.Forms {
             this.dataGridView1.Width = this.Width - 400;
             this.panel1.Location = new Point(this.dataGridView1.Width + this.dataGridView1.Location.X, this.Height - this.panel1.Height - 45);
             this.panel2.Location = new Point(this.dataGridView1.Width + this.dataGridView1.Location.X, this.Height - this.panel2.Height - this.panel1.Height - 40);
-            this.dataGridView1.Height = this.Height - 190;
 
+            this.CommentInfoLabel.Location = new Point(this.dataGridView1.Width + this.dataGridView1.Location.X, this.Height - this.toolStripStatusLabel1.Height-this.CommentInfoLabel.Height); 
+            this.dataGridView1.Height = this.Height - this.toolStripStatusLabel1.Height-this.CommentInfoLabel.Height-50;
         }
 
         private void CommentForm_KeyDown(object sender, KeyEventArgs e) {
@@ -194,6 +196,30 @@ namespace RakuLand.Forms {
             var editform = new ItemEditForm(item, this.Frilapi);
             //editform.mainform = mainform;
             editform.Show();
+        }
+
+        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e) {
+            Console.WriteLine(e.RowIndex);
+            Console.WriteLine(comments[e.RowIndex].id);
+            if (Frilapi.DeleteComment(comments[e.RowIndex].item_id, comments[e.RowIndex].id)) {
+                toolStripStatusLabel1.Text = "コメント削除成功";
+            } else {
+                toolStripStatusLabel1.Text = "コメント削除失敗(rakuland.dev@gmail.comにお問い合わせください)";
+            }
+            //コメント一覧を再取得してGUIに反映
+            this.dataGridView1.Rows.Clear();
+            //コメントを取得
+            comments = Frilapi.GetComments(itemid);
+            //コメントをGUIに反映
+            RefreshCommentDataGridview(comments);
+        }
+
+        private void CommentInfoLabel_MouseHover(object sender, EventArgs e) {
+            toolStripStatusLabel1.Text = "ダブルクリックでコメントを削除することができます。";
+        }
+
+        private void CommentInfoLabel_MouseLeave(object sender, EventArgs e) {
+            toolStripStatusLabel1.Text = "";
         }
     }
 }

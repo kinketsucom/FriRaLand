@@ -54,6 +54,9 @@ namespace RakuLand {
             public string url;
             public FrilAPI api;
         }
+
+
+
         //通知のunreadcountをもらう
         public Dictionary<string,double> getNotificationCount() {
             Dictionary<string, double> rst = new Dictionary<string, double>();
@@ -91,7 +94,7 @@ namespace RakuLand {
                     if (!get_all) { //全部取らないとき
                        if (count >= (int)dic["me"]) break;
                     }
-                    if (data.type_id != 1) {
+                    if (data.id != 1) {
                         RakumaNotificationResponse notification = new RakumaNotificationResponse();
                         string time = data.created_at.Substring(0, data.created_at.IndexOf("+"));
                         time = time.Replace("-", "/");
@@ -689,6 +692,65 @@ namespace RakuLand {
             }
             catch {
                 return new FrilRawResponse("", true);
+            }
+        }
+        //FrilAPIをDELETEでたたく
+        private FrilRawResponse deleteFrilAPI(string url, Dictionary<string, string> param, CookieContainer cc, bool webmode = false) {
+            FrilRawResponse res = new FrilRawResponse();
+            try {
+                string text = "";
+                List<string> paramstr = new List<string>();
+                int num = 0;
+                foreach (KeyValuePair<string, string> p in param) {
+                    string k = Uri.EscapeDataString(p.Key);
+                    string v = Uri.EscapeDataString(p.Value);
+                    if (num != 0) text += "&";
+                    text = text + (k + "=" + v);
+                    num++;
+                }
+                byte[] bytes = Encoding.ASCII.GetBytes(text);
+                HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
+                req.UserAgent = FrilAPI.USER_AGENT;
+                req.Method = "DELETE";
+                //リクエストヘッダを付加
+                req.Headers.Add("Accept-Encoding", "br, gzip, deflate");
+                req.ContentType = "application/x-www-form-urlencoded";
+                req.Accept = "*/*";
+                req.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+                req.ContentLength = (long)bytes.Length;
+                //webモードのときはauth_tokenをヘッダにいれる
+                if (webmode && !string.IsNullOrEmpty(this.account.auth_token)) req.Headers.Add("Authorization", this.account.auth_token);
+                //クッキーコンテナの追加
+                req.CookieContainer = cc;
+                //プロキシの設定
+                if (string.IsNullOrEmpty(this.proxy) == false) {
+                    System.Net.WebProxy proxy = new System.Net.WebProxy(this.proxy);
+                    req.Proxy = proxy;
+                }
+                //タイムアウト設定
+                req.Timeout = 5000;
+                //POST
+                string content = "";
+                var task = Task.Factory.StartNew(() => executePostRequest(ref req, bytes));
+                task.Wait(10000);
+                if (task.IsCompleted) {
+                    content = task.Result;
+                    Console.WriteLine(content);
+                } else {
+                    throw new Exception("Timed out");
+                }
+                if (res.error) throw new Exception("webrequest error");
+                //if (res.Contains("false")) throw new Exception("item result false");
+                res.error = false;
+                res.response = content;
+                Log.Logger.Error("FrilDELETEリクエスト失敗" + res.response);
+                req.Abort();
+                return res;
+            } catch (Exception e) {
+
+                Console.WriteLine(e);
+                Log.Logger.Error("FrilDELETEリクエスト失敗");
+                return res;
             }
         }
         //FrilAPIをPOSTでたたく
@@ -1553,9 +1615,9 @@ namespace RakuLand {
             try {
                 Dictionary<string, string> param = new Dictionary<string, string>();
                 string url = "https://api.fril.jp/api/v3/comments/";
-                //param.Add("item_id", itemid);
-                param.Add("id", commentid);
-                FrilRawResponse rawres = postFrilAPI(url, param,this.account.cc);
+                url += commentid+"?";
+                param.Add("auth_token", this.account.auth_token);
+                FrilRawResponse rawres = deleteFrilAPI(url, param,this.account.cc);
                 if (rawres.error) throw new Exception();
                 Log.Logger.Info("コメント削除成功");
                 return true;

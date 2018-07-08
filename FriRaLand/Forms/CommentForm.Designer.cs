@@ -23,8 +23,8 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.ignoreNesageCheckBox = new System.Windows.Forms.CheckBox();
             this.reSaleItemButton = new System.Windows.Forms.Button();
             this.saveWindowSizeCheckbox = new System.Windows.Forms.CheckBox();
@@ -53,10 +53,14 @@
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.CommentInfoLabel = new System.Windows.Forms.Label();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // ignoreNesageCheckBox
@@ -132,7 +136,7 @@
             // 
             this.panel2.Controls.Add(this.BikouTextBox);
             this.panel2.Controls.Add(this.label6);
-            this.panel2.Location = new System.Drawing.Point(165, 317);
+            this.panel2.Location = new System.Drawing.Point(523, 161);
             this.panel2.Margin = new System.Windows.Forms.Padding(4);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(493, 126);
@@ -316,13 +320,14 @@
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 21;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(492, 530);
+            this.dataGridView1.Size = new System.Drawing.Size(492, 489);
             this.dataGridView1.TabIndex = 57;
+            this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
             // 
             // Column1
             // 
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.Column1.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.Column1.DefaultCellStyle = dataGridViewCellStyle7;
             this.Column1.HeaderText = "名前";
             this.Column1.Name = "Column1";
             this.Column1.ReadOnly = true;
@@ -337,8 +342,8 @@
             // 
             // Column2
             // 
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.Column2.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.Column2.DefaultCellStyle = dataGridViewCellStyle8;
             this.Column2.HeaderText = "コメント内容";
             this.Column2.Name = "Column2";
             this.Column2.ReadOnly = true;
@@ -354,11 +359,43 @@
             this.pictureBox1.TabIndex = 56;
             this.pictureBox1.TabStop = false;
             // 
+            // statusStrip1
+            // 
+            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 700);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(1041, 25);
+            this.statusStrip1.TabIndex = 74;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(160, 20);
+            this.toolStripStatusLabel1.Text = "情報がここに表示されます";
+            // 
+            // CommentInfoLabel
+            // 
+            this.CommentInfoLabel.AutoSize = true;
+            this.CommentInfoLabel.Font = new System.Drawing.Font("メイリオ", 7.8F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.CommentInfoLabel.ForeColor = System.Drawing.Color.Blue;
+            this.CommentInfoLabel.Location = new System.Drawing.Point(401, 654);
+            this.CommentInfoLabel.Name = "CommentInfoLabel";
+            this.CommentInfoLabel.Size = new System.Drawing.Size(108, 21);
+            this.CommentInfoLabel.TabIndex = 75;
+            this.CommentInfoLabel.Text = "？コメント削除";
+            this.CommentInfoLabel.MouseLeave += new System.EventHandler(this.CommentInfoLabel_MouseLeave);
+            this.CommentInfoLabel.MouseHover += new System.EventHandler(this.CommentInfoLabel_MouseHover);
+            // 
             // CommentForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1041, 703);
+            this.ClientSize = new System.Drawing.Size(1041, 725);
+            this.Controls.Add(this.CommentInfoLabel);
+            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.ignoreNesageCheckBox);
             this.Controls.Add(this.reSaleItemButton);
             this.Controls.Add(this.saveWindowSizeCheckbox);
@@ -388,6 +425,8 @@
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -423,5 +462,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.Label CommentInfoLabel;
     }
 }
