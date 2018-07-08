@@ -118,12 +118,13 @@ namespace RakuLand.Forms {
             AdjustGUISize();
         }
         private void AdjustGUISize() {
-            this.dataGridView1.Width = this.Width - 400;
-            this.panel1.Location = new Point(this.dataGridView1.Width + this.dataGridView1.Location.X, this.Height - this.panel1.Height - 45);
-            this.panel2.Location = new Point(this.dataGridView1.Width + this.dataGridView1.Location.X, this.Height - this.panel2.Height - this.panel1.Height - 40);
+            
+            //this.dataGridView1.Width = this.Width - 400;
+            //this.panel1.Location = new Point(this.dataGridView1.Width + this.dataGridView1.Location.X, this.Height - this.panel1.Height - 45);
+            //this.panel2.Location = new Point(this.dataGridView1.Width + this.dataGridView1.Location.X, this.Height - this.panel2.Height - this.panel1.Height - 40);
 
-            this.CommentInfoLabel.Location = new Point(this.dataGridView1.Width + this.dataGridView1.Location.X, this.Height - this.toolStripStatusLabel1.Height-this.CommentInfoLabel.Height); 
-            this.dataGridView1.Height = this.Height - this.toolStripStatusLabel1.Height-this.CommentInfoLabel.Height-50;
+            //this.CommentInfoLabel.Location = new Point(this.dataGridView1.Width + this.dataGridView1.Location.X, this.Height - this.toolStripStatusLabel1.Height-this.CommentInfoLabel.Height); 
+            //this.dataGridView1.Height = this.Height - this.toolStripStatusLabel1.Height-this.CommentInfoLabel.Height-50;
         }
 
         private void CommentForm_KeyDown(object sender, KeyEventArgs e) {

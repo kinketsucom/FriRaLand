@@ -23,8 +23,8 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
             this.ignoreNesageCheckBox = new System.Windows.Forms.CheckBox();
             this.reSaleItemButton = new System.Windows.Forms.Button();
             this.saveWindowSizeCheckbox = new System.Windows.Forms.CheckBox();
@@ -40,7 +40,6 @@
             this.riekiTextBox = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -56,11 +55,15 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.CommentInfoLabel = new System.Windows.Forms.Label();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.panel2.SuspendLayout();
-            this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.statusStrip1.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // ignoreNesageCheckBox
@@ -78,7 +81,7 @@
             // reSaleItemButton
             // 
             this.reSaleItemButton.Font = new System.Drawing.Font("メイリオ", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.reSaleItemButton.Location = new System.Drawing.Point(889, 79);
+            this.reSaleItemButton.Location = new System.Drawing.Point(831, 51);
             this.reSaleItemButton.Margin = new System.Windows.Forms.Padding(4);
             this.reSaleItemButton.Name = "reSaleItemButton";
             this.reSaleItemButton.Size = new System.Drawing.Size(135, 42);
@@ -102,10 +105,10 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("メイリオ", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.button1.Location = new System.Drawing.Point(530, 41);
+            this.button1.Location = new System.Drawing.Point(384, 97);
             this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(135, 42);
+            this.button1.Size = new System.Drawing.Size(113, 42);
             this.button1.TabIndex = 65;
             this.button1.Text = "商品の編集";
             this.button1.UseVisualStyleBackColor = true;
@@ -136,7 +139,7 @@
             // 
             this.panel2.Controls.Add(this.BikouTextBox);
             this.panel2.Controls.Add(this.label6);
-            this.panel2.Location = new System.Drawing.Point(523, 161);
+            this.panel2.Location = new System.Drawing.Point(547, 18);
             this.panel2.Margin = new System.Windows.Forms.Padding(4);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(493, 126);
@@ -164,7 +167,7 @@
             // 
             // sellerLabel
             // 
-            this.sellerLabel.Location = new System.Drawing.Point(245, 73);
+            this.sellerLabel.Location = new System.Drawing.Point(242, 64);
             this.sellerLabel.Margin = new System.Windows.Forms.Padding(4);
             this.sellerLabel.Name = "sellerLabel";
             this.sellerLabel.ReadOnly = true;
@@ -173,7 +176,7 @@
             // 
             // itemNameLabel
             // 
-            this.itemNameLabel.Location = new System.Drawing.Point(245, 17);
+            this.itemNameLabel.Location = new System.Drawing.Point(242, 3);
             this.itemNameLabel.Margin = new System.Windows.Forms.Padding(4);
             this.itemNameLabel.Name = "itemNameLabel";
             this.itemNameLabel.ReadOnly = true;
@@ -183,7 +186,7 @@
             // 
             // kakakuTextBox
             // 
-            this.kakakuTextBox.Location = new System.Drawing.Point(247, 103);
+            this.kakakuTextBox.Location = new System.Drawing.Point(244, 94);
             this.kakakuTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.kakakuTextBox.Name = "kakakuTextBox";
             this.kakakuTextBox.ReadOnly = true;
@@ -192,7 +195,7 @@
             // 
             // riekiTextBox
             // 
-            this.riekiTextBox.Location = new System.Drawing.Point(247, 130);
+            this.riekiTextBox.Location = new System.Drawing.Point(244, 121);
             this.riekiTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.riekiTextBox.Name = "riekiTextBox";
             this.riekiTextBox.ReadOnly = true;
@@ -202,7 +205,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(168, 133);
+            this.label7.Location = new System.Drawing.Point(165, 124);
             this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(67, 15);
@@ -212,30 +215,17 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(168, 106);
+            this.label5.Location = new System.Drawing.Point(165, 97);
             this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(37, 15);
             this.label5.TabIndex = 61;
             this.label5.Text = "価格";
             // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.label4);
-            this.panel1.Controls.Add(this.comboBox1);
-            this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.richTextBox1);
-            this.panel1.Controls.Add(this.submit);
-            this.panel1.Location = new System.Drawing.Point(523, 287);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(493, 404);
-            this.panel1.TabIndex = 60;
-            // 
             // label4
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(4, 348);
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label4.Location = new System.Drawing.Point(21, 571);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(131, 15);
@@ -245,18 +235,19 @@
             // 
             // comboBox1
             // 
+            this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(7, 370);
+            this.comboBox1.Location = new System.Drawing.Point(22, 590);
             this.comboBox1.Margin = new System.Windows.Forms.Padding(4);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(475, 23);
+            this.comboBox1.Size = new System.Drawing.Size(387, 23);
             this.comboBox1.TabIndex = 38;
             this.comboBox1.Visible = false;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(4, 11);
+            this.label1.Location = new System.Drawing.Point(21, 18);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(90, 15);
@@ -265,19 +256,23 @@
             // 
             // richTextBox1
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(7, 30);
+            this.richTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.richTextBox1.Location = new System.Drawing.Point(7, 40);
             this.richTextBox1.Margin = new System.Windows.Forms.Padding(4);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(481, 295);
+            this.richTextBox1.Size = new System.Drawing.Size(402, 505);
             this.richTextBox1.TabIndex = 11;
             this.richTextBox1.Text = "";
             // 
             // submit
             // 
-            this.submit.Location = new System.Drawing.Point(385, 334);
+            this.submit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.submit.Location = new System.Drawing.Point(292, 553);
             this.submit.Margin = new System.Windows.Forms.Padding(4);
             this.submit.Name = "submit";
-            this.submit.Size = new System.Drawing.Size(100, 29);
+            this.submit.Size = new System.Drawing.Size(115, 29);
             this.submit.TabIndex = 12;
             this.submit.Text = "送信";
             this.submit.UseVisualStyleBackColor = true;
@@ -286,7 +281,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(168, 79);
+            this.label3.Location = new System.Drawing.Point(165, 70);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(52, 15);
@@ -296,7 +291,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(169, 20);
+            this.label2.Location = new System.Drawing.Point(166, 11);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(52, 15);
@@ -307,27 +302,30 @@
             // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
             this.Column3,
             this.Column2});
-            this.dataGridView1.Location = new System.Drawing.Point(17, 161);
+            this.dataGridView1.Location = new System.Drawing.Point(0, 9);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 21;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(492, 489);
+            this.dataGridView1.Size = new System.Drawing.Size(608, 583);
             this.dataGridView1.TabIndex = 57;
             this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
             // 
             // Column1
             // 
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.Column1.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.Column1.DefaultCellStyle = dataGridViewCellStyle13;
             this.Column1.HeaderText = "名前";
             this.Column1.Name = "Column1";
             this.Column1.ReadOnly = true;
@@ -342,8 +340,8 @@
             // 
             // Column2
             // 
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.Column2.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.Column2.DefaultCellStyle = dataGridViewCellStyle14;
             this.Column2.HeaderText = "コメント内容";
             this.Column2.Name = "Column2";
             this.Column2.ReadOnly = true;
@@ -351,7 +349,7 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(16, 20);
+            this.pictureBox1.Location = new System.Drawing.Point(13, 11);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(133, 125);
@@ -364,9 +362,9 @@
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 700);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 784);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1041, 25);
+            this.statusStrip1.Size = new System.Drawing.Size(1054, 25);
             this.statusStrip1.TabIndex = 74;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -378,10 +376,11 @@
             // 
             // CommentInfoLabel
             // 
+            this.CommentInfoLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.CommentInfoLabel.AutoSize = true;
             this.CommentInfoLabel.Font = new System.Drawing.Font("メイリオ", 7.8F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.CommentInfoLabel.ForeColor = System.Drawing.Color.Blue;
-            this.CommentInfoLabel.Location = new System.Drawing.Point(401, 654);
+            this.CommentInfoLabel.Location = new System.Drawing.Point(500, 596);
             this.CommentInfoLabel.Name = "CommentInfoLabel";
             this.CommentInfoLabel.Size = new System.Drawing.Size(108, 21);
             this.CommentInfoLabel.TabIndex = 75;
@@ -389,31 +388,58 @@
             this.CommentInfoLabel.MouseLeave += new System.EventHandler(this.CommentInfoLabel_MouseLeave);
             this.CommentInfoLabel.MouseHover += new System.EventHandler(this.CommentInfoLabel_MouseHover);
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.dataGridView1);
+            this.groupBox1.Controls.Add(this.CommentInfoLabel);
+            this.groupBox1.Location = new System.Drawing.Point(12, 161);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(610, 620);
+            this.groupBox1.TabIndex = 76;
+            this.groupBox1.TabStop = false;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.richTextBox1);
+            this.groupBox2.Controls.Add(this.comboBox1);
+            this.groupBox2.Controls.Add(this.submit);
+            this.groupBox2.Controls.Add(this.label4);
+            this.groupBox2.Controls.Add(this.label1);
+            this.groupBox2.Location = new System.Drawing.Point(628, 161);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(416, 620);
+            this.groupBox2.TabIndex = 77;
+            this.groupBox2.TabStop = false;
+            // 
             // CommentForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1041, 725);
-            this.Controls.Add(this.CommentInfoLabel);
-            this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.ignoreNesageCheckBox);
-            this.Controls.Add(this.reSaleItemButton);
-            this.Controls.Add(this.saveWindowSizeCheckbox);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.itemStatusTextBox);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.panel2);
-            this.Controls.Add(this.sellerLabel);
-            this.Controls.Add(this.itemNameLabel);
+            this.ClientSize = new System.Drawing.Size(1054, 809);
+            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.kakakuTextBox);
-            this.Controls.Add(this.riekiTextBox);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.panel1);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.statusStrip1);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.ignoreNesageCheckBox);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.reSaleItemButton);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.saveWindowSizeCheckbox);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.itemStatusTextBox);
+            this.Controls.Add(this.riekiTextBox);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.itemNameLabel);
+            this.Controls.Add(this.sellerLabel);
+            this.Controls.Add(this.panel2);
             this.Name = "CommentForm";
             this.Text = "CommentForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CommentForm_FormClosing);
@@ -421,12 +447,14 @@
             this.SizeChanged += new System.EventHandler(this.CommentForm_SizeChanged_1);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -449,7 +477,6 @@
         private System.Windows.Forms.TextBox riekiTextBox;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label1;
@@ -465,5 +492,8 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.Label CommentInfoLabel;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBox2;
     }
 }
