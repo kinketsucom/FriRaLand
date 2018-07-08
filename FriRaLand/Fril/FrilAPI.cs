@@ -91,30 +91,32 @@ namespace RakuLand {
                     if (!get_all) { //全部取らないとき
                        if (count >= (int)dic["me"]) break;
                     }
-                    RakumaNotificationResponse notification = new RakumaNotificationResponse();
-                    string time = data.created_at.Substring(0, data.created_at.IndexOf("+"));
-                    time = time.Replace("-", "/");
-                    time = time.Replace("T", " ");
-                    notification.created_at = DateTime.Parse(time);
-                    notification.id = data.id.ToString();
-                    if (data.image_url == null) notification.image_url = "";
-                    else notification.image_url = data.image_url.ToString();
-                    if (data.item_id == null) notification.item_id = "";
-                    else notification.item_id = data.item_id.ToString();
-                    notification.message = data.message.ToString();
-                    notification.type_id = data.type_id.ToString();
-                    time = data.updated_at.Substring(0, data.updated_at.IndexOf("+"));
-                    time = time.Replace("-", "/");
-                    time = time.Replace("T", " ");
-                    notification.updated_at = DateTime.Parse(time);
-                    notification.url = data.url.ToString();
-                    notification.api = this;
-                    if(int.Parse(notification.id) > this.account.nortification_needed_info.me_latest_id) {
-                        account.nortification_needed_info.me_latest_id = int.Parse(notification.id);
-                        new AccountDBHelper().updateAccount(this.account.DBId, this.account);
+                    if (data.type_id != 1) {
+                        RakumaNotificationResponse notification = new RakumaNotificationResponse();
+                        string time = data.created_at.Substring(0, data.created_at.IndexOf("+"));
+                        time = time.Replace("-", "/");
+                        time = time.Replace("T", " ");
+                        notification.created_at = DateTime.Parse(time);
+                        notification.id = data.id.ToString();
+                        if (data.image_url == null) notification.image_url = "";
+                        else notification.image_url = data.image_url.ToString();
+                        if (data.item_id == null) notification.item_id = "";
+                        else notification.item_id = data.item_id.ToString();
+                        notification.message = data.message.ToString();
+                        notification.type_id = data.type_id.ToString();
+                        time = data.updated_at.Substring(0, data.updated_at.IndexOf("+"));
+                        time = time.Replace("-", "/");
+                        time = time.Replace("T", " ");
+                        notification.updated_at = DateTime.Parse(time);
+                        notification.url = data.url.ToString();
+                        notification.api = this;
+                        if (int.Parse(notification.id) > this.account.nortification_needed_info.me_latest_id) {
+                            account.nortification_needed_info.me_latest_id = int.Parse(notification.id);
+                            new AccountDBHelper().updateAccount(this.account.DBId, this.account);
+                        }
+                        count += 1;
+                        rst.Add(notification);
                     }
-                    count += 1;
-                    rst.Add(notification);
                 }
 
 

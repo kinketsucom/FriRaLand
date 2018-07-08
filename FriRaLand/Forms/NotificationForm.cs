@@ -60,8 +60,11 @@ namespace RakuLand.Forms {
                             case "10":
                                 e.Value = "取引メッセージ";
                                 break;
+                            case "13":
+                                e.Value = "運営";
+                                break;
                             case "25":
-                                e.Value = "運営メッセ―ジ";
+                                e.Value = "運営";
                                 break;
                             case "26":
                                 e.Value = "ポイント期限等";
