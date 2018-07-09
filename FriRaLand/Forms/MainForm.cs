@@ -1600,6 +1600,12 @@ namespace RakuLand {
             form.Show();
         }
 
+
+
+
+
+
+        #region 上へボタン
         private async void ItemUpButton_Click(object sender, EventArgs e) {
             //if (!LicenseForm.checkCanUseWithErrorWindow()) return;
             //商品を上へ
@@ -1627,6 +1633,17 @@ namespace RakuLand {
             //LocalItemDataGridView.FirstDisplayedScrollingRowIndex = rowIndex - 1;
         }
 
+        private void ItemUpInfoLabel_MouseHover(object sender, EventArgs e) {
+            toolStripStatusLabel1.Text = "選択したアイテムを上に動かします";
+        }
+
+        private void ItemUpInfoLabel_MouseLeave(object sender, EventArgs e) {
+            toolStripStatusLabel1.Text = "";
+        }
+        #endregion
+
+
+        #region 下へボタン
         private async void ItemDownButton_Click(object sender, EventArgs e) {
             if (!LicenseForm.checkCanUseWithErrorWindow()) return;
             //商品を下へ
@@ -1654,6 +1671,15 @@ namespace RakuLand {
             LocalItemDataGridView.Rows[rowIndex + 1].Selected = true;
             //LocalItemDataGridView.FirstDisplayedScrollingRowIndex = rowIndex + 1;
         }
+
+
+        private void ItemDownInfoLabel_MouseHover(object sender, EventArgs e) {
+            toolStripStatusLabel1.Text = "選択したアイテムを下に動かします";
+        }
+        private void ItemDownInfoLabel_MouseLeave(object sender, EventArgs e) {
+            toolStripStatusLabel1.Text = "";
+        }
+        #endregion
     }
 }
 
