@@ -1593,7 +1593,61 @@ namespace RakuLand {
             var form = new OptionForm(this);
             form.Show();
         }
-    }
 
+        private async void ItemUpButton_Click(object sender, EventArgs e) {
+            //if (!LicenseForm.checkCanUseWithErrorWindow()) return;
+            //商品を上へ
+            if (LocalItemDataGridView.SelectedRows.Count != 1) {
+                MessageBox.Show("商品を1つだけ選択してください");
+                return;
+            }
+            int rowIndex = LocalItemDataGridView.SelectedRows[0].Index;
+            if (rowIndex == 0) return;
+            int DBId1 = LocalItemDataBindList[rowIndex - 1].DBId;
+            int DBId2 = LocalItemDataBindList[rowIndex].DBId;
+            new FrilItemDBHelper().swapNumber(DBId1, DBId2);
+
+            //from reload local item
+            FrilItemDBHelper DBhelper = new FrilItemDBHelper();
+            List<FrilItem> loadresult = await Task.Run(() => DBhelper.loadItems());
+            LocalItemDataBindList.Clear();
+            foreach (var item in loadresult) {
+                LocalItemDataBindList.Add(item);
+            }
+            LocalItemDataGridView.RowCount = LocalItemDataBindList.Count;
+            LocalItemDataGridView.Refresh();
+            LocalItemDataGridView.ClearSelection();
+            LocalItemDataGridView.Rows[rowIndex - 1].Selected = true;
+            //LocalItemDataGridView.FirstDisplayedScrollingRowIndex = rowIndex - 1;
+        }
+
+        private async void ItemDownButton_Click(object sender, EventArgs e) {
+            if (!LicenseForm.checkCanUseWithErrorWindow()) return;
+            //商品を下へ
+            if (LocalItemDataGridView.SelectedRows.Count != 1) {
+                MessageBox.Show("商品を1つだけ選択してください");
+                return;
+            }
+            int rowIndex = LocalItemDataGridView.SelectedRows[0].Index;
+            if (rowIndex == LocalItemDataGridView.Rows.Count) return;
+            int DBId1 = LocalItemDataBindList[rowIndex].DBId;
+            int DBId2 = LocalItemDataBindList[rowIndex + 1].DBId;
+            new FrilItemDBHelper().swapNumber(DBId1, DBId2);
+
+            //from reload local item
+            FrilItemDBHelper DBhelper = new FrilItemDBHelper();
+            List<FrilItem> loadresult = await Task.Run(() => DBhelper.loadItems());
+            LocalItemDataBindList.Clear();
+            foreach (var item in loadresult) {
+                LocalItemDataBindList.Add(item);
+            }
+            LocalItemDataGridView.RowCount = LocalItemDataBindList.Count;
+            LocalItemDataGridView.Refresh();
+            LocalItemDataGridView.ClearSelection();
+
+            LocalItemDataGridView.Rows[rowIndex + 1].Selected = true;
+            //LocalItemDataGridView.FirstDisplayedScrollingRowIndex = rowIndex + 1;
+        }
+    }
 }
 

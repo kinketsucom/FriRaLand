@@ -611,8 +611,8 @@ namespace RakuLand {
                     max_id = item.item_id;
 
                 }
-                has_next = false;//FIXIT:ここわかんなかったんでfalseいれてるだけで絶対ダメ
-                //has_next = (bool)resjson.paging.has_next;//FIXIT:ここもわかりませんでした
+                has_next = false;//FIXME:ここわからなかったんでfalseいれてるだけで絶対ダメ
+                //has_next = (bool)resjson.paging.has_next;//FIXME:ここもわからませんでした
             } while (has_next);
             return rst;
         }
@@ -1366,7 +1366,7 @@ namespace RakuLand {
             List<FrilItem> res = new List<FrilItem>();
 
             //60個以上あるか
-            Boolean has_next = false;
+            Boolean has_next = false;//FIXME:has_nextのやつかんがえないとね
             //2回目以降でつかうmax_pager_id
             string max_pager_id = "";
             do {
