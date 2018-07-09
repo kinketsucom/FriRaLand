@@ -125,6 +125,12 @@ namespace RakuLand {
         Dictionary<int, Account> FrilAccountDictionary = new Dictionary<int, Account>(); //accountDBId, Account
         private void AdjustLayout() {
             //レイアウトの自動調整をする
+            this.ExhibittedDataGridView.Left = this.tabControl1.Width+20;
+            this.LocalItemDataGridView.Left = this.tabControl1.Width+20;
+            this.ReservationDataGridView.Left = this.tabControl1.Width+20;
+            this.DailyExhibitDataGridView.Left = this.tabControl1.Width+20;
+
+
             //this.ExhibittedDataGridView.Width = this.Width - this.ExhibittedDataGridView.Left - 20;
             //this.ExhibittedDataGridView.Height = this.Height - this.ExhibittedDataGridView.Top - this.statusStrip1.Height - 40;
             //this.LocalItemDataGridView.Width = this.Width - this.LocalItemDataGridView.Left - 20;
