@@ -24,18 +24,18 @@
         /// </summary>
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle37 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle38 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle39 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle40 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle41 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle42 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle43 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle44 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle45 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle46 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle47 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle48 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle157 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle158 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle159 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle160 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle161 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle162 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle163 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle164 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle165 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle166 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle167 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle168 = new System.Windows.Forms.DataGridViewCellStyle();
             this.DailyExhibitDataGridView = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -157,7 +157,6 @@
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.panel5 = new System.Windows.Forms.Panel();
             this.groupListComboBox = new System.Windows.Forms.ComboBox();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.notificationTimer = new System.Windows.Forms.Timer(this.components);
@@ -178,7 +177,6 @@
             this.menuStrip1.SuspendLayout();
             this.panel4.SuspendLayout();
             this.statusStrip1.SuspendLayout();
-            this.panel5.SuspendLayout();
             this.SuspendLayout();
             // 
             // DailyExhibitDataGridView
@@ -186,6 +184,8 @@
             this.DailyExhibitDataGridView.AllowUserToAddRows = false;
             this.DailyExhibitDataGridView.AllowUserToDeleteRows = false;
             this.DailyExhibitDataGridView.AllowUserToResizeRows = false;
+            this.DailyExhibitDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.DailyExhibitDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DailyExhibitDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
@@ -199,7 +199,7 @@
             this.DailyExhibitDataGridView.RowHeadersVisible = false;
             this.DailyExhibitDataGridView.RowTemplate.Height = 80;
             this.DailyExhibitDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DailyExhibitDataGridView.Size = new System.Drawing.Size(1217, 715);
+            this.DailyExhibitDataGridView.Size = new System.Drawing.Size(1217, 683);
             this.DailyExhibitDataGridView.TabIndex = 34;
             this.DailyExhibitDataGridView.VirtualMode = true;
             this.DailyExhibitDataGridView.Visible = false;
@@ -235,8 +235,8 @@
             // dataGridViewTextBoxColumn3
             // 
             this.dataGridViewTextBoxColumn3.DataPropertyName = "name";
-            dataGridViewCellStyle37.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewTextBoxColumn3.DefaultCellStyle = dataGridViewCellStyle37;
+            dataGridViewCellStyle157.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewTextBoxColumn3.DefaultCellStyle = dataGridViewCellStyle157;
             this.dataGridViewTextBoxColumn3.HeaderText = "商品名";
             this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
             this.dataGridViewTextBoxColumn3.ReadOnly = true;
@@ -247,6 +247,8 @@
             this.LocalItemDataGridView.AllowUserToAddRows = false;
             this.LocalItemDataGridView.AllowUserToDeleteRows = false;
             this.LocalItemDataGridView.AllowUserToResizeRows = false;
+            this.LocalItemDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.LocalItemDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.LocalItemDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.LocalItemDataGridView_Image,
@@ -266,7 +268,7 @@
             this.LocalItemDataGridView.RowHeadersVisible = false;
             this.LocalItemDataGridView.RowTemplate.Height = 80;
             this.LocalItemDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.LocalItemDataGridView.Size = new System.Drawing.Size(1217, 715);
+            this.LocalItemDataGridView.Size = new System.Drawing.Size(1217, 683);
             this.LocalItemDataGridView.TabIndex = 35;
             this.LocalItemDataGridView.VirtualMode = true;
             this.LocalItemDataGridView.CellValueNeeded += new System.Windows.Forms.DataGridViewCellValueEventHandler(this.LocalItemDataGridView_CellValueNeeded);
@@ -305,8 +307,8 @@
             // LocalItemDataGridView_name
             // 
             this.LocalItemDataGridView_name.DataPropertyName = "name";
-            dataGridViewCellStyle38.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.LocalItemDataGridView_name.DefaultCellStyle = dataGridViewCellStyle38;
+            dataGridViewCellStyle158.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.LocalItemDataGridView_name.DefaultCellStyle = dataGridViewCellStyle158;
             this.LocalItemDataGridView_name.FillWeight = 298.928F;
             this.LocalItemDataGridView_name.HeaderText = "商品名";
             this.LocalItemDataGridView_name.Name = "LocalItemDataGridView_name";
@@ -316,8 +318,8 @@
             // LocalItemDataGridView_description
             // 
             this.LocalItemDataGridView_description.DataPropertyName = "description";
-            dataGridViewCellStyle39.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.LocalItemDataGridView_description.DefaultCellStyle = dataGridViewCellStyle39;
+            dataGridViewCellStyle159.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.LocalItemDataGridView_description.DefaultCellStyle = dataGridViewCellStyle159;
             this.LocalItemDataGridView_description.FillWeight = 218.0931F;
             this.LocalItemDataGridView_description.HeaderText = "商品説明";
             this.LocalItemDataGridView_description.Name = "LocalItemDataGridView_description";
@@ -327,10 +329,10 @@
             // LocalItemDataGridView_price
             // 
             this.LocalItemDataGridView_price.DataPropertyName = "price";
-            dataGridViewCellStyle40.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle40.Format = "C0";
-            dataGridViewCellStyle40.NullValue = null;
-            this.LocalItemDataGridView_price.DefaultCellStyle = dataGridViewCellStyle40;
+            dataGridViewCellStyle160.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle160.Format = "C0";
+            dataGridViewCellStyle160.NullValue = null;
+            this.LocalItemDataGridView_price.DefaultCellStyle = dataGridViewCellStyle160;
             this.LocalItemDataGridView_price.FillWeight = 54.86601F;
             this.LocalItemDataGridView_price.HeaderText = "価格";
             this.LocalItemDataGridView_price.Name = "LocalItemDataGridView_price";
@@ -374,6 +376,8 @@
             this.ReservationDataGridView.AllowUserToAddRows = false;
             this.ReservationDataGridView.AllowUserToDeleteRows = false;
             this.ReservationDataGridView.AllowUserToResizeRows = false;
+            this.ReservationDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.ReservationDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.ReservationDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ReservationDataGridView_exhibit_status_str,
@@ -394,7 +398,7 @@
             this.ReservationDataGridView.RowHeadersVisible = false;
             this.ReservationDataGridView.RowTemplate.Height = 80;
             this.ReservationDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.ReservationDataGridView.Size = new System.Drawing.Size(1217, 715);
+            this.ReservationDataGridView.Size = new System.Drawing.Size(1217, 683);
             this.ReservationDataGridView.TabIndex = 36;
             this.ReservationDataGridView.VirtualMode = true;
             this.ReservationDataGridView.Visible = false;
@@ -421,8 +425,8 @@
             // ReservationDataGridView_itemName
             // 
             this.ReservationDataGridView_itemName.DataPropertyName = "itemName";
-            dataGridViewCellStyle41.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.ReservationDataGridView_itemName.DefaultCellStyle = dataGridViewCellStyle41;
+            dataGridViewCellStyle161.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.ReservationDataGridView_itemName.DefaultCellStyle = dataGridViewCellStyle161;
             this.ReservationDataGridView_itemName.FillWeight = 298.928F;
             this.ReservationDataGridView_itemName.HeaderText = "商品名";
             this.ReservationDataGridView_itemName.Name = "ReservationDataGridView_itemName";
@@ -432,8 +436,8 @@
             // ReservationDataGridView_nickname
             // 
             this.ReservationDataGridView_nickname.DataPropertyName = "accountNickName";
-            dataGridViewCellStyle42.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.ReservationDataGridView_nickname.DefaultCellStyle = dataGridViewCellStyle42;
+            dataGridViewCellStyle162.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.ReservationDataGridView_nickname.DefaultCellStyle = dataGridViewCellStyle162;
             this.ReservationDataGridView_nickname.FillWeight = 218.0931F;
             this.ReservationDataGridView_nickname.HeaderText = "出品アカウント";
             this.ReservationDataGridView_nickname.Name = "ReservationDataGridView_nickname";
@@ -443,10 +447,10 @@
             // ReservationDataGridView_exhibitDateString
             // 
             this.ReservationDataGridView_exhibitDateString.DataPropertyName = "exhibitDateString";
-            dataGridViewCellStyle43.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle43.Format = "C0";
-            dataGridViewCellStyle43.NullValue = null;
-            this.ReservationDataGridView_exhibitDateString.DefaultCellStyle = dataGridViewCellStyle43;
+            dataGridViewCellStyle163.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle163.Format = "C0";
+            dataGridViewCellStyle163.NullValue = null;
+            this.ReservationDataGridView_exhibitDateString.DefaultCellStyle = dataGridViewCellStyle163;
             this.ReservationDataGridView_exhibitDateString.FillWeight = 54.86601F;
             this.ReservationDataGridView_exhibitDateString.HeaderText = "出品日時";
             this.ReservationDataGridView_exhibitDateString.Name = "ReservationDataGridView_exhibitDateString";
@@ -456,8 +460,8 @@
             // ReservationDataGridView_deleteDateString
             // 
             this.ReservationDataGridView_deleteDateString.DataPropertyName = "deleteDateString";
-            dataGridViewCellStyle44.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.ReservationDataGridView_deleteDateString.DefaultCellStyle = dataGridViewCellStyle44;
+            dataGridViewCellStyle164.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.ReservationDataGridView_deleteDateString.DefaultCellStyle = dataGridViewCellStyle164;
             this.ReservationDataGridView_deleteDateString.FillWeight = 33.26188F;
             this.ReservationDataGridView_deleteDateString.HeaderText = "取消日時";
             this.ReservationDataGridView_deleteDateString.Name = "ReservationDataGridView_deleteDateString";
@@ -516,6 +520,8 @@
             this.ExhibittedDataGridView.AllowUserToAddRows = false;
             this.ExhibittedDataGridView.AllowUserToDeleteRows = false;
             this.ExhibittedDataGridView.AllowUserToResizeRows = false;
+            this.ExhibittedDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.ExhibittedDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.ExhibittedDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ExhibittedDataGridView_Image,
@@ -544,7 +550,7 @@
             this.ExhibittedDataGridView.RowHeadersVisible = false;
             this.ExhibittedDataGridView.RowTemplate.Height = 80;
             this.ExhibittedDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.ExhibittedDataGridView.Size = new System.Drawing.Size(1217, 715);
+            this.ExhibittedDataGridView.Size = new System.Drawing.Size(1217, 683);
             this.ExhibittedDataGridView.TabIndex = 37;
             this.ExhibittedDataGridView.VirtualMode = true;
             this.ExhibittedDataGridView.Visible = false;
@@ -577,8 +583,8 @@
             // ExhibittedDataGridView_name
             // 
             this.ExhibittedDataGridView_name.DataPropertyName = "name";
-            dataGridViewCellStyle45.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.ExhibittedDataGridView_name.DefaultCellStyle = dataGridViewCellStyle45;
+            dataGridViewCellStyle165.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.ExhibittedDataGridView_name.DefaultCellStyle = dataGridViewCellStyle165;
             this.ExhibittedDataGridView_name.HeaderText = "商品名";
             this.ExhibittedDataGridView_name.Name = "ExhibittedDataGridView_name";
             this.ExhibittedDataGridView_name.ReadOnly = true;
@@ -587,8 +593,8 @@
             // ExhibittedDataGridView_description
             // 
             this.ExhibittedDataGridView_description.DataPropertyName = "description";
-            dataGridViewCellStyle46.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.ExhibittedDataGridView_description.DefaultCellStyle = dataGridViewCellStyle46;
+            dataGridViewCellStyle166.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.ExhibittedDataGridView_description.DefaultCellStyle = dataGridViewCellStyle166;
             this.ExhibittedDataGridView_description.HeaderText = "商品説明";
             this.ExhibittedDataGridView_description.Name = "ExhibittedDataGridView_description";
             this.ExhibittedDataGridView_description.ReadOnly = true;
@@ -598,10 +604,10 @@
             // ExhibittedDataGridView_price
             // 
             this.ExhibittedDataGridView_price.DataPropertyName = "price";
-            dataGridViewCellStyle47.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle47.Format = "C0";
-            dataGridViewCellStyle47.NullValue = null;
-            this.ExhibittedDataGridView_price.DefaultCellStyle = dataGridViewCellStyle47;
+            dataGridViewCellStyle167.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle167.Format = "C0";
+            dataGridViewCellStyle167.NullValue = null;
+            this.ExhibittedDataGridView_price.DefaultCellStyle = dataGridViewCellStyle167;
             this.ExhibittedDataGridView_price.HeaderText = "価格";
             this.ExhibittedDataGridView_price.Name = "ExhibittedDataGridView_price";
             this.ExhibittedDataGridView_price.ReadOnly = true;
@@ -632,8 +638,8 @@
             // ExhibittedDataGridView_created_str
             // 
             this.ExhibittedDataGridView_created_str.DataPropertyName = "created_str";
-            dataGridViewCellStyle48.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.ExhibittedDataGridView_created_str.DefaultCellStyle = dataGridViewCellStyle48;
+            dataGridViewCellStyle168.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.ExhibittedDataGridView_created_str.DefaultCellStyle = dataGridViewCellStyle168;
             this.ExhibittedDataGridView_created_str.HeaderText = "出品日時";
             this.ExhibittedDataGridView_created_str.Name = "ExhibittedDataGridView_created_str";
             this.ExhibittedDataGridView_created_str.Visible = false;
@@ -715,7 +721,7 @@
             // 
             this.register_button.BackColor = System.Drawing.Color.Transparent;
             this.register_button.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.register_button.Location = new System.Drawing.Point(25, 14);
+            this.register_button.Location = new System.Drawing.Point(27, 14);
             this.register_button.Margin = new System.Windows.Forms.Padding(4);
             this.register_button.Name = "register_button";
             this.register_button.Size = new System.Drawing.Size(193, 54);
@@ -742,12 +748,12 @@
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.ItemSize = new System.Drawing.Size(61, 18);
-            this.tabControl1.Location = new System.Drawing.Point(13, 148);
+            this.tabControl1.Location = new System.Drawing.Point(13, 166);
             this.tabControl1.Margin = new System.Windows.Forms.Padding(4);
             this.tabControl1.Multiline = true;
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(256, 690);
+            this.tabControl1.Size = new System.Drawing.Size(256, 640);
             this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
             this.tabControl1.TabIndex = 40;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
@@ -759,7 +765,7 @@
             this.tabPage1.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPage1.Size = new System.Drawing.Size(248, 664);
+            this.tabPage1.Size = new System.Drawing.Size(248, 614);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "商品";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -785,7 +791,7 @@
             // ItemDownButton
             // 
             this.ItemDownButton.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.ItemDownButton.Location = new System.Drawing.Point(24, 436);
+            this.ItemDownButton.Location = new System.Drawing.Point(27, 437);
             this.ItemDownButton.Margin = new System.Windows.Forms.Padding(4);
             this.ItemDownButton.Name = "ItemDownButton";
             this.ItemDownButton.Size = new System.Drawing.Size(193, 44);
@@ -797,7 +803,7 @@
             // ItemUpButton
             // 
             this.ItemUpButton.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.ItemUpButton.Location = new System.Drawing.Point(22, 385);
+            this.ItemUpButton.Location = new System.Drawing.Point(27, 385);
             this.ItemUpButton.Margin = new System.Windows.Forms.Padding(4);
             this.ItemUpButton.Name = "ItemUpButton";
             this.ItemUpButton.Size = new System.Drawing.Size(193, 44);
@@ -809,7 +815,7 @@
             // LocalItemExportButton
             // 
             this.LocalItemExportButton.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.LocalItemExportButton.Location = new System.Drawing.Point(22, 488);
+            this.LocalItemExportButton.Location = new System.Drawing.Point(27, 488);
             this.LocalItemExportButton.Margin = new System.Windows.Forms.Padding(4);
             this.LocalItemExportButton.Name = "LocalItemExportButton";
             this.LocalItemExportButton.Size = new System.Drawing.Size(193, 54);
@@ -821,7 +827,7 @@
             // zaiko_kanri_button
             // 
             this.zaiko_kanri_button.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.zaiko_kanri_button.Location = new System.Drawing.Point(22, 550);
+            this.zaiko_kanri_button.Location = new System.Drawing.Point(27, 550);
             this.zaiko_kanri_button.Margin = new System.Windows.Forms.Padding(4);
             this.zaiko_kanri_button.Name = "zaiko_kanri_button";
             this.zaiko_kanri_button.Size = new System.Drawing.Size(193, 54);
@@ -833,7 +839,7 @@
             // item_register_from_excel_button
             // 
             this.item_register_from_excel_button.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.item_register_from_excel_button.Location = new System.Drawing.Point(25, 199);
+            this.item_register_from_excel_button.Location = new System.Drawing.Point(27, 199);
             this.item_register_from_excel_button.Margin = new System.Windows.Forms.Padding(4);
             this.item_register_from_excel_button.Name = "item_register_from_excel_button";
             this.item_register_from_excel_button.Size = new System.Drawing.Size(193, 54);
@@ -1421,12 +1427,14 @@
             // 
             // panel4
             // 
+            this.panel4.Controls.Add(this.groupListComboBox);
             this.panel4.Controls.Add(this.accountListComboBox);
+            this.panel4.Controls.Add(this.radioButton2);
             this.panel4.Controls.Add(this.radioButton1);
             this.panel4.Location = new System.Drawing.Point(12, 32);
             this.panel4.Margin = new System.Windows.Forms.Padding(4);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(253, 55);
+            this.panel4.Size = new System.Drawing.Size(253, 126);
             this.panel4.TabIndex = 42;
             // 
             // accountListComboBox
@@ -1483,23 +1491,13 @@
             this.backgroundWorker2.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker2_ProgressChanged);
             this.backgroundWorker2.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker2_RunWorkerCompleted);
             // 
-            // panel5
-            // 
-            this.panel5.Controls.Add(this.groupListComboBox);
-            this.panel5.Controls.Add(this.radioButton2);
-            this.panel5.Location = new System.Drawing.Point(13, 86);
-            this.panel5.Margin = new System.Windows.Forms.Padding(4);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(253, 55);
-            this.panel5.TabIndex = 44;
-            // 
             // groupListComboBox
             // 
             this.groupListComboBox.BackColor = System.Drawing.SystemColors.Control;
             this.groupListComboBox.Enabled = false;
             this.groupListComboBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.groupListComboBox.FormattingEnabled = true;
-            this.groupListComboBox.Location = new System.Drawing.Point(27, 26);
+            this.groupListComboBox.Location = new System.Drawing.Point(27, 92);
             this.groupListComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.groupListComboBox.Name = "groupListComboBox";
             this.groupListComboBox.Size = new System.Drawing.Size(217, 23);
@@ -1510,7 +1508,7 @@
             // 
             this.radioButton2.AutoSize = true;
             this.radioButton2.Font = new System.Drawing.Font("メイリオ", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButton2.Location = new System.Drawing.Point(4, 0);
+            this.radioButton2.Location = new System.Drawing.Point(5, 55);
             this.radioButton2.Margin = new System.Windows.Forms.Padding(4);
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(101, 29);
@@ -1542,7 +1540,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1536, 869);
-            this.Controls.Add(this.panel5);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.tabControl1);
@@ -1578,8 +1575,6 @@
             this.panel4.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
-            this.panel5.ResumeLayout(false);
-            this.panel5.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1706,7 +1701,6 @@
         private System.Windows.Forms.ToolStripMenuItem バージョン情報ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 出金管理ToolStripMenuItem;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.ComboBox groupListComboBox;
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.Timer notificationTimer;

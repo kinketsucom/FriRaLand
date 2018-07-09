@@ -125,15 +125,15 @@ namespace RakuLand {
         Dictionary<int, Account> FrilAccountDictionary = new Dictionary<int, Account>(); //accountDBId, Account
         private void AdjustLayout() {
             //レイアウトの自動調整をする
-            this.ExhibittedDataGridView.Width = this.Width - this.ExhibittedDataGridView.Left - 20;
-            this.ExhibittedDataGridView.Height = this.Height - this.ExhibittedDataGridView.Top - this.statusStrip1.Height - 40;
-            this.LocalItemDataGridView.Width = this.Width - this.LocalItemDataGridView.Left - 20;
-            this.LocalItemDataGridView.Height = this.Height - this.LocalItemDataGridView.Top - this.statusStrip1.Height - 40;
-            this.ReservationDataGridView.Width = this.Width - this.ReservationDataGridView.Left - 20;
-            this.ReservationDataGridView.Height = this.Height - this.ReservationDataGridView.Top - this.statusStrip1.Height - 40;
-            this.DailyExhibitDataGridView.Width = this.Width - this.DailyExhibitDataGridView.Left - 20;
-            this.DailyExhibitDataGridView.Height = this.Height - this.DailyExhibitDataGridView.Top - this.statusStrip1.Height - 40;
-            this.tabControl1.Height = this.Height - this.tabControl1.Top - this.statusStrip1.Height;
+            //this.ExhibittedDataGridView.Width = this.Width - this.ExhibittedDataGridView.Left - 20;
+            //this.ExhibittedDataGridView.Height = this.Height - this.ExhibittedDataGridView.Top - this.statusStrip1.Height - 40;
+            //this.LocalItemDataGridView.Width = this.Width - this.LocalItemDataGridView.Left - 20;
+            //this.LocalItemDataGridView.Height = this.Height - this.LocalItemDataGridView.Top - this.statusStrip1.Height - 40;
+            //this.ReservationDataGridView.Width = this.Width - this.ReservationDataGridView.Left - 20;
+            //this.ReservationDataGridView.Height = this.Height - this.ReservationDataGridView.Top - this.statusStrip1.Height - 40;
+            //this.DailyExhibitDataGridView.Width = this.Width - this.DailyExhibitDataGridView.Left - 20;
+            //this.DailyExhibitDataGridView.Height = this.Height - this.DailyExhibitDataGridView.Top - this.statusStrip1.Height - 40;
+            //this.tabControl1.Height = this.Height - this.tabControl1.Top - this.statusStrip1.Height;
         }
 
         private void InitializeMainForm() {
