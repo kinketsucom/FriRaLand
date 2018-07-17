@@ -42,9 +42,11 @@
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.button2);
             this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Location = new System.Drawing.Point(14, 102);
+            this.groupBox2.Location = new System.Drawing.Point(19, 128);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(397, 94);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox2.Size = new System.Drawing.Size(529, 118);
             this.groupBox2.TabIndex = 14;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "体験版として試用する";
@@ -52,25 +54,28 @@
             // expireLabel
             // 
             this.expireLabel.AutoSize = true;
-            this.expireLabel.Location = new System.Drawing.Point(44, 51);
+            this.expireLabel.Location = new System.Drawing.Point(59, 64);
+            this.expireLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.expireLabel.Name = "expireLabel";
-            this.expireLabel.Size = new System.Drawing.Size(0, 12);
+            this.expireLabel.Size = new System.Drawing.Size(0, 15);
             this.expireLabel.TabIndex = 8;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(7, 51);
+            this.label4.Location = new System.Drawing.Point(9, 64);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(31, 12);
+            this.label4.Size = new System.Drawing.Size(40, 15);
             this.label4.TabIndex = 7;
             this.label4.Text = "期限:";
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(309, 64);
+            this.button2.Location = new System.Drawing.Point(412, 80);
+            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(82, 24);
+            this.button2.Size = new System.Drawing.Size(109, 30);
             this.button2.TabIndex = 6;
             this.button2.Text = "体験版を試用";
             this.button2.UseVisualStyleBackColor = true;
@@ -79,20 +84,23 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(7, 25);
+            this.label3.Location = new System.Drawing.Point(9, 31);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(221, 12);
+            this.label3.Size = new System.Drawing.Size(278, 15);
             this.label3.TabIndex = 5;
-            this.label3.Text = "初回起動から7日間すべての機能を使えます。";
+            this.label3.Text = "初回起動から3日間すべての機能を使えます。";
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.licenseKeyTextBox);
             this.groupBox1.Controls.Add(this.button1);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
+            this.groupBox1.Location = new System.Drawing.Point(16, 15);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(397, 84);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Size = new System.Drawing.Size(529, 105);
             this.groupBox1.TabIndex = 13;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "ライセンス登録";
@@ -100,24 +108,27 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(7, 34);
+            this.label2.Location = new System.Drawing.Point(9, 42);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(70, 12);
+            this.label2.Size = new System.Drawing.Size(86, 15);
             this.label2.TabIndex = 1;
             this.label2.Text = "ライセンスキー";
             // 
             // licenseKeyTextBox
             // 
-            this.licenseKeyTextBox.Location = new System.Drawing.Point(83, 31);
+            this.licenseKeyTextBox.Location = new System.Drawing.Point(111, 39);
+            this.licenseKeyTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.licenseKeyTextBox.Name = "licenseKeyTextBox";
-            this.licenseKeyTextBox.Size = new System.Drawing.Size(298, 19);
+            this.licenseKeyTextBox.Size = new System.Drawing.Size(396, 22);
             this.licenseKeyTextBox.TabIndex = 4;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(309, 55);
+            this.button1.Location = new System.Drawing.Point(412, 69);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(82, 23);
+            this.button1.Size = new System.Drawing.Size(109, 29);
             this.button1.TabIndex = 2;
             this.button1.Text = "解除";
             this.button1.UseVisualStyleBackColor = true;
@@ -125,12 +136,13 @@
             // 
             // LicenseForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(424, 202);
+            this.ClientSize = new System.Drawing.Size(565, 252);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "LicenseForm";
             this.Text = "LicenseForm";
             this.Load += new System.EventHandler(this.LicenseForm_Load);

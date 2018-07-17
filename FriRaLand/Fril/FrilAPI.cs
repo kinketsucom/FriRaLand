@@ -94,7 +94,7 @@ namespace RakuLand {
                     if (!get_all) { //全部取らないとき
                        if (count >= (int)dic["me"]) break;
                     }
-                    if (data.id != 1) {
+                    if (data.type_id != 1) {
                         RakumaNotificationResponse notification = new RakumaNotificationResponse();
                         string time = data.created_at.Substring(0, data.created_at.IndexOf("+"));
                         time = time.Replace("-", "/");

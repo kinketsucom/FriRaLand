@@ -61,10 +61,10 @@ namespace RakuLand.Forms {
                 //GUIにセット（ComboBoxのSelectedIndexをプログラムから書き換えた場合もイベントは呼ばれるのでindexを変えるだけでいい）
                 this.ItemNameTextBox.Text = loaditem.item_name;
                 this.DescriptionTextBox.Text = loaditem.detail;
-                this.pictureBox1.ImageLocation = loaditem.imagepaths[0];
-                this.pictureBox2.ImageLocation = loaditem.imagepaths[1];
-                this.pictureBox3.ImageLocation = loaditem.imagepaths[2];
-                this.pictureBox4.ImageLocation = loaditem.imagepaths[3];
+                this.pictureBox1.ImageLocation = loaditem.imageurls[0];
+                this.pictureBox2.ImageLocation = loaditem.imageurls[1];
+                this.pictureBox3.ImageLocation = loaditem.imageurls[2];
+                this.pictureBox4.ImageLocation = loaditem.imageurls[3];
 
                 if (loaditem.status >= 0) this.ItemConditionComboBox.SelectedIndex = TabIndexFromDictionary(FrilCommon.conditionTypeFril, loaditem.status);
                 if (loaditem.carriage >= 0) this.ShippingPayerComboBox.SelectedIndex = TabIndexFromDictionary(FrilCommon.shippingPayersFril, loaditem.carriage);

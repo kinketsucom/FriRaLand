@@ -40,9 +40,9 @@ namespace RakuLand {
 
         private async void MainForm_Load(object sender, EventArgs e) {
             AdjustLayout();
-            //初回起動(キーがなければ起動時刻+7日をレジストリに書き込み）
+            //初回起動(キーがなければ起動時刻+3日をレジストリに書き込み）
             string stringValue = (string)Microsoft.Win32.Registry.GetValue(MainForm.Registry_Path, "Expire", "");
-            string datestr = DateTime.Now.AddDays(7).ToString();
+            string datestr = DateTime.Now.AddDays(3).ToString();
             if (string.IsNullOrEmpty(stringValue)) Microsoft.Win32.Registry.SetValue(Registry_Path, "Expire", datestr);
             FrilItemDBHelper DBhelper = new FrilItemDBHelper();
             DBhelper.onCreate();
