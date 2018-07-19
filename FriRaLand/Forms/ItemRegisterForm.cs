@@ -465,6 +465,7 @@ namespace RakuLand {
             if (String.IsNullOrEmpty(PriceTextBox.Text)) {
                 MessageBox.Show("価格は必須です。\n価格は\\300～\\500,000円にしてください。", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 PriceTextBox.Focus();
+                return;
             }
             if (int.Parse(PriceTextBox.Text) < 300 || 500000 < int.Parse(PriceTextBox.Text)) {
                 MessageBox.Show("ラクマの設定可能価格を超えています。\n価格は\\300～\\500,000円にしてください。", MainForm.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -589,7 +590,14 @@ namespace RakuLand {
 
                 if (loaditem.status >= 0) this.Fril_ItemConditionComboBox.SelectedIndex = TabIndexFromDictionary(FrilCommon.conditionTypeFril, loaditem.status);
                 if (loaditem.carriage >= 0) this.Fril_ShippingPayerComboBox.SelectedIndex = TabIndexFromDictionary(FrilCommon.shippingPayersFril, loaditem.carriage);
-                if (loaditem.d_method >= 0) this.Fril_ShippingMethodComboBox.SelectedIndex = TabIndexFromDictionary(FrilCommon.shippingMethodsBuyerFril,loaditem.d_method);
+
+                if (loaditem.d_method >= 0) {
+                    if (loaditem.carriage == 1) {//出品者が負担
+                        this.Fril_ShippingMethodComboBox.SelectedIndex = TabIndexFromDictionary(FrilCommon.shippingMethodsSellerFril, loaditem.d_method);
+                    } else { 
+                        this.Fril_ShippingMethodComboBox.SelectedIndex = TabIndexFromDictionary(FrilCommon.shippingMethodsBuyerFril, loaditem.d_method);
+                    }
+                }
                 if (loaditem.d_area >= 0) this.ShippingAreaComboBox.SelectedIndex = TabIndexFromDictionary(FrilCommon.shippingFromAreas,loaditem.d_area);
                 if (loaditem.d_date >= 0) this.ShippingDurationComboBox.SelectedIndex = TabIndexFromDictionary(FrilCommon.shippingFromAreas, loaditem.d_date);
                 if (loaditem.s_price <= 0) this.PriceTextBox.Text = "";

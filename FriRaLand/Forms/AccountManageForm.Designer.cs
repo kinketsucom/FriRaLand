@@ -276,7 +276,7 @@
             this.accountDeleteButton.TabIndex = 30;
             this.accountDeleteButton.Text = "削除";
             this.accountDeleteButton.UseVisualStyleBackColor = true;
-            this.accountDeleteButton.Visible = false;
+            this.accountDeleteButton.Click += new System.EventHandler(this.accountDeleteButton_Click);
             // 
             // editGroupButton
             // 

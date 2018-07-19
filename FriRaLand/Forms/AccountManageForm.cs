@@ -591,5 +591,9 @@ namespace RakuLand.Forms {
             Common.Account ac = (Common.Account)e.ListItem;
             e.Value = ac.nickname;
         }
+
+        private void accountDeleteButton_Click(object sender, EventArgs e) {
+
+        }
     }
 }

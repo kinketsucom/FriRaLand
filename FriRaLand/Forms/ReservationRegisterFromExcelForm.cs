@@ -82,8 +82,9 @@ namespace RakuLand.Forms {
                     if (cell2 != null) {
                         text2 = cell2.RichStringCellValue.ToString();
                     }
-                } catch (Exception) {
+                } catch (Exception ex) {
                     message += i.ToString() + "行目の出品アカウントが入力されていません。\n";
+                    Console.WriteLine(ex);
                     flag = true;
                     continue;
                 }
@@ -278,13 +279,14 @@ namespace RakuLand.Forms {
                     if (cell2 != null) {
                         text18 = cell2.RichStringCellValue.ToString();
                     }
-                } catch (Exception) {
+                } catch (Exception ex) {
                     message += i.ToString() + "行目の発送までの日数が正しくありません。" + Environment.NewLine;
+                    Console.WriteLine(ex);
                     flag = true;
                     continue;
                 }
-                /*num++;
-                cell2 = row2.GetCell(num);
+                num++;
+                /*cell2 = row2.GetCell(num);
                 string text19 = "";
                 try {
                     text19 = cell2.RichStringCellValue.ToString();
@@ -298,8 +300,9 @@ namespace RakuLand.Forms {
                 string text20 = "0";
                 try {
                     text20 = cell2.NumericCellValue.ToString();
-                } catch (Exception) {
+                } catch (Exception ex) {
                     message += i.ToString() + "行目の販売価格が正しくありません。" + Environment.NewLine;
+                    Console.WriteLine(ex);
                     flag = true;
                     continue;
                 }

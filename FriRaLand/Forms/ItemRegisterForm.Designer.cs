@@ -460,6 +460,7 @@
             this.PriceTextBox.Name = "PriceTextBox";
             this.PriceTextBox.Size = new System.Drawing.Size(212, 22);
             this.PriceTextBox.TabIndex = 100;
+            this.PriceTextBox.Text = "0";
             this.PriceTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PriceTextBox_KeyPress);
             this.PriceTextBox.Leave += new System.EventHandler(this.PriceTextBox_Leave);
             // 
