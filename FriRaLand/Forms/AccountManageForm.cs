@@ -593,7 +593,33 @@ namespace RakuLand.Forms {
         }
 
         private void accountDeleteButton_Click(object sender, EventArgs e) {
-
+            //if (checkTokenRefreshNow()) return;
+            if (accountDataGridView1.SelectedRows.Count <= 0) return;
+            //削除確認画面を出す
+            DialogResult result = MessageBox.Show("アカウントを一覧から削除しますか?", "質問",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Exclamation,
+                MessageBoxDefaultButton.Button2);
+            if (result == DialogResult.Yes) {
+                foreach (var selectedrow in this.accountDataGridView1.SelectedRows) {
+                    AccountDBHelper accountDBHelper = new AccountDBHelper();
+                    int delDBId = accountDBHelper.getAccountDBId(accountList[((DataGridViewRow)selectedrow).Index]);
+                    //アカウントDBからの削除
+                    accountDBHelper.deleteAccount(new List<int> { delDBId });
+                    //グループ配属DBからの削除
+                    new GroupBelongDBHelper().deleteGroupBelongByAccountID(delDBId);
+                    //削除したアカウントに関する出品予約が存在すれば削除する
+                    var reservationDBHelper = new ReservationDBHelper();
+                    List<ReservationSettingForm.ReservationSetting> reservationList = reservationDBHelper.loadReservations();
+                    List<int> deleteReservationIdList = new List<int>();
+                    foreach (var reservation in reservationList) if (delDBId == reservation.accountDBId) deleteReservationIdList.Add(reservation.DBId);
+                    reservationDBHelper.deleteReservation(deleteReservationIdList);
+                }
+                //ComboBoxリフレッシュ
+                accountColumnBoxReflesh();
+            } else if (result == DialogResult.No) {
+                return;
+            }
         }
     }
 }
