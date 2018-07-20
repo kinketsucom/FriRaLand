@@ -19,7 +19,7 @@ namespace RakuLand.Forms {
         private FrilItemDBHelper itemDBHelper = new FrilItemDBHelper();
         private ReservationDBHelper reservationDBHelper = new ReservationDBHelper();
         private Dictionary<string, int> cashItem = new Dictionary<string, int>();
-        private bool debugmode = true;
+        private bool debugmode = false;
         private int excel_rownum = 0;
         public ReservationRegisterFromExcelForm(MainForm mainform) {
             this.mainform = mainform;
