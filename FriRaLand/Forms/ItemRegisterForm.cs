@@ -315,7 +315,7 @@ namespace RakuLand {
                     //カテゴリがきまればサイズとブランドの候補はきまるので候補からIDが一致するSelectedIndexを見つければいい
                     if (openItem.size_id >= 0 && Fril_SizeComboBox.Enabled) {
                         Console.WriteLine(openItem.size_id);
-                        Fril_SizeComboBox.SelectedIndex = TabIndexFromDictionary(FrilCommon.fril_default_sizeInfoDictionary, 10004);
+                        Fril_SizeComboBox.SelectedIndex = TabIndexFromDictionary(FrilCommon.fril_default_sizeInfoDictionary, this.openItem.size_id);
                         this.setting_now = false;
                     }
                 }
