@@ -451,13 +451,18 @@ namespace RakuLand {
                 param.Add("p_category", item.category_p_id.ToString());
                 param.Add("request_required", "0");
                 param.Add("sell_price", item.s_price.ToString());
-                param.Add("size", item.size_id.ToString());
-                param.Add("size_name", item.size_name);
+                if (item.size_id <= 0) {
+                    param.Add("size", "19999");
+                    param.Add("size_name", "なし");
+                } else { 
+                    param.Add("size", item.size_id.ToString());
+                    param.Add("size_name", item.size_name);
+                }
                 param.Add("status", item.status.ToString());
                 param.Add("title", item.item_name);
                 //ブランドidは指定のものを追加か、パラメータまったく含めないの二択
                 //それ以外はクラッシュ
-                if (item.brand_id.ToString()!="0") { 
+                if (item.brand_id > 0) { 
                     param.Add("brand", item.brand_id.ToString());
                 }                
                 //パラメータ表示
