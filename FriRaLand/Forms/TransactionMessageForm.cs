@@ -119,11 +119,11 @@ namespace RakuLand.Forms {
             //コメントをGUIに反映
             RefreshCommentDataGridview(comments);
             //購入者情報を取得
-            if (this.item.t_status ==3) {//TODO:このへんまじinfoとかいらんしけしたいなあああ
+            //if (this.item.t_status ==3) {//TODO:このへんまじinfoとかいらんしけしたいなあああ
                 this.info = Frilapi.GetTransactionInfo(itemid);
                 this.item.buyer_address = this.info.address;
                 this.item.buyer_name = this.info.buyer_screen_name;
-            }
+            //}
             if (!string.IsNullOrEmpty(this.item.buyer_name)) {
                 buyerNameTextBox.Text = this.info.buyername;
             } else {
