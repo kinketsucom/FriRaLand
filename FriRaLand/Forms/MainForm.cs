@@ -110,11 +110,11 @@ namespace RakuLand {
                 this.Close();
             }
             //ライセンスが認証できていれば更新情報・お知らせ情報を取得する
-            /*if (this.tabControl1.Enabled == true) {
+            if (this.tabControl1.Enabled == true) {
                 //新しいバージョンまたは新しいお知らせがあれば表示する
-                var form = new startUpWindow();
-                if (startUpWindow.notifyFlag) form.Show();
-            }*/
+                var form = new StartUpForm();
+                if (StartUpForm.notifyFlag) form.Show();
+            }
         }
         public void unlockLicense() {
             this.tabControl1.Enabled = true;

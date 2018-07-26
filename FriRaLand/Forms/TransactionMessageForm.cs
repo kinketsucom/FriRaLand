@@ -16,6 +16,7 @@ namespace RakuLand.Forms {
         private FrilAPI.TransactionInfo info;
         private FrilItem item;
         private List<string> message_template_list;
+        private List<FrilAPI.Comment> comments;
         public TransactionMessageForm(FrilAPI api, string itemid) {
             InitializeComponent();
             this.Frilapi = api;
@@ -61,7 +62,7 @@ namespace RakuLand.Forms {
             //コメント一覧を再取得してGUIに反映
             this.dataGridView1.Rows.Clear();
             //コメントを取得
-            var comments = Frilapi.GetTransactionMessages(itemid);
+             comments = Frilapi.GetTransactionMessages(itemid);
             //コメントをGUIに反映
             RefreshCommentDataGridview(comments);
             //コメントフォームをクリア
@@ -115,7 +116,7 @@ namespace RakuLand.Forms {
             this.kakakuTextBox.Text = item.s_price.ToString();// +"円";
             this.riekiTextBox.Text = Common.getRieki(item.s_price).ToString();
             //コメントを取得
-            var comments = Frilapi.GetTransactionMessages(itemid);
+            comments = Frilapi.GetTransactionMessages(itemid);
             //コメントをGUIに反映
             RefreshCommentDataGridview(comments);
             //購入者情報を取得
@@ -133,6 +134,11 @@ namespace RakuLand.Forms {
                 buyerAddressRichTextBox.Text = info.address;
             } else {
                 buyerAddressRichTextBox.Enabled = false;
+            }
+            if (!string.IsNullOrEmpty(info.zipcode)) {//zipcode
+                buyerZipcodeTextBox.Text = info.zipcode;
+            } else {
+                buyerZipcodeTextBox.Enabled = false;
             }
             this.buyerAccountNickNameTextBox.Text = this.info.buyer_screen_name;
 
@@ -369,6 +375,25 @@ namespace RakuLand.Forms {
 
         private void TransactionMessageForm_SizeChanged_1(object sender, EventArgs e) {
             AdjustGUISize();
+        }
+
+        private void dataGridView1_CellMouseEnter(object sender, DataGridViewCellEventArgs e) {
+            //if (e.RowIndex != -1) {
+            //    ToolTip ToolTip1 = new ToolTip();
+            //    //ToolTipの設定を行う
+            //    //ToolTipが表示されるまでの時間
+            //    ToolTip1.InitialDelay = 2000;
+            //    //ToolTipが表示されている時に、別のToolTipを表示するまでの時間
+            //    ToolTip1.ReshowDelay = 1000;
+            //    //ToolTipを表示する時間
+            //    ToolTip1.AutoPopDelay = 10000;
+            //    //フォームがアクティブでない時でもToolTipを表示する
+            //    ToolTip1.ShowAlways = false;
+
+            //    //Button1とButton2にToolTipが表示されるようにする
+            //    ToolTip1.SetToolTip(Button1, comments[e.RowIndex].comment);
+            //    Console.WriteLine(comments[e.RowIndex].comment);
+            //}
         }
     }
 }

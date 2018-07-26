@@ -23,8 +23,8 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.cancelTransactionButton = new System.Windows.Forms.Button();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.copyButton2 = new System.Windows.Forms.Button();
@@ -64,6 +64,8 @@
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.buyerZipcodeTextBox = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -107,7 +109,7 @@
             // saveWindowSizeCheckbox
             // 
             this.saveWindowSizeCheckbox.AutoSize = true;
-            this.saveWindowSizeCheckbox.Location = new System.Drawing.Point(737, 134);
+            this.saveWindowSizeCheckbox.Location = new System.Drawing.Point(734, 204);
             this.saveWindowSizeCheckbox.Margin = new System.Windows.Forms.Padding(4);
             this.saveWindowSizeCheckbox.Name = "saveWindowSizeCheckbox";
             this.saveWindowSizeCheckbox.Size = new System.Drawing.Size(181, 19);
@@ -138,7 +140,7 @@
             // address_copyed_checkbox
             // 
             this.address_copyed_checkbox.AutoSize = true;
-            this.address_copyed_checkbox.Location = new System.Drawing.Point(617, 136);
+            this.address_copyed_checkbox.Location = new System.Drawing.Point(614, 206);
             this.address_copyed_checkbox.Margin = new System.Windows.Forms.Padding(4);
             this.address_copyed_checkbox.Name = "address_copyed_checkbox";
             this.address_copyed_checkbox.Size = new System.Drawing.Size(104, 19);
@@ -151,10 +153,10 @@
             // 
             this.panel2.Controls.Add(this.BikouTextBox);
             this.panel2.Controls.Add(this.label11);
-            this.panel2.Location = new System.Drawing.Point(513, 162);
+            this.panel2.Location = new System.Drawing.Point(513, 231);
             this.panel2.Margin = new System.Windows.Forms.Padding(4);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(492, 126);
+            this.panel2.Size = new System.Drawing.Size(492, 57);
             this.panel2.TabIndex = 80;
             this.panel2.Visible = false;
             // 
@@ -362,7 +364,7 @@
             // 
             // buyerAddressRichTextBox
             // 
-            this.buyerAddressRichTextBox.Location = new System.Drawing.Point(617, 63);
+            this.buyerAddressRichTextBox.Location = new System.Drawing.Point(617, 111);
             this.buyerAddressRichTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.buyerAddressRichTextBox.Name = "buyerAddressRichTextBox";
             this.buyerAddressRichTextBox.ReadOnly = true;
@@ -372,7 +374,7 @@
             // 
             // buyerNameTextBox
             // 
-            this.buyerNameTextBox.Location = new System.Drawing.Point(617, 37);
+            this.buyerNameTextBox.Location = new System.Drawing.Point(617, 40);
             this.buyerNameTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.buyerNameTextBox.Name = "buyerNameTextBox";
             this.buyerNameTextBox.ReadOnly = true;
@@ -382,7 +384,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(521, 67);
+            this.label5.Location = new System.Drawing.Point(521, 111);
             this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(82, 15);
@@ -392,7 +394,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(521, 40);
+            this.label4.Location = new System.Drawing.Point(521, 43);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(82, 15);
@@ -438,11 +440,12 @@
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(492, 405);
             this.dataGridView1.TabIndex = 60;
+            this.dataGridView1.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellMouseEnter);
             // 
             // Column1
             // 
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.Column1.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.Column1.DefaultCellStyle = dataGridViewCellStyle3;
             this.Column1.HeaderText = "名前";
             this.Column1.Name = "Column1";
             this.Column1.ReadOnly = true;
@@ -457,8 +460,8 @@
             // 
             // Column2
             // 
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.Column2.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.Column2.DefaultCellStyle = dataGridViewCellStyle4;
             this.Column2.HeaderText = "取引メッセージ";
             this.Column2.Name = "Column2";
             this.Column2.ReadOnly = true;
@@ -474,11 +477,32 @@
             this.pictureBox1.TabIndex = 59;
             this.pictureBox1.TabStop = false;
             // 
+            // buyerZipcodeTextBox
+            // 
+            this.buyerZipcodeTextBox.Location = new System.Drawing.Point(617, 70);
+            this.buyerZipcodeTextBox.Margin = new System.Windows.Forms.Padding(4);
+            this.buyerZipcodeTextBox.Name = "buyerZipcodeTextBox";
+            this.buyerZipcodeTextBox.ReadOnly = true;
+            this.buyerZipcodeTextBox.Size = new System.Drawing.Size(253, 22);
+            this.buyerZipcodeTextBox.TabIndex = 89;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(521, 73);
+            this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(67, 15);
+            this.label13.TabIndex = 88;
+            this.label13.Text = "郵便番号";
+            // 
             // TransactionMessageForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1026, 704);
+            this.Controls.Add(this.buyerZipcodeTextBox);
+            this.Controls.Add(this.label13);
             this.Controls.Add(this.cancelTransactionButton);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.copyButton2);
@@ -565,5 +589,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.TextBox buyerZipcodeTextBox;
+        private System.Windows.Forms.Label label13;
     }
 }

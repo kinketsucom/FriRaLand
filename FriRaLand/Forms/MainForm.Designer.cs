@@ -1051,6 +1051,7 @@
             this.label6.Size = new System.Drawing.Size(107, 28);
             this.label6.TabIndex = 23;
             this.label6.Text = "再出品失敗";
+            this.label6.Visible = false;
             // 
             // delete_failed_num_label
             // 
@@ -1083,6 +1084,7 @@
             this.label1.Size = new System.Drawing.Size(107, 28);
             this.label1.TabIndex = 19;
             this.label1.Text = "再出品成功";
+            this.label1.Visible = false;
             // 
             // exhibit_failed_num_label
             // 
