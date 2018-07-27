@@ -998,6 +998,7 @@
             this.reexhibit_success_num_label.Name = "reexhibit_success_num_label";
             this.reexhibit_success_num_label.Size = new System.Drawing.Size(0, 28);
             this.reexhibit_success_num_label.TabIndex = 25;
+            this.reexhibit_success_num_label.Visible = false;
             // 
             // reexhibit_failed_num_label
             // 
@@ -1008,6 +1009,7 @@
             this.reexhibit_failed_num_label.Name = "reexhibit_failed_num_label";
             this.reexhibit_failed_num_label.Size = new System.Drawing.Size(0, 28);
             this.reexhibit_failed_num_label.TabIndex = 24;
+            this.reexhibit_failed_num_label.Visible = false;
             // 
             // label3
             // 

@@ -858,6 +858,7 @@ namespace RakuLand {
             }
            
             item.item_id = api.Sell(cloneItem, api.account.cc);
+            
             return item;
         }
 
@@ -1355,6 +1356,7 @@ namespace RakuLand {
                 this.toolStripStatusLabel1.Text = ("出品中: " + item.item_name);
                 apis[0] = Common.checkFrilAPI(apis[0]);
                 FrilItem res = SellWithOption(apis[0].account, item);
+                if (res.item_id == 0.ToString()) continue;
                 AccountDBHelper accountDBHelper = new AccountDBHelper();
                 if (res != null) {
                     Account a = accountDBHelper.getAccountFromSellerid(apis[0].account.userId);
