@@ -1356,7 +1356,7 @@ namespace RakuLand {
                 this.toolStripStatusLabel1.Text = ("出品中: " + item.item_name);
                 apis[0] = Common.checkFrilAPI(apis[0]);
                 FrilItem res = SellWithOption(apis[0].account, item);
-                if (res.item_id == 0.ToString()) continue;
+                if (res.item_id == null) continue;
                 AccountDBHelper accountDBHelper = new AccountDBHelper();
                 if (res != null) {
                     Account a = accountDBHelper.getAccountFromSellerid(apis[0].account.userId);
@@ -1682,6 +1682,95 @@ namespace RakuLand {
             toolStripStatusLabel1.Text = "";
         }
         #endregion
+
+        private void ReservationDataGridView_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e) {
+            try {
+                switch (e.ColumnIndex) {
+                    //case 1:
+                    //    //状態でソート
+                    //    if (ReservationDataBindList.Count <= 0) return;
+                    //    //降順昇順の切り替え
+                    //    if (String.Compare(ReservationDataBindList[0].exhibit_status_str, ReservationDataBindList[ReservationDataBindList.Count - 1].exhibit_status_str) < 0) ReservationDataBindList.Sort((a, b) => String.Compare(b.exhibit_status_str, a.exhibit_status_str));
+                    //    else ReservationDataBindList.Sort((a, b) => String.Compare(a.exhibit_status_str, b.exhibit_status_str));
+                    //    break;
+                    //case 2:
+                    //    //商品名でソート
+                    //    if (ReservationDataBindList.Count <= 0) return;
+                    //    //降順昇順の切り替え
+                    //    if (String.Compare(ReservationDataBindList[0].itemName, ReservationDataBindList[ReservationDataBindList.Count - 1].itemName) < 0) ReservationDataBindList.Sort((a, b) => String.Compare(b.itemName, a.itemName));
+                    //    else ReservationDataBindList.Sort((a, b) => String.Compare(a.itemName, b.itemName));
+                    //    break;
+                    //case 3:
+                    //    //ニックネームでソート
+                    //    if (ReservationDataBindList.Count <= 0) return;
+                    //    //降順昇順の切り替え
+                    //    if (String.Compare(ReservationDataBindList[0].accountNickName, ReservationDataBindList[ReservationDataBindList.Count - 1].accountNickName) < 0) ReservationDataBindList.Sort((a, b) => String.Compare(b.accountNickName, a.accountNickName));
+                    //    else ReservationDataBindList.Sort((a, b) => String.Compare(a.accountNickName, b.accountNickName));
+                    //    break;
+                    case 4:
+                        //出品日時でソート
+                        if (ReservationDataBindList.Count <= 0) return;
+                        //降順昇順の切り替え
+                        if (String.Compare(ReservationDataBindList[0].exhibitDateString, ReservationDataBindList[ReservationDataBindList.Count - 1].exhibitDateString) < 0) ReservationDataBindList.Sort((a, b) => DateTime.Compare(b.exhibitDate, a.exhibitDate));
+                        else ReservationDataBindList.Sort((a, b) => DateTime.Compare(a.exhibitDate, b.exhibitDate));
+                        break;
+                    //case 5:
+                    //    //取消日時でソート
+                    //    if (ReservationDataBindList.Count <= 0) return;
+                    //    //降順昇順の切り替え
+                    //    if (String.Compare(ReservationDataBindList[0].deleteDateString, ReservationDataBindList[ReservationDataBindList.Count - 1].deleteDateString) < 0) ReservationDataBindList.Sort((a, b) => DateTime.Compare(b.deleteDate, a.deleteDate));
+                    //    else ReservationDataBindList.Sort((a, b) => DateTime.Compare(a.deleteDate, b.deleteDate));
+                    //    break;
+                    //case 6:
+                    //    //いいね見るかでソート
+                    //    if (ReservationDataBindList.Count <= 0) return;
+                    //    //降順昇順の切り替え
+                    //    if (String.Compare(ReservationDataBindList[0].consider_favorite_str, ReservationDataBindList[ReservationDataBindList.Count - 1].consider_favorite_str) < 0) ReservationDataBindList.Sort((a, b) => String.Compare(b.consider_favorite_str, a.consider_favorite_str));
+                    //    else ReservationDataBindList.Sort((a, b) => String.Compare(a.consider_favorite_str, b.consider_favorite_str));
+                    //    break;
+                    //case 7:
+                    //    //コメントでソート
+                    //    if (ReservationDataBindList.Count <= 0) return;
+                    //    //降順昇順の切り替え
+                    //    if (String.Compare(ReservationDataBindList[0].consider_comment_str, ReservationDataBindList[ReservationDataBindList.Count - 1].consider_comment_str) < 0) ReservationDataBindList.Sort((a, b) => String.Compare(b.consider_comment_str, a.consider_comment_str));
+                    //    else ReservationDataBindList.Sort((a, b) => String.Compare(a.consider_comment_str, b.consider_comment_str));
+                    //    break;
+                    //case 8:
+                    //    //取消日時2でソート
+                    //    if (ReservationDataBindList.Count <= 0) return;
+                    //    //降順昇順の切り替え
+                    //    if (String.Compare(ReservationDataBindList[0].deleteDateString2, ReservationDataBindList[ReservationDataBindList.Count - 1].deleteDateString2) < 0) ReservationDataBindList.Sort((a, b) => DateTime.Compare(b.deleteDate2, a.deleteDate2));
+                    //    else ReservationDataBindList.Sort((a, b) => DateTime.Compare(a.deleteDate2, b.deleteDate2));
+                    //    break;
+                    //case 9:
+                    //    //いいね2見るかでソート
+                    //    if (ReservationDataBindList.Count <= 0) return;
+                    //    //降順昇順の切り替え
+                    //    if (String.Compare(ReservationDataBindList[0].consider_favorite_str2, ReservationDataBindList[ReservationDataBindList.Count - 1].consider_favorite_str2) < 0) ReservationDataBindList.Sort((a, b) => String.Compare(b.consider_favorite_str2, a.consider_favorite_str2));
+                    //    else ReservationDataBindList.Sort((a, b) => String.Compare(a.consider_favorite_str2, b.consider_favorite_str2));
+                    //    break;
+                    //case 10:
+                    //    //コメント2でソート
+                    //    if (ReservationDataBindList.Count <= 0) return;
+                    //    //降順昇順の切り替え
+                    //    if (String.Compare(ReservationDataBindList[0].consider_comment_str2, ReservationDataBindList[ReservationDataBindList.Count - 1].consider_comment_str2) < 0) ReservationDataBindList.Sort((a, b) => String.Compare(b.consider_comment_str2, a.consider_comment_str2));
+                    //    else ReservationDataBindList.Sort((a, b) => String.Compare(a.consider_comment_str2, b.consider_comment_str2));
+                    //    break;
+                    //case 11:
+                    //    //再出品オプションでソート
+                    //    if (ReservationDataBindList.Count <= 0) return;
+                    //    //降順昇順の切り替え
+                    //    if (String.Compare(ReservationDataBindList[0].reexhibit_flag_str, ReservationDataBindList[ReservationDataBindList.Count - 1].reexhibit_flag_str) < 0) ReservationDataBindList.Sort((a, b) => String.Compare(b.reexhibit_flag_str, a.reexhibit_flag_str));
+                    //    else ReservationDataBindList.Sort((a, b) => String.Compare(a.reexhibit_flag_str, b.reexhibit_flag_str));
+                    //    break;
+                    default:
+                        break;
+                }
+                ReservationDataGridView.Refresh();
+            } catch {
+
+            }
+        }
     }
 }
 

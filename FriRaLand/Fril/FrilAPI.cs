@@ -474,7 +474,7 @@ namespace RakuLand {
                 var rawres = postFrilAPI(url, param, cc);
                 if (rawres.error) throw new Exception("商品情報の送信に失敗");
                 if (string.IsNullOrEmpty(rawres.response)) {
-                    MessageBox.Show("アカウントの住所が未登録の可能性があります");
+                    MessageBox.Show("アカウントの住所等詳細情報が未登録の可能性があります");
                     throw new Exception("住所未登録"); }
                 string res = "";
                 //itemIDをとりだして画像を送る
