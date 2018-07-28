@@ -474,8 +474,8 @@ namespace RakuLand {
                 var rawres = postFrilAPI(url, param, cc);
                 if (rawres.error) throw new Exception("商品情報の送信に失敗");
                 if (string.IsNullOrEmpty(rawres.response)) {
-                    MessageBox.Show("アカウントの住所等詳細情報が未登録の可能性があります");
-                    throw new Exception("住所未登録"); }
+                    MessageBox.Show("アカウントが何らかの理由で制限があります。\n公式webでアカウントの確認をしてください。");
+                    throw new Exception("アカウントに制限ありの可能性"); }
                 string res = "";
                 //itemIDをとりだして画像を送る
                 string item_id = ((long)DynamicJson.Parse(rawres.response).item_id).ToString();
@@ -799,7 +799,7 @@ namespace RakuLand {
                 //POST
                 string content = "";
                 var task = Task.Factory.StartNew(() => executePostRequest(ref req, bytes));
-                task.Wait(10000);
+                task.Wait(100000);
                 if (task.IsCompleted) {
                     content = task.Result;
                     Console.WriteLine(content);
