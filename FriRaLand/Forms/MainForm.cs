@@ -40,8 +40,10 @@ namespace RakuLand {
 
         private async void MainForm_Load(object sender, EventArgs e) {
             AdjustLayout();
+            
             //初回起動(キーがなければ起動時刻+3日をレジストリに書き込み）
             string stringValue = (string)Microsoft.Win32.Registry.GetValue(MainForm.Registry_Path, "Expire", "");
+            Console.WriteLine(stringValue);
             string datestr = DateTime.Now.AddDays(3).ToString();
             if (string.IsNullOrEmpty(stringValue)) Microsoft.Win32.Registry.SetValue(Registry_Path, "Expire", datestr);
             FrilItemDBHelper DBhelper = new FrilItemDBHelper();
@@ -913,6 +915,13 @@ namespace RakuLand {
                 EnableAllButton();
                 return;
             }
+
+
+            foreach(var val in items) {
+                Console.WriteLine(val.t_status+":"+val.item_name);
+            }
+
+
             ExhibittedItemDataBindList.Clear();
             ExhibittedItemDataBackBindList.Clear();
             foreach (var item in items) {
@@ -993,6 +1002,9 @@ namespace RakuLand {
                     case 1:
                         //e.Value = item.status_message;
                         switch (item.t_status) {
+                            case 2:
+                                e.Value += "決済以前";
+                                break;
                             case 3:
                                 e.Value += "決済済";
                                 break;
@@ -1686,13 +1698,13 @@ namespace RakuLand {
         private void ReservationDataGridView_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e) {
             try {
                 switch (e.ColumnIndex) {
-                    //case 1:
-                    //    //状態でソート
-                    //    if (ReservationDataBindList.Count <= 0) return;
-                    //    //降順昇順の切り替え
-                    //    if (String.Compare(ReservationDataBindList[0].exhibit_status_str, ReservationDataBindList[ReservationDataBindList.Count - 1].exhibit_status_str) < 0) ReservationDataBindList.Sort((a, b) => String.Compare(b.exhibit_status_str, a.exhibit_status_str));
-                    //    else ReservationDataBindList.Sort((a, b) => String.Compare(a.exhibit_status_str, b.exhibit_status_str));
-                    //    break;
+                    case 1:
+                        //    //状態でソート
+                        if (ReservationDataBindList.Count <= 0) return;
+                        //降順昇順の切り替え
+                        if (String.Compare(ReservationDataBindList[0].exhibit_status_str, ReservationDataBindList[ReservationDataBindList.Count - 1].exhibit_status_str) < 0) ReservationDataBindList.Sort((a, b) => String.Compare(b.exhibit_status_str, a.exhibit_status_str));
+                        else ReservationDataBindList.Sort((a, b) => String.Compare(a.exhibit_status_str, b.exhibit_status_str));
+                        break;
                     //case 2:
                     //    //商品名でソート
                     //    if (ReservationDataBindList.Count <= 0) return;
