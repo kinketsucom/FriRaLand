@@ -38,6 +38,9 @@ namespace RakuLand {
         private List<FrilAPI> FrilAPIList = new List<FrilAPI>();
         private Dictionary<string, FrilAPI> sellerIDtoAPIDictionary = new Dictionary<string, FrilAPI>(); //sellerid -> API
 
+
+        private bool exhibit_sort = true;
+
         private async void MainForm_Load(object sender, EventArgs e) {
             AdjustLayout();
             
@@ -1779,6 +1782,174 @@ namespace RakuLand {
                         break;
                 }
                 ReservationDataGridView.Refresh();
+            } catch {
+
+            }
+        }
+        private static int Compare(FrilItem x, FrilItem y) {
+            if (x.t_status < y.t_status) {
+                return -1;
+            } else if (x.t_status > y.t_status) {
+                return 1;
+            } else {
+                if (x.item_name[0] < y.item_name[0]) {
+                    return -1;
+                } else if (x.item_name[0] < y.item_name[0]) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+                
+                return 0;
+            }
+        }
+
+        private void ExhibittedDataGridView_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e) {
+            try {
+                switch (e.ColumnIndex) {
+                    case 1:
+                        //状態でソート
+                        if (ExhibittedItemDataBindList.Count <= 0) return;
+                        //降順昇順の切り替え
+                        if (exhibit_sort) {
+                            ExhibittedItemDataBindList.Sort(Compare);
+                        } else {
+                            ExhibittedItemDataBindList.Reverse();
+                        }
+                        exhibit_sort = !exhibit_sort; 
+                            //if ( ExhibittedItemDataBindList[0].t_status, ExhibittedItemDataBindList[ExhibittedItemDataBindList.Count - 1].status_message) < 0) ExhibittedItemDataBindList.Sort((a, b) => String.Compare(b.status_message, a.status_message));
+                        //else ExhibittedItemDataBindList.Sort((a, b) => String.Compare(a.status_message, b.status_message));
+                        break;
+                    case 2:
+                        //出品アカウントでソート
+                        if (ExhibittedItemDataBindList.Count <= 0) return;
+                        //降順昇順の切り替え
+                        if (String.Compare(ExhibittedItemDataBindList[0].screen_name, ExhibittedItemDataBindList[ExhibittedItemDataBindList.Count - 1].screen_name) < 0) ExhibittedItemDataBindList.Sort((a, b) => String.Compare(b.screen_name, a.screen_name));
+                        else ExhibittedItemDataBindList.Sort((a, b) => String.Compare(a.screen_name, b.screen_name));
+                        break;
+                    //case 3:
+                    //    //商品名でソート
+                    //    if (ExhibittedItemDataBindList.Count <= 0) return;
+                    //    //降順昇順の切り替え
+                    //    if (String.Compare(ExhibittedItemDataBindList[0].name, ExhibittedItemDataBindList[ExhibittedItemDataBindList.Count - 1].name) < 0) ExhibittedItemDataBindList.Sort((a, b) => String.Compare(b.name, a.name));
+                    //    else ExhibittedItemDataBindList.Sort((a, b) => String.Compare(a.name, b.name));
+                    //    break;
+                    //case 4:
+                    //    //商品説明でソート
+                    //    if (ExhibittedItemDataBindList.Count <= 0) return;
+                    //    //降順昇順の切り替え
+                    //    if (String.Compare(ExhibittedItemDataBindList[0].description, ExhibittedItemDataBindList[ExhibittedItemDataBindList.Count - 1].description) < 0) ExhibittedItemDataBindList.Sort((a, b) => String.Compare(b.description, a.description));
+                    //    else ExhibittedItemDataBindList.Sort((a, b) => String.Compare(a.description, b.description));
+                    //    break;
+                    //case 5:
+                    //    //価格でソート
+                    //    if (ExhibittedItemDataBindList.Count <= 0) return;
+                    //    //降順昇順の切り替え
+                    //    if (ExhibittedItemDataBindList[0].price < ExhibittedItemDataBindList[ExhibittedItemDataBindList.Count - 1].price) ExhibittedItemDataBindList.Sort((a, b) => b.price - a.price);
+                    //    else ExhibittedItemDataBindList.Sort((a, b) => a.price - b.price);
+                    //    break;
+                    //case 6:
+                    //    //いいね数でソート
+                    //    if (ExhibittedItemDataBindList.Count <= 0) return;
+                    //    //降順昇順の切り替え
+                    //    if (ExhibittedItemDataBindList[0].num_likes < ExhibittedItemDataBindList[ExhibittedItemDataBindList.Count - 1].num_likes) ExhibittedItemDataBindList.Sort((a, b) => b.num_likes - a.num_likes);
+                    //    else ExhibittedItemDataBindList.Sort((a, b) => a.num_likes - b.num_likes);
+                    //    break;
+                    //case 7:
+                    //    //コメント数でソート
+                    //    if (ExhibittedItemDataBindList.Count <= 0) return;
+                    //    //降順昇順の切り替え
+                    //    if (ExhibittedItemDataBindList[0].num_comments < ExhibittedItemDataBindList[ExhibittedItemDataBindList.Count - 1].num_comments) ExhibittedItemDataBindList.Sort((a, b) => b.num_comments - a.num_comments);
+                    //    else ExhibittedItemDataBindList.Sort((a, b) => a.num_comments - b.num_comments);
+                    //    break;
+                    //case 8:
+                    //    //ウォッチ数でソート
+                    //    if (ExhibittedItemDataBindList.Count <= 0) return;
+                    //    //降順昇順の切り替え
+                    //    if (ExhibittedItemDataBindList[0].item_pv < ExhibittedItemDataBindList[ExhibittedItemDataBindList.Count - 1].item_pv) ExhibittedItemDataBindList.Sort((a, b) => b.item_pv - a.item_pv);
+                    //    else ExhibittedItemDataBindList.Sort((a, b) => a.item_pv - b.item_pv);
+                    //    break;
+                    //case 9:
+                    //    //出品日時でソート
+                    //    if (ExhibittedItemDataBindList.Count <= 0) return;
+                    //    //降順昇順の切り替え
+                    //    if (String.Compare(ExhibittedItemDataBindList[0].created_str, ExhibittedItemDataBindList[ExhibittedItemDataBindList.Count - 1].created_str) < 0) ExhibittedItemDataBindList.Sort((a, b) => DateTime.Compare(b.created_date, a.created_date));
+                    //    else ExhibittedItemDataBindList.Sort((a, b) => DateTime.Compare(a.created_date, b.created_date));
+                    //    break;
+                    //case 10:
+                    //    //購入者コメント時間でソート
+                    //    if (ExhibittedItemDataBindList.Count <= 0) return;
+                    //    //降順昇順の切り替え
+                    //    if (DateTime.Compare(ExhibittedItemDataBindList[0].buyer_comment_time, ExhibittedItemDataBindList[ExhibittedItemDataBindList.Count - 1].buyer_comment_time) < 0) ExhibittedItemDataBindList.Sort((a, b) => DateTime.Compare(b.buyer_comment_time, a.buyer_comment_time));
+                    //    else ExhibittedItemDataBindList.Sort((a, b) => DateTime.Compare(a.buyer_comment_time, b.buyer_comment_time));
+                    //    break;
+                    //case 11:
+                    //    //出品者コメント時間でソート
+                    //    if (ExhibittedItemDataBindList.Count <= 0) return;
+                    //    //降順昇順の切り替え
+                    //    if (DateTime.Compare(ExhibittedItemDataBindList[0].seller_comment_time, ExhibittedItemDataBindList[ExhibittedItemDataBindList.Count - 1].seller_comment_time) < 0) ExhibittedItemDataBindList.Sort((a, b) => DateTime.Compare(b.seller_comment_time, a.seller_comment_time));
+                    //    else ExhibittedItemDataBindList.Sort((a, b) => DateTime.Compare(a.seller_comment_time, b.seller_comment_time));
+                    //    break;
+                    //case 12:
+                    //    //取引メッセージ数でソート
+                    //    if (ExhibittedItemDataBindList.Count <= 0) return;
+                    //    //降順昇順の切り替え
+                    //    if (ExhibittedItemDataBindList[0].transaction_message_num < ExhibittedItemDataBindList[ExhibittedItemDataBindList.Count - 1].transaction_message_num) ExhibittedItemDataBindList.Sort((a, b) => b.transaction_message_num - a.transaction_message_num);
+                    //    else ExhibittedItemDataBindList.Sort((a, b) => a.transaction_message_num - b.transaction_message_num);
+                    //    break;
+                    //case 13:
+                    //    //購入者取引メッセージ時間でソート
+                    //    if (ExhibittedItemDataBindList.Count <= 0) return;
+                    //    //降順昇順の切り替え
+                    //    if (DateTime.Compare(ExhibittedItemDataBindList[0].buyer_transaction_message_time, ExhibittedItemDataBindList[ExhibittedItemDataBindList.Count - 1].buyer_transaction_message_time) < 0) ExhibittedItemDataBindList.Sort((a, b) => DateTime.Compare(b.buyer_transaction_message_time, a.buyer_transaction_message_time));
+                    //    else ExhibittedItemDataBindList.Sort((a, b) => DateTime.Compare(a.buyer_transaction_message_time, b.buyer_transaction_message_time));
+                    //    break;
+                    //case 14:
+                    //    //出品者取引メッセージ時間時間でソート
+                    //    if (ExhibittedItemDataBindList.Count <= 0) return;
+                    //    //降順昇順の切り替え
+                    //    if (DateTime.Compare(ExhibittedItemDataBindList[0].seller_transaction_message_time, ExhibittedItemDataBindList[ExhibittedItemDataBindList.Count - 1].seller_transaction_message_time) < 0) ExhibittedItemDataBindList.Sort((a, b) => DateTime.Compare(b.seller_transaction_message_time, a.seller_transaction_message_time));
+                    //    else ExhibittedItemDataBindList.Sort((a, b) => DateTime.Compare(a.seller_transaction_message_time, b.seller_transaction_message_time));
+                    //    break;
+                    //case 15:
+                    //    //備考でソート
+                    //    if (ExhibittedItemDataBindList.Count <= 0) return;
+                    //    //降順昇順の切り替え
+                    //    if (String.Compare(ExhibittedItemDataBindList[0].bikou, ExhibittedItemDataBindList[ExhibittedItemDataBindList.Count - 1].bikou) < 0) ExhibittedItemDataBindList.Sort((a, b) => String.Compare(b.bikou, a.bikou));
+                    //    else ExhibittedItemDataBindList.Sort((a, b) => String.Compare(a.bikou, b.bikou));
+                    //    break;
+                    //case 16:
+                    //    //住所転記済みでソート
+                    //    if (ExhibittedItemDataBindList.Count <= 0) return;
+                    //    //降順昇順の切り替え
+                    //    if (ExhibittedItemDataBindList[0].address_copyed.CompareTo(ExhibittedItemDataBindList[ExhibittedItemDataBindList.Count - 1].address_copyed) < 0) ExhibittedItemDataBindList.Sort((a, b) => b.address_copyed.CompareTo(a.address_copyed));
+                    //    else ExhibittedItemDataBindList.Sort((a, b) => a.address_copyed.CompareTo(b.address_copyed));
+                    //    break;
+                    //case 17:
+                    //    //購入者氏名でソート
+                    //    if (ExhibittedItemDataBindList.Count <= 0) return;
+                    //    //降順昇順の切り替え
+                    //    if (String.Compare(ExhibittedItemDataBindList[0].buyer_simei, ExhibittedItemDataBindList[ExhibittedItemDataBindList.Count - 1].buyer_simei) < 0) ExhibittedItemDataBindList.Sort((a, b) => String.Compare(b.buyer_simei, a.buyer_simei));
+                    //    else ExhibittedItemDataBindList.Sort((a, b) => String.Compare(a.buyer_simei, b.buyer_simei));
+                    //    break;
+                    //case 18:
+                    //    //購入者ニックネームでソート
+                    //    if (ExhibittedItemDataBindList.Count <= 0) return;
+                    //    //降順昇順の切り替え
+                    //    if (String.Compare(ExhibittedItemDataBindList[0].buyer_name, ExhibittedItemDataBindList[ExhibittedItemDataBindList.Count - 1].buyer_name) < 0) ExhibittedItemDataBindList.Sort((a, b) => String.Compare(b.buyer_name, a.buyer_name));
+                    //    else ExhibittedItemDataBindList.Sort((a, b) => String.Compare(a.buyer_name, b.buyer_name));
+                    //    break;
+                    //case 19:
+                    //    //商品名でソート
+                    //    if (ExhibittedItemDataBindList.Count <= 0) return;
+                    //    //降順昇順の切り替え
+                    //    if (String.Compare(ExhibittedItemDataBindList[0].itemid, ExhibittedItemDataBindList[ExhibittedItemDataBindList.Count - 1].itemid) < 0) ExhibittedItemDataBindList.Sort((a, b) => String.Compare(b.itemid, a.itemid));
+                    //    else ExhibittedItemDataBindList.Sort((a, b) => String.Compare(a.itemid, b.itemid));
+                    //    break;
+                    default:
+                        break;
+                }
+                ExhibittedDataGridView.Refresh();
             } catch {
 
             }
