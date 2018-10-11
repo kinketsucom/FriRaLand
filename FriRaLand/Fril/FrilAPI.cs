@@ -474,8 +474,8 @@ namespace RakuLand {
                 var rawres = postFrilAPI(url, param, cc);
                 if (rawres.error) throw new Exception("商品情報の送信に失敗");
                 if (string.IsNullOrEmpty(rawres.response)) {
-                    MessageBox.Show("アカウントが何らかの理由で制限があります。\n公式webでアカウントの確認をしてください。");
-                    throw new Exception("アカウントに制限ありの可能性"); }
+                    MessageBox.Show("連続出品しすぎか、アカウントが何らかの理由で制限があります。\n公式webでアカウントの確認をしてください。");
+                    throw new Exception("アカウントに制限ありの可能性or連続出品制限"); }
                 string res = "";
                 //itemIDをとりだして画像を送る
                 string item_id = ((long)DynamicJson.Parse(rawres.response).item_id).ToString();

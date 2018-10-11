@@ -1173,7 +1173,7 @@ namespace RakuLand {
                 api = Common.checkFrilAPI(api);
                 //this.toolStripStatusLabel1.Text = ("出品中: " + item.name);
                 FrilItem res = SellWithOption(a, item);
-                if (res != null) {
+                if (res.item_id != null) {
                     var sr = new ShuppinRirekiDBHelper.ShuppinRireki();
                     sr.itemDBId = item.DBId;
                     sr.item_id = res.item_id;
@@ -1186,6 +1186,7 @@ namespace RakuLand {
                     //GUIだけ更新してDBには入れない
                     ReservationDataBindList[row.Index].exhibit_status_str = ReservationSettingForm.get_exhibit_status_str(ReservationSettingForm.Status.Success);
                 } else {
+                    ReservationDataBindList[row.Index].exhibit_status_str = ReservationSettingForm.get_exhibit_status_str(ReservationSettingForm.Status.Failed);
                     exhibit_failed_num++;
                 }
                 num++;
