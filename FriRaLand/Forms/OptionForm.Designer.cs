@@ -128,9 +128,8 @@
             this.label3.Font = new System.Drawing.Font("メイリオ", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(12, 260);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(358, 25);
+            this.label3.Size = new System.Drawing.Size(0, 25);
             this.label3.TabIndex = 45;
-            this.label3.Text = "rakuland.dev@gmail.comまでお願いします";
             // 
             // label2
             // 
@@ -138,9 +137,8 @@
             this.label2.Font = new System.Drawing.Font("メイリオ", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(14, 235);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(222, 25);
+            this.label2.Size = new System.Drawing.Size(0, 25);
             this.label2.TabIndex = 44;
-            this.label2.Text = "※バグ報告.お問い合わせは";
             // 
             // OptionForm
             // 
