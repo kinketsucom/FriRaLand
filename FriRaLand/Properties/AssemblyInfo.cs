@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // アセンブリに関する一般情報は以下の属性セットをとおして制御されます。
 // アセンブリに関連付けられている情報を変更するには、
 // これらの属性値を変更してください。
-[assembly: AssemblyTitle("RakuLand")]
+[assembly: AssemblyTitle("ExhibitProgram")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("RakuLand")]
-[assembly: AssemblyCopyright("Copyright ©  2018 RakuLand")]
+[assembly: AssemblyProduct("ExhibitProgram")]
+[assembly: AssemblyCopyright("Copyright ©  2018 ExhibitProgram")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

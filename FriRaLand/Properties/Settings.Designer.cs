@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace RakuLand.Properties {
+namespace ExhibitProgram.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

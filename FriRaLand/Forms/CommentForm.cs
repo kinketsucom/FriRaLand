@@ -205,7 +205,7 @@ namespace RakuLand.Forms {
             if (Frilapi.DeleteComment(comments[e.RowIndex].item_id, comments[e.RowIndex].id)) {
                 toolStripStatusLabel1.Text = "コメント削除成功";
             } else {
-                toolStripStatusLabel1.Text = "コメント削除失敗(rakuland.dev@gmail.comにお問い合わせください)";
+                toolStripStatusLabel1.Text = "コメント削除失敗(お問い合わせください)";
             }
             //コメント一覧を再取得してGUIに反映
             this.dataGridView1.Rows.Clear();

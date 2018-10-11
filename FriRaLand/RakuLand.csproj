@@ -7,8 +7,8 @@
     <ProjectGuid>{1FF68773-6902-4707-A4AA-532D2D28FE4A}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RakuLand</RootNamespace>
-    <AssemblyName>RakuLand</AssemblyName>
+    <RootNamespace>ExhibitProgram</RootNamespace>
+    <AssemblyName>ExhibitProgram</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
