@@ -164,6 +164,7 @@
             this.notificationTimer = new System.Windows.Forms.Timer(this.components);
             this.getNotificationBackgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            this.ライセンス入力ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.DailyExhibitDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.LocalItemDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ReservationDataGridView)).BeginInit();
@@ -1411,7 +1412,8 @@
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.メニューToolStripMenuItem,
-            this.バージョン情報ToolStripMenuItem});
+            this.バージョン情報ToolStripMenuItem,
+            this.ライセンス入力ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1536, 28);
@@ -1432,28 +1434,28 @@
             // アカウント管理ToolStripMenuItem
             // 
             this.アカウント管理ToolStripMenuItem.Name = "アカウント管理ToolStripMenuItem";
-            this.アカウント管理ToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
+            this.アカウント管理ToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
             this.アカウント管理ToolStripMenuItem.Text = "アカウント管理";
             this.アカウント管理ToolStripMenuItem.Click += new System.EventHandler(this.アカウント管理ToolStripMenuItem_Click_1);
             // 
             // 出金管理ToolStripMenuItem
             // 
             this.出金管理ToolStripMenuItem.Name = "出金管理ToolStripMenuItem";
-            this.出金管理ToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
+            this.出金管理ToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
             this.出金管理ToolStripMenuItem.Text = "出金管理";
             this.出金管理ToolStripMenuItem.Click += new System.EventHandler(this.出金管理ToolStripMenuItem_Click);
             // 
             // 通知一覧ToolStripMenuItem
             // 
             this.通知一覧ToolStripMenuItem.Name = "通知一覧ToolStripMenuItem";
-            this.通知一覧ToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
+            this.通知一覧ToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
             this.通知一覧ToolStripMenuItem.Text = "通知一覧";
             this.通知一覧ToolStripMenuItem.Click += new System.EventHandler(this.通知一覧ToolStripMenuItem_Click);
             // 
             // オプションToolStripMenuItem
             // 
             this.オプションToolStripMenuItem.Name = "オプションToolStripMenuItem";
-            this.オプションToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
+            this.オプションToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
             this.オプションToolStripMenuItem.Text = "オプション";
             this.オプションToolStripMenuItem.Click += new System.EventHandler(this.オプションToolStripMenuItem_Click);
             // 
@@ -1574,6 +1576,13 @@
             this.notifyIcon1.Visible = true;
             this.notifyIcon1.BalloonTipClicked += new System.EventHandler(this.notifyIcon1_BalloonTipClicked);
             // 
+            // ライセンス入力ToolStripMenuItem
+            // 
+            this.ライセンス入力ToolStripMenuItem.Name = "ライセンス入力ToolStripMenuItem";
+            this.ライセンス入力ToolStripMenuItem.Size = new System.Drawing.Size(106, 24);
+            this.ライセンス入力ToolStripMenuItem.Text = "ライセンス入力";
+            this.ライセンス入力ToolStripMenuItem.Click += new System.EventHandler(this.ライセンス入力ToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -1590,7 +1599,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainForm";
-            this.Text = "ExhibitProgram";
+            this.Text = "RakuExhibitProgram";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.SizeChanged += new System.EventHandler(this.MainForm_SizeChanged);
             ((System.ComponentModel.ISupportInitialize)(this.DailyExhibitDataGridView)).EndInit();
@@ -1750,6 +1759,7 @@
         private System.Windows.Forms.ToolStripMenuItem オプションToolStripMenuItem;
         private System.Windows.Forms.Label ItemUpInfoLabel;
         private System.Windows.Forms.Label ItemDownInfoLabel;
+        private System.Windows.Forms.ToolStripMenuItem ライセンス入力ToolStripMenuItem;
     }
 }
 

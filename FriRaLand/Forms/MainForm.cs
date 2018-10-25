@@ -26,9 +26,9 @@ namespace RakuLand {
         private List<Group> groupList = new List<Group>();
         private List<FrilItem> LocalItemDataBindList = new List<FrilItem>();
         public const string Key_LicenseKey = "LicenseKey";
-        public const string Registry_Path = @"HKEY_CURRENT_USER\Software\Rakuland";
-        public const string ProductName = "RakuLand";
-        public const string ProductKind = "rakuland";
+        public const string Registry_Path = @"HKEY_CURRENT_USER\Software\MatsudaRakuland";
+        public const string ProductName = "RakuExhibitProgram";
+        public const string ProductKind = "matsuda_rakuland";
         private List<ReservationSettingForm.ReservationSetting> ReservationDataBindList = new List<ReservationSettingForm.ReservationSetting>();
         private List<FrilItem> ExhibittedItemDataBindList = new List<FrilItem>(); //表にバインドする商品リスト 絞り込み結果はこっち
         private List<FrilItem> ExhibittedItemDataBackBindList = new List<FrilItem>(); //こっちは絞り込んでも減らない
@@ -1954,6 +1954,11 @@ namespace RakuLand {
             } catch {
 
             }
+        }
+
+        private void ライセンス入力ToolStripMenuItem_Click(object sender, EventArgs e) {
+            LicenseForm lf = new LicenseForm(this);
+            lf.Show();
         }
     }
 }

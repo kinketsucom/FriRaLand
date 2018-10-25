@@ -18,7 +18,6 @@ namespace RakuLand.Forms {
             //最前面にもってくる
             this.mainform = mainform;
             this.TopMost = true;
-
         }
         private MainForm mainform;
         private void button1_Click(object sender, EventArgs e) {
@@ -36,6 +35,9 @@ namespace RakuLand.Forms {
                 }
             } else {
                 //チェックを行う必要があるのでチェックする
+                registerLicenseKey(this.licenseKeyTextBox.Text.Trim());//レジストリを上書き
+                registry_license_key = (string)Microsoft.Win32.Registry.GetValue(MainForm.Registry_Path, MainForm.Key_LicenseKey, "");
+
                 bool res = checkLicenseKey(registry_license_key, Environment.MachineName);
                 if (res) {
                     ok = true;
@@ -88,7 +90,7 @@ namespace RakuLand.Forms {
             try {
                 string text = "machine_name=" + Uri.EscapeUriString(machine_name);
                 byte[] bytes = Encoding.ASCII.GetBytes(text);
-                HttpWebRequest req = (HttpWebRequest)WebRequest.Create("http://160.16.200.169/api/register/" + guid);
+                HttpWebRequest req = (HttpWebRequest)WebRequest.Create("http://160.16.69.60/api/matsuda_register/" + guid);
                 req.Method = "POST";
                 req.ContentType = "application/x-www-form-urlencoded";
                 req.ContentLength = (long)bytes.Length;
@@ -119,7 +121,7 @@ namespace RakuLand.Forms {
             try {
                 string text = "machine_name=" + Uri.EscapeDataString(machine_name);
                 byte[] bytes = Encoding.ASCII.GetBytes(text);
-                HttpWebRequest req = (HttpWebRequest)WebRequest.Create("http://160.16.200.169/api/check/" + guid);
+                HttpWebRequest req = (HttpWebRequest)WebRequest.Create("http://160.16.69.60/api/matsuda_check/" + guid);
                 req.Method = "POST";
                 req.ContentType = "application/x-www-form-urlencoded";
                 req.ContentLength = (long)bytes.Length;
