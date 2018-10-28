@@ -1702,27 +1702,27 @@ namespace RakuLand {
         private void ReservationDataGridView_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e) {
             try {
                 switch (e.ColumnIndex) {
-                    case 1:
+                    case 0:
                         //    //状態でソート
                         if (ReservationDataBindList.Count <= 0) return;
                         //降順昇順の切り替え
                         if (String.Compare(ReservationDataBindList[0].exhibit_status_str, ReservationDataBindList[ReservationDataBindList.Count - 1].exhibit_status_str) < 0) ReservationDataBindList.Sort((a, b) => String.Compare(b.exhibit_status_str, a.exhibit_status_str));
                         else ReservationDataBindList.Sort((a, b) => String.Compare(a.exhibit_status_str, b.exhibit_status_str));
                         break;
-                    //case 2:
-                    //    //商品名でソート
-                    //    if (ReservationDataBindList.Count <= 0) return;
-                    //    //降順昇順の切り替え
-                    //    if (String.Compare(ReservationDataBindList[0].itemName, ReservationDataBindList[ReservationDataBindList.Count - 1].itemName) < 0) ReservationDataBindList.Sort((a, b) => String.Compare(b.itemName, a.itemName));
-                    //    else ReservationDataBindList.Sort((a, b) => String.Compare(a.itemName, b.itemName));
-                    //    break;
-                    //case 3:
-                    //    //ニックネームでソート
-                    //    if (ReservationDataBindList.Count <= 0) return;
-                    //    //降順昇順の切り替え
-                    //    if (String.Compare(ReservationDataBindList[0].accountNickName, ReservationDataBindList[ReservationDataBindList.Count - 1].accountNickName) < 0) ReservationDataBindList.Sort((a, b) => String.Compare(b.accountNickName, a.accountNickName));
-                    //    else ReservationDataBindList.Sort((a, b) => String.Compare(a.accountNickName, b.accountNickName));
-                    //    break;
+                    case 2:
+                        //商品名でソート
+                        if (ReservationDataBindList.Count <= 0) return;
+                        //降順昇順の切り替え
+                        if (String.Compare(ReservationDataBindList[0].item_name, ReservationDataBindList[ReservationDataBindList.Count - 1].item_name) < 0) ReservationDataBindList.Sort((a, b) => String.Compare(b.item_name, a.item_name));
+                        else ReservationDataBindList.Sort((a, b) => String.Compare(a.item_name, b.item_name));
+                        break;
+                    case 3:
+                        //ニックネームでソート
+                        if (ReservationDataBindList.Count <= 0) return;
+                        //降順昇順の切り替え
+                        if (String.Compare(ReservationDataBindList[0].accountNickName, ReservationDataBindList[ReservationDataBindList.Count - 1].accountNickName) < 0) ReservationDataBindList.Sort((a, b) => String.Compare(b.accountNickName, a.accountNickName));
+                        else ReservationDataBindList.Sort((a, b) => String.Compare(a.accountNickName, b.accountNickName));
+                        break;
                     case 4:
                         //出品日時でソート
                         if (ReservationDataBindList.Count <= 0) return;
@@ -1737,27 +1737,27 @@ namespace RakuLand {
                     //    if (String.Compare(ReservationDataBindList[0].deleteDateString, ReservationDataBindList[ReservationDataBindList.Count - 1].deleteDateString) < 0) ReservationDataBindList.Sort((a, b) => DateTime.Compare(b.deleteDate, a.deleteDate));
                     //    else ReservationDataBindList.Sort((a, b) => DateTime.Compare(a.deleteDate, b.deleteDate));
                     //    break;
-                    //case 6:
-                    //    //いいね見るかでソート
-                    //    if (ReservationDataBindList.Count <= 0) return;
-                    //    //降順昇順の切り替え
-                    //    if (String.Compare(ReservationDataBindList[0].consider_favorite_str, ReservationDataBindList[ReservationDataBindList.Count - 1].consider_favorite_str) < 0) ReservationDataBindList.Sort((a, b) => String.Compare(b.consider_favorite_str, a.consider_favorite_str));
-                    //    else ReservationDataBindList.Sort((a, b) => String.Compare(a.consider_favorite_str, b.consider_favorite_str));
-                    //    break;
-                    //case 7:
-                    //    //コメントでソート
-                    //    if (ReservationDataBindList.Count <= 0) return;
-                    //    //降順昇順の切り替え
-                    //    if (String.Compare(ReservationDataBindList[0].consider_comment_str, ReservationDataBindList[ReservationDataBindList.Count - 1].consider_comment_str) < 0) ReservationDataBindList.Sort((a, b) => String.Compare(b.consider_comment_str, a.consider_comment_str));
-                    //    else ReservationDataBindList.Sort((a, b) => String.Compare(a.consider_comment_str, b.consider_comment_str));
-                    //    break;
-                    //case 8:
-                    //    //取消日時2でソート
-                    //    if (ReservationDataBindList.Count <= 0) return;
-                    //    //降順昇順の切り替え
-                    //    if (String.Compare(ReservationDataBindList[0].deleteDateString2, ReservationDataBindList[ReservationDataBindList.Count - 1].deleteDateString2) < 0) ReservationDataBindList.Sort((a, b) => DateTime.Compare(b.deleteDate2, a.deleteDate2));
-                    //    else ReservationDataBindList.Sort((a, b) => DateTime.Compare(a.deleteDate2, b.deleteDate2));
-                    //    break;
+                    case 5:
+                        //いいね見るかでソート->FIXME:いいね数では？
+                        if (ReservationDataBindList.Count <= 0) return;
+                        //降順昇順の切り替え
+                        if (String.Compare(ReservationDataBindList[0].consider_favorite_str, ReservationDataBindList[ReservationDataBindList.Count - 1].consider_favorite_str) < 0) ReservationDataBindList.Sort((a, b) => String.Compare(b.consider_favorite_str, a.consider_favorite_str));
+                        else ReservationDataBindList.Sort((a, b) => String.Compare(a.consider_favorite_str, b.consider_favorite_str));
+                        break;
+                    case 6:
+                        //コメントでソート
+                        if (ReservationDataBindList.Count <= 0) return;
+                        //降順昇順の切り替え
+                        if (String.Compare(ReservationDataBindList[0].consider_comment_str, ReservationDataBindList[ReservationDataBindList.Count - 1].consider_comment_str) < 0) ReservationDataBindList.Sort((a, b) => String.Compare(b.consider_comment_str, a.consider_comment_str));
+                        else ReservationDataBindList.Sort((a, b) => String.Compare(a.consider_comment_str, b.consider_comment_str));
+                        break;
+                    case 7:
+                        //取消日時2でソート
+                        if (ReservationDataBindList.Count <= 0) return;
+                        //降順昇順の切り替え
+                        if (String.Compare(ReservationDataBindList[0].deleteDateString2, ReservationDataBindList[ReservationDataBindList.Count - 1].deleteDateString2) < 0) ReservationDataBindList.Sort((a, b) => DateTime.Compare(b.deleteDate2, a.deleteDate2));
+                        else ReservationDataBindList.Sort((a, b) => DateTime.Compare(a.deleteDate2, b.deleteDate2));
+                        break;
                     //case 9:
                     //    //いいね2見るかでソート
                     //    if (ReservationDataBindList.Count <= 0) return;
@@ -1828,13 +1828,13 @@ namespace RakuLand {
                         if (String.Compare(ExhibittedItemDataBindList[0].screen_name, ExhibittedItemDataBindList[ExhibittedItemDataBindList.Count - 1].screen_name) < 0) ExhibittedItemDataBindList.Sort((a, b) => String.Compare(b.screen_name, a.screen_name));
                         else ExhibittedItemDataBindList.Sort((a, b) => String.Compare(a.screen_name, b.screen_name));
                         break;
-                    //case 3:
-                    //    //商品名でソート
-                    //    if (ExhibittedItemDataBindList.Count <= 0) return;
-                    //    //降順昇順の切り替え
-                    //    if (String.Compare(ExhibittedItemDataBindList[0].name, ExhibittedItemDataBindList[ExhibittedItemDataBindList.Count - 1].name) < 0) ExhibittedItemDataBindList.Sort((a, b) => String.Compare(b.name, a.name));
-                    //    else ExhibittedItemDataBindList.Sort((a, b) => String.Compare(a.name, b.name));
-                    //    break;
+                    case 3:
+                        //商品名でソート
+                        if (ExhibittedItemDataBindList.Count <= 0) return;
+                        //降順昇順の切り替え
+                        if (String.Compare(ExhibittedItemDataBindList[0].item_name, ExhibittedItemDataBindList[ExhibittedItemDataBindList.Count - 1].item_name) < 0) ExhibittedItemDataBindList.Sort((a, b) => String.Compare(b.item_name, a.item_name));
+                        else ExhibittedItemDataBindList.Sort((a, b) => String.Compare(a.item_name, b.item_name));
+                        break;
                     //case 4:
                     //    //商品説明でソート
                     //    if (ExhibittedItemDataBindList.Count <= 0) return;
@@ -1842,27 +1842,27 @@ namespace RakuLand {
                     //    if (String.Compare(ExhibittedItemDataBindList[0].description, ExhibittedItemDataBindList[ExhibittedItemDataBindList.Count - 1].description) < 0) ExhibittedItemDataBindList.Sort((a, b) => String.Compare(b.description, a.description));
                     //    else ExhibittedItemDataBindList.Sort((a, b) => String.Compare(a.description, b.description));
                     //    break;
-                    //case 5:
-                    //    //価格でソート
-                    //    if (ExhibittedItemDataBindList.Count <= 0) return;
-                    //    //降順昇順の切り替え
-                    //    if (ExhibittedItemDataBindList[0].price < ExhibittedItemDataBindList[ExhibittedItemDataBindList.Count - 1].price) ExhibittedItemDataBindList.Sort((a, b) => b.price - a.price);
-                    //    else ExhibittedItemDataBindList.Sort((a, b) => a.price - b.price);
-                    //    break;
-                    //case 6:
-                    //    //いいね数でソート
-                    //    if (ExhibittedItemDataBindList.Count <= 0) return;
-                    //    //降順昇順の切り替え
-                    //    if (ExhibittedItemDataBindList[0].num_likes < ExhibittedItemDataBindList[ExhibittedItemDataBindList.Count - 1].num_likes) ExhibittedItemDataBindList.Sort((a, b) => b.num_likes - a.num_likes);
-                    //    else ExhibittedItemDataBindList.Sort((a, b) => a.num_likes - b.num_likes);
-                    //    break;
-                    //case 7:
-                    //    //コメント数でソート
-                    //    if (ExhibittedItemDataBindList.Count <= 0) return;
-                    //    //降順昇順の切り替え
-                    //    if (ExhibittedItemDataBindList[0].num_comments < ExhibittedItemDataBindList[ExhibittedItemDataBindList.Count - 1].num_comments) ExhibittedItemDataBindList.Sort((a, b) => b.num_comments - a.num_comments);
-                    //    else ExhibittedItemDataBindList.Sort((a, b) => a.num_comments - b.num_comments);
-                    //    break;
+                    case 4:
+                        //価格でソート
+                        if (ExhibittedItemDataBindList.Count <= 0) return;
+                        //降順昇順の切り替え
+                        if (ExhibittedItemDataBindList[0].s_price < ExhibittedItemDataBindList[ExhibittedItemDataBindList.Count - 1].s_price) ExhibittedItemDataBindList.Sort((a, b) => b.s_price - a.s_price);
+                        else ExhibittedItemDataBindList.Sort((a, b) => a.s_price - b.s_price);
+                        break;
+                    case 5:
+                        //いいね数でソート
+                        if (ExhibittedItemDataBindList.Count <= 0) return;
+                        //降順昇順の切り替え
+                        if (ExhibittedItemDataBindList[0].likes_count < ExhibittedItemDataBindList[ExhibittedItemDataBindList.Count - 1].likes_count) ExhibittedItemDataBindList.Sort((a, b) => b.likes_count - a.likes_count);
+                        else ExhibittedItemDataBindList.Sort((a, b) => a.likes_count - b.likes_count);
+                        break;
+                    case 6:
+                        //コメント数でソート
+                        if (ExhibittedItemDataBindList.Count <= 0) return;
+                        //降順昇順の切り替え
+                        if (ExhibittedItemDataBindList[0].comments_count < ExhibittedItemDataBindList[ExhibittedItemDataBindList.Count - 1].comments_count) ExhibittedItemDataBindList.Sort((a, b) => b.comments_count - a.comments_count);
+                        else ExhibittedItemDataBindList.Sort((a, b) => a.comments_count - b.comments_count);
+                        break;
                     //case 8:
                     //    //ウォッチ数でソート
                     //    if (ExhibittedItemDataBindList.Count <= 0) return;
@@ -1926,20 +1926,20 @@ namespace RakuLand {
                     //    if (ExhibittedItemDataBindList[0].address_copyed.CompareTo(ExhibittedItemDataBindList[ExhibittedItemDataBindList.Count - 1].address_copyed) < 0) ExhibittedItemDataBindList.Sort((a, b) => b.address_copyed.CompareTo(a.address_copyed));
                     //    else ExhibittedItemDataBindList.Sort((a, b) => a.address_copyed.CompareTo(b.address_copyed));
                     //    break;
-                    //case 17:
-                    //    //購入者氏名でソート
-                    //    if (ExhibittedItemDataBindList.Count <= 0) return;
-                    //    //降順昇順の切り替え
-                    //    if (String.Compare(ExhibittedItemDataBindList[0].buyer_simei, ExhibittedItemDataBindList[ExhibittedItemDataBindList.Count - 1].buyer_simei) < 0) ExhibittedItemDataBindList.Sort((a, b) => String.Compare(b.buyer_simei, a.buyer_simei));
-                    //    else ExhibittedItemDataBindList.Sort((a, b) => String.Compare(a.buyer_simei, b.buyer_simei));
-                    //    break;
-                    //case 18:
-                    //    //購入者ニックネームでソート
-                    //    if (ExhibittedItemDataBindList.Count <= 0) return;
-                    //    //降順昇順の切り替え
-                    //    if (String.Compare(ExhibittedItemDataBindList[0].buyer_name, ExhibittedItemDataBindList[ExhibittedItemDataBindList.Count - 1].buyer_name) < 0) ExhibittedItemDataBindList.Sort((a, b) => String.Compare(b.buyer_name, a.buyer_name));
-                    //    else ExhibittedItemDataBindList.Sort((a, b) => String.Compare(a.buyer_name, b.buyer_name));
-                    //    break;
+                    case 7:
+                        //購入者氏名でソート
+                        if (ExhibittedItemDataBindList.Count <= 0) return;
+                        //降順昇順の切り替え
+                        if (String.Compare(ExhibittedItemDataBindList[0].buyer_simei, ExhibittedItemDataBindList[ExhibittedItemDataBindList.Count - 1].buyer_simei) < 0) ExhibittedItemDataBindList.Sort((a, b) => String.Compare(b.buyer_simei, a.buyer_simei));
+                        else ExhibittedItemDataBindList.Sort((a, b) => String.Compare(a.buyer_simei, b.buyer_simei));
+                        break;
+                    case 8:
+                        //購入者ニックネームでソート
+                        if (ExhibittedItemDataBindList.Count <= 0) return;
+                        //降順昇順の切り替え
+                        if (String.Compare(ExhibittedItemDataBindList[0].buyer_name, ExhibittedItemDataBindList[ExhibittedItemDataBindList.Count - 1].buyer_name) < 0) ExhibittedItemDataBindList.Sort((a, b) => String.Compare(b.buyer_name, a.buyer_name));
+                        else ExhibittedItemDataBindList.Sort((a, b) => String.Compare(a.buyer_name, b.buyer_name));
+                        break;
                     //case 19:
                     //    //商品名でソート
                     //    if (ExhibittedItemDataBindList.Count <= 0) return;
