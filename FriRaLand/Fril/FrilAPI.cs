@@ -934,6 +934,10 @@ namespace RakuLand {
                     MessageBox.Show("500エラーです。");
                   
                 }
+                if (ex.Message.Contains("403")){
+                    Console.WriteLine("403エラーメッセボックスだします");
+                    MessageBox.Show("403エラーです。");
+                }
                 return "";
             }
         }
