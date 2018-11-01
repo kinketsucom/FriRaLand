@@ -1545,7 +1545,7 @@ namespace RakuLand {
             var accountList = AccountManageForm.accountLoader();
             foreach (var account in accountList) {
                 FrilAPI api = new FrilAPI(account);
-                api = Common.checkFrilAPI(api);
+                //api = Common.checkFrilAPI(api);
                 var accountNotifications = api.getNotifications();
                 //var accountTodoLists = api.getToDoLists();
                 //var accountNews = api.getNews();
