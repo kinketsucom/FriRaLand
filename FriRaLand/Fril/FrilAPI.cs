@@ -501,6 +501,7 @@ namespace RakuLand {
             }
         }
         public bool tryFrilLogin(CookieContainer cc) {
+            Console.WriteLine("ろぐいしますた");
             /*revert,android_id,device_id,app_generated_idなどのパラメタはなくてもOKなので送らない*/
             Dictionary<string, string> param = new Dictionary<string, string>();
             param.Add("email", this.account.email);

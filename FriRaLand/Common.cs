@@ -281,25 +281,26 @@ namespace RakuLand {
                         else Log.Logger.Info("トークンの強制更新実施");
                         FrilAPI newapi = new FrilAPI(account);
                         if (newapi.account.auth_token == null) throw new Exception("new FrilAPI() error");
-                        bool loginres = newapi.tryFrilLogin(api.account.cc);
-                        if (loginres) {
-                            //アカウントデータ変更
-                            account.auth_token = newapi.account.auth_token;
-                            account.nickname = newapi.account.nickname;
-                            account.expiration_date = newapi.account.expiration_date;
-                            account.token_update_date = account.expiration_date;
-                            //DB更新
-                            if (accountDBHelper.updateAccount(account.DBId, account)) {
-                                Log.Logger.Info(newapi.account.nickname + "のトークン更新に成功");
-                                return newapi;
-                            } else {
-                                //失敗
-                                Log.Logger.Error(api.account.nickname + "のトークン更新に成功したがDB更新に失敗");
-                                return api;
-                            }
-                        } else {
-                            throw new Exception("login error");
-                        }
+                        ///////////FIXME:いまログイン処理はアカウントマネージャのみで行うことにしている。
+                        //bool loginres = newapi.tryFrilLogin(api.account.cc);
+                        //if (loginres) {
+                        //    //アカウントデータ変更
+                        //    account.auth_token = newapi.account.auth_token;
+                        //    account.nickname = newapi.account.nickname;
+                        //    account.expiration_date = newapi.account.expiration_date;
+                        //    account.token_update_date = account.expiration_date;
+                        //    //DB更新
+                        //    if (accountDBHelper.updateAccount(account.DBId, account)) {
+                        //        Log.Logger.Info(newapi.account.nickname + "のトークン更新に成功");
+                        //        return newapi;
+                        //    } else {
+                        //        //失敗
+                        //        Log.Logger.Error(api.account.nickname + "のトークン更新に成功したがDB更新に失敗");
+                        //        return api;
+                        //    }
+                        //} else {
+                        //    throw new Exception("login error");
+                        //}
                     } catch (Exception ex) {
                         Log.Logger.Error(ex.Message);
                         Log.Logger.Error(api.account.nickname + "のトークン更新に失敗");
