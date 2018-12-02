@@ -24,8 +24,8 @@ namespace RakuLand.Forms {
         private void button1_Click(object sender, EventArgs e) {
             string registry_license_key = (string)Microsoft.Win32.Registry.GetValue(MainForm.Registry_Path, MainForm.Key_LicenseKey, "");
             bool ok = false;
-            if (string.IsNullOrEmpty(registry_license_key)) {
-                //ライセンスキー初めてなので登録を行う
+            if (string.IsNullOrEmpty(registry_license_key) || licenseKeyTextBox.Text != registry_license_key) {
+                //ライセンスキー初めてまたは変更なので登録を行う
                 bool res = register(this.licenseKeyTextBox.Text.Trim(), Environment.MachineName);
                 if (res) {
                     ok = true;
