@@ -164,6 +164,7 @@
             this.notificationTimer = new System.Windows.Forms.Timer(this.components);
             this.getNotificationBackgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            this.ライセンス管理ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.DailyExhibitDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.LocalItemDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ReservationDataGridView)).BeginInit();
@@ -196,13 +197,12 @@
             this.dataGridViewImageColumn1,
             this.dataGridViewTextBoxColumn2,
             this.dataGridViewTextBoxColumn3});
-            this.DailyExhibitDataGridView.Location = new System.Drawing.Point(306, 119);
-            this.DailyExhibitDataGridView.Margin = new System.Windows.Forms.Padding(4);
+            this.DailyExhibitDataGridView.Location = new System.Drawing.Point(230, 95);
             this.DailyExhibitDataGridView.Name = "DailyExhibitDataGridView";
             this.DailyExhibitDataGridView.RowHeadersVisible = false;
             this.DailyExhibitDataGridView.RowTemplate.Height = 80;
             this.DailyExhibitDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DailyExhibitDataGridView.Size = new System.Drawing.Size(1217, 683);
+            this.DailyExhibitDataGridView.Size = new System.Drawing.Size(913, 546);
             this.DailyExhibitDataGridView.TabIndex = 34;
             this.DailyExhibitDataGridView.VirtualMode = true;
             this.DailyExhibitDataGridView.Visible = false;
@@ -266,13 +266,12 @@
             this.LocalItemDataGridView_comment,
             this.LocalItemDataGridView_created_str,
             this.LocalItemDataGridView_status_message});
-            this.LocalItemDataGridView.Location = new System.Drawing.Point(306, 119);
-            this.LocalItemDataGridView.Margin = new System.Windows.Forms.Padding(4);
+            this.LocalItemDataGridView.Location = new System.Drawing.Point(230, 95);
             this.LocalItemDataGridView.Name = "LocalItemDataGridView";
             this.LocalItemDataGridView.RowHeadersVisible = false;
             this.LocalItemDataGridView.RowTemplate.Height = 80;
             this.LocalItemDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.LocalItemDataGridView.Size = new System.Drawing.Size(1217, 683);
+            this.LocalItemDataGridView.Size = new System.Drawing.Size(913, 546);
             this.LocalItemDataGridView.TabIndex = 35;
             this.LocalItemDataGridView.VirtualMode = true;
             this.LocalItemDataGridView.CellValueNeeded += new System.Windows.Forms.DataGridViewCellValueEventHandler(this.LocalItemDataGridView_CellValueNeeded);
@@ -396,13 +395,12 @@
             this.ReservationDataGridView_favorite2,
             this.ReservationDataGridView_comment2,
             this.ReservationDataGridView_reexhibit_flag});
-            this.ReservationDataGridView.Location = new System.Drawing.Point(306, 119);
-            this.ReservationDataGridView.Margin = new System.Windows.Forms.Padding(4);
+            this.ReservationDataGridView.Location = new System.Drawing.Point(230, 95);
             this.ReservationDataGridView.Name = "ReservationDataGridView";
             this.ReservationDataGridView.RowHeadersVisible = false;
             this.ReservationDataGridView.RowTemplate.Height = 80;
             this.ReservationDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.ReservationDataGridView.Size = new System.Drawing.Size(1217, 683);
+            this.ReservationDataGridView.Size = new System.Drawing.Size(913, 546);
             this.ReservationDataGridView.TabIndex = 36;
             this.ReservationDataGridView.VirtualMode = true;
             this.ReservationDataGridView.Visible = false;
@@ -550,13 +548,12 @@
             this.ExhibittedDataGridView_buyer_simei,
             this.ExhibittedDataGridView_buyer_name,
             this.ExhibittedDataGridView_itemid});
-            this.ExhibittedDataGridView.Location = new System.Drawing.Point(306, 119);
-            this.ExhibittedDataGridView.Margin = new System.Windows.Forms.Padding(4);
+            this.ExhibittedDataGridView.Location = new System.Drawing.Point(230, 95);
             this.ExhibittedDataGridView.Name = "ExhibittedDataGridView";
             this.ExhibittedDataGridView.RowHeadersVisible = false;
             this.ExhibittedDataGridView.RowTemplate.Height = 80;
             this.ExhibittedDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.ExhibittedDataGridView.Size = new System.Drawing.Size(1217, 683);
+            this.ExhibittedDataGridView.Size = new System.Drawing.Size(913, 546);
             this.ExhibittedDataGridView.TabIndex = 37;
             this.ExhibittedDataGridView.VirtualMode = true;
             this.ExhibittedDataGridView.Visible = false;
@@ -728,10 +725,9 @@
             // 
             this.register_button.BackColor = System.Drawing.Color.Transparent;
             this.register_button.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.register_button.Location = new System.Drawing.Point(27, 14);
-            this.register_button.Margin = new System.Windows.Forms.Padding(4);
+            this.register_button.Location = new System.Drawing.Point(20, 11);
             this.register_button.Name = "register_button";
-            this.register_button.Size = new System.Drawing.Size(193, 54);
+            this.register_button.Size = new System.Drawing.Size(145, 43);
             this.register_button.TabIndex = 38;
             this.register_button.Text = "登録";
             this.register_button.UseVisualStyleBackColor = false;
@@ -740,10 +736,9 @@
             // deleteItemButton
             // 
             this.deleteItemButton.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.deleteItemButton.Location = new System.Drawing.Point(27, 138);
-            this.deleteItemButton.Margin = new System.Windows.Forms.Padding(4);
+            this.deleteItemButton.Location = new System.Drawing.Point(20, 110);
             this.deleteItemButton.Name = "deleteItemButton";
-            this.deleteItemButton.Size = new System.Drawing.Size(191, 54);
+            this.deleteItemButton.Size = new System.Drawing.Size(143, 43);
             this.deleteItemButton.TabIndex = 39;
             this.deleteItemButton.Text = "削除";
             this.deleteItemButton.UseVisualStyleBackColor = true;
@@ -755,12 +750,11 @@
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.ItemSize = new System.Drawing.Size(61, 18);
-            this.tabControl1.Location = new System.Drawing.Point(13, 166);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(4);
+            this.tabControl1.Location = new System.Drawing.Point(10, 133);
             this.tabControl1.Multiline = true;
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(256, 640);
+            this.tabControl1.Size = new System.Drawing.Size(192, 512);
             this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
             this.tabControl1.TabIndex = 40;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
@@ -769,10 +763,9 @@
             // 
             this.tabPage1.Controls.Add(this.panel1);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPage1.Size = new System.Drawing.Size(248, 614);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage1.Size = new System.Drawing.Size(184, 486);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "商品";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -792,9 +785,8 @@
             this.panel1.Controls.Add(this.SelectItemAllExhibitButton);
             this.panel1.Controls.Add(this.exhibitRegisterButton);
             this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(241, 614);
+            this.panel1.Size = new System.Drawing.Size(181, 491);
             this.panel1.TabIndex = 13;
             // 
             // ItemDownInfoLabel
@@ -802,9 +794,10 @@
             this.ItemDownInfoLabel.AutoSize = true;
             this.ItemDownInfoLabel.Font = new System.Drawing.Font("メイリオ", 7.8F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.ItemDownInfoLabel.ForeColor = System.Drawing.Color.Blue;
-            this.ItemDownInfoLabel.Location = new System.Drawing.Point(221, 451);
+            this.ItemDownInfoLabel.Location = new System.Drawing.Point(166, 361);
+            this.ItemDownInfoLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.ItemDownInfoLabel.Name = "ItemDownInfoLabel";
-            this.ItemDownInfoLabel.Size = new System.Drawing.Size(17, 21);
+            this.ItemDownInfoLabel.Size = new System.Drawing.Size(14, 17);
             this.ItemDownInfoLabel.TabIndex = 45;
             this.ItemDownInfoLabel.Text = "?";
             this.ItemDownInfoLabel.MouseLeave += new System.EventHandler(this.ItemDownInfoLabel_MouseLeave);
@@ -815,9 +808,10 @@
             this.ItemUpInfoLabel.AutoSize = true;
             this.ItemUpInfoLabel.Font = new System.Drawing.Font("メイリオ", 7.8F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.ItemUpInfoLabel.ForeColor = System.Drawing.Color.Blue;
-            this.ItemUpInfoLabel.Location = new System.Drawing.Point(221, 399);
+            this.ItemUpInfoLabel.Location = new System.Drawing.Point(166, 319);
+            this.ItemUpInfoLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.ItemUpInfoLabel.Name = "ItemUpInfoLabel";
-            this.ItemUpInfoLabel.Size = new System.Drawing.Size(17, 21);
+            this.ItemUpInfoLabel.Size = new System.Drawing.Size(14, 17);
             this.ItemUpInfoLabel.TabIndex = 44;
             this.ItemUpInfoLabel.Text = "?";
             this.ItemUpInfoLabel.MouseLeave += new System.EventHandler(this.ItemUpInfoLabel_MouseLeave);
@@ -826,10 +820,9 @@
             // ItemDownButton
             // 
             this.ItemDownButton.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.ItemDownButton.Location = new System.Drawing.Point(27, 437);
-            this.ItemDownButton.Margin = new System.Windows.Forms.Padding(4);
+            this.ItemDownButton.Location = new System.Drawing.Point(20, 350);
             this.ItemDownButton.Name = "ItemDownButton";
-            this.ItemDownButton.Size = new System.Drawing.Size(193, 44);
+            this.ItemDownButton.Size = new System.Drawing.Size(145, 35);
             this.ItemDownButton.TabIndex = 22;
             this.ItemDownButton.Text = "下へ";
             this.ItemDownButton.UseVisualStyleBackColor = true;
@@ -838,10 +831,9 @@
             // zaiko_kanri_button
             // 
             this.zaiko_kanri_button.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.zaiko_kanri_button.Location = new System.Drawing.Point(27, 550);
-            this.zaiko_kanri_button.Margin = new System.Windows.Forms.Padding(4);
+            this.zaiko_kanri_button.Location = new System.Drawing.Point(20, 440);
             this.zaiko_kanri_button.Name = "zaiko_kanri_button";
-            this.zaiko_kanri_button.Size = new System.Drawing.Size(193, 54);
+            this.zaiko_kanri_button.Size = new System.Drawing.Size(145, 43);
             this.zaiko_kanri_button.TabIndex = 19;
             this.zaiko_kanri_button.Text = "在庫管理";
             this.zaiko_kanri_button.UseVisualStyleBackColor = true;
@@ -850,10 +842,9 @@
             // LocalItemExportButton
             // 
             this.LocalItemExportButton.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.LocalItemExportButton.Location = new System.Drawing.Point(27, 488);
-            this.LocalItemExportButton.Margin = new System.Windows.Forms.Padding(4);
+            this.LocalItemExportButton.Location = new System.Drawing.Point(20, 390);
             this.LocalItemExportButton.Name = "LocalItemExportButton";
-            this.LocalItemExportButton.Size = new System.Drawing.Size(193, 54);
+            this.LocalItemExportButton.Size = new System.Drawing.Size(145, 43);
             this.LocalItemExportButton.TabIndex = 20;
             this.LocalItemExportButton.Text = "エクスポート";
             this.LocalItemExportButton.UseVisualStyleBackColor = true;
@@ -862,10 +853,9 @@
             // ItemUpButton
             // 
             this.ItemUpButton.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.ItemUpButton.Location = new System.Drawing.Point(27, 385);
-            this.ItemUpButton.Margin = new System.Windows.Forms.Padding(4);
+            this.ItemUpButton.Location = new System.Drawing.Point(20, 308);
             this.ItemUpButton.Name = "ItemUpButton";
-            this.ItemUpButton.Size = new System.Drawing.Size(193, 44);
+            this.ItemUpButton.Size = new System.Drawing.Size(145, 35);
             this.ItemUpButton.TabIndex = 21;
             this.ItemUpButton.Text = "上へ";
             this.ItemUpButton.UseVisualStyleBackColor = true;
@@ -874,10 +864,9 @@
             // item_register_from_excel_button
             // 
             this.item_register_from_excel_button.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.item_register_from_excel_button.Location = new System.Drawing.Point(27, 199);
-            this.item_register_from_excel_button.Margin = new System.Windows.Forms.Padding(4);
+            this.item_register_from_excel_button.Location = new System.Drawing.Point(20, 159);
             this.item_register_from_excel_button.Name = "item_register_from_excel_button";
-            this.item_register_from_excel_button.Size = new System.Drawing.Size(193, 54);
+            this.item_register_from_excel_button.Size = new System.Drawing.Size(145, 43);
             this.item_register_from_excel_button.TabIndex = 18;
             this.item_register_from_excel_button.Text = "エクセルで登録";
             this.item_register_from_excel_button.UseVisualStyleBackColor = true;
@@ -886,10 +875,9 @@
             // editItemButton
             // 
             this.editItemButton.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.editItemButton.Location = new System.Drawing.Point(27, 76);
-            this.editItemButton.Margin = new System.Windows.Forms.Padding(4);
+            this.editItemButton.Location = new System.Drawing.Point(20, 61);
             this.editItemButton.Name = "editItemButton";
-            this.editItemButton.Size = new System.Drawing.Size(191, 54);
+            this.editItemButton.Size = new System.Drawing.Size(143, 43);
             this.editItemButton.TabIndex = 14;
             this.editItemButton.Text = "修正";
             this.editItemButton.UseVisualStyleBackColor = true;
@@ -898,10 +886,9 @@
             // SelectItemAllExhibitButton
             // 
             this.SelectItemAllExhibitButton.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.SelectItemAllExhibitButton.Location = new System.Drawing.Point(25, 261);
-            this.SelectItemAllExhibitButton.Margin = new System.Windows.Forms.Padding(4);
+            this.SelectItemAllExhibitButton.Location = new System.Drawing.Point(19, 209);
             this.SelectItemAllExhibitButton.Name = "SelectItemAllExhibitButton";
-            this.SelectItemAllExhibitButton.Size = new System.Drawing.Size(193, 54);
+            this.SelectItemAllExhibitButton.Size = new System.Drawing.Size(145, 43);
             this.SelectItemAllExhibitButton.TabIndex = 16;
             this.SelectItemAllExhibitButton.Text = "即時出品";
             this.SelectItemAllExhibitButton.UseVisualStyleBackColor = true;
@@ -910,10 +897,9 @@
             // exhibitRegisterButton
             // 
             this.exhibitRegisterButton.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.exhibitRegisterButton.Location = new System.Drawing.Point(25, 323);
-            this.exhibitRegisterButton.Margin = new System.Windows.Forms.Padding(4);
+            this.exhibitRegisterButton.Location = new System.Drawing.Point(19, 258);
             this.exhibitRegisterButton.Name = "exhibitRegisterButton";
-            this.exhibitRegisterButton.Size = new System.Drawing.Size(193, 54);
+            this.exhibitRegisterButton.Size = new System.Drawing.Size(145, 43);
             this.exhibitRegisterButton.TabIndex = 17;
             this.exhibitRegisterButton.Text = "予約登録";
             this.exhibitRegisterButton.UseVisualStyleBackColor = true;
@@ -924,10 +910,9 @@
             this.tabPage2.Controls.Add(this.groupBox1);
             this.tabPage2.Controls.Add(this.panel2);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPage2.Size = new System.Drawing.Size(248, 614);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage2.Size = new System.Drawing.Size(184, 486);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "予約";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -949,11 +934,9 @@
             this.groupBox1.Controls.Add(this.exhibit_failed_num_label);
             this.groupBox1.Controls.Add(this.exhibit_success_num_label);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Location = new System.Drawing.Point(25, 310);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox1.Location = new System.Drawing.Point(19, 248);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Size = new System.Drawing.Size(181, 301);
+            this.groupBox1.Size = new System.Drawing.Size(136, 241);
             this.groupBox1.TabIndex = 17;
             this.groupBox1.TabStop = false;
             // 
@@ -961,10 +944,9 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label7.Location = new System.Drawing.Point(8, 86);
-            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label7.Location = new System.Drawing.Point(6, 69);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(88, 28);
+            this.label7.Size = new System.Drawing.Size(70, 23);
             this.label7.TabIndex = 30;
             this.label7.Text = "在庫切れ";
             // 
@@ -972,19 +954,17 @@
             // 
             this.zaikogire_num_label.AutoSize = true;
             this.zaikogire_num_label.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.zaikogire_num_label.Location = new System.Drawing.Point(109, 86);
-            this.zaikogire_num_label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.zaikogire_num_label.Location = new System.Drawing.Point(82, 69);
             this.zaikogire_num_label.Name = "zaikogire_num_label";
-            this.zaikogire_num_label.Size = new System.Drawing.Size(0, 28);
+            this.zaikogire_num_label.Size = new System.Drawing.Size(0, 23);
             this.zaikogire_num_label.TabIndex = 31;
             // 
             // reservation_log_view_button
             // 
             this.reservation_log_view_button.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.reservation_log_view_button.Location = new System.Drawing.Point(37, 251);
-            this.reservation_log_view_button.Margin = new System.Windows.Forms.Padding(4);
+            this.reservation_log_view_button.Location = new System.Drawing.Point(28, 201);
             this.reservation_log_view_button.Name = "reservation_log_view_button";
-            this.reservation_log_view_button.Size = new System.Drawing.Size(92, 42);
+            this.reservation_log_view_button.Size = new System.Drawing.Size(69, 34);
             this.reservation_log_view_button.TabIndex = 19;
             this.reservation_log_view_button.Text = "失敗詳細";
             this.reservation_log_view_button.UseVisualStyleBackColor = true;
@@ -995,10 +975,9 @@
             // 
             this.reexhibit_success_num_label.AutoSize = true;
             this.reexhibit_success_num_label.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.reexhibit_success_num_label.Location = new System.Drawing.Point(112, 180);
-            this.reexhibit_success_num_label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.reexhibit_success_num_label.Location = new System.Drawing.Point(84, 144);
             this.reexhibit_success_num_label.Name = "reexhibit_success_num_label";
-            this.reexhibit_success_num_label.Size = new System.Drawing.Size(0, 28);
+            this.reexhibit_success_num_label.Size = new System.Drawing.Size(0, 23);
             this.reexhibit_success_num_label.TabIndex = 25;
             this.reexhibit_success_num_label.Visible = false;
             // 
@@ -1006,10 +985,9 @@
             // 
             this.reexhibit_failed_num_label.AutoSize = true;
             this.reexhibit_failed_num_label.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.reexhibit_failed_num_label.Location = new System.Drawing.Point(112, 214);
-            this.reexhibit_failed_num_label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.reexhibit_failed_num_label.Location = new System.Drawing.Point(84, 171);
             this.reexhibit_failed_num_label.Name = "reexhibit_failed_num_label";
-            this.reexhibit_failed_num_label.Size = new System.Drawing.Size(0, 28);
+            this.reexhibit_failed_num_label.Size = new System.Drawing.Size(0, 23);
             this.reexhibit_failed_num_label.TabIndex = 24;
             this.reexhibit_failed_num_label.Visible = false;
             // 
@@ -1017,10 +995,9 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label3.Location = new System.Drawing.Point(8, 151);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Location = new System.Drawing.Point(6, 121);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(88, 28);
+            this.label3.Size = new System.Drawing.Size(70, 23);
             this.label3.TabIndex = 16;
             this.label3.Text = "削除失敗";
             // 
@@ -1028,20 +1005,18 @@
             // 
             this.delete_success_num_label.AutoSize = true;
             this.delete_success_num_label.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.delete_success_num_label.Location = new System.Drawing.Point(112, 118);
-            this.delete_success_num_label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.delete_success_num_label.Location = new System.Drawing.Point(84, 94);
             this.delete_success_num_label.Name = "delete_success_num_label";
-            this.delete_success_num_label.Size = new System.Drawing.Size(0, 28);
+            this.delete_success_num_label.Size = new System.Drawing.Size(0, 23);
             this.delete_success_num_label.TabIndex = 20;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label5.Location = new System.Drawing.Point(8, 118);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label5.Location = new System.Drawing.Point(6, 94);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(88, 28);
+            this.label5.Size = new System.Drawing.Size(70, 23);
             this.label5.TabIndex = 23;
             this.label5.Text = "削除成功";
             // 
@@ -1049,10 +1024,9 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label6.Location = new System.Drawing.Point(-1, 214);
-            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label6.Location = new System.Drawing.Point(-1, 171);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(107, 28);
+            this.label6.Size = new System.Drawing.Size(85, 23);
             this.label6.TabIndex = 23;
             this.label6.Text = "再出品失敗";
             this.label6.Visible = false;
@@ -1061,20 +1035,18 @@
             // 
             this.delete_failed_num_label.AutoSize = true;
             this.delete_failed_num_label.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.delete_failed_num_label.Location = new System.Drawing.Point(112, 148);
-            this.delete_failed_num_label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.delete_failed_num_label.Location = new System.Drawing.Point(84, 118);
             this.delete_failed_num_label.Name = "delete_failed_num_label";
-            this.delete_failed_num_label.Size = new System.Drawing.Size(0, 28);
+            this.delete_failed_num_label.Size = new System.Drawing.Size(0, 23);
             this.delete_failed_num_label.TabIndex = 22;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label4.Location = new System.Drawing.Point(8, 54);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Location = new System.Drawing.Point(6, 43);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(88, 28);
+            this.label4.Size = new System.Drawing.Size(70, 23);
             this.label4.TabIndex = 21;
             this.label4.Text = "出品失敗";
             // 
@@ -1082,10 +1054,9 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label1.Location = new System.Drawing.Point(-1, 180);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(-1, 144);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(107, 28);
+            this.label1.Size = new System.Drawing.Size(85, 23);
             this.label1.TabIndex = 19;
             this.label1.Text = "再出品成功";
             this.label1.Visible = false;
@@ -1094,30 +1065,27 @@
             // 
             this.exhibit_failed_num_label.AutoSize = true;
             this.exhibit_failed_num_label.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.exhibit_failed_num_label.Location = new System.Drawing.Point(112, 54);
-            this.exhibit_failed_num_label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.exhibit_failed_num_label.Location = new System.Drawing.Point(84, 43);
             this.exhibit_failed_num_label.Name = "exhibit_failed_num_label";
-            this.exhibit_failed_num_label.Size = new System.Drawing.Size(0, 28);
+            this.exhibit_failed_num_label.Size = new System.Drawing.Size(0, 23);
             this.exhibit_failed_num_label.TabIndex = 18;
             // 
             // exhibit_success_num_label
             // 
             this.exhibit_success_num_label.AutoSize = true;
             this.exhibit_success_num_label.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.exhibit_success_num_label.Location = new System.Drawing.Point(112, 19);
-            this.exhibit_success_num_label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.exhibit_success_num_label.Location = new System.Drawing.Point(84, 15);
             this.exhibit_success_num_label.Name = "exhibit_success_num_label";
-            this.exhibit_success_num_label.Size = new System.Drawing.Size(0, 28);
+            this.exhibit_success_num_label.Size = new System.Drawing.Size(0, 23);
             this.exhibit_success_num_label.TabIndex = 17;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label2.Location = new System.Drawing.Point(8, 19);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(6, 15);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(88, 28);
+            this.label2.Size = new System.Drawing.Size(70, 23);
             this.label2.TabIndex = 15;
             this.label2.Text = "出品成功";
             // 
@@ -1129,19 +1097,17 @@
             this.panel2.Controls.Add(this.SelectItemAllExhibitButtonFromReservationTab);
             this.panel2.Controls.Add(this.register_from_xml_button);
             this.panel2.Location = new System.Drawing.Point(0, 0);
-            this.panel2.Margin = new System.Windows.Forms.Padding(4);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(256, 302);
+            this.panel2.Size = new System.Drawing.Size(192, 242);
             this.panel2.TabIndex = 14;
             // 
             // isStopCheckBox
             // 
             this.isStopCheckBox.AutoSize = true;
             this.isStopCheckBox.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.isStopCheckBox.Location = new System.Drawing.Point(25, 16);
-            this.isStopCheckBox.Margin = new System.Windows.Forms.Padding(4);
+            this.isStopCheckBox.Location = new System.Drawing.Point(19, 13);
             this.isStopCheckBox.Name = "isStopCheckBox";
-            this.isStopCheckBox.Size = new System.Drawing.Size(182, 27);
+            this.isStopCheckBox.Size = new System.Drawing.Size(147, 22);
             this.isStopCheckBox.TabIndex = 18;
             this.isStopCheckBox.Text = "取消ではなく停止する";
             this.isStopCheckBox.UseVisualStyleBackColor = true;
@@ -1150,10 +1116,9 @@
             // ReservationToggleButton
             // 
             this.ReservationToggleButton.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.ReservationToggleButton.Location = new System.Drawing.Point(25, 51);
-            this.ReservationToggleButton.Margin = new System.Windows.Forms.Padding(4);
+            this.ReservationToggleButton.Location = new System.Drawing.Point(19, 41);
             this.ReservationToggleButton.Name = "ReservationToggleButton";
-            this.ReservationToggleButton.Size = new System.Drawing.Size(193, 54);
+            this.ReservationToggleButton.Size = new System.Drawing.Size(145, 43);
             this.ReservationToggleButton.TabIndex = 14;
             this.ReservationToggleButton.Text = "予約実行";
             this.ReservationToggleButton.UseVisualStyleBackColor = true;
@@ -1162,10 +1127,9 @@
             // deleteReservationItem
             // 
             this.deleteReservationItem.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.deleteReservationItem.Location = new System.Drawing.Point(25, 112);
-            this.deleteReservationItem.Margin = new System.Windows.Forms.Padding(4);
+            this.deleteReservationItem.Location = new System.Drawing.Point(19, 90);
             this.deleteReservationItem.Name = "deleteReservationItem";
-            this.deleteReservationItem.Size = new System.Drawing.Size(193, 54);
+            this.deleteReservationItem.Size = new System.Drawing.Size(145, 43);
             this.deleteReservationItem.TabIndex = 15;
             this.deleteReservationItem.Text = "削除";
             this.deleteReservationItem.UseVisualStyleBackColor = true;
@@ -1174,10 +1138,9 @@
             // SelectItemAllExhibitButtonFromReservationTab
             // 
             this.SelectItemAllExhibitButtonFromReservationTab.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.SelectItemAllExhibitButtonFromReservationTab.Location = new System.Drawing.Point(25, 174);
-            this.SelectItemAllExhibitButtonFromReservationTab.Margin = new System.Windows.Forms.Padding(4);
+            this.SelectItemAllExhibitButtonFromReservationTab.Location = new System.Drawing.Point(19, 139);
             this.SelectItemAllExhibitButtonFromReservationTab.Name = "SelectItemAllExhibitButtonFromReservationTab";
-            this.SelectItemAllExhibitButtonFromReservationTab.Size = new System.Drawing.Size(193, 54);
+            this.SelectItemAllExhibitButtonFromReservationTab.Size = new System.Drawing.Size(145, 43);
             this.SelectItemAllExhibitButtonFromReservationTab.TabIndex = 16;
             this.SelectItemAllExhibitButtonFromReservationTab.Text = "即時出品";
             this.SelectItemAllExhibitButtonFromReservationTab.UseVisualStyleBackColor = true;
@@ -1186,10 +1149,9 @@
             // register_from_xml_button
             // 
             this.register_from_xml_button.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.register_from_xml_button.Location = new System.Drawing.Point(25, 235);
-            this.register_from_xml_button.Margin = new System.Windows.Forms.Padding(4);
+            this.register_from_xml_button.Location = new System.Drawing.Point(19, 188);
             this.register_from_xml_button.Name = "register_from_xml_button";
-            this.register_from_xml_button.Size = new System.Drawing.Size(193, 54);
+            this.register_from_xml_button.Size = new System.Drawing.Size(145, 43);
             this.register_from_xml_button.TabIndex = 17;
             this.register_from_xml_button.Text = "エクセルで登録";
             this.register_from_xml_button.UseVisualStyleBackColor = true;
@@ -1199,10 +1161,9 @@
             // 
             this.tabPage3.Controls.Add(this.panel3);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPage3.Size = new System.Drawing.Size(248, 614);
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage3.Size = new System.Drawing.Size(184, 486);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "出品済";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -1223,18 +1184,16 @@
             this.panel3.Controls.Add(this.get_trading_button);
             this.panel3.Controls.Add(this.get_selling_button);
             this.panel3.Location = new System.Drawing.Point(0, 0);
-            this.panel3.Margin = new System.Windows.Forms.Padding(4);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(256, 650);
+            this.panel3.Size = new System.Drawing.Size(192, 520);
             this.panel3.TabIndex = 5;
             // 
             // doNeageButton
             // 
             this.doNeageButton.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.doNeageButton.Location = new System.Drawing.Point(25, 572);
-            this.doNeageButton.Margin = new System.Windows.Forms.Padding(4);
+            this.doNeageButton.Location = new System.Drawing.Point(19, 458);
             this.doNeageButton.Name = "doNeageButton";
-            this.doNeageButton.Size = new System.Drawing.Size(192, 41);
+            this.doNeageButton.Size = new System.Drawing.Size(144, 33);
             this.doNeageButton.TabIndex = 22;
             this.doNeageButton.Text = "値上げ";
             this.doNeageButton.UseVisualStyleBackColor = true;
@@ -1243,10 +1202,9 @@
             // doNebikiButton
             // 
             this.doNebikiButton.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.doNebikiButton.Location = new System.Drawing.Point(25, 524);
-            this.doNebikiButton.Margin = new System.Windows.Forms.Padding(4);
+            this.doNebikiButton.Location = new System.Drawing.Point(19, 419);
             this.doNebikiButton.Name = "doNebikiButton";
-            this.doNebikiButton.Size = new System.Drawing.Size(192, 41);
+            this.doNebikiButton.Size = new System.Drawing.Size(144, 33);
             this.doNebikiButton.TabIndex = 21;
             this.doNebikiButton.Text = "値下げ";
             this.doNebikiButton.UseVisualStyleBackColor = true;
@@ -1255,10 +1213,9 @@
             // AllItemSendReviewButton
             // 
             this.AllItemSendReviewButton.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.AllItemSendReviewButton.Location = new System.Drawing.Point(27, 426);
-            this.AllItemSendReviewButton.Margin = new System.Windows.Forms.Padding(4);
+            this.AllItemSendReviewButton.Location = new System.Drawing.Point(20, 341);
             this.AllItemSendReviewButton.Name = "AllItemSendReviewButton";
-            this.AllItemSendReviewButton.Size = new System.Drawing.Size(192, 41);
+            this.AllItemSendReviewButton.Size = new System.Drawing.Size(144, 33);
             this.AllItemSendReviewButton.TabIndex = 20;
             this.AllItemSendReviewButton.Text = "出品者評価";
             this.AllItemSendReviewButton.UseVisualStyleBackColor = true;
@@ -1267,10 +1224,9 @@
             // get_bought_button
             // 
             this.get_bought_button.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.get_bought_button.Location = new System.Drawing.Point(27, 475);
-            this.get_bought_button.Margin = new System.Windows.Forms.Padding(4);
+            this.get_bought_button.Location = new System.Drawing.Point(20, 380);
             this.get_bought_button.Name = "get_bought_button";
-            this.get_bought_button.Size = new System.Drawing.Size(192, 41);
+            this.get_bought_button.Size = new System.Drawing.Size(144, 33);
             this.get_bought_button.TabIndex = 8;
             this.get_bought_button.Text = "購入済";
             this.get_bought_button.UseVisualStyleBackColor = true;
@@ -1280,10 +1236,9 @@
             // 
             this.detailInfoGetCheckBox.AutoSize = true;
             this.detailInfoGetCheckBox.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.detailInfoGetCheckBox.Location = new System.Drawing.Point(31, 10);
-            this.detailInfoGetCheckBox.Margin = new System.Windows.Forms.Padding(4);
+            this.detailInfoGetCheckBox.Location = new System.Drawing.Point(23, 8);
             this.detailInfoGetCheckBox.Name = "detailInfoGetCheckBox";
-            this.detailInfoGetCheckBox.Size = new System.Drawing.Size(167, 27);
+            this.detailInfoGetCheckBox.Size = new System.Drawing.Size(135, 22);
             this.detailInfoGetCheckBox.TabIndex = 19;
             this.detailInfoGetCheckBox.Text = "詳細情報も取得する";
             this.detailInfoGetCheckBox.UseVisualStyleBackColor = true;
@@ -1292,10 +1247,9 @@
             // get_stopping_button
             // 
             this.get_stopping_button.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.get_stopping_button.Location = new System.Drawing.Point(25, 134);
-            this.get_stopping_button.Margin = new System.Windows.Forms.Padding(4);
+            this.get_stopping_button.Location = new System.Drawing.Point(19, 107);
             this.get_stopping_button.Name = "get_stopping_button";
-            this.get_stopping_button.Size = new System.Drawing.Size(192, 41);
+            this.get_stopping_button.Size = new System.Drawing.Size(144, 33);
             this.get_stopping_button.TabIndex = 7;
             this.get_stopping_button.Text = "停止中";
             this.get_stopping_button.UseVisualStyleBackColor = true;
@@ -1304,10 +1258,9 @@
             // CheckItemAllStop
             // 
             this.CheckItemAllStop.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.CheckItemAllStop.Location = new System.Drawing.Point(25, 280);
-            this.CheckItemAllStop.Margin = new System.Windows.Forms.Padding(4);
+            this.CheckItemAllStop.Location = new System.Drawing.Point(19, 224);
             this.CheckItemAllStop.Name = "CheckItemAllStop";
-            this.CheckItemAllStop.Size = new System.Drawing.Size(192, 41);
+            this.CheckItemAllStop.Size = new System.Drawing.Size(144, 33);
             this.CheckItemAllStop.TabIndex = 10;
             this.CheckItemAllStop.Text = "出品停止";
             this.CheckItemAllStop.UseVisualStyleBackColor = true;
@@ -1316,10 +1269,9 @@
             // saveAllDeliveryAddress
             // 
             this.saveAllDeliveryAddress.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.saveAllDeliveryAddress.Location = new System.Drawing.Point(25, 231);
-            this.saveAllDeliveryAddress.Margin = new System.Windows.Forms.Padding(4);
+            this.saveAllDeliveryAddress.Location = new System.Drawing.Point(19, 185);
             this.saveAllDeliveryAddress.Name = "saveAllDeliveryAddress";
-            this.saveAllDeliveryAddress.Size = new System.Drawing.Size(192, 41);
+            this.saveAllDeliveryAddress.Size = new System.Drawing.Size(144, 33);
             this.saveAllDeliveryAddress.TabIndex = 13;
             this.saveAllDeliveryAddress.Text = "住所一括取得";
             this.saveAllDeliveryAddress.UseVisualStyleBackColor = true;
@@ -1328,10 +1280,9 @@
             // CheckItemAllCancel
             // 
             this.CheckItemAllCancel.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.CheckItemAllCancel.Location = new System.Drawing.Point(27, 183);
-            this.CheckItemAllCancel.Margin = new System.Windows.Forms.Padding(4);
+            this.CheckItemAllCancel.Location = new System.Drawing.Point(20, 146);
             this.CheckItemAllCancel.Name = "CheckItemAllCancel";
-            this.CheckItemAllCancel.Size = new System.Drawing.Size(192, 41);
+            this.CheckItemAllCancel.Size = new System.Drawing.Size(144, 33);
             this.CheckItemAllCancel.TabIndex = 9;
             this.CheckItemAllCancel.Text = "出品取消";
             this.CheckItemAllCancel.UseVisualStyleBackColor = true;
@@ -1340,10 +1291,9 @@
             // CheckAllItemReviewButton
             // 
             this.CheckAllItemReviewButton.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.CheckAllItemReviewButton.Location = new System.Drawing.Point(25, 378);
-            this.CheckAllItemReviewButton.Margin = new System.Windows.Forms.Padding(4);
+            this.CheckAllItemReviewButton.Location = new System.Drawing.Point(19, 302);
             this.CheckAllItemReviewButton.Name = "CheckAllItemReviewButton";
-            this.CheckAllItemReviewButton.Size = new System.Drawing.Size(192, 41);
+            this.CheckAllItemReviewButton.Size = new System.Drawing.Size(144, 33);
             this.CheckAllItemReviewButton.TabIndex = 12;
             this.CheckAllItemReviewButton.Text = "購入者評価";
             this.CheckAllItemReviewButton.UseVisualStyleBackColor = true;
@@ -1352,10 +1302,9 @@
             // CheckItemAllSendShippingNotificationButton
             // 
             this.CheckItemAllSendShippingNotificationButton.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.CheckItemAllSendShippingNotificationButton.Location = new System.Drawing.Point(25, 329);
-            this.CheckItemAllSendShippingNotificationButton.Margin = new System.Windows.Forms.Padding(4);
+            this.CheckItemAllSendShippingNotificationButton.Location = new System.Drawing.Point(19, 263);
             this.CheckItemAllSendShippingNotificationButton.Name = "CheckItemAllSendShippingNotificationButton";
-            this.CheckItemAllSendShippingNotificationButton.Size = new System.Drawing.Size(192, 41);
+            this.CheckItemAllSendShippingNotificationButton.Size = new System.Drawing.Size(144, 33);
             this.CheckItemAllSendShippingNotificationButton.TabIndex = 11;
             this.CheckItemAllSendShippingNotificationButton.Text = "発送通知";
             this.CheckItemAllSendShippingNotificationButton.UseVisualStyleBackColor = true;
@@ -1364,10 +1313,9 @@
             // get_trading_button
             // 
             this.get_trading_button.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.get_trading_button.Location = new System.Drawing.Point(25, 85);
-            this.get_trading_button.Margin = new System.Windows.Forms.Padding(4);
+            this.get_trading_button.Location = new System.Drawing.Point(19, 68);
             this.get_trading_button.Name = "get_trading_button";
-            this.get_trading_button.Size = new System.Drawing.Size(192, 41);
+            this.get_trading_button.Size = new System.Drawing.Size(144, 33);
             this.get_trading_button.TabIndex = 6;
             this.get_trading_button.Text = "取引中";
             this.get_trading_button.UseVisualStyleBackColor = true;
@@ -1376,10 +1324,9 @@
             // get_selling_button
             // 
             this.get_selling_button.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.get_selling_button.Location = new System.Drawing.Point(25, 36);
-            this.get_selling_button.Margin = new System.Windows.Forms.Padding(4);
+            this.get_selling_button.Location = new System.Drawing.Point(19, 29);
             this.get_selling_button.Name = "get_selling_button";
-            this.get_selling_button.Size = new System.Drawing.Size(192, 41);
+            this.get_selling_button.Size = new System.Drawing.Size(144, 33);
             this.get_selling_button.TabIndex = 5;
             this.get_selling_button.Text = "出品中";
             this.get_selling_button.UseVisualStyleBackColor = true;
@@ -1414,7 +1361,8 @@
             this.バージョン情報ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1536, 28);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(1152, 24);
             this.menuStrip1.TabIndex = 41;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -1424,43 +1372,44 @@
             this.アカウント管理ToolStripMenuItem,
             this.出金管理ToolStripMenuItem,
             this.通知一覧ToolStripMenuItem,
-            this.オプションToolStripMenuItem});
+            this.オプションToolStripMenuItem,
+            this.ライセンス管理ToolStripMenuItem});
             this.メニューToolStripMenuItem.Name = "メニューToolStripMenuItem";
-            this.メニューToolStripMenuItem.Size = new System.Drawing.Size(63, 24);
+            this.メニューToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
             this.メニューToolStripMenuItem.Text = "メニュー";
             // 
             // アカウント管理ToolStripMenuItem
             // 
             this.アカウント管理ToolStripMenuItem.Name = "アカウント管理ToolStripMenuItem";
-            this.アカウント管理ToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
+            this.アカウント管理ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.アカウント管理ToolStripMenuItem.Text = "アカウント管理";
             this.アカウント管理ToolStripMenuItem.Click += new System.EventHandler(this.アカウント管理ToolStripMenuItem_Click_1);
             // 
             // 出金管理ToolStripMenuItem
             // 
             this.出金管理ToolStripMenuItem.Name = "出金管理ToolStripMenuItem";
-            this.出金管理ToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
+            this.出金管理ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.出金管理ToolStripMenuItem.Text = "出金管理";
             this.出金管理ToolStripMenuItem.Click += new System.EventHandler(this.出金管理ToolStripMenuItem_Click);
             // 
             // 通知一覧ToolStripMenuItem
             // 
             this.通知一覧ToolStripMenuItem.Name = "通知一覧ToolStripMenuItem";
-            this.通知一覧ToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
+            this.通知一覧ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.通知一覧ToolStripMenuItem.Text = "通知一覧";
             this.通知一覧ToolStripMenuItem.Click += new System.EventHandler(this.通知一覧ToolStripMenuItem_Click);
             // 
             // オプションToolStripMenuItem
             // 
             this.オプションToolStripMenuItem.Name = "オプションToolStripMenuItem";
-            this.オプションToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
+            this.オプションToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.オプションToolStripMenuItem.Text = "オプション";
             this.オプションToolStripMenuItem.Click += new System.EventHandler(this.オプションToolStripMenuItem_Click);
             // 
             // バージョン情報ToolStripMenuItem
             // 
             this.バージョン情報ToolStripMenuItem.Name = "バージョン情報ToolStripMenuItem";
-            this.バージョン情報ToolStripMenuItem.Size = new System.Drawing.Size(105, 24);
+            this.バージョン情報ToolStripMenuItem.Size = new System.Drawing.Size(88, 20);
             this.バージョン情報ToolStripMenuItem.Text = "バージョン情報";
             this.バージョン情報ToolStripMenuItem.Click += new System.EventHandler(this.バージョン情報ToolStripMenuItem_Click);
             // 
@@ -1470,10 +1419,9 @@
             this.panel4.Controls.Add(this.accountListComboBox);
             this.panel4.Controls.Add(this.radioButton2);
             this.panel4.Controls.Add(this.radioButton1);
-            this.panel4.Location = new System.Drawing.Point(12, 32);
-            this.panel4.Margin = new System.Windows.Forms.Padding(4);
+            this.panel4.Location = new System.Drawing.Point(9, 26);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(253, 126);
+            this.panel4.Size = new System.Drawing.Size(190, 101);
             this.panel4.TabIndex = 42;
             // 
             // groupListComboBox
@@ -1482,10 +1430,9 @@
             this.groupListComboBox.Enabled = false;
             this.groupListComboBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.groupListComboBox.FormattingEnabled = true;
-            this.groupListComboBox.Location = new System.Drawing.Point(27, 92);
-            this.groupListComboBox.Margin = new System.Windows.Forms.Padding(4);
+            this.groupListComboBox.Location = new System.Drawing.Point(20, 74);
             this.groupListComboBox.Name = "groupListComboBox";
-            this.groupListComboBox.Size = new System.Drawing.Size(217, 23);
+            this.groupListComboBox.Size = new System.Drawing.Size(164, 20);
             this.groupListComboBox.TabIndex = 28;
             this.groupListComboBox.Format += new System.Windows.Forms.ListControlConvertEventHandler(this.groupListComboBox_Format);
             // 
@@ -1494,10 +1441,9 @@
             this.accountListComboBox.BackColor = System.Drawing.SystemColors.Control;
             this.accountListComboBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.accountListComboBox.FormattingEnabled = true;
-            this.accountListComboBox.Location = new System.Drawing.Point(27, 24);
-            this.accountListComboBox.Margin = new System.Windows.Forms.Padding(4);
+            this.accountListComboBox.Location = new System.Drawing.Point(20, 19);
             this.accountListComboBox.Name = "accountListComboBox";
-            this.accountListComboBox.Size = new System.Drawing.Size(217, 23);
+            this.accountListComboBox.Size = new System.Drawing.Size(164, 20);
             this.accountListComboBox.TabIndex = 14;
             this.accountListComboBox.SelectedIndexChanged += new System.EventHandler(this.accountListComboBox_SelectedIndexChanged);
             this.accountListComboBox.Format += new System.Windows.Forms.ListControlConvertEventHandler(this.accountListComboBox_Format);
@@ -1506,10 +1452,9 @@
             // 
             this.radioButton2.AutoSize = true;
             this.radioButton2.Font = new System.Drawing.Font("メイリオ", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButton2.Location = new System.Drawing.Point(5, 55);
-            this.radioButton2.Margin = new System.Windows.Forms.Padding(4);
+            this.radioButton2.Location = new System.Drawing.Point(4, 44);
             this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(101, 29);
+            this.radioButton2.Size = new System.Drawing.Size(79, 24);
             this.radioButton2.TabIndex = 29;
             this.radioButton2.Text = "グループ";
             this.radioButton2.UseVisualStyleBackColor = true;
@@ -1520,10 +1465,9 @@
             this.radioButton1.AutoSize = true;
             this.radioButton1.Checked = true;
             this.radioButton1.Font = new System.Drawing.Font("メイリオ", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButton1.Location = new System.Drawing.Point(4, 0);
-            this.radioButton1.Margin = new System.Windows.Forms.Padding(4);
+            this.radioButton1.Location = new System.Drawing.Point(3, 0);
             this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(118, 29);
+            this.radioButton1.Size = new System.Drawing.Size(92, 24);
             this.radioButton1.TabIndex = 27;
             this.radioButton1.TabStop = true;
             this.radioButton1.Text = "アカウント";
@@ -1535,9 +1479,10 @@
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 845);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 671);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1536, 24);
+            this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 10, 0);
+            this.statusStrip1.Size = new System.Drawing.Size(1152, 24);
             this.statusStrip1.TabIndex = 43;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -1574,11 +1519,18 @@
             this.notifyIcon1.Visible = true;
             this.notifyIcon1.BalloonTipClicked += new System.EventHandler(this.notifyIcon1_BalloonTipClicked);
             // 
+            // ライセンス管理ToolStripMenuItem
+            // 
+            this.ライセンス管理ToolStripMenuItem.Name = "ライセンス管理ToolStripMenuItem";
+            this.ライセンス管理ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.ライセンス管理ToolStripMenuItem.Text = "ライセンス管理";
+            this.ライセンス管理ToolStripMenuItem.Click += new System.EventHandler(this.ライセンス管理ToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1536, 869);
+            this.ClientSize = new System.Drawing.Size(1152, 695);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.tabControl1);
@@ -1588,7 +1540,6 @@
             this.Controls.Add(this.LocalItemDataGridView);
             this.Controls.Add(this.DailyExhibitDataGridView);
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainForm";
             this.Text = "RakuLand";
             this.Load += new System.EventHandler(this.MainForm_Load);
@@ -1750,6 +1701,7 @@
         private System.Windows.Forms.ToolStripMenuItem オプションToolStripMenuItem;
         private System.Windows.Forms.Label ItemUpInfoLabel;
         private System.Windows.Forms.Label ItemDownInfoLabel;
+        private System.Windows.Forms.ToolStripMenuItem ライセンス管理ToolStripMenuItem;
     }
 }
 

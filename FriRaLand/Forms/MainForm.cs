@@ -1955,6 +1955,10 @@ namespace RakuLand {
 
             }
         }
+
+        private void ライセンス管理ToolStripMenuItem_Click(object sender, EventArgs e) {
+            new LicenseForm(this).Show();
+        }
     }
 }
 
